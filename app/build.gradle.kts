@@ -708,7 +708,7 @@ dependencies {
     // 避免 kapt 输出与 check-in 副本在 stub 编译期撞 duplicate class
     if (project.hasProperty("roomRegen")) {
         kapt(libs.room.compiler)
-        sourceSets["main"].java.exclude("**/*_Impl.java")
+        android.sourceSets.getByName("main").java.exclude("**/*_Impl.java")
     }
 
     implementation(libs.commons.compress.v2)
