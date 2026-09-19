@@ -3,8 +3,7 @@ package com.ai.assistance.operit.data.model
 import java.util.Arrays
 
 /**
- * A wrapper class for a FloatArray to be used as an ObjectBox entity property.
- * This helps to avoid issues with ObjectBox's handling of primitive arrays.
+ * A wrapper class for a FloatArray to be stored as a BLOB column in the memory database.
  */
 data class Embedding(val vector: FloatArray) {
     // Custom equals/hashCode to properly compare float arrays

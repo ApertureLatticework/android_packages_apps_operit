@@ -1,14 +1,17 @@
 package com.ai.assistance.operit.data.model
 
-import io.objectbox.annotation.Entity
-import io.objectbox.annotation.Id
-import io.objectbox.annotation.Index
+import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import java.util.Date
 
-@Entity
+@Entity(
+    tableName = "memory_auto_save_candidate",
+    indices = [Index("chatId")]
+)
 data class MemoryAutoSaveCandidate(
-    @Id var id: Long = 0,
-    @Index var chatId: String = "",
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
+    var chatId: String = "",
     var triggerMessageTimestamp: Long = 0L,
     var createdAt: Date = Date(),
     var updatedAt: Date = Date(),

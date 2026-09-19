@@ -17,7 +17,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.parcelize)
-    id("io.objectbox")
     id("kotlin-kapt")
 }
 
@@ -700,9 +699,6 @@ dependencies {
     implementation(libs.room.ktx) // Kotlin扩展和协程支持
     kapt(libs.room.compiler) // 使用kapt代替ksp
 
-    // ObjectBox
-    implementation(libs.objectbox.kotlin)
-    kapt(libs.objectbox.processor)
     implementation(libs.commons.compress.v2)
     implementation(libs.junrar)
 

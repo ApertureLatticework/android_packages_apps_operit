@@ -1,21 +1,18 @@
 package com.ai.assistance.operit.data.repository
 
 import android.content.Context
-import com.ai.assistance.operit.data.db.ObjectBoxManager
+import com.ai.assistance.operit.data.db.MemoryDatabaseManager
 import com.ai.assistance.operit.data.model.MemoryAutoSaveCandidate
-import com.ai.assistance.operit.data.model.MemoryAutoSaveCandidate_
-import io.objectbox.Box
-import io.objectbox.kotlin.boxFor
 import java.util.Date
 
 class MemoryAutoSaveCandidateRepository(
     context: Context,
     profileId: String
 ) {
-    private val store = ObjectBoxManager.get(context, profileId)
-    private val candidateBox: Box<MemoryAutoSaveCandidate> = store.boxFor()
+    private val candidateDao =
+        MemoryDatabaseManager.get(context, profileId).memoryAutoSaveCandidateDao()
 
-    fun enqueue(
+    suspend fun enqueue(
         chatId: String,
         triggerMessageTimestamp: Long,
         sourceType: String = MemoryAutoSaveCandidate.SOURCE_TYPE_REPLY_FINALIZED_AUTO
@@ -30,10 +27,10 @@ class MemoryAutoSaveCandidateRepository(
                 status = MemoryAutoSaveCandidate.STATUS_PENDING,
                 sourceType = sourceType
             )
-        return candidateBox.put(candidate)
+        return candidateDao.insert(candidate)
     }
 
-    fun enqueueSelectedUserMessages(
+    suspend fun enqueueSelectedUserMessages(
         chatId: String,
         triggerMessageTimestamps: List<Long>
     ) {
@@ -52,23 +49,16 @@ class MemoryAutoSaveCandidateRepository(
         }
     }
 
-    fun getPendingAndFailedCandidates(): List<MemoryAutoSaveCandidate> {
-        return candidateBox
-            .query(
-                MemoryAutoSaveCandidate_.status
-                    .equal(MemoryAutoSaveCandidate.STATUS_PENDING)
-                    .or(
-                        MemoryAutoSaveCandidate_.status.equal(
-                            MemoryAutoSaveCandidate.STATUS_FAILED
-                        )
-                    )
+    suspend fun getPendingAndFailedCandidates(): List<MemoryAutoSaveCandidate> {
+        return candidateDao.getByStatuses(
+            listOf(
+                MemoryAutoSaveCandidate.STATUS_PENDING,
+                MemoryAutoSaveCandidate.STATUS_FAILED
             )
-            .build()
-            .find()
-            .sortedBy { it.createdAt.time }
+        )
     }
 
-    fun countPendingAndFailedChats(): Int {
+    suspend fun countPendingAndFailedChats(): Int {
         return getPendingAndFailedCandidates()
             .map { it.chatId }
             .filter { it.isNotBlank() }
@@ -76,50 +66,50 @@ class MemoryAutoSaveCandidateRepository(
             .size
     }
 
-    fun countPendingAndFailedCandidates(): Int {
+    suspend fun countPendingAndFailedCandidates(): Int {
         return getPendingAndFailedCandidates().size
     }
 
-    fun markProcessing(candidateIds: List<Long>) {
+    suspend fun markProcessing(candidateIds: List<Long>) {
         if (candidateIds.isEmpty()) return
+        val candidates = candidateDao.getByIds(candidateIds)
         val now = Date()
-        val candidates = candidateIds.mapNotNull { candidateBox.get(it) }
         candidates.forEach { candidate ->
             candidate.status = MemoryAutoSaveCandidate.STATUS_PROCESSING
             candidate.updatedAt = now
             candidate.lastError = ""
         }
-        candidateBox.put(candidates)
+        candidateDao.updateAll(candidates)
     }
 
-    fun markPending(candidateIds: List<Long>) {
+    suspend fun markPending(candidateIds: List<Long>) {
         if (candidateIds.isEmpty()) return
+        val candidates = candidateDao.getByIds(candidateIds)
         val now = Date()
-        val candidates = candidateIds.mapNotNull { candidateBox.get(it) }
         candidates.forEach { candidate ->
             candidate.status = MemoryAutoSaveCandidate.STATUS_PENDING
             candidate.updatedAt = now
             candidate.lastError = ""
         }
-        candidateBox.put(candidates)
+        candidateDao.updateAll(candidates)
     }
 
-    fun deleteCandidates(candidateIds: List<Long>) {
+    suspend fun deleteCandidates(candidateIds: List<Long>) {
         if (candidateIds.isEmpty()) return
-        candidateIds.forEach { candidateBox.remove(it) }
+        candidateIds.forEach { candidateDao.deleteById(it) }
     }
 
-    fun markFailed(candidateIds: List<Long>, errorMessage: String) {
+    suspend fun markFailed(candidateIds: List<Long>, errorMessage: String) {
         if (candidateIds.isEmpty()) return
+        val candidates = candidateDao.getByIds(candidateIds)
         val now = Date()
         val normalizedError = errorMessage.take(500)
-        val candidates = candidateIds.mapNotNull { candidateBox.get(it) }
         candidates.forEach { candidate ->
             candidate.status = MemoryAutoSaveCandidate.STATUS_FAILED
             candidate.attemptCount += 1
             candidate.lastError = normalizedError
             candidate.updatedAt = now
         }
-        candidateBox.put(candidates)
+        candidateDao.updateAll(candidates)
     }
 }

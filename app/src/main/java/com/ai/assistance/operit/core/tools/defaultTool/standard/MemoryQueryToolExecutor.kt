@@ -945,8 +945,8 @@ class MemoryQueryToolExecutor(private val context: Context) : ToolExecutor {
             )
 
             val linkInfos = links.mapNotNull { link ->
-                val source = link.source.target
-                val target = link.target.target
+                val source = link.sourceMemory
+                val target = link.targetMemory
                 if (source == null || target == null) {
                     null
                 } else {
@@ -1131,7 +1131,7 @@ class MemoryQueryToolExecutor(private val context: Context) : ToolExecutor {
                     )
 
                 val candidates = sourceMemory.links.filter {
-                    it.target.target?.id == targetMemory.id &&
+                    it.targetMemory?.id == targetMemory.id &&
                         (locatorLinkType.isNullOrBlank() || it.type == locatorLinkType)
                 }
                 when {
@@ -1173,8 +1173,8 @@ class MemoryQueryToolExecutor(private val context: Context) : ToolExecutor {
                 )
             }
 
-            val source = updated.source.target?.title ?: sourceTitle ?: ""
-            val target = updated.target.target?.title ?: targetTitle ?: ""
+            val source = updated.sourceMemory?.title ?: sourceTitle ?: ""
+            val target = updated.targetMemory?.title ?: targetTitle ?: ""
 
             ToolResult(
                 toolName = tool.name,
@@ -1234,7 +1234,7 @@ class MemoryQueryToolExecutor(private val context: Context) : ToolExecutor {
                     )
 
                 val candidates = sourceMemory.links.filter {
-                    it.target.target?.id == targetMemory.id &&
+                    it.targetMemory?.id == targetMemory.id &&
                         (locatorLinkType.isNullOrBlank() || it.type == locatorLinkType)
                 }
 

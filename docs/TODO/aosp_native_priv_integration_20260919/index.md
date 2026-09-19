@@ -1,7 +1,7 @@
 ---
 Repository: https://github.com/ApertureLatticework/android_packages_apps_operit
 Branch: feat/native-rom-integration
-Status: planning
+Status: executing（步骤 1、2 已落地，CI 验证中）
 ---
 
 # 原生集成特权版：LineageOS 源码进树改造
@@ -55,8 +55,8 @@ Operit 以 Gradle 构建产出通用 APK，系统能力通过五档权限阶梯�
 
 ## 步骤
 
-1. [功能面裁剪与依赖清单定稿](1_ScopeCutAndDependencyManifest.md)
-2. [ObjectBox 迁移 Room 并删除整线](2_ObjectBoxToRoom.md)
+1. [功能面裁剪与依赖清单定稿](1_ScopeCutAndDependencyManifest.md)（已完成，commit 3d2ac61 / 4b3d7cf / 7733184 / f44c9d4）
+2. [ObjectBox 迁移 Room 并删除整线](2_ObjectBoxToRoom.md)（已完成，待 CI 验证）
 3. [Room 生成代码 check-in 机制](3_RoomGeneratedCodeCheckin.md)
 4. [权限阶梯改造与 PRIVILEGED 档](4_PrivilegedExecutorAndTierRemoval.md)
 5. [包内 Soong 模块化与 Android.bp](5_InTreePackageAndSoongModules.md)

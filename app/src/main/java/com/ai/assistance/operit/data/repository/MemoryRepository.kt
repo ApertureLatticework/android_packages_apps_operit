@@ -3,12 +3,12 @@ package com.ai.assistance.operit.data.repository
 import android.content.Context
 import androidx.compose.ui.graphics.Color
 import com.ai.assistance.operit.R
-import com.ai.assistance.operit.data.db.ObjectBoxManager
+import androidx.room.withTransaction
+import com.ai.assistance.operit.data.db.MemoryDatabaseManager
 import com.ai.assistance.operit.data.model.Memory
+import com.ai.assistance.operit.data.model.MemoryTagJunction
 import com.ai.assistance.operit.data.model.MemoryLink
 import com.ai.assistance.operit.data.model.MemoryTag
-import com.ai.assistance.operit.data.model.MemoryTag_
-import com.ai.assistance.operit.data.model.Memory_
 import com.ai.assistance.operit.data.model.DocumentChunk
 import com.ai.assistance.operit.data.model.Embedding
 import com.ai.assistance.operit.data.model.CloudEmbeddingConfig
@@ -20,14 +20,9 @@ import com.ai.assistance.operit.services.CloudEmbeddingService
 import com.ai.assistance.operit.ui.features.memory.screens.graph.model.Edge
 import com.ai.assistance.operit.ui.features.memory.screens.graph.model.Graph
 import com.ai.assistance.operit.ui.features.memory.screens.graph.model.Node
-import io.objectbox.Box
-import io.objectbox.kotlin.boxFor
-import io.objectbox.kotlin.query
-import io.objectbox.query.QueryBuilder
 import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import io.objectbox.query.QueryCondition
 import java.util.UUID
 import java.util.Date
 import java.util.Locale
@@ -49,7 +44,7 @@ import kotlinx.serialization.json.Json
 import kotlin.math.sqrt
 
 /**
- * Repository for handling Memory data operations. It abstracts the data source (ObjectBox) from the
+ * Repository for handling Memory data operations. It abstracts the data source (Room MemoryDatabase) from the
  * rest of the application.
  */
 class MemoryRepository(private val context: Context, profileId: String) {
@@ -87,11 +82,10 @@ class MemoryRepository(private val context: Context, profileId: String) {
         }
     }
 
-    private val store = ObjectBoxManager.get(context, profileId)
-    private val memoryBox: Box<Memory> = store.boxFor()
-    private val tagBox = store.boxFor<MemoryTag>()
-    private val linkBox = store.boxFor<MemoryLink>()
-    private val chunkBox = store.boxFor<DocumentChunk>()
+    private val db = MemoryDatabaseManager.get(context, profileId)
+    private val memoryDao = db.memoryDao()
+    private val linkDao = db.memoryLinkDao()
+    private val chunkDao = db.documentChunkDao()
 
     private val searchSettingsPreferences = MemorySearchSettingsPreferences(context, profileId)
     private val cloudEmbeddingService = CloudEmbeddingService(context)
@@ -270,6 +264,54 @@ class MemoryRepository(private val context: Context, profileId: String) {
             resolvedWeights.semanticKeywordNormFactor
     }
 
+    // --- 关系快照水合（Memory/MemoryLink 上的 @Ignore 集合） ---
+
+    private suspend fun hydrateTags(memories: List<Memory>) {
+        if (memories.isEmpty()) return
+        val pairs = memoryDao.getTagPairs(memories.map { it.id })
+        val tagsByMemoryId = pairs.groupBy({ it.memoryId }, { it.tag })
+        memories.forEach { memory ->
+            memory.tags = tagsByMemoryId[memory.id] ?: emptyList()
+        }
+    }
+
+    private suspend fun hydrateLinkEnds(links: List<MemoryLink>) {
+        if (links.isEmpty()) return
+        val memoryIds = links.flatMap { listOf(it.sourceId, it.targetId) }
+            .filter { it > 0L }
+            .distinct()
+        if (memoryIds.isEmpty()) return
+        val memoryById = memoryDao.getByIds(memoryIds).associateBy { it.id }
+        links.forEach { link ->
+            link.sourceMemory = memoryById[link.sourceId]
+            link.targetMemory = memoryById[link.targetId]
+        }
+    }
+
+    private suspend fun hydrateLinks(memories: List<Memory>) {
+        if (memories.isEmpty()) return
+        val ids = memories.map { it.id }
+        val outgoing = linkDao.getOutgoingFor(ids)
+        val incoming = linkDao.getIncomingFor(ids)
+        hydrateLinkEnds(outgoing + incoming)
+        val outgoingById = outgoing.groupBy { it.sourceId }
+        val incomingById = incoming.groupBy { it.targetId }
+        memories.forEach { memory ->
+            memory.links = outgoingById[memory.id] ?: emptyList()
+            memory.backlinks = incomingById[memory.id] ?: emptyList()
+        }
+    }
+
+    private suspend fun hydrateRelations(memory: Memory) {
+        hydrateTags(listOf(memory))
+        hydrateLinks(listOf(memory))
+    }
+
+    private suspend fun hydrateRelations(memories: List<Memory>) {
+        hydrateTags(memories)
+        hydrateLinks(memories)
+    }
+
     private fun vectorIndexDir(): File = OperitPaths.vectorIndexDir(context)
 
     private fun currentProfileMemoryIndexFiles(): List<File> {
@@ -314,12 +356,13 @@ class MemoryRepository(private val context: Context, profileId: String) {
         }
     }
 
-    private fun loadChunksForDocument(memory: Memory): List<DocumentChunk> {
-        memory.documentChunks.reset()
-        return memory.documentChunks.sortedBy { it.chunkIndex }
+    private suspend fun loadChunksForDocument(memory: Memory): List<DocumentChunk> {
+        val chunks = chunkDao.getByMemoryId(memory.id)
+        memory.documentChunks = chunks
+        return chunks
     }
 
-    private fun countDocumentChunkIndexableItems(memory: Memory): Int {
+    private suspend fun countDocumentChunkIndexableItems(memory: Memory): Int {
         if (!memory.isDocumentNode) return 0
         val chunks = loadChunksForDocument(memory)
         val targetDimension = resolveDocumentIndexDimension(chunks, forcedDimension = null) ?: return 0
@@ -352,13 +395,13 @@ class MemoryRepository(private val context: Context, profileId: String) {
     }
 
     // HNSW 的删除会保留 tombstone，直接增量 add 容易命中容量异常，因此按维度重建活跃记忆索引。
-    private fun rebuildMemoryVectorIndexForDimension(
+    private suspend fun rebuildMemoryVectorIndexForDimension(
         dimension: Int,
         excludedMemoryId: Long? = null
     ): Int {
         if (dimension <= 0) return 0
 
-        val items = memoryBox.all
+        val items = memoryDao.getAll()
             .asSequence()
             .filter { memory -> excludedMemoryId == null || memory.id != excludedMemoryId }
             .mapNotNull { memory ->
@@ -385,7 +428,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
         return items.size
     }
 
-    private fun rebuildAffectedMemoryVectorIndices(
+    private suspend fun rebuildAffectedMemoryVectorIndices(
         dimensions: Collection<Int?>,
         excludedMemoryId: Long? = null
     ) {
@@ -401,7 +444,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
             }
     }
 
-    private fun addMemoryToIndexInternal(memory: Memory, previousDimension: Int? = null) {
+    private suspend fun addMemoryToIndexInternal(memory: Memory, previousDimension: Int? = null) {
         rebuildAffectedMemoryVectorIndices(
             dimensions = listOf(previousDimension, memory.embedding?.vector?.size)
         )
@@ -410,7 +453,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
         }
     }
 
-    private fun removeMemoryFromIndexInternal(memory: Memory, memoryAlreadyRemoved: Boolean = false) {
+    private suspend fun removeMemoryFromIndexInternal(memory: Memory, memoryAlreadyRemoved: Boolean = false) {
         rebuildAffectedMemoryVectorIndices(
             dimensions = listOf(memory.embedding?.vector?.size),
             excludedMemoryId = memory.id.takeUnless { memoryAlreadyRemoved }
@@ -418,15 +461,15 @@ class MemoryRepository(private val context: Context, profileId: String) {
         if (!memory.isDocumentNode) return
 
         deleteIndexFileIfExists(memory.chunkIndexFilePath?.let(::File))
-        val storedMemory = memoryBox.get(memory.id)
+        val storedMemory = memoryDao.getById(memory.id)
         if (storedMemory != null && storedMemory.chunkIndexFilePath != null) {
             storedMemory.chunkIndexFilePath = null
-            memoryBox.put(storedMemory)
+            memoryDao.upsert(storedMemory)
         }
     }
 
-    private fun rebuildAllMemoryVectorIndices(onItemIndexed: (() -> Unit)? = null): Int {
-        val memoriesByDimension = memoryBox.all
+    private suspend fun rebuildAllMemoryVectorIndices(onItemIndexed: (() -> Unit)? = null): Int {
+        val memoriesByDimension = memoryDao.getAll()
             .mapNotNull { memory ->
                 val item = createMemoryIndexItem(memory) ?: return@mapNotNull null
                 val dimension = memory.embedding?.vector?.size ?: return@mapNotNull null
@@ -474,7 +517,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
             ?.key
     }
 
-    private fun rebuildDocumentChunkIndex(
+    private suspend fun rebuildDocumentChunkIndex(
         memory: Memory,
         forcedDimension: Int? = null,
         onItemIndexed: (() -> Unit)? = null
@@ -494,7 +537,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
             deleteIndexFileIfExists(memory.chunkIndexFilePath?.let(::File))
             if (memory.chunkIndexFilePath != null) {
                 memory.chunkIndexFilePath = null
-                memoryBox.put(memory)
+                memoryDao.upsert(memory)
             }
             return 0
         }
@@ -511,7 +554,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
             deleteIndexFileIfExists(memory.chunkIndexFilePath?.let(::File))
             if (memory.chunkIndexFilePath != null) {
                 memory.chunkIndexFilePath = null
-                memoryBox.put(memory)
+                memoryDao.upsert(memory)
             }
             return 0
         }
@@ -535,17 +578,17 @@ class MemoryRepository(private val context: Context, profileId: String) {
 
         if (memory.chunkIndexFilePath != targetFile.absolutePath) {
             memory.chunkIndexFilePath = targetFile.absolutePath
-            memoryBox.put(memory)
+            memoryDao.upsert(memory)
         }
 
         return compatibleItems.size
     }
 
-    private fun rebuildAllDocumentChunkIndices(onItemIndexed: (() -> Unit)? = null): Int {
+    private suspend fun rebuildAllDocumentChunkIndices(onItemIndexed: (() -> Unit)? = null): Int {
         currentProfileDocumentIndexFiles().forEach { deleteIndexFileIfExists(it) }
         var indexedCount = 0
 
-        memoryBox.all
+        memoryDao.getAll()
             .filter { it.isDocumentNode }
             .forEach { memory ->
                 indexedCount += rebuildDocumentChunkIndex(memory, onItemIndexed = onItemIndexed)
@@ -554,7 +597,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
         return indexedCount
     }
 
-    private fun ensureMemoryVectorIndex(dimension: Int): VectorIndexManager<IndexItem<Long, Long>, Long>? {
+    private suspend fun ensureMemoryVectorIndex(dimension: Int): VectorIndexManager<IndexItem<Long, Long>, Long>? {
         val targetFile = memoryIndexFileForDimension(dimension)
         if (!targetFile.exists()) {
             rebuildAllMemoryVectorIndices()
@@ -567,7 +610,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
         )
     }
 
-    private fun ensureDocumentChunkIndex(memory: Memory, dimension: Int): VectorIndexManager<IndexItem<Long, Long>, Long>? {
+    private suspend fun ensureDocumentChunkIndex(memory: Memory, dimension: Int): VectorIndexManager<IndexItem<Long, Long>, Long>? {
         val targetFile = documentIndexFile(memory.id, dimension)
         if (memory.chunkIndexFilePath != targetFile.absolutePath || !targetFile.exists()) {
             rebuildDocumentChunkIndex(memory, forcedDimension = dimension)
@@ -580,7 +623,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
         )
     }
 
-    private fun getSemanticMemoryCandidatesFromIndex(queryEmbedding: Embedding): List<Pair<Memory, Float>> {
+    private suspend fun getSemanticMemoryCandidatesFromIndex(queryEmbedding: Embedding): List<Pair<Memory, Float>> {
         val manager = ensureMemoryVectorIndex(queryEmbedding.vector.size) ?: return emptyList()
         val availableCount = manager.size()
         if (availableCount <= 0) {
@@ -595,7 +638,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
         if (nearest.isEmpty()) return emptyList()
 
         val ids = nearest.map { it.value }.distinct()
-        val memoryById = memoryBox.get(ids).filterNotNull().associateBy { it.id }
+        val memoryById = memoryDao.getByIds(ids).filterNotNull().associateBy { it.id }
         return ids.mapNotNull { memoryId ->
             val memory = memoryById[memoryId] ?: return@mapNotNull null
             val memoryEmbedding = memory.embedding ?: return@mapNotNull null
@@ -604,7 +647,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
         }
     }
 
-    private fun getSemanticChunkCandidatesFromIndex(
+    private suspend fun getSemanticChunkCandidatesFromIndex(
         memory: Memory,
         queryEmbedding: Embedding
     ): List<Pair<DocumentChunk, Float>> {
@@ -622,7 +665,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
         if (nearest.isEmpty()) return emptyList()
 
         val ids = nearest.map { it.value }.distinct()
-        val chunkById = chunkBox.get(ids).filterNotNull().associateBy { it.id }
+        val chunkById = chunkDao.getByIds(ids).filterNotNull().associateBy { it.id }
         return ids.mapNotNull { chunkId ->
             val chunk = chunkById[chunkId] ?: return@mapNotNull null
             val chunkEmbedding = chunk.embedding ?: return@mapNotNull null
@@ -683,7 +726,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
         }
     }
 
-    private fun queryTitleCandidatesByFragments(
+    private suspend fun queryTitleCandidatesByFragments(
         fragments: List<String>,
         scopedMemories: List<Memory>
     ): List<TitleMatchCandidate> {
@@ -701,10 +744,9 @@ class MemoryRepository(private val context: Context, profileId: String) {
                     textMatchesLexicalToken(memory.title, fragment)
                 }
             } else {
-                memoryBox.query()
-                    .contains(Memory_.title, fragment, QueryBuilder.StringOrder.CASE_INSENSITIVE)
-                    .build()
-                    .find()
+                memoryDao.getAll()
+            } else {
+                memoryDao.titleContains(fragment)
             }
 
             matches.forEach { memory ->
@@ -729,15 +771,15 @@ class MemoryRepository(private val context: Context, profileId: String) {
             )
     }
 
-    private fun queryTagCandidatesByFragments(
+    private suspend fun queryTagCandidatesByFragments(
         fragments: List<String>,
         scopedMemories: List<Memory>
     ): List<TitleMatchCandidate> {
         if (fragments.isEmpty() || scopedMemories.isEmpty()) return emptyList()
+        hydrateTags(scopedMemories)
 
         return scopedMemories
             .mapNotNull { memory ->
-                memory.tags.reset()
                 val tagNames = memory.tags.map { it.name }
                 if (tagNames.isEmpty()) return@mapNotNull null
 
@@ -781,7 +823,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
             this.chunkIndexFilePath = null
             this.folderPath = normalizeFolderPath(folderPath)
         }
-        memoryBox.put(documentMemory)
+        memoryDao.upsert(documentMemory)
 
         val chunks = text.split(Regex("(\\r?\\n[\\t ]*){2,}"))
             .mapNotNull { chunkText ->
@@ -796,8 +838,9 @@ class MemoryRepository(private val context: Context, profileId: String) {
             }
 
         if (chunks.isNotEmpty()) {
-            chunks.forEach { it.memory.target = documentMemory }
-            chunkBox.put(chunks)
+            chunks.forEach { it.memoryId = documentMemory.id }
+            val insertedIds = chunkDao.insertAll(chunks)
+            chunks.forEachIndexed { index, chunk -> chunk.id = insertedIds[index] }
 
             val embeddings = chunks.map { generateEmbedding(it.content, cloudConfig) }
 
@@ -809,10 +852,10 @@ class MemoryRepository(private val context: Context, profileId: String) {
                     }
                 }
             }
-            chunkBox.put(chunks)
+            chunkDao.updateAll(chunks)
         }
 
-        memoryBox.put(documentMemory)
+        memoryDao.upsert(documentMemory)
         addMemoryToIndexInternal(documentMemory)
         documentMemory
     }
@@ -834,7 +877,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
     suspend fun saveMemory(memory: Memory): Long = withContext(Dispatchers.IO){
         val cloudConfig = searchSettingsPreferences.loadCloudEmbedding()
         val previousDimension = memory.id.takeIf { it > 0L }
-            ?.let { existingId -> memoryBox.get(existingId)?.embedding?.vector?.size }
+            ?.let { existingId -> memoryDao.getById(existingId)?.embedding?.vector?.size }
         memory.folderPath = normalizeFolderPath(memory.folderPath)
         memory.credibility = memory.credibility.coerceIn(0.0f, 1.0f)
         memory.importance = memory.importance.coerceIn(0.0f, 1.0f)
@@ -842,7 +885,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
         if (textForEmbedding.isNotBlank()) {
             memory.embedding = generateEmbedding(textForEmbedding, cloudConfig)
         }
-        val id = memoryBox.put(memory)
+        val id = memoryDao.upsert(memory)
         addMemoryToIndexInternal(memory, previousDimension = previousDimension)
         id
     }
@@ -853,7 +896,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
      * @return The found Memory object, or null if not found.
      */
     suspend fun findMemoryById(id: Long): Memory? = withContext(Dispatchers.IO) {
-        memoryBox.get(id)
+        memoryDao.getById(id)?.also { hydrateRelations(it) }
     }
 
     /**
@@ -862,7 +905,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
      * @return The found Memory object, or null if not found.
      */
     suspend fun findMemoryByUuid(uuid: String): Memory? = withContext(Dispatchers.IO) {
-        memoryBox.query(Memory_.uuid.equal(uuid)).build().findFirst()
+        memoryDao.getByUuid(uuid)?.also { hydrateRelations(it) }
     }
 
     /**
@@ -871,7 +914,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
      * @return The found Memory object, or null if not found.
      */
     suspend fun findMemoryByTitle(title: String): Memory? = withContext(Dispatchers.IO) {
-        memoryBox.query(Memory_.title.equal(title)).build().findFirst()
+        memoryDao.getFirstByTitle(title)?.also { hydrateRelations(it) }
     }
 
     /**
@@ -880,7 +923,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
      * @return A list of found Memory objects.
      */
     suspend fun findMemoriesByTitle(title: String): List<Memory> = withContext(Dispatchers.IO) {
-        memoryBox.query(Memory_.title.equal(title)).build().find()
+        memoryDao.getByTitle(title).also { hydrateRelations(it) }
     }
 
     /**
@@ -894,23 +937,22 @@ class MemoryRepository(private val context: Context, profileId: String) {
 
         // 如果是文档节点，删除其所有区块
         if (memory.isDocumentNode) {
-            memory.documentChunks.reset()
-            val chunkIds = memory.documentChunks.map { it.id }
+            val chunkIds = chunkDao.getByMemoryId(memory.id).map { it.id }
             if (chunkIds.isNotEmpty()) {
-                chunkBox.removeByIds(chunkIds)
+                chunkDao.deleteByIds(chunkIds)
                 com.ai.assistance.operit.util.AppLogger.d("MemoryRepo", "Deleted ${chunkIds.size} associated chunks for document.")
             }
         }
 
         val linkIdsToDelete = collectLinkIdsForDeletion(setOf(memoryId), includeDangling = false)
         if (linkIdsToDelete.isNotEmpty()) {
-            linkBox.removeByIds(linkIdsToDelete)
+            linkDao.deleteByIds(linkIdsToDelete)
             com.ai.assistance.operit.util.AppLogger.d(
                 "MemoryRepo",
                 "Deleted ${linkIdsToDelete.size} links while deleting memory id=$memoryId."
             )
         }
-        val removed = memoryBox.remove(memory)
+        val removed = memoryDao.deleteById(memory.id) > 0
         if (removed) {
             removeMemoryFromIndexInternal(memory, memoryAlreadyRemoved = true)
         }
@@ -918,17 +960,17 @@ class MemoryRepository(private val context: Context, profileId: String) {
     }
 
     // --- Link CRUD Operations ---
-    private fun collectLinkIdsForDeletion(
+    private suspend fun collectLinkIdsForDeletion(
         memoryIdsToDelete: Set<Long>,
         includeDangling: Boolean = true
     ): Set<Long> {
         val existingMemoryIds =
-            if (includeDangling) memoryBox.all.map { it.id }.toHashSet() else emptySet()
-        return linkBox.all
+            if (includeDangling) memoryDao.getAll().map { it.id }.toHashSet() else emptySet()
+        return linkDao.getAll()
             .asSequence()
             .filter { link ->
-                val sourceId = link.source.targetId
-                val targetId = link.target.targetId
+                val sourceId = link.sourceId
+                val targetId = link.targetId
                 val linkedToDeletingMemories =
                     sourceId in memoryIdsToDelete || targetId in memoryIdsToDelete
                 val danglingLink = if (includeDangling) {
@@ -945,14 +987,14 @@ class MemoryRepository(private val context: Context, profileId: String) {
             .toSet()
     }
 
-    private fun cleanupDanglingLinksIfNeeded(force: Boolean = false) {
+    private suspend fun cleanupDanglingLinksIfNeeded(force: Boolean = false) {
         val now = System.currentTimeMillis()
         if (!force && now - lastDanglingCleanupAtMs < DANGLING_LINK_CLEANUP_INTERVAL_MS) {
             return
         }
         val danglingLinkIds = collectLinkIdsForDeletion(emptySet())
         if (danglingLinkIds.isNotEmpty()) {
-            linkBox.removeByIds(danglingLinkIds)
+            linkDao.deleteByIds(danglingLinkIds)
             com.ai.assistance.operit.util.AppLogger.w(
                 "MemoryRepo",
                 "Cleaned ${danglingLinkIds.size} dangling memory links."
@@ -962,40 +1004,23 @@ class MemoryRepository(private val context: Context, profileId: String) {
     }
 
     suspend fun findLinkById(linkId: Long): MemoryLink? = withContext(Dispatchers.IO) {
-        linkBox.get(linkId)
+        linkDao.getById(linkId)
     }
 
     suspend fun updateLink(linkId: Long, type: String, weight: Float, description: String): MemoryLink? = withContext(Dispatchers.IO) {
         val link = findLinkById(linkId) ?: return@withContext null
-        val sourceMemory = link.source.target
 
         link.type = type
         link.weight = weight
         link.description = description
-        linkBox.put(link)
-
-        // 在更新link后，同样put其所属的source memory。
-        // 这是为了向ObjectBox明确指出，这个父实体的关系集合“脏了”，
-        // 以此来避免后续查询时拿到缓存的旧数据。
-        if (sourceMemory != null) {
-            memoryBox.put(sourceMemory)
-        }
+        linkDao.update(link)
+        hydrateLinkEnds(listOf(link))
 
         link
     }
 
     suspend fun deleteLink(linkId: Long): Boolean = withContext(Dispatchers.IO) {
-        // 为了健壮性，在删除链接后，也更新其父实体。
-        val link = findLinkById(linkId)
-        val sourceMemory = link?.source?.target
-
-        val wasRemoved = linkBox.remove(linkId)
-
-        if (wasRemoved && sourceMemory != null) {
-            // 通过put源实体，我们确保它的ToMany关系缓存在其他线程或未来的查询中得到更新。
-            memoryBox.put(sourceMemory)
-        }
-        wasRemoved
+        linkDao.deleteById(linkId) > 0
     }
 
     // --- Tagging Operations ---
@@ -1007,17 +1032,11 @@ class MemoryRepository(private val context: Context, profileId: String) {
      * @return The MemoryTag object.
      */
     suspend fun addTagToMemory(memory: Memory, tagName: String): MemoryTag = withContext(Dispatchers.IO) {
-        // Find existing tag or create a new one
-        val tag =
-                tagBox.query()
-                        .equal(MemoryTag_.name, tagName, QueryBuilder.StringOrder.CASE_SENSITIVE)
-                        .build()
-                        .findFirst()
-                        ?: MemoryTag(name = tagName).also { tagBox.put(it) }
+        val tag = memoryDao.getOrCreateTag(tagName)
 
-        if (!memory.tags.any { it.id == tag.id }) {
-            memory.tags.add(tag)
-            memoryBox.put(memory)
+        if (memory.tags.none { it.id == tag.id }) {
+            memoryDao.linkTag(MemoryTagJunction(memoryId = memory.id, tagId = tag.id))
+            memory.tags = memory.tags + tag
         }
         tag
     }
@@ -1043,9 +1062,8 @@ class MemoryRepository(private val context: Context, profileId: String) {
             description: String = ""
     ) = withContext(Dispatchers.IO) {
         // 检查链接是否已存在
-        val existingLink = source.links.find { link ->
-            link.target.target?.id == target.id && 
-            link.type == type
+        val existingLink = linkDao.getOutgoing(source.id).find { link ->
+            link.targetId == target.id && link.type == type
         }
         
         if (existingLink != null) {
@@ -1057,25 +1075,27 @@ class MemoryRepository(private val context: Context, profileId: String) {
         
         // Coerce the weight to be within the valid range [0.0, 1.0] to ensure data integrity.
         val sanitizedWeight = weight.coerceIn(0.0f, 1.0f)
-        val link = MemoryLink(type = type, weight = sanitizedWeight, description = description)
-        link.source.target = source
-        link.target.target = target
-
-        source.links.add(link)
-        memoryBox.put(source)
+        val link = MemoryLink(
+            type = type,
+            weight = sanitizedWeight,
+            description = description,
+            sourceId = source.id,
+            targetId = target.id
+        )
+        link.id = linkDao.insert(link)
+        hydrateLinkEnds(listOf(link))
+        source.links = source.links + link
     }
 
     /** Gets all outgoing links from a memory. */
     suspend fun getOutgoingLinks(memoryId: Long): List<MemoryLink> = withContext(Dispatchers.IO) {
         val memory = findMemoryById(memoryId)
-        memory?.links?.reset()
         memory?.links ?: emptyList()
     }
 
     /** Gets all incoming links to a memory. */
     suspend fun getIncomingLinks(memoryId: Long): List<MemoryLink> = withContext(Dispatchers.IO) {
         val memory = findMemoryById(memoryId)
-        memory?.backlinks?.reset()
         memory?.backlinks ?: emptyList()
     }
 
@@ -1096,19 +1116,20 @@ class MemoryRepository(private val context: Context, profileId: String) {
         val validLimit = limit.coerceIn(1, 200)
 
         val candidates = when {
-            linkId != null -> listOfNotNull(linkBox.get(linkId))
+            linkId != null -> listOfNotNull(linkDao.getById(linkId))
             sourceMemoryId != null && targetMemoryId != null ->
-                getOutgoingLinks(sourceMemoryId).filter { it.target.targetId == targetMemoryId }
+                getOutgoingLinks(sourceMemoryId).filter { it.targetId == targetMemoryId }
             sourceMemoryId != null -> getOutgoingLinks(sourceMemoryId)
             targetMemoryId != null -> getIncomingLinks(targetMemoryId)
-            else -> linkBox.all
+            else -> linkDao.getAll()
         }
+        hydrateLinkEnds(candidates)
 
         candidates
             .asSequence()
             .filter { link ->
-                val sourceId = link.source.targetId
-                val targetId = link.target.targetId
+                val sourceId = link.sourceId
+                val targetId = link.targetId
 
                 (sourceMemoryId == null || sourceId == sourceMemoryId) &&
                     (targetMemoryId == null || targetId == targetMemoryId) &&
@@ -1196,9 +1217,9 @@ class MemoryRepository(private val context: Context, profileId: String) {
 
         val memoriesInScope = if (normalizedFolderPath == null) {
             if (folderPath == context.getString(R.string.memory_uncategorized)) {
-                memoryBox.all.filter { normalizeFolderPath(it.folderPath) == null }
+                memoryDao.getAll().filter { normalizeFolderPath(it.folderPath) == null }
             } else {
-                memoryBox.all
+                memoryDao.getAll()
             }
         } else {
             getMemoriesByFolderPath(normalizedFolderPath)
@@ -1477,13 +1498,12 @@ class MemoryRepository(private val context: Context, profileId: String) {
             val sourceMemory = memoriesToSearch.find { it.id == sourceId } ?: return@forEach
             val sourceScore = scores[sourceId] ?: 0.0
             
-            // 重置关系缓存以获取最新连接
-            sourceMemory.links.reset()
-            sourceMemory.backlinks.reset()
+            // 水合该记忆的边快照
+            hydrateLinks(listOf(sourceMemory))
             
             // Propagate score through outgoing links
             sourceMemory.links.forEach { link ->
-                val targetMemory = link.target.target
+                val targetMemory = link.targetMemory
                 if (targetMemory != null) {
                     // 边权重越高，传播的分数越多
                     val propagatedScore = (sourceScore * link.weight * graphPropagationWeight) + basePropagationScore
@@ -1495,7 +1515,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
             
             // Propagate score through incoming links (backlinks)
             sourceMemory.backlinks.forEach { link ->
-                val targetMemory = link.source.target
+                val targetMemory = link.sourceMemory
                 if (targetMemory != null) {
                     // 边权重越高，传播的分数越多
                     val propagatedScore = (sourceScore * link.weight * graphPropagationWeight) + basePropagationScore
@@ -1533,7 +1553,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
 
         // 只显示前3个结果的分数
         val sortedScoresForLogging = scores.entries.sortedByDescending { it.value }
-        val scoredMemoryMap = memoryBox.get(scores.keys.toList()).filterNotNull().associateBy { it.id }
+        val scoredMemoryMap = memoryDao.getByIds(scores.keys.toList()).filterNotNull().associateBy { it.id }
         sortedScoresForLogging.take(3).forEach { (id, score) ->
             val memory = scoredMemoryMap[id] ?: memoriesToSearch.find { it.id == id }
             if (memory != null) {
@@ -1585,7 +1605,8 @@ class MemoryRepository(private val context: Context, profileId: String) {
         val sortedMemoryIds = filteredScores.sortedByDescending { it.value }.map { it.key }
 
         // Fetch the sorted entities from the database
-        val sortedMemories = memoryBox.get(sortedMemoryIds).filterNotNull()
+        val sortedMemories = memoryDao.getByIds(sortedMemoryIds).filterNotNull()
+        hydrateTags(sortedMemories)
 
         // 7. Semantic Deduplication
         // deduplicateBySemantics(sortedMemories)
@@ -1602,8 +1623,8 @@ class MemoryRepository(private val context: Context, profileId: String) {
      */
     suspend fun getChunksForMemory(memoryId: Long): List<DocumentChunk> = withContext(Dispatchers.IO) {
         val memory = findMemoryById(memoryId)
-        // 从数据库关系中获取，并按原始顺序排序
-        memory?.documentChunks?.sortedBy { it.chunkIndex } ?: emptyList()
+        // 按原始顺序载入区块快照
+        memory?.let { loadChunksForDocument(it) } ?: emptyList()
     }
 
     /**
@@ -1795,13 +1816,13 @@ class MemoryRepository(private val context: Context, profileId: String) {
      * @param newContent 新的文本内容。
      */
     suspend fun updateChunk(chunkId: Long, newContent: String) = withContext(Dispatchers.IO) {
-        val chunk = chunkBox.get(chunkId) ?: return@withContext
+        val chunk = chunkDao.getById(chunkId) ?: return@withContext
         val cloudConfig = searchSettingsPreferences.loadCloudEmbedding()
 
         chunk.content = newContent
         chunk.embedding = generateEmbedding(newContent, cloudConfig)
-        chunkBox.put(chunk)
-        val owner = chunk.memory.target
+        chunkDao.update(chunk)
+        val owner = memoryDao.getById(chunk.memoryId)
         if (owner != null) {
             rebuildDocumentChunkIndex(owner, forcedDimension = chunk.embedding?.vector?.size)
         }
@@ -1824,8 +1845,8 @@ class MemoryRepository(private val context: Context, profileId: String) {
     }
 
     suspend fun getEmbeddingDimensionUsage(): EmbeddingDimensionUsage = withContext(Dispatchers.IO) {
-        val memories = memoryBox.all
-        val chunks = chunkBox.all
+        val memories = memoryDao.getAll()
+        val chunks = chunkDao.getAll()
 
         val memoryDimensions = memories
             .mapNotNull { it.embedding?.vector?.size?.takeIf { dimension -> dimension > 0 } }
@@ -1859,7 +1880,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
             throw IllegalStateException(context.getString(R.string.memory_embedding_rebuild_requires_config))
         }
 
-        val memories = memoryBox.all
+        val memories = memoryDao.getAll()
         val documentChunksByMemoryId = memories
             .filter { it.isDocumentNode }
             .associate { memory -> memory.id to loadChunksForDocument(memory) }
@@ -1907,7 +1928,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
             val textForEmbedding = generateTextForEmbedding(memory).trim()
             if (textForEmbedding.isBlank() && memory.embedding != null) {
                 memory.embedding = null
-                memoryBox.put(memory)
+                memoryDao.upsert(memory)
             }
         }
         documentChunksByMemoryId.values.forEach { chunks ->
@@ -1916,7 +1937,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
             }
             if (updatedBlankChunks.isNotEmpty()) {
                 updatedBlankChunks.forEach { it.embedding = null }
-                chunkBox.put(updatedBlankChunks)
+                chunkDao.updateAll(updatedBlankChunks)
             }
         }
 
@@ -1972,14 +1993,14 @@ class MemoryRepository(private val context: Context, profileId: String) {
                 failed += 1
             }
             memory.embedding = embedding
-            memoryBox.put(memory)
+            memoryDao.upsert(memory)
 
             processed += 1
             report("memory_embedding")
         }
 
         report("chunk_embedding")
-        val chunksNeedingEmbeddingByMemoryId = chunksNeedingEmbedding.groupBy { it.memory.targetId }
+        val chunksNeedingEmbeddingByMemoryId = chunksNeedingEmbedding.groupBy { it.memoryId }
         chunksNeedingEmbeddingByMemoryId.forEach { (_, chunks) ->
             val updatedChunks = chunks.map { chunk ->
                 val textForEmbedding = chunk.content.trim()
@@ -1999,7 +2020,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
             }
 
             if (updatedChunks.isNotEmpty()) {
-                chunkBox.put(updatedChunks)
+                chunkDao.updateAll(updatedChunks)
             }
         }
 
@@ -2041,10 +2062,11 @@ class MemoryRepository(private val context: Context, profileId: String) {
         val expandedMemories = mutableSetOf<Memory>()
         expandedMemories.addAll(memories)
 
+        hydrateLinks(memories)
         memories.forEach { memory ->
-            memory.links.forEach { link -> link.target.target?.let { expandedMemories.add(it) } }
+            memory.links.forEach { link -> link.targetMemory?.let { expandedMemories.add(it) } }
             memory.backlinks.forEach { backlink ->
-                backlink.source.target?.let { expandedMemories.add(it) }
+                backlink.sourceMemory?.let { expandedMemories.add(it) }
             }
         }
 
@@ -2058,7 +2080,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
     /** Retrieves a single memory by its UUID. */
     suspend fun getMemoryByUuid(uuid: String): Memory? =
             withContext(Dispatchers.IO) {
-                memoryBox.query(Memory_.uuid.equal(uuid)).build().findUnique()
+                memoryDao.getByUuid(uuid)?.also { hydrateRelations(it) }
             }
 
     /**
@@ -2066,7 +2088,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
      * @return 所有唯一的文件夹路径列表。
      */
     suspend fun getAllFolderPaths(): List<String> = withContext(Dispatchers.IO) {
-        val allMemories = memoryBox.all
+        val allMemories = memoryDao.getAll()
         com.ai.assistance.operit.util.AppLogger.d("MemoryRepository", "getAllFolderPaths: Total memories: ${allMemories.size}")
         val folderPaths = allMemories
             .map { normalizeFolderPath(it.folderPath) ?: context.getString(R.string.memory_uncategorized) }
@@ -2083,14 +2105,16 @@ class MemoryRepository(private val context: Context, profileId: String) {
      */
     suspend fun getMemoriesByFolderPath(folderPath: String): List<Memory> = withContext(Dispatchers.IO) {
         val normalizedTarget = normalizeFolderPath(folderPath)
-        if (folderPath == context.getString(R.string.memory_uncategorized) || normalizedTarget == null) {
-            memoryBox.all.filter { normalizeFolderPath(it.folderPath) == null }
+        val memories = if (folderPath == context.getString(R.string.memory_uncategorized) || normalizedTarget == null) {
+            memoryDao.getAll().filter { normalizeFolderPath(it.folderPath) == null }
         } else {
-            memoryBox.all.filter { memory ->
+            memoryDao.getAll().filter { memory ->
                 val path = normalizeFolderPath(memory.folderPath) ?: return@filter false
                 path == normalizedTarget || path.startsWith("$normalizedTarget/")
             }
         }
+        hydrateTags(memories)
+        memories
     }
 
     /**
@@ -2116,7 +2140,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
         
         try {
             // 获取该文件夹及其所有子文件夹下的记忆
-            val memories = memoryBox.all.filter { memory ->
+            val memories = memoryDao.getAll().filter { memory ->
                 val path = normalizeFolderPath(memory.folderPath) ?: return@filter false
                 path == normalizedOldPath || path.startsWith("$normalizedOldPath/")
             }
@@ -2131,7 +2155,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
                 }
             }
             
-            memoryBox.put(memories)
+            memoryDao.upsertAll(memories)
             true
         } catch (e: Exception) {
             com.ai.assistance.operit.util.AppLogger.e("MemoryRepo", "Failed to rename folder", e)
@@ -2154,7 +2178,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
             }
             val memories = memoryIds.mapNotNull { findMemoryById(it) }
             memories.forEach { it.folderPath = normalizedTarget }
-            memoryBox.put(memories)
+            memoryDao.upsertAll(memories)
             true
         } catch (e: Exception) {
             com.ai.assistance.operit.util.AppLogger.e("MemoryRepo", "Failed to move memories", e)
@@ -2171,7 +2195,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
         try {
             val normalizedFolderPath = normalizeFolderPath(folderPath) ?: return@withContext false
             // 检查是否已存在该文件夹
-            val exists = memoryBox.all.any { normalizeFolderPath(it.folderPath) == normalizedFolderPath }
+            val exists = memoryDao.getAll().any { normalizeFolderPath(it.folderPath) == normalizedFolderPath }
             if (exists) return@withContext true
             
             // 创建一个占位记忆
@@ -2184,7 +2208,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
             val cloudConfig = searchSettingsPreferences.loadCloudEmbedding()
             val embedding = generateEmbedding(placeholder.content, cloudConfig)
             if (embedding != null) placeholder.embedding = embedding
-            memoryBox.put(placeholder)
+            memoryDao.upsert(placeholder)
             addMemoryToIndexInternal(placeholder)
             true
         } catch (e: Exception) {
@@ -2219,15 +2243,9 @@ class MemoryRepository(private val context: Context, profileId: String) {
         saveMemory(memory)
 
         if (!normalizedTags.isNullOrEmpty()) {
-            normalizedTags.forEach { tagName ->
-                val tag =
-                    tagBox.query(MemoryTag_.name.equal(tagName, QueryBuilder.StringOrder.CASE_SENSITIVE))
-                        .build()
-                        .findFirst()
-                        ?: MemoryTag(name = tagName).also { tagBox.put(it) }
-                memory.tags.add(tag)
-            }
-            memoryBox.put(memory)
+            val tags = normalizedTags.map { memoryDao.getOrCreateTag(it) }
+            memoryDao.replaceTagsForMemory(memory.id, tags.map { it.id })
+            memory.tags = tags
         }
 
         memory
@@ -2283,13 +2301,9 @@ class MemoryRepository(private val context: Context, profileId: String) {
 
         // 更新标签
         if (newTags != null) {
-            memory.tags.clear() // 清除旧标签
-            newTags.forEach { tagName ->
-                // Find existing tag or create a new one
-                val tag = tagBox.query(MemoryTag_.name.equal(tagName, QueryBuilder.StringOrder.CASE_SENSITIVE))
-                    .build().findFirst() ?: MemoryTag(name = tagName).also { tagBox.put(it) }
-                memory.tags.add(tag)
-            }
+            val tags = newTags.map { memoryDao.getOrCreateTag(it) }
+            memoryDao.replaceTagsForMemory(memory.id, tags.map { it.id })
+            memory.tags = tags
         }
 
         // 更新记忆属性
@@ -2298,8 +2312,8 @@ class MemoryRepository(private val context: Context, profileId: String) {
         }
 
         // 这里不再需要调用 saveMemory，因为 memory 对象已经被修改，
-        // 最后的 memoryBox.put(memory) 会保存所有更改。
-        memoryBox.put(memory)
+        // 最后的 memoryDao.upsert(memory) 会保存所有更改。
+        memoryDao.upsert(memory)
 
         if (needsReEmbedding) {
             addMemoryToIndexInternal(memory, previousDimension = previousDimension)
@@ -2332,7 +2346,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
 
         var newMemory: Memory? = null
         try {
-            store.runInTx {
+            db.withTransaction {
                 // 2. Create the new merged memory (without embedding yet)
                 val mergedMemory = Memory(
                     title = newTitle,
@@ -2340,48 +2354,42 @@ class MemoryRepository(private val context: Context, profileId: String) {
                     folderPath = normalizeFolderPath(folderPath),
                     source = "merged_from_memory"
                 )
-                memoryBox.put(mergedMemory) // Save to get an ID
+                memoryDao.upsert(mergedMemory) // Save to get an ID
 
                 // 3. Add tags to the new memory
-                newTags.forEach { tagName ->
-                    val tag = tagBox.query(MemoryTag_.name.equal(tagName, QueryBuilder.StringOrder.CASE_SENSITIVE))
-                        .build().findFirst() ?: MemoryTag(name = tagName).also { tagBox.put(it) }
-                    mergedMemory.tags.add(tag)
-                }
-                memoryBox.put(mergedMemory)
+                val mergedTags = newTags.map { memoryDao.getOrCreateTag(it) }
+                memoryDao.replaceTagsForMemory(mergedMemory.id, mergedTags.map { it.id })
+                mergedMemory.tags = mergedTags
 
                 // 4. Collect all unique links and redirect them
                 val allLinksToProcess = mutableSetOf<MemoryLink>()
                 val sourceIdsSet = sourceMemories.map { it.id }.toSet()
 
-                sourceMemories.forEach {
-                    it.links.reset()
-                    it.backlinks.reset()
-                    allLinksToProcess.addAll(it.links)
-                    allLinksToProcess.addAll(it.backlinks)
+                sourceMemories.forEach { sourceMemory ->
+                    allLinksToProcess.addAll(linkDao.getOutgoing(sourceMemory.id))
+                    allLinksToProcess.addAll(linkDao.getIncoming(sourceMemory.id))
                 }
 
                 allLinksToProcess.forEach { link ->
-                    if (link.source.targetId in sourceIdsSet) {
-                        link.source.target = mergedMemory
+                    if (link.sourceId in sourceIdsSet) {
+                        link.sourceId = mergedMemory.id
                     }
-                    if (link.target.targetId in sourceIdsSet) {
-                        link.target.target = mergedMemory
+                    if (link.targetId in sourceIdsSet) {
+                        link.targetId = mergedMemory.id
                     }
                 }
-                linkBox.put(allLinksToProcess.toList())
+                linkDao.updateAll(allLinksToProcess.toList())
 
                 // 5. Delete old source memories
                 sourceMemories.forEach { sourceMemory ->
                     if (sourceMemory.isDocumentNode) {
-                        sourceMemory.documentChunks.reset()
-                        val chunkIds = sourceMemory.documentChunks.map { it.id }
+                        val chunkIds = chunkDao.getByMemoryId(sourceMemory.id).map { it.id }
                         if (chunkIds.isNotEmpty()) {
-                            chunkBox.removeByIds(chunkIds)
+                            chunkDao.deleteByIds(chunkIds)
                         }
                     }
                 }
-                memoryBox.removeByIds(sourceIdsSet.toList())
+                memoryDao.deleteByIds(sourceIdsSet.toList())
 
                 newMemory = mergedMemory
             }
@@ -2392,9 +2400,9 @@ class MemoryRepository(private val context: Context, profileId: String) {
                 // Generate and save embedding for the new memory
                 val textForEmbedding = generateTextForEmbedding(memory)
                 memory.embedding = generateEmbedding(textForEmbedding, cloudConfig)
-                memoryBox.put(memory)
+                memoryDao.upsert(memory)
 
-                sourceMemories.forEach(::removeMemoryFromIndexInternal)
+                sourceMemories.forEach { removeMemoryFromIndexInternal(it) }
                 addMemoryToIndexInternal(memory)
             }
         } catch (e: Exception) {
@@ -2417,17 +2425,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
             return@withContext true
         }
 
-        // 使用QueryBuilder动态构建OR查询
-        val builder = memoryBox.query()
-        // ObjectBox的QueryBuilder.equal()不支持字符串，我们必须从Property本身开始构建条件
-        if (uuids.isNotEmpty()) {
-            var finalCondition: QueryCondition<Memory> = Memory_.uuid.equal(uuids.first())
-            uuids.drop(1).forEach { uuid ->
-                finalCondition = finalCondition.or(Memory_.uuid.equal(uuid))
-            }
-            builder.apply(finalCondition)
-        }
-        val memoriesToDelete = builder.build().find()
+        val memoriesToDelete = memoryDao.getByUuids(uuids.toList())
 
         com.ai.assistance.operit.util.AppLogger.d("MemoryRepo", "Found ${memoriesToDelete.size} memories to delete.")
         if (memoriesToDelete.isEmpty()) {
@@ -2436,7 +2434,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
 
         // 在一个事务中执行所有数据库写入操作
         try {
-            store.runInTx {
+            db.withTransaction {
                 // 1. 收集所有相关链接和区块的ID
                 val memoryIdsToDelete = memoriesToDelete.map { it.id }.toSet()
                 val linkIdsToDelete =
@@ -2445,24 +2443,23 @@ class MemoryRepository(private val context: Context, profileId: String) {
                 val chunkIdsToDelete = mutableSetOf<Long>()
                 for (memory in memoriesToDelete) {
                     if (memory.isDocumentNode) {
-                        memory.documentChunks.reset()
-                        memory.documentChunks.forEach { chunk -> chunkIdsToDelete.add(chunk.id) }
+                        chunkDao.getByMemoryId(memory.id).forEach { chunk -> chunkIdsToDelete.add(chunk.id) }
                     }
                 }
                 com.ai.assistance.operit.util.AppLogger.d("MemoryRepo", "Found ${linkIdsToDelete.size} unique links and ${chunkIdsToDelete.size} chunks to delete.")
 
                 // 2. 批量删除链接和区块
                 if (linkIdsToDelete.isNotEmpty()) {
-                    linkBox.removeByIds(linkIdsToDelete)
+                    linkDao.deleteByIds(linkIdsToDelete)
                     com.ai.assistance.operit.util.AppLogger.d("MemoryRepo", "Bulk-deleted ${linkIdsToDelete.size} links.")
                 }
                 if (chunkIdsToDelete.isNotEmpty()) {
-                    chunkBox.removeByIds(chunkIdsToDelete)
+                    chunkDao.deleteByIds(chunkIdsToDelete)
                     com.ai.assistance.operit.util.AppLogger.d("MemoryRepo", "Bulk-deleted ${chunkIdsToDelete.size} chunks.")
                 }
 
                 // 3. 批量删除记忆本身
-                memoryBox.removeByIds(memoryIdsToDelete.toList())
+                memoryDao.deleteByIds(memoryIdsToDelete.toList())
                 com.ai.assistance.operit.util.AppLogger.d("MemoryRepo", "Bulk-deleted ${memoriesToDelete.size} memories.")
             }
             com.ai.assistance.operit.util.AppLogger.d("MemoryRepo", "Transaction completed successfully.")
@@ -2472,7 +2469,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
         }
 
         // 4. 在事务外处理向量索引和文件
-        memoriesToDelete.forEach(::removeMemoryFromIndexInternal)
+        memoriesToDelete.forEach { removeMemoryFromIndexInternal(it) }
         com.ai.assistance.operit.util.AppLogger.d("MemoryRepo", "Removed deleted memories from vector indices and cleaned up chunk index files.")
 
         return@withContext true
@@ -2483,7 +2480,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
     /** Fetches all memories and their links, and converts them into a Graph data structure. */
     suspend fun getMemoryGraph(): Graph = withContext(Dispatchers.IO) {
         cleanupDanglingLinksIfNeeded()
-        buildGraphFromMemories(memoryBox.all, null)
+        buildGraphFromMemories(memoryDao.getAll(), null)
     }
 
     /**
@@ -2492,7 +2489,9 @@ class MemoryRepository(private val context: Context, profileId: String) {
      * @param memories 要构建图谱的记忆列表
      * @param currentFolderPath 当前选中的文件夹路径（用于判断跨文件夹连接），null表示显示全部
      */
-    private fun buildGraphFromMemories(memories: List<Memory>, currentFolderPath: String? = null): Graph {
+    private suspend fun buildGraphFromMemories(memories: List<Memory>, currentFolderPath: String? = null): Graph {
+        hydrateTags(memories)
+        hydrateLinks(memories)
         val memoryUuids = memories.map { it.uuid }.toSet()
 
         val nodes =
@@ -2515,11 +2514,9 @@ class MemoryRepository(private val context: Context, profileId: String) {
 
         val edges = mutableListOf<Edge>()
         memories.forEach { memory ->
-            // 关键：重置关系缓存，确保获取最新的连接信息
-            memory.links.reset()
             memory.links.forEach { link ->
-                val sourceMemory = link.source.target
-                val targetMemory = link.target.target
+                val sourceMemory = link.sourceMemory
+                val targetMemory = link.targetMemory
                 val sourceId = sourceMemory?.uuid
                 val targetId = targetMemory?.uuid
                 
@@ -2570,13 +2567,13 @@ class MemoryRepository(private val context: Context, profileId: String) {
         withContext(Dispatchers.IO) {
             val normalizedTarget = normalizeFolderPath(folderPath)
             val memories = if (normalizedTarget == null || folderPath == context.getString(R.string.memory_uncategorized)) {
-                memoryBox.all.filter { normalizeFolderPath(it.folderPath) == null }
+                memoryDao.getAll().filter { normalizeFolderPath(it.folderPath) == null }
             } else {
-                memoryBox.all.filter { normalizeFolderPath(it.folderPath) == normalizedTarget }
+                memoryDao.getAll().filter { normalizeFolderPath(it.folderPath) == normalizedTarget }
             }
             memories.forEach { memory ->
                 memory.folderPath = null
-                memoryBox.put(memory)
+                memoryDao.upsert(memory)
             }
             com.ai.assistance.operit.util.AppLogger.d("MemoryRepo", "Deleted folder '$folderPath', moved ${memories.size} memories to uncategorized")
         }
@@ -2587,13 +2584,14 @@ class MemoryRepository(private val context: Context, profileId: String) {
      * @return JSON 格式的记忆库数据
      */
     suspend fun exportMemoriesToJson(): String = withContext(Dispatchers.IO) {
-        // 获取所有非文档节点的记忆
-        val memories = memoryBox.query(Memory_.isDocumentNode.equal(false)).build().find()
+        // 获取所有非文档节点的记忆（水合标签与链接快照供导出读取）
+        val memories = memoryDao.getNonDocumentNodes()
+        hydrateTags(memories)
+        hydrateLinks(memories)
         
         // 转换为可序列化格式
         val serializableMemories = memories.map { memory ->
             // 获取标签名称
-            memory.tags.reset()
             val tagNames = memory.tags.map { it.name }
             
             SerializableMemory(
@@ -2616,10 +2614,9 @@ class MemoryRepository(private val context: Context, profileId: String) {
         val serializableLinks = mutableListOf<SerializableLink>()
         
         memories.forEach { memory ->
-            memory.links.reset()
             memory.links.forEach { link ->
-                val sourceUuid = link.source.target?.uuid
-                val targetUuid = link.target.target?.uuid
+                val sourceUuid = link.sourceMemory?.uuid
+                val targetUuid = link.targetMemory?.uuid
                 
                 // 只导出两端都是非文档节点的链接
                 if (sourceUuid != null && targetUuid != null && 
@@ -2677,8 +2674,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
             
             // 导入记忆
             exportData.memories.forEach { serializableMemory ->
-                val existingMemory = memoryBox.query(Memory_.uuid.equal(serializableMemory.uuid))
-                    .build().findFirst()
+                val existingMemory = memoryDao.getByUuid(serializableMemory.uuid)
                 
                 when {
                     existingMemory != null && strategy == ImportStrategy.SKIP -> {
@@ -2698,7 +2694,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
                             folderPath = normalizeFolderPath(serializableMemory.folderPath)
                             updatedAt = Date()
                         }
-                        memoryBox.put(existingMemory)
+                        memoryDao.upsert(existingMemory)
                         updatedCount++
                         uuidMap[serializableMemory.uuid] = existingMemory
                         
@@ -2725,24 +2721,21 @@ class MemoryRepository(private val context: Context, profileId: String) {
                 val targetMemory = uuidMap[serializableLink.targetUuid]
                 
                 if (sourceMemory != null && targetMemory != null) {
-                    // 检查链接是否已存在 - 查询所有链接并手动过滤
-                    val existingLink = sourceMemory.links.find { link ->
-                        link.target.target?.id == targetMemory.id && 
+                    // 检查链接是否已存在 - 查询源记忆的出边并过滤
+                    val existingLink = linkDao.getOutgoing(sourceMemory.id).find { link ->
+                        link.targetId == targetMemory.id &&
                         link.type == serializableLink.type
                     }
-                    
+
                     if (existingLink == null) {
                         val newLink = MemoryLink(
                             type = serializableLink.type,
                             weight = serializableLink.weight,
-                            description = serializableLink.description
+                            description = serializableLink.description,
+                            sourceId = sourceMemory.id,
+                            targetId = targetMemory.id
                         )
-                        newLink.source.target = sourceMemory
-                        newLink.target.target = targetMemory
-                        // 将链接添加到源记忆的 links 集合中，并保存源记忆
-                        // 这与 linkMemories 方法保持一致
-                        sourceMemory.links.add(newLink)
-                        memoryBox.put(sourceMemory)
+                        newLink.id = linkDao.insert(newLink)
                         newLinksCount++
                     }
                 }
@@ -2769,7 +2762,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
      * @param forceNewUuid 是否强制生成新的 UUID
      * @return 创建的 Memory 对象
      */
-    private fun createMemoryFromSerializable(
+    private suspend fun createMemoryFromSerializable(
         serializable: SerializableMemory,
         forceNewUuid: Boolean
     ): Memory {
@@ -2786,7 +2779,7 @@ class MemoryRepository(private val context: Context, profileId: String) {
             updatedAt = serializable.updatedAt
         )
         
-        memoryBox.put(memory)
+        memoryDao.upsert(memory)
         
         // 添加标签
         updateMemoryTags(memory, serializable.tagNames)
@@ -2799,16 +2792,10 @@ class MemoryRepository(private val context: Context, profileId: String) {
      * @param memory 要更新的记忆
      * @param tagNames 标签名称列表
      */
-    private fun updateMemoryTags(memory: Memory, tagNames: List<String>) {
-        memory.tags.clear()
-        
-        tagNames.forEach { tagName ->
-            val tag = tagBox.query(MemoryTag_.name.equal(tagName)).build().findFirst()
-                ?: MemoryTag(name = tagName).also { tagBox.put(it) }
-            memory.tags.add(tag)
-        }
-        
-        memoryBox.put(memory)
+    private suspend fun updateMemoryTags(memory: Memory, tagNames: List<String>) {
+        val tags = tagNames.map { memoryDao.getOrCreateTag(it) }
+        memoryDao.replaceTagsForMemory(memory.id, tags.map { it.id })
+        memory.tags = tags
     }
 
 }
