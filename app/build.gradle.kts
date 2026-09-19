@@ -582,8 +582,6 @@ kotlin {
 
 dependencies {
     implementation("com.github.jelmerk:hnswlib-core:1.2.1")
-    implementation(project(":mnn"))
-    implementation(project(":llama"))
     implementation(project(":showerclient"))
     implementation(project(":quickjs"))
 
