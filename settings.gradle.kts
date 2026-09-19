@@ -20,8 +20,6 @@ dependencyResolutionManagement {
 rootProject.name = "Operit"
 include(":app")
 include(":mnn")
-project(":mnn").projectDir = file("llm/mnn")
 include(":llama")
-project(":llama").projectDir = file("llm/llama")
 include(":showerclient")
 include(":quickjs")

@@ -687,16 +687,14 @@ class ModelConfigManager(
         }
     }
 
-    // 更新模型配置 - 包含API提供商类型和MNN配置
+    // 更新模型配置 - 包含API提供商类型
     suspend fun updateModelConfig(
             configId: String,
             apiKey: String,
             apiEndpoint: String,
             modelName: String,
             apiProviderType: com.ai.assistance.operit.data.model.ApiProviderType,
-            apiProviderTypeId: String = apiProviderType.name,
-            mnnForwardType: Int,
-            mnnThreadCount: Int
+            apiProviderTypeId: String = apiProviderType.name
     ): ModelConfigData {
         return updateConfigInternal(configId) {
             it.copy(
@@ -706,9 +704,7 @@ class ModelConfigManager(
                     apiProviderType = apiProviderType,
                     apiProviderTypeId = apiProviderTypeId,
                     thinkingConfigurations = nextThinkingRulesForProvider(it, apiProviderTypeId, apiEndpoint),
-                    thinkingOptionId = nextThinkingOptionIdForProvider(it, apiProviderTypeId, modelName, apiEndpoint),
-                    mnnForwardType = mnnForwardType,
-                    mnnThreadCount = mnnThreadCount
+                    thinkingOptionId = nextThinkingOptionIdForProvider(it, apiProviderTypeId, modelName, apiEndpoint)
             )
         }
     }
@@ -720,11 +716,6 @@ class ModelConfigManager(
             modelName: String,
             apiProviderType: ApiProviderType,
             apiProviderTypeId: String = apiProviderType.name,
-            mnnForwardType: Int,
-            mnnThreadCount: Int,
-            llamaThreadCount: Int,
-            llamaContextSize: Int,
-            llamaGpuLayers: Int,
             enableDirectImageProcessing: Boolean,
             enableDirectAudioProcessing: Boolean,
             enableDirectVideoProcessing: Boolean,
@@ -743,11 +734,6 @@ class ModelConfigManager(
                     apiProviderTypeId = apiProviderTypeId,
                     thinkingConfigurations = nextThinkingRulesForProvider(it, apiProviderTypeId, apiEndpoint),
                     thinkingOptionId = nextThinkingOptionIdForProvider(it, apiProviderTypeId, modelName, apiEndpoint),
-                    mnnForwardType = mnnForwardType,
-                    mnnThreadCount = mnnThreadCount,
-                    llamaThreadCount = llamaThreadCount.coerceAtLeast(1),
-                    llamaContextSize = llamaContextSize.coerceAtLeast(1),
-                    llamaGpuLayers = llamaGpuLayers.coerceAtLeast(0),
                     enableDirectImageProcessing = enableDirectImageProcessing,
                     enableDirectAudioProcessing = enableDirectAudioProcessing,
                     enableDirectVideoProcessing = enableDirectVideoProcessing,

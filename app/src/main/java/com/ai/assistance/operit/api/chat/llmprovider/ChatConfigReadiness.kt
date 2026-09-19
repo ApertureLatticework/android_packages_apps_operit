@@ -62,9 +62,6 @@ object ChatConfigReadiness {
             return ChatConfigReadinessResult(ChatConfigReadinessIssue.MODEL_MISSING)
         }
 
-        if (providerType == ApiProviderType.MNN || providerType == ApiProviderType.LLAMA_CPP) {
-            return ChatConfigReadinessResult()
-        }
 
         val completedEndpoint = EndpointCompleter.completeEndpoint(config.apiEndpoint, providerType)
         if (!isHttpEndpoint(completedEndpoint)) {

@@ -1839,7 +1839,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "api_provider_type",
                                         type = "string",
-                                        description = "optional, provider enum name (e.g. OPENAI_GENERIC/OPENAI_LOCAL/OPENAI_RESPONSES_GENERIC/DEEPSEEK/MIMO/GEMINI_GENERIC/LMSTUDIO/OLLAMA/MNN/LLAMA_CPP)",
+                                        description = "optional, provider enum name (e.g. OPENAI_GENERIC/OPENAI_LOCAL/OPENAI_RESPONSES_GENERIC/DEEPSEEK/MIMO/GEMINI_GENERIC/LMSTUDIO/OLLAMA)",
                                         required = false
                                     ),
                                     ToolParameterSchema(
@@ -2215,37 +2215,7 @@ object SystemToolPromptsInternal {
                                         description = "optional, enable provider-native tool call",
                                         required = false
                                     ),
-                                    ToolParameterSchema(
-                                        name = "mnn_forward_type",
-                                        type = "integer",
-                                        description = "optional, MNN forward type",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "mnn_thread_count",
-                                        type = "integer",
-                                        description = "optional, MNN thread count",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "llama_thread_count",
-                                        type = "integer",
-                                        description = "optional, llama.cpp thread count",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "llama_context_size",
-                                        type = "integer",
-                                        description = "optional, llama.cpp context size",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "llama_gpu_layers",
-                                        type = "integer",
-                                        description = "optional, llama.cpp GPU layer count",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
+                                                                                                                                                                                                                        ToolParameterSchema(
                                         name = "request_limit_per_minute",
                                         type = "integer",
                                         description = "optional, requests-per-minute limit (0 = unlimited)",
@@ -4659,7 +4629,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "api_provider_type",
                                         type = "string",
-                                        description = "可选，提供商枚举名（如 OPENAI_GENERIC/OPENAI_LOCAL/OPENAI_RESPONSES_GENERIC/DEEPSEEK/MIMO/GEMINI_GENERIC/LMSTUDIO/OLLAMA/MNN/LLAMA_CPP）",
+                                        description = "可选，提供商枚举名（如 OPENAI_GENERIC/OPENAI_LOCAL/OPENAI_RESPONSES_GENERIC/DEEPSEEK/MIMO/GEMINI_GENERIC/LMSTUDIO/OLLAMA）",
                                         required = false
                                     ),
                                     ToolParameterSchema(
@@ -5035,37 +5005,7 @@ object SystemToolPromptsInternal {
                                         description = "可选，是否开启模型原生 Tool Call",
                                         required = false
                                     ),
-                                    ToolParameterSchema(
-                                        name = "mnn_forward_type",
-                                        type = "integer",
-                                        description = "可选，MNN 前向类型",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "mnn_thread_count",
-                                        type = "integer",
-                                        description = "可选，MNN 线程数",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "llama_thread_count",
-                                        type = "integer",
-                                        description = "可选，llama.cpp 线程数",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "llama_context_size",
-                                        type = "integer",
-                                        description = "可选，llama.cpp 上下文大小",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "llama_gpu_layers",
-                                        type = "integer",
-                                        description = "可选，llama.cpp GPU 层数",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
+                                                                                                                                                                                                                        ToolParameterSchema(
                                         name = "request_limit_per_minute",
                                         type = "integer",
                                         description = "可选，每分钟请求限制（0 为不限）",

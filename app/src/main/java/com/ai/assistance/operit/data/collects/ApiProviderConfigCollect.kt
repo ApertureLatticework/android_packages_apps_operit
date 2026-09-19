@@ -239,24 +239,6 @@ object ApiProviderConfigs {
             requiresApiKey = false
         ),
         ProviderApiConfig(
-            providerType = ApiProviderType.OPENAI_LOCAL,
-            defaultModelName = "",
-            defaultApiEndpoint = "http://localhost:8000/v1/chat/completions",
-            requiresApiKey = false
-        ),
-        ProviderApiConfig(
-            providerType = ApiProviderType.MNN,
-            defaultModelName = "",
-            defaultApiEndpoint = "",
-            requiresApiKey = false
-        ),
-        ProviderApiConfig(
-            providerType = ApiProviderType.LLAMA_CPP,
-            defaultModelName = "",
-            defaultApiEndpoint = "",
-            requiresApiKey = false
-        ),
-        ProviderApiConfig(
             providerType = ApiProviderType.PPINFRA,
             defaultModelName = "gpt-4o-mini",
             defaultApiEndpoint = "https://api.ppinfra.com/openai/v1/chat/completions"

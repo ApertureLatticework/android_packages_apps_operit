@@ -315,14 +315,6 @@ object ModelThinkingConfigDefaults {
                     "disable": [{"path": "chat_template_kwargs.enable_thinking", "value": false}]
                   },
                   {
-                    "id": "mnn-llama-template-thinking-toggle",
-                    "providers": ["MNN", "LLAMA_CPP"],
-                    "control": "toggle_only",
-                    "parameterLabel": "enable_thinking",
-                    "enable": [{"path": "enable_thinking", "value": true}],
-                    "disable": [{"path": "enable_thinking", "value": false}]
-                  },
-                  {
                     "id": "opencode-gemini-thinking-level",
                     "providers": ["OPENCODE"],
                     "match": {"firstSegment": ["google"], "lastSegmentPrefix": ["gemini-"]},

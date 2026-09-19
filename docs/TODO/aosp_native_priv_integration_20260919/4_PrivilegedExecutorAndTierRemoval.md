@@ -34,6 +34,17 @@ ROM 独占后借权通道整档删除，阶梯收缩为三档，特权档直调 
 - `AndroidManifest.xml` 权限区
 - 设置界面的权限引导文案与入口
 
+## 并入事项：本地 AI 运行线切割（2026-09-19 决策）
+
+语音链路为模型无关管线（STT→任意 LLM→TTS），本地推理对语音零影响。切割面：
+
+- 删除：llm/llama 与 llm/mnn 两 Gradle 模块（llama.cpp 与 MNN-LLM JNI）、LlamaProvider、MNNProvider、LocalGenerationEnd、MnnModelDownloadManager、MnnModelDownloadScreen 及全部路由
+- 删除：sherpa-mnn 线（SherpaMnnSpeechProvider 与 com/k2fsa/sherpa/mnn/，MNN 后端 ASR；其 Vad 类无外部消费）
+- 删除：ApiProviderType.MNN/LLAMA_CPP 枚举、ModelConfigData 的 mnn*/llama* 字段、保存管线（ModelConfigManager/ApiAutoSaveState/SoftwareSettingsModify 工具参数）与双语 schema 中对应条目
+- 保留：sherpa-ncnn（SHERPA_NCNN ASR + 唤醒词预滚）、OnnxSileroVad（onnxruntime，唤醒词 VAD 本体）、PersonalWake* 全套、云 STT/TTS 各 provider
+- STT 面收敛为：本地 sherpa-ncnn / OpenAI / Deepgram
+- Soong 侧受益：卸掉 llama.cpp 与 MNN 两个 C++ 大库，保留 sherpa-ncnn（+ncnn）与 onnxruntime
+
 ## 验证
 
 - 原 root 档命令面的逐条对照测试：每条命令在新档有等价行为

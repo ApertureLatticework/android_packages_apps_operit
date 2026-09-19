@@ -29,7 +29,6 @@ on:
       - gradle.properties
       - gradlew
       - gradlew.bat
-      - llm/**
       - package.json
       - package-lock.json
       - npm-shrinkwrap.json

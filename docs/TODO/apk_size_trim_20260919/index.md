@@ -38,6 +38,8 @@ ROM 独占分发，system 分区寸土寸金；安装包体积按梯队压缩，
 
 - templates/ 11M：AI 工作区与工具包开发的 Android 工程模板，WorkspaceUtils 现役消费
 - accessibility.apk 2.7M：无障碍档现役，步骤 4 权限阶梯改造时评估保留形态
+
+并入步骤 4 的本地 AI 切割（2026-09-19）：llama.cpp 与 MNN-LLM 两条本地推理线、sherpa-mnn ASR 线整删，模型资产与下载管理同步移除；唤醒词与 VAD 保留
 - emoji/ 3.7M：CustomEmojiRepository 运行时读取，现役
 
 ## 验证与实测（2026-09-19）

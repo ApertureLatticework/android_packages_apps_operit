@@ -66,8 +66,6 @@ data class ProviderUsageSnapshot(
  * - Gemini：`candidatesTokenCount` 是 response candidates token，`thoughtsTokenCount`
  *   是思考 token（官方 API 独立字段，不含在 candidatesTokenCount 内，按输出计费）
  *   → 计费时输出 = candidates + thoughts。
- * - 本地模型（llama/MNN）：没有 provider usage 对象，token 为本地实测计数
- *   （tokenizer 计数 + 逐 token 生成计数），缓存分量明确为 0。
  *
  * 不保存正文、API key、Cookie 或 endpoint 凭据。
  */
@@ -77,8 +75,6 @@ object ProviderUsageNormalizer {
     const val SOURCE_OPENAI_RESPONSES = "openai_responses"
     const val SOURCE_ANTHROPIC = "anthropic"
     const val SOURCE_GEMINI = "gemini"
-    const val SOURCE_LLAMA = "llama_cpp"
-    const val SOURCE_MNN = "mnn"
     const val SOURCE_TOOLPKG = "toolpkg_js"
 
     /** OpenAI chat/completions 系（含 DeepSeek、Kimi、Qwen、Mistral 等兼容端点）。
@@ -277,58 +273,6 @@ object ProviderUsageNormalizer {
                 source = SOURCE_GEMINI,
             )
         return snapshot.takeIf { it.hasKnownFields() }
-    }
-
-    /** 本地模型（llama.cpp/MNN）：本地实测计数，缓存分量明确为 0；单次完整上报。 */
-    fun local(
-        uncachedInputTokens: Long,
-        outputTokens: Long,
-        source: String,
-    ): ProviderUsageSnapshot =
-        ProviderUsageSnapshot(
-            uncachedInputTokens = uncachedInputTokens.coerceAtLeast(0L),
-            cachedInputTokens = 0L,
-            cacheWriteTokens = 0L,
-            totalInputTokens = uncachedInputTokens.coerceAtLeast(0L),
-            outputTokens = outputTokens.coerceAtLeast(0L),
-            reasoningTokens = null,
-            reasoningIncludedInOutput = null,
-            cacheWriteSeparateBilling = false,
-            completeSnapshot = true,
-            source = source,
-        )
-
-    /**
-     * ToolPkg JS provider：`input` 视为总量（含缓存命中），uncached 为差值。
-     * [completeSnapshot] 由协议版本决定：新协议（携带 attempt）为同 attempt 内
-     * 的部分更新；旧协议（无 attempt）为整个逻辑请求的累计完整快照。
-     * 字段可空（评审 P1-6）：缺省字段 = 未知，绝不继承全局累计计数；跨 attempt
-     * 聚合时缺失分量保持未知（不猜测）。Long 语义（评审 P2-1），负值拒绝为未知。
-     */
-    fun toolPkg(
-        input: Long?,
-        cachedInput: Long?,
-        output: Long?,
-        completeSnapshot: Boolean,
-    ): ProviderUsageSnapshot {
-        val validInput = input?.takeIf { it >= 0 }
-        val validCachedInput = cachedInput?.takeIf { it >= 0 }
-        val splitIsValid =
-            validInput != null && validCachedInput != null && validCachedInput <= validInput
-        val uncached =
-            if (splitIsValid) validInput!! - validCachedInput!! else null
-        return ProviderUsageSnapshot(
-            uncachedInputTokens = uncached,
-            cachedInputTokens = validCachedInput.takeIf { splitIsValid },
-            cacheWriteTokens = null,
-            totalInputTokens = validInput,
-            outputTokens = output?.takeIf { it >= 0 },
-            reasoningTokens = null,
-            reasoningIncludedInOutput = null,
-            cacheWriteSeparateBilling = false,
-            completeSnapshot = completeSnapshot,
-            source = SOURCE_TOOLPKG,
-        )
     }
 
     private fun sumNumericFields(jsonObject: JSONObject): Long {
