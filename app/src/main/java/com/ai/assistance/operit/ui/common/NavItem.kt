@@ -13,7 +13,6 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Terminal
 import androidx.compose.material.icons.filled.Token
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -36,7 +35,6 @@ sealed class NavItem(val route: String, val titleResId: Int, val icon: ImageVect
         object Packages : NavItem("packages", R.string.nav_packages, Icons.Default.Extension)
         object MemoryBase :
                 NavItem("memory_base", R.string.nav_memory_base, Icons.Default.History)
-        object Terminal : NavItem("terminal", R.string.terminal, Icons.Default.Terminal)
         object Toolbox : NavItem("toolbox", R.string.toolbox, Icons.Default.Apps)
         object About : NavItem("about", R.string.nav_about, Icons.Default.Info)
         object Agreement :

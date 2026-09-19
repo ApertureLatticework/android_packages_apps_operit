@@ -131,15 +131,6 @@ object ToolGetter {
     }
 
     /**
-     * 获取终端命令执行器
-     * @param context 应用上下文
-     * @return 终端命令执行器实现（只有标准版本）
-     */
-    fun getTerminalCommandExecutor(context: Context): StandardTerminalCommandExecutor {
-        return StandardTerminalCommandExecutor(context)
-    }
-
-    /**
      * 获取音乐播放工具执行器
      * @param context 应用上下文
      * @return 音乐播放工具执行器实现（标准版本）

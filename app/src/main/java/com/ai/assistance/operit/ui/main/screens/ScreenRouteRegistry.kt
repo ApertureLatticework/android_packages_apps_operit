@@ -17,7 +17,6 @@ import androidx.compose.material.icons.filled.RecordVoiceOver
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.SmartToy
 import androidx.compose.material.icons.filled.TableView
-import androidx.compose.material.icons.filled.Terminal
 import androidx.compose.material.icons.filled.Token
 import androidx.compose.material.icons.filled.VideoSettings
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -235,16 +234,6 @@ object ScreenRouteRegistry {
                 descriptionResId = R.string.tool_default_assistant_guide_desc,
                 icon = Icons.Default.SmartToy,
                 order = 70
-            ),
-            hostEntryDefinition(
-                entryId = "toolbox.terminal",
-                screen = Screen.Terminal,
-                surface = NavigationSurface.TOOLBOX,
-                launchNavItem = NavItem.Terminal,
-                titleResId = R.string.tool_terminal,
-                descriptionResId = R.string.tool_terminal_desc,
-                icon = Icons.Default.Terminal,
-                order = 80
             ),
             hostEntryDefinition(
                 entryId = "toolbox.ui_debugger",

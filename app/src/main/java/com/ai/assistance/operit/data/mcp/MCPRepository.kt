@@ -920,81 +920,6 @@ class MCPRepository(private val context: Context) {
     }
 
     // ==================== 状态同步和管理 ====================
-
-    /** Synchronizes local stdio plugin status from the bridge. */
-    suspend fun syncBridgeStatus() {
-        withContext(Dispatchers.IO) {
-            AppLogger.d(TAG, "开始同步本地 bridge 服务状态...")
-            try {
-                val localPluginServiceNames = _installedPluginIds.value
-                    .mapNotNull { pluginId ->
-                        val metadata = mcpLocalServer.getPluginMetadata(pluginId)
-                        if (metadata?.type != "local") return@mapNotNull null
-
-                        val serviceName = MCPConfigGenerator().extractServerNameFromConfig(
-                            mcpLocalServer.getPluginConfig(pluginId)
-                        ) ?: pluginId.split("/").last().lowercase()
-                        serviceName to pluginId
-                    }
-                    .toMap()
-                if (localPluginServiceNames.isEmpty()) {
-                    AppLogger.d(TAG, "No local stdio plugins to synchronize from bridge")
-                    return@withContext
-                }
-                val bridge = com.ai.assistance.operit.data.mcp.plugins.MCPBridge.getInstance(context)
-                val listResponse = bridge.listMcpServices()
-
-                if (listResponse?.optBoolean("success", false) == true) {
-                    val services = listResponse.optJSONObject("result")?.optJSONArray("services")
-                    val activePluginIds = mutableSetOf<String>()
-                    
-                    if (services != null) {
-                        for (i in 0 until services.length()) {
-                            val service = services.optJSONObject(i)
-                            val serviceName = service?.optString("name")
-                            val isActive = service?.optBoolean("active", false) ?: false
-                            val pluginId = serviceName?.let(localPluginServiceNames::get)
-
-                            if (pluginId != null) {
-                                val now = System.currentTimeMillis()
-                                val wasRunning = mcpLocalServer.isServerLikelyRunning(pluginId)
-                                if (isActive) {
-                                    activePluginIds.add(pluginId)
-                                }
-                                if (isActive && !wasRunning) {
-                                    mcpLocalServer.updateServerStatus(
-                                        serverId = pluginId,
-                                        lastStartTime = now,
-                                        errorMessage = ""
-                                    )
-                                } else if (!isActive && wasRunning) {
-                                    mcpLocalServer.updateServerStatus(
-                                        serverId = pluginId,
-                                        lastStopTime = now
-                                    )
-                                }
-                            }
-                        }
-                    }
-                    
-                    localPluginServiceNames.values.forEach { pluginId ->
-                        if (!activePluginIds.contains(pluginId) && mcpLocalServer.isServerLikelyRunning(pluginId)) {
-                            mcpLocalServer.updateServerStatus(
-                                serverId = pluginId,
-                                lastStopTime = System.currentTimeMillis()
-                            )
-                        }
-                    }
-                    AppLogger.d(TAG, "本地 bridge 状态同步完成。活跃插件: ${activePluginIds.joinToString()}")
-                } else {
-                    AppLogger.w(TAG, "从桥接器获取服务列表失败")
-                }
-            } catch (e: Exception) {
-                AppLogger.e(TAG, "同步桥接器状态时出错", e)
-            }
-        }
-    }
-
     /**
      * 同步已安装状态
      */
@@ -1213,7 +1138,6 @@ class MCPRepository(private val context: Context) {
             val serverConfig = MCPServerConfig(
                 name = pluginId,
                 endpoint = when (runtimeDescriptor) {
-                    is McpRuntimeDescriptor.Local -> "mcp://plugin/${runtimeDescriptor.serviceName}"
                     is McpRuntimeDescriptor.Remote -> runtimeDescriptor.endpoint
                 },
                 description = pluginMetadata.description,
@@ -1340,13 +1264,6 @@ class MCPRepository(private val context: Context) {
     private fun createRuntimeDescriptor(
         metadata: MCPLocalServer.PluginMetadata
     ): McpRuntimeDescriptor = when (metadata.type) {
-        "local" -> {
-            val pluginConfig = mcpLocalServer.getPluginConfig(metadata.id)
-            val serviceName = requireNotNull(
-                MCPConfigGenerator().extractServerNameFromConfig(pluginConfig)
-            ) { "Missing MCP service name for local plugin ${metadata.id}" }
-            McpRuntimeDescriptor.Local(serviceName)
-        }
         "remote" -> McpRuntimeDescriptor.Remote(
             endpoint = requireNotNull(metadata.endpoint) {
                 "Missing endpoint for remote plugin ${metadata.id}"

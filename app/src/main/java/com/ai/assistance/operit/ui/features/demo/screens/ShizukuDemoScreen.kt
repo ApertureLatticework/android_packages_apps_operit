@@ -32,7 +32,6 @@ import com.ai.assistance.operit.data.repository.UIHierarchyManager
 import com.ai.assistance.operit.ui.features.demo.components.*
 import com.ai.assistance.operit.ui.features.demo.viewmodel.ShizukuDemoViewModel
 import com.ai.assistance.operit.ui.features.demo.wizards.AccessibilityWizardCard
-import com.ai.assistance.operit.ui.features.demo.wizards.OperitTerminalWizardCard
 import com.ai.assistance.operit.ui.features.demo.wizards.RootWizardCard
 import com.ai.assistance.operit.ui.features.demo.wizards.ShizukuWizardCard
 import kotlinx.coroutines.Dispatchers
@@ -663,20 +662,6 @@ fun ShizukuDemoScreen(
                 Spacer(modifier = Modifier.height(12.dp))
             }
 
-            // NodeJS和Python环境配置向导卡片
-            if (needOperitTerminalSetupGuide) {
-                OperitTerminalWizardCard(
-                    isPnpmInstalled = viewModel.isPnpmInstalled.value,
-                    isPipInstalled = viewModel.isPythonInstalled.value,
-                    isEnvironmentReady = viewModel.isNodejsPythonEnvironmentReady.value,
-                    showWizard = uiState.showOperitTerminalWizard.value,
-                    onToggleWizard = { viewModel.toggleOperitTerminalWizard() },
-                    onOpenTerminalScreen = { 
-                        // 跳转到TerminalSetup，直接显示配置界面
-                        navigateTo?.invoke(Screen.TerminalSetup)
-                    }
-                )
-            }
         }
     }
 }

@@ -709,6 +709,7 @@
     <string name="plugin_auto_deploy">插件未部署，开始自动部署</string>
     <string name="plugin_auto_deploy_complete">自动部署完成</string>
     <string name="plugin_terminal_service_unavailable">终端服务不可用，请先启动它</string>
+    <string name="plugin_local_removed">本地 MCP 插件已随终端环境裁撤: %1$s</string>
     <string name="plugin_pnpm_missing">终端中未安装pnpm，请先安装</string>
 
     <!-- Theme Settings Screen -->

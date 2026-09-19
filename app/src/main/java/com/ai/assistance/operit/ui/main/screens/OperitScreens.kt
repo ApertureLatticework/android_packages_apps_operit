@@ -72,8 +72,6 @@ import com.ai.assistance.operit.ui.features.toolbox.screens.FileManagerToolScree
 import com.ai.assistance.operit.ui.features.toolbox.screens.LogcatToolScreen
 import com.ai.assistance.operit.ui.features.toolbox.screens.ShellExecutorToolScreen
 import com.ai.assistance.operit.ui.features.toolbox.screens.StreamMarkdownDemoScreen
-import com.ai.assistance.operit.ui.features.toolbox.screens.TerminalAutoConfigToolScreen
-import com.ai.assistance.operit.ui.features.toolbox.screens.TerminalToolScreen
 import com.ai.assistance.operit.ui.features.toolbox.screens.ToolboxScreen
 import com.ai.assistance.operit.ui.common.composedsl.ToolPkgComposeDslToolScreen
 import com.ai.assistance.operit.ui.features.toolbox.screens.UIDebuggerToolScreen
@@ -1234,54 +1232,6 @@ sealed class Screen(
                 onGestureConsumed: (Boolean) -> Unit
         ) {
             FileManagerToolScreen(navController = navController)
-        }
-    }
-
-    data object Terminal :
-            Screen(navItem = NavItem.Toolbox, titleRes = R.string.screen_title_terminal) {
-        @Composable
-        override fun Content(
-                navController: NavController,
-                navigateTo: ScreenNavigationHandler,
-                onGoBack: () -> Unit,
-                hasBackgroundImage: Boolean,
-                onLoading: (Boolean) -> Unit,
-                onError: (String) -> Unit,
-                onGestureConsumed: (Boolean) -> Unit
-        ) {
-            TerminalToolScreen(navController = navController)
-        }
-    }
-
-    data object TerminalSetup :
-            Screen(navItem = NavItem.Toolbox, titleRes = R.string.screen_title_terminal) {
-        @Composable
-        override fun Content(
-                navController: NavController,
-                navigateTo: ScreenNavigationHandler,
-                onGoBack: () -> Unit,
-                hasBackgroundImage: Boolean,
-                onLoading: (Boolean) -> Unit,
-                onError: (String) -> Unit,
-                onGestureConsumed: (Boolean) -> Unit
-        ) {
-            TerminalToolScreen(navController = navController, forceShowSetup = true)
-        }
-    }
-
-    data object TerminalAutoConfig :
-            Screen(navItem = NavItem.Toolbox, titleRes = R.string.screen_title_terminal_auto_config) {
-        @Composable
-        override fun Content(
-                navController: NavController,
-                navigateTo: ScreenNavigationHandler,
-                onGoBack: () -> Unit,
-                hasBackgroundImage: Boolean,
-                onLoading: (Boolean) -> Unit,
-                onError: (String) -> Unit,
-                onGestureConsumed: (Boolean) -> Unit
-        ) {
-            TerminalAutoConfigToolScreen(navController = navController)
         }
     }
 

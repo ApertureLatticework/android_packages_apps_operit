@@ -19,7 +19,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Operit"
 include(":app")
-include(":terminal")
 include(":mnn")
 project(":mnn").projectDir = file("llm/mnn")
 include(":llama")

@@ -40,16 +40,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.lifecycleScope
 import com.ai.assistance.operit.data.mcp.MCPLocalServer
 import com.ai.assistance.operit.data.mcp.MCPRepository
-import com.ai.assistance.operit.data.mcp.plugins.MCPDeployer
 import com.ai.assistance.operit.ui.features.packages.components.dialogs.MCPServerDetailsDialog
 import com.ai.assistance.operit.ui.features.packages.dialogs.MCPPackageDetailsDialog
-import com.ai.assistance.operit.ui.features.packages.screens.mcp.components.MCPCommandsEditDialog
-import com.ai.assistance.operit.ui.features.packages.screens.mcp.components.MCPDeployConfirmDialog
-import com.ai.assistance.operit.ui.features.packages.screens.mcp.components.MCPDeployProgressDialog
 import com.ai.assistance.operit.ui.features.packages.screens.mcp.components.MCPInstallProgressDialog
-import com.ai.assistance.operit.ui.features.packages.screens.mcp.viewmodel.MCPDeployViewModel
 import com.ai.assistance.operit.ui.features.packages.screens.mcp.viewmodel.MCPViewModel
-import com.ai.assistance.operit.data.mcp.plugins.MCPBridge
 import com.ai.assistance.operit.util.AppLogger
 import android.widget.Toast
 import androidx.compose.ui.res.stringResource
@@ -85,9 +79,6 @@ fun MCPConfigScreen(
     val viewModel = remember {
         MCPViewModel.Factory(mcpRepository, context).create(MCPViewModel::class.java)
     }
-    val deployViewModel = remember {
-        MCPDeployViewModel.Factory(context, mcpRepository).create(MCPDeployViewModel::class.java)
-    }
 
 
     // 状态收集
@@ -111,10 +102,6 @@ fun MCPConfigScreen(
     }
 
     // 部署状态
-    val deploymentStatus by deployViewModel.deploymentStatus.collectAsState()
-    val outputMessages by deployViewModel.outputMessages.collectAsState()
-    val currentDeployingPlugin by deployViewModel.currentDeployingPlugin.collectAsState()
-    val environmentVariables by deployViewModel.environmentVariables.collectAsState()
     
 
 
@@ -133,7 +120,6 @@ fun MCPConfigScreen(
         if (isRefreshing) return
         isRefreshing = true
         try {
-            mcpRepository.syncBridgeStatus()
             mcpRepository.refreshPluginList()
             lockedPluginOrder = null
         } finally {
@@ -204,12 +190,6 @@ fun MCPConfigScreen(
     var selectedPluginForToolDetails by remember {
         mutableStateOf<MCPLocalServer.PluginMetadata?>(null)
     }
-    var pluginToDeploy by remember { mutableStateOf<String?>(null) }
-
-    // 添加新的状态变量来跟踪对话框展示
-    var showConfirmDialog by remember { mutableStateOf(false) }
-    var showCustomCommandsDialog by remember { mutableStateOf(false) }
-
     // 添加导入对话框状态
     var showImportDialog by remember { mutableStateOf(false) }
     var repoUrlInput by remember { mutableStateOf("") }
@@ -355,15 +335,7 @@ fun MCPConfigScreen(
         }
 
         try {
-            val hasLocalPlugins = visiblePluginIds.any { pluginId ->
-                mcpConfigSnapshot.pluginMetadata[pluginId]?.type != "remote"
-            }
-            val bridgeServiceTools = if (hasLocalPlugins) {
-                parseMCPServiceToolNames(MCPBridge.getInstance(context).listMcpServices())
-            } else {
-                emptyMap()
-            }
-
+            // 本地插件的桥接工具名列表随 terminal 线裁撤，仅远程插件可获取工具名
             for (pluginId in visiblePluginIds) {
                 try {
                     val metadata = mcpConfigSnapshot.pluginMetadata[pluginId]
@@ -371,11 +343,8 @@ fun MCPConfigScreen(
                     val toolNames = if (isRemote) {
                         mcpRepository.getRemoteToolNames(pluginId)
                     } else {
-                        if (!mcpLocalServer.isPluginRuntimeReady(pluginId)) {
-                            AppLogger.d("MCPConfigScreen", "Plugin $pluginId runtime directory is not ready, skip tool fetch.")
-                            continue
-                        }
-                        bridgeServiceTools[pluginId].orEmpty()
+                        AppLogger.d("MCPConfigScreen", "Local plugin $pluginId removed with terminal line, skip tool fetch.")
+                        continue
                     }
 
                     if (toolNames.isNotEmpty()) {
@@ -411,15 +380,6 @@ fun MCPConfigScreen(
     // 获取选中插件的配置
     LaunchedEffect(selectedPluginId) {
         selectedPluginId?.let { pluginConfigJson = mcpLocalServer.getPluginConfig(it) }
-    }
-
-    // 监听部署状态变化，当成功时显示提示
-    LaunchedEffect(deploymentStatus) {
-        if (deploymentStatus is MCPDeployer.DeploymentStatus.Success) {
-            currentDeployingPlugin?.let { pluginId ->
-                Toast.makeText(context, context.getString(R.string.plugin_deployed_success, getPluginDisplayName(pluginId, mcpRepository)), Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
     // 插件详情对话框
@@ -460,75 +420,9 @@ fun MCPConfigScreen(
         )
     }
 
-    // 部署确认对话框 - 新增
-    if (showConfirmDialog && pluginToDeploy != null) {
-        com.ai.assistance.operit.ui.features.packages.screens.mcp.components.MCPDeployConfirmDialog(
-                pluginName = getPluginDisplayName(pluginToDeploy!!, mcpRepository),
-                onDismissRequest = {
-                    showConfirmDialog = false
-                    pluginToDeploy = null
-                },
-                onConfirm = {
-                    // 在协程内部复制当前的pluginId避免外部状态变化导致空指针异常
-                    val pluginId = pluginToDeploy!!
-                    
-                    // 使用默认命令部署（会自动获取命令）
-                    deployViewModel.deployPlugin(pluginId)
 
-                    // 重置状态
-                    showConfirmDialog = false
-                    pluginToDeploy = null
-                },
-                onCustomize = {
-                    // 先关闭确认对话框，然后显示命令编辑对话框
-                    showConfirmDialog = false
-                    showCustomCommandsDialog = true
 
-                    // 立即尝试获取命令，不要等到命令编辑对话框渲染后再获取
-                    scope.launch {
-                        val pluginId = pluginToDeploy
-                        if (pluginId != null && deployViewModel.generatedCommands.value.isEmpty()) {
-                            deployViewModel.getDeployCommands(pluginId)
-                        }
-                    }
-                }
-        )
-    }
 
-    // 命令编辑对话框 - 修改为只在选择自定义后显示
-    if (showCustomCommandsDialog && pluginToDeploy != null) {
-        // 检查命令是否已生成
-        val commandsAvailable =
-                deployViewModel.generatedCommands.collectAsState().value.isNotEmpty()
-
-        // 显示命令编辑对话框，暂时移除isLoading参数
-        com.ai.assistance.operit.ui.features.packages.screens.mcp.components.MCPCommandsEditDialog(
-                pluginName = getPluginDisplayName(pluginToDeploy!!, mcpRepository),
-                commands = deployViewModel.generatedCommands.value,
-                // 注释掉isLoading参数直到MCPCommandsEditDialog.kt的修改生效
-                // isLoading = !commandsAvailable,
-                onDismissRequest = {
-                    showCustomCommandsDialog = false
-                    pluginToDeploy = null
-                },
-                onConfirm = { customCommands ->
-                    // 在协程内部复制插件ID以避免空指针异常
-                    val pluginId = pluginToDeploy!!
-                    deployViewModel.deployPluginWithCommands(pluginId, customCommands)
-
-                    // 重置状态
-                    showCustomCommandsDialog = false
-                    pluginToDeploy = null
-                }
-        )
-
-        // 如果还没有获取命令，异步获取
-        LaunchedEffect(pluginToDeploy) {
-            if (!commandsAvailable) {
-                deployViewModel.getDeployCommands(pluginToDeploy!!)
-            }
-        }
-    }
 
     // 新增：远程服务编辑对话框
     if (showRemoteEditDialog && editingRemoteServer != null) {
@@ -554,24 +448,7 @@ fun MCPConfigScreen(
     }
 
 
-    // 部署进度对话框
-    if (currentDeployingPlugin != null) {
-        MCPDeployProgressDialog(
-                deploymentStatus = deploymentStatus,
-                onDismissRequest = { deployViewModel.resetDeploymentState() },
-                onRetry = {
-                    currentDeployingPlugin?.let { pluginId ->
-                        deployViewModel.deployPlugin(pluginId)
-                    }
-                },
-                pluginName = currentDeployingPlugin?.let { getPluginDisplayName(it, mcpRepository) } ?: "",
-                outputMessages = outputMessages,
-                environmentVariables = environmentVariables,
-                onEnvironmentVariablesChange = { newEnvVars ->
-                    deployViewModel.setEnvironmentVariables(newEnvVars)
-                }
-        )
-    }
+
 
     // 安装进度对话框
     if (installProgress != null && currentInstallingPlugin != null) {
@@ -1301,10 +1178,6 @@ fun MCPConfigScreen(
                                             context
                                         )
                                     },
-                                    onDeploy = {
-                                        pluginToDeploy = pluginId
-                                        showConfirmDialog = true // 显示确认对话框而不是直接进入命令编辑
-                                    },
                                     onEdit = {
                                         // 设置要编辑的服务器并显示对话框
                                         val serverToEdit = getPluginAsServer(
@@ -1382,41 +1255,6 @@ fun MCPConfigScreen(
 
             }
     }
-}
-
-private fun parseMCPServiceToolNames(listResponse: JSONObject?): Map<String, List<String>> {
-    if (listResponse?.optBoolean("success", false) != true) {
-        return emptyMap()
-    }
-
-    val services = listResponse.optJSONObject("result")?.optJSONArray("services") ?: return emptyMap()
-    val serviceTools = mutableMapOf<String, List<String>>()
-
-    for (serviceIndex in 0 until services.length()) {
-        val service = services.optJSONObject(serviceIndex) ?: continue
-        val serviceName = service.optString("name", "").trim()
-        if (serviceName.isEmpty()) {
-            continue
-        }
-
-        val tools = service.optJSONArray("tools") ?: continue
-        val toolNames = mutableListOf<String>()
-        for (toolIndex in 0 until tools.length()) {
-            val toolName = tools.optJSONObject(toolIndex)
-                ?.optString("name", "")
-                ?.trim()
-                .orEmpty()
-            if (toolName.isNotEmpty()) {
-                toolNames.add(toolName)
-            }
-        }
-
-        if (toolNames.isNotEmpty()) {
-            serviceTools[serviceName] = toolNames.distinct()
-        }
-    }
-
-    return serviceTools
 }
 
 // 从插件ID中提取显示名称
@@ -1523,7 +1361,6 @@ private fun PluginListItem(
     toolNames: List<String>,
     onClick: () -> Unit,
     onToolsClick: () -> Unit,
-    onDeploy: () -> Unit,
     onEdit: () -> Unit,
     isEnabled: Boolean,
     onEnabledChange: (Boolean) -> Unit,
@@ -1764,23 +1601,6 @@ private fun PluginListItem(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    // 主要操作按钮
-                    if (!isRemote) {
-                        OutlinedButton(
-                            onClick = onDeploy,
-                            modifier = Modifier.weight(1f).height(32.dp),
-                            contentPadding = PaddingValues(horizontal = 12.dp),
-                            colors = ButtonDefaults.outlinedButtonColors(
-                                contentColor = if (isDeployed) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.primary
-                            )
-                        ) {
-                            Text(
-                                text = if (isDeployed) stringResource(R.string.redeploy) else stringResource(R.string.deploy),
-                                style = MaterialTheme.typography.labelMedium,
-                                fontSize = 12.sp
-                            )
-                        }
-                    }
                     
                     // 编辑按钮
                     OutlinedButton(

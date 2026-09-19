@@ -5,8 +5,6 @@ import org.json.JSONObject
 
 /** Runtime transport selected for an installed MCP plugin. */
 sealed interface McpRuntimeDescriptor {
-    data class Local(val serviceName: String) : McpRuntimeDescriptor
-
     data class Remote(
         val endpoint: String,
         val connectionType: String,

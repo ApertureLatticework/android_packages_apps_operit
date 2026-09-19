@@ -9,7 +9,6 @@ import android.os.SystemClock
 import android.system.Os
 import android.system.OsConstants
 import com.ai.assistance.operit.core.tools.packTool.PackageManager
-import com.ai.assistance.operit.terminal.TerminalManager
 import com.ai.assistance.operit.util.AppLogger
 import java.io.File
 import java.util.ArrayDeque
@@ -25,7 +24,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /** 采样实体的类别；软件=主进程，插件=ToolPkg 容器，终端=PTY 会话进程树。 */
-enum class PerformanceEntityKind { APP, PLUGIN, TERMINAL }
+enum class PerformanceEntityKind { APP, PLUGIN }
 
 /**
  * 单个实体在一次采样里的指标。
@@ -90,7 +89,6 @@ object PerformanceMonitorManager {
 
     private const val KEY_APP = "app"
     private const val KEY_PLUGIN_PREFIX = "plugin:"
-    private const val KEY_TERMINAL_PREFIX = "terminal:"
 
     private data class ProcStat(
         val ppid: Int,
@@ -113,7 +111,6 @@ object PerformanceMonitorManager {
         val deviceTx: Long
     )
 
-    private data class TerminalSessionRef(val id: String, val title: String, val pid: Int)
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private val stateMutex = Any()
@@ -296,38 +293,6 @@ object PerformanceMonitorManager {
             )
         }
 
-        // —— 终端（PTY 子进程树：bash → proot → 命令） ——
-        val terminalSessions = collectTerminalSessions()
-        val procTree = if (terminalSessions.isEmpty()) emptyMap() else readAccessibleProcessTree()
-        terminalSessions.forEach { session ->
-            val tree = collectDescendants(session.pid, procTree)
-            var currentTicks = 0L
-            var rssPages = 0L
-            tree.forEach { pid ->
-                val stat = procTree[pid] ?: return@forEach
-                currentTicks += stat.withChildrenTicks
-                rssPages += stat.rssPages
-            }
-            val key = "${KEY_TERMINAL_PREFIX}${session.id}"
-            val cpuPercent =
-                if (deltaValid) {
-                    ticksToPercent(currentTicks - (prevEntityTicks[key] ?: 0L), deltaMs, coreCount)
-                } else {
-                    0.0
-                }
-            prevEntityTicks[key] = currentTicks
-            entities.add(
-                PerformanceEntitySample(
-                    id = session.id,
-                    kind = PerformanceEntityKind.TERMINAL,
-                    displayName = session.title,
-                    cpuPercent = cpuPercent,
-                    memoryKb = rssPages * pageSizeBytes / 1024L,
-                    detail = "PID ${session.pid} · ${tree.size}P"
-                )
-            )
-        }
-
         // —— 整机 ——
         var deviceCpuPercent: Double? = null
         if (deltaValid && deviceCpu != null) {
@@ -356,20 +321,6 @@ object PerformanceMonitorManager {
             deviceTxBytesPerSec = deviceTx,
             entities = entities.toList()
         )
-    }
-
-    private fun collectTerminalSessions(): List<TerminalSessionRef> {
-        val context = appContext ?: return emptyList()
-        val sessions =
-            TerminalManager.getInstance(context).terminalState.value.sessions
-        return sessions.mapNotNull { session ->
-            val pid = session.pty?.pid ?: -1
-            if (pid > 0) {
-                TerminalSessionRef(id = session.id, title = session.title, pid = pid)
-            } else {
-                null
-            }
-        }
     }
 
     // ————————————————————————————— /proc 读取 —————————————————————————————
@@ -414,38 +365,6 @@ object PerformanceMonitorManager {
                 DeviceCpuTicks(total = values.sum(), idle = idle)
             }
         }.getOrNull()
-    }
-
-    /** 枚举本 UID 可读的进程（其他应用的进程 stat 读取会失败并被跳过），建立 pid → stat 映射。 */
-    private fun readAccessibleProcessTree(): Map<Int, ProcStat> {
-        val result = HashMap<Int, ProcStat>()
-        val dirs =
-            File("/proc").listFiles { file -> file.name.all { it in '0'..'9' } } ?: return result
-        dirs.forEach { dir ->
-            val stat = readProcStat("/proc/${dir.name}/stat") ?: return@forEach
-            result[dir.name.toInt()] = stat
-        }
-        return result
-    }
-
-    private fun collectDescendants(rootPid: Int, procTree: Map<Int, ProcStat>): List<Int> {
-        val childrenByParent = HashMap<Int, MutableList<Int>>()
-        procTree.forEach { (pid, stat) ->
-            childrenByParent.getOrPut(stat.ppid) { mutableListOf() }.add(pid)
-        }
-        val visited = mutableListOf<Int>()
-        val queue = ArrayDeque<Int>()
-        queue.add(rootPid)
-        while (queue.isNotEmpty()) {
-            val current = queue.removeFirst()
-            visited.add(current)
-            childrenByParent[current]?.forEach { child ->
-                if (child != rootPid) {
-                    queue.add(child)
-                }
-            }
-        }
-        return visited
     }
 
     private fun readNetworkCounters(): NetworkCounters? {

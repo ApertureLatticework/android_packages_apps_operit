@@ -105,20 +105,30 @@ UI 面同步裁剪（设置页、向导、导航）：
 - 裁后入树 Java 坐标约 60 条，其中 androidx 系约半数
 - 死依赖两条（retrofit、glide）先行清理，属无风险首刀（已完成：build.gradle.kts 与 toml 同步删除，代码零引用无需改动）
 
-### terminal 线侦察记录（2026-09-19，待执行）
+### terminal 线执行地图（2026-09-19 已执行）
 
 架构事实：
 
-- 终端引擎是独立伴侣 App：OperitTerminal（包名 com.ai.assistance.operit.terminal，GitHub Releases 分发，OperitTerminalManager 负责检测安装）；:terminal 模块（subpack 提供）是其客户端 SDK
-- Agent 的终端会话工具族（create/execute/input/hidden，含 android 环境 PTY）全部经 Terminal 单例跑在该伴侣 App 上
-- shell 工具的 android 环境走权限阶梯执行器（AndroidShellExecutor → 五档），与终端引擎无关，不受裁剪影响
-- workspace 的 ComputerScreen 与 CanvasCodeEditorView 也依赖终端引擎，属文件与工作区域，裁剪前需判定共去留
-- 待判定：shell 工具 environment="linux" 分支的执行路径是否经终端引擎（决定裁法）
+- 终端引擎是独立子模块：terminal 为 git submodule（OperitTerminalCore），引擎本体又是独立伴侣 App（com.ai.assistance.operit.terminal，OperitTerminalManager 负责检测安装）
+- Agent 的终端会话工具族全部经 Terminal 单例跑在终端引擎上；shell 工具的 android 环境走权限阶梯，不受影响
+- FileSystemProvider 与 SSH 客户端栈均在终端子模块内，SSH 远程文件能力随线裁撤，未来可用纯 Java SSH 库重加
 
-裁剪面（待补全后执行）：
+已执行：
 
-- :terminal 模块与 settings 引用、Terminal.kt、OperitTerminalManager、StandardTerminalCommandExecutor、终端 UI 与路由、向导卡、OperitTerminalWizardCard
-- 终端工具族 schema 与 JS 桥的清理归步骤 8 同步
+- 子模块 gitlink 与 .gitmodules 条目、settings.gradle 与 build.gradle 引用全部移除
+- Terminal.kt、OperitTerminalManager.kt、StandardTerminalCommandExecutor.kt、LinuxFileSystemTools.kt 删除
+- StandardFileSystemTools 的 17 处 linux 委托与跨环境复制的 linux 分支改写为纯 Android/repo 语义
+- MCP：MCPStarter 重写为 remote-only，MCPBridge/MCPBridgeClient/MCPDeployer/MCPSharedSession/BridgeMcpRuntimeSession 删除，McpRuntimeDescriptor.Local 与 MCPRepository 的本地链路同步移除，远程 MCP 保留
+- UI：ComputerScreen 删除、ChatViewModel 工作区终端命令链路与 AI 电脑开关删除、WorkspaceCommandExecutionDialog 删除、ToolboxScreen 终端两屏删除、OperitScreens 三屏与路由/NavItem 清理、向导卡删除、PerformanceMonitor 终端实体链路删除
+- 工具与提示词：五个终端工具注册、双语 schema、JS 桥、PathMapper 消费方清理
+- 字体：CanvasCodeEditorView 与 MarkdownCodeTypeface 改用系统等宽字体
+
+遗留（归步骤 8 或后续清扫）：
+
+- 提示词中 environment="linux" 文案与 copy_file 的 source/dest_environment 描述
+- 演示页的 isOperitTerminalInstalled 等参数名与终端环境卡片（恒 false 展示）
+- PathMapper 不可达的 linux 分支；MCPConfigScreen 本地插件添加表单
+- 孤儿字符串（终端工具、向导、perf_kind_terminal 等）
 
 ### avatar 线裁剪作战清单（rg 实测，2026-09-19 已执行）
 
