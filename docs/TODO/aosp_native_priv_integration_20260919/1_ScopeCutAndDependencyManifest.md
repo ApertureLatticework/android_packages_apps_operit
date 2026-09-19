@@ -105,6 +105,21 @@ UI 面同步裁剪（设置页、向导、导航）：
 - 裁后入树 Java 坐标约 60 条，其中 androidx 系约半数
 - 死依赖两条（retrofit、glide）先行清理，属无风险首刀（已完成：build.gradle.kts 与 toml 同步删除，代码零引用无需改动）
 
+### terminal 线侦察记录（2026-09-19，待执行）
+
+架构事实：
+
+- 终端引擎是独立伴侣 App：OperitTerminal（包名 com.ai.assistance.operit.terminal，GitHub Releases 分发，OperitTerminalManager 负责检测安装）；:terminal 模块（subpack 提供）是其客户端 SDK
+- Agent 的终端会话工具族（create/execute/input/hidden，含 android 环境 PTY）全部经 Terminal 单例跑在该伴侣 App 上
+- shell 工具的 android 环境走权限阶梯执行器（AndroidShellExecutor → 五档），与终端引擎无关，不受裁剪影响
+- workspace 的 ComputerScreen 与 CanvasCodeEditorView 也依赖终端引擎，属文件与工作区域，裁剪前需判定共去留
+- 待判定：shell 工具 environment="linux" 分支的执行路径是否经终端引擎（决定裁法）
+
+裁剪面（待补全后执行）：
+
+- :terminal 模块与 settings 引用、Terminal.kt、OperitTerminalManager、StandardTerminalCommandExecutor、终端 UI 与路由、向导卡、OperitTerminalWizardCard
+- 终端工具族 schema 与 JS 桥的清理归步骤 8 同步
+
 ### avatar 线裁剪作战清单（rg 实测，2026-09-19 已执行）
 
 - Gradle：settings.gradle 移除 :dragonbones、:mmd、:fbx 三条与 avator/ 目录映射；app/build.gradle.kts 移除三个 project 依赖与 filament 三条坐标
