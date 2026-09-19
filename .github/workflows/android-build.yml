@@ -25,7 +25,6 @@ on:
       - ci/script/prepare_android_dependencies.py
       - cmake/**
       - avator/**
-      - examples/**
       - gradle/**
       - gradle.properties
       - gradlew
@@ -180,11 +179,6 @@ jobs:
       - name: Build WebChat assets
         run: |
           npm run build:webchat
-
-      - name: Build bundled ToolPkg packages
-        run: |
-          npm run build:examples:github
-          python3 tools/example_packages/sync_example_packages.py --no-hot-reload
 
       - name: Configure Android SDK
         shell: bash
