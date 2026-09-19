@@ -53,9 +53,13 @@ def main() -> int:
     parser.add_argument("--from", dest="from_dir", default=None, help="生成源目录（默认 app/build kapt 输出；可指 CI artifact 解压目录）")
     args = parser.parse_args()
 
-    generated = collect_files(find_generated_root(args.from_dir))
+    root = find_generated_root(args.from_dir)
+    generated = collect_files(root)
     if not generated:
-        sys.exit("kapt 生成目录为空：Room compiler 未生效（确认 -ProomRegen 已传入）")
+        for base in sorted((REPO_ROOT / "app/build/generated").glob("source/*")):
+            for p in sorted(base.rglob("*_Impl.java"))[:5]:
+                print(f"发现候选: {p.relative_to(REPO_ROOT)}")
+        sys.exit(f"kapt 生成目录为空（root={root}）：Room compiler 未生效（确认 -ProomRegen 已传入）")
 
     added, changed, same = [], [], []
     for rel, src in sorted(generated.items()):
