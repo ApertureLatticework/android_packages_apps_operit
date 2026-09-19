@@ -744,8 +744,6 @@ class MemoryRepository(private val context: Context, profileId: String) {
                     textMatchesLexicalToken(memory.title, fragment)
                 }
             } else {
-                memoryDao.getAll()
-            } else {
                 memoryDao.titleContains(fragment)
             }
 
