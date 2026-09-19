@@ -726,8 +726,6 @@ dependencies {
     implementation(libs.shizuku.api)
     implementation(libs.shizuku.provider)
 
-    // Tasker Plugin Library
-    implementation("com.joaomgcd:taskerpluginlibrary:0.4.10")
     
     // WorkManager for scheduled workflows
     implementation(libs.work.runtime.ktx)

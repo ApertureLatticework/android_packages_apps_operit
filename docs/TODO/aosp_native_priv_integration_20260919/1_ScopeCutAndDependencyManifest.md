@@ -71,10 +71,10 @@ UI 面同步裁剪（设置页、向导、导航）：
 | objectbox 双条与插件 | 记忆向量旧存储 | 归步骤 2 |
 | retrofit 双条、moshi-kotlin | 无引用死依赖 | 零文件引用，直接删 |
 | glide | 无引用死依赖 | 零文件引用，与 coil 双轨 |
-| poi 三条、itextg、pdfbox、junrar | 文档转换与 rar 解压 | 合计 6 文件，外围能力 |
+| poi 三条、itextg、pdfbox、junrar | 改判保留 | Agent 文件工具与工作区文档预览在用（StandardFileSystemTools、WorkspaceReadOnlyDocumentPreview），属文件与工作区核心域 |
 | exoplayer 三条 | 改判保留 | 见待定区定案，Soong 化时迁 androidx.media3 |
-| renderx | LaTeX 辅助渲染 | jlatexmath 保留主链 |
-| taskerpluginlibrary | Tasker 集成 | 随外围裁 |
+| renderx | 改判保留 | 聊天 markdown 流渲染链在用（CanvasMarkdownNodeRenderer 等 4 文件） |
+| taskerpluginlibrary | Tasker 集成线（已执行） | 删除 integrations/tasker、manifest 三条目、trigger_tasker_event 工具与双语 schema、JS 桥、工作流 tasker 触发类型与引擎函数；WorkflowBootReceiver 迁居 integrations/intent 保留 |
 | desugar-jdk | Gradle 构建期概念 | 平台构建无需，不入树 |
 
 ### 唯一例外（prebuilt AAR）

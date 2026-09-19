@@ -11,7 +11,6 @@ import com.ai.assistance.operit.data.model.ToolParameter
 import com.ai.assistance.operit.data.model.ToolResult
 import com.ai.assistance.operit.data.preferences.CharacterCardToolAccessResolver
 import com.ai.assistance.operit.data.preferences.ResolvedCharacterCardToolAccess
-import com.ai.assistance.operit.integrations.tasker.triggerAIAgentAction
 import com.ai.assistance.operit.services.FloatingChatService
 import com.ai.assistance.operit.ui.common.displays.VirtualDisplayOverlay
 import com.ai.assistance.operit.util.LocaleUtils
@@ -1458,57 +1457,6 @@ fun registerAllTools(handler: AIToolHandler, context: Context) {
                 deviceInfoTool.invoke(tool)
             }
     )
-    
-    // Tasker事件触发工具
-    handler.registerTool(
-            name = "trigger_tasker_event",
-            descriptionGenerator = { tool ->
-                val taskType = tool.parameters.find { it.name == "task_type" }?.value ?: ""
-                val args = tool.parameters.filter { it.name.startsWith("arg1") }.joinToString(",")
-                s(R.string.toolreg_trigger_tasker_event_desc, taskType, args)
-            },
-            executor = { tool ->
-                val params = tool.parameters.associate { it.name to it.value }
-                val taskType = params["task_type"]
-                if (taskType.isNullOrBlank()) {
-                    ToolResult(
-                        toolName = tool.name,
-                        success = false,
-                        result = StringResultData(""),
-                        error = s(R.string.toolreg_missing_required_param, "task_type")
-                    )
-                } else {
-                    val args = params.filterKeys { it != "task_type" }
-                    try {
-                        context.triggerAIAgentAction(
-                            taskType,
-                            args
-                        )
-                        ToolResult(
-                            toolName = tool.name,
-                            success = true,
-                            result =
-                                    StringResultData(
-                                            s(R.string.toolreg_tasker_event_triggered_result, taskType)
-                                    )
-                        )
-                    } catch (e: Exception) {
-                        ToolResult(
-                            toolName = tool.name,
-                            success = false,
-                            result = StringResultData(""),
-                            error =
-                                    s(
-                                            R.string.toolreg_failed_trigger_tasker_event,
-                                            e.message ?: ""
-                                    )
-                        )
-                    }
-                }
-            }
-    )
-
-    
     // 工作流工具
     val workflowTools = ToolGetter.getWorkflowTools(context)
 

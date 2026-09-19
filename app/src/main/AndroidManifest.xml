@@ -294,15 +294,7 @@
             </intent-filter>
         </activity>
         
-        <activity
-            android:name=".integrations.tasker.ActivityConfigAIAgentAction"
-            android:exported="true"
-            android:icon="@mipmap/ic_launcher_simple"
-            android:label="AI Agent Action">
-            <intent-filter>
-                <action android:name="net.dinglisch.android.tasker.ACTION_EDIT_EVENT" />
-            </intent-filter>
-        </activity>
+    <!-- Tasker 集成线随 ROM 版裁撤 -->
 
         <activity
             android:name=".core.tools.system.ScreenCaptureActivity"
@@ -445,31 +437,11 @@
             </intent-filter>
         </receiver>
         
-        <!-- Workflow Tasker Plugin Activity -->
-        <activity
-            android:name=".integrations.tasker.WorkflowTaskerActivityConfig"
-            android:exported="true"
-            android:label="Operit Workflow"
-            android:icon="@mipmap/ic_launcher_simple">
-            <intent-filter>
-                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
-            </intent-filter>
-        </activity>
-        
-        <!-- Workflow Tasker Receiver -->
-        <receiver
-            android:name=".integrations.tasker.WorkflowTaskerReceiver"
-            android:exported="true"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="com.ai.assistance.operit.TRIGGER_WORKFLOW" />
-                <action android:name="com.twofortyfouram.locale.intent.action.FIRE_SETTING" />
-            </intent-filter>
-        </receiver>
+        <!-- Workflow Tasker 插件随 Tasker 集成线裁撤 -->
         
         <!-- Boot Completed Receiver for rescheduling workflows -->
         <receiver
-            android:name=".integrations.tasker.WorkflowBootReceiver"
+            android:name=".integrations.intent.WorkflowBootReceiver"
             android:exported="true"
             android:enabled="true">
             <intent-filter>

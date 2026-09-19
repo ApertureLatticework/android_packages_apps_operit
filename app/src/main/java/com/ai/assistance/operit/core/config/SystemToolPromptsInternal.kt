@@ -809,57 +809,6 @@ object SystemToolPromptsInternal {
                         )
                     )
             ),
-            SystemToolPromptCategory(
-                categoryName = "Tasker Tools",
-                tools =
-                    listOf(
-                        ToolPrompt(
-                            name = "trigger_tasker_event",
-                            description = "Trigger a Tasker event.",
-                            parametersStructured =
-                                listOf(
-                                    ToolParameterSchema(
-                                        name = "task_type",
-                                        type = "string",
-                                        description = "Tasker event type",
-                                        required = true
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg1",
-                                        type = "string",
-                                        description = "optional",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg2",
-                                        type = "string",
-                                        description = "optional",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg3",
-                                        type = "string",
-                                        description = "optional",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg4",
-                                        type = "string",
-                                        description = "optional",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg5",
-                                        type = "string",
-                                        description = "optional",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "args_json",
-                                        type = "string",
-                                        description = "optional, JSON object string",
-                                        required = false
-                                    )
                                 )
                         )
                     )
@@ -3798,61 +3747,6 @@ object SystemToolPromptsInternal {
                                 ToolParameterSchema(name = "path", type = "string", description = "文件路径", required = true),
                                 ToolParameterSchema(name = "title", type = "string", description = "可选的共享标题", required = false, default = "\"Share File\"")
                             )
-                        )
-                    )
-            ),
-            SystemToolPromptCategory(
-                categoryName = "Tasker 工具",
-                tools =
-                    listOf(
-                        ToolPrompt(
-                            name = "trigger_tasker_event",
-                            description = "触发 Tasker 事件。",
-                            parametersStructured =
-                                listOf(
-                                    ToolParameterSchema(
-                                        name = "task_type",
-                                        type = "string",
-                                        description = "Tasker 事件类型",
-                                        required = true
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg1",
-                                        type = "string",
-                                        description = "可选",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg2",
-                                        type = "string",
-                                        description = "可选",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg3",
-                                        type = "string",
-                                        description = "可选",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg4",
-                                        type = "string",
-                                        description = "可选",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg5",
-                                        type = "string",
-                                        description = "可选",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "args_json",
-                                        type = "string",
-                                        description = "可选，JSON 对象字符串",
-                                        required = false
-                                    )
-                                )
                         )
                     )
             ),
