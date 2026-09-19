@@ -703,12 +703,13 @@ dependencies {
     // Room 数据库
     implementation(libs.room.runtime)
     implementation(libs.room.ktx) // Kotlin扩展和协程支持
-    // 步骤3机制：Room 生成类已 check-in 进 src/main/java，默认构建零注解处理器；
-    // 再生成时（-ProomRegen）注入 compiler，并从编译源集排除 check-in 生成类，
+    // 步骤3机制：Room 生成类已 check-in 进 src/main/room-generated，默认构建零注解处理器；
+    // 再生成时（-ProomRegen）注入 compiler 并把该目录移出编译源集，
     // 避免 kapt 输出与 check-in 副本在 stub 编译期撞 duplicate class
     if (project.hasProperty("roomRegen")) {
         kapt(libs.room.compiler)
-        android.sourceSets.getByName("main").java.exclude("**/*_Impl.java")
+    } else {
+        android.sourceSets.getByName("main").java.srcDir("src/main/room-generated")
     }
 
     implementation(libs.commons.compress.v2)

@@ -22,7 +22,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 GENERATED_GLOB = "generated/source/kapt*"
 VARIANT = "debug"
-DEST_ROOT = REPO_ROOT / "app/src/main/java"
+DEST_ROOT = REPO_ROOT / "app/src/main/room-generated"
 
 
 def find_generated_root(from_dir: str | None) -> Path:
