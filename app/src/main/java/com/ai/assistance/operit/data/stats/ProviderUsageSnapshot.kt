@@ -275,6 +275,38 @@ object ProviderUsageNormalizer {
         return snapshot.takeIf { it.hasKnownFields() }
     }
 
+
+    /** ToolPkg JS provider：`input` 视为总量（含缓存命中），uncached 为差值。
+     * [completeSnapshot] 由协议版本决定：新协议（携带 attempt）为同 attempt 内
+     * 的部分更新；旧协议（无 attempt）为整个逻辑请求的累计完整快照。
+     * 字段可空（评审 P1-6）：缺省字段 = 未知，绝不继承全局累计计数；跨 attempt
+     * 聚合时缺失分量保持未知（不猜测）。Long 语义（评审 P2-1），负值拒绝为未知。
+     */
+    fun toolPkg(
+        input: Long?,
+        cachedInput: Long?,
+        output: Long?,
+        completeSnapshot: Boolean,
+    ): ProviderUsageSnapshot {
+        val validInput = input?.takeIf { it >= 0 }
+        val validCachedInput = cachedInput?.takeIf { it >= 0 }
+        val splitIsValid =
+            validInput != null && validCachedInput != null && validCachedInput <= validInput
+        val uncached =
+            if (splitIsValid) validInput!! - validCachedInput!! else null
+        return ProviderUsageSnapshot(
+            uncachedInputTokens = uncached,
+            cachedInputTokens = validCachedInput.takeIf { splitIsValid },
+            cacheWriteTokens = null,
+            totalInputTokens = validInput,
+            outputTokens = output?.takeIf { it >= 0 },
+            reasoningTokens = null,
+            reasoningIncludedInOutput = null,
+            cacheWriteSeparateBilling = false,
+            completeSnapshot = completeSnapshot,
+            source = SOURCE_TOOLPKG,
+        )
+    }
     private fun sumNumericFields(jsonObject: JSONObject): Long {
         var total = 0L
         val keys = jsonObject.keys()

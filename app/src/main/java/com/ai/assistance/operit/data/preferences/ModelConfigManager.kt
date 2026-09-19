@@ -687,28 +687,6 @@ class ModelConfigManager(
         }
     }
 
-    // 更新模型配置 - 包含API提供商类型
-    suspend fun updateModelConfig(
-            configId: String,
-            apiKey: String,
-            apiEndpoint: String,
-            modelName: String,
-            apiProviderType: com.ai.assistance.operit.data.model.ApiProviderType,
-            apiProviderTypeId: String = apiProviderType.name
-    ): ModelConfigData {
-        return updateConfigInternal(configId) {
-            it.copy(
-                    apiKey = apiKey,
-                    apiEndpoint = apiEndpoint,
-                    modelName = modelName,
-                    apiProviderType = apiProviderType,
-                    apiProviderTypeId = apiProviderTypeId,
-                    thinkingConfigurations = nextThinkingRulesForProvider(it, apiProviderTypeId, apiEndpoint),
-                    thinkingOptionId = nextThinkingOptionIdForProvider(it, apiProviderTypeId, modelName, apiEndpoint)
-            )
-        }
-    }
-
     suspend fun updateApiSettingsFull(
             configId: String,
             apiKey: String,
