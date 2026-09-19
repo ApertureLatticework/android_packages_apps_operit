@@ -201,14 +201,14 @@ jobs:
           chmod +x ./gradlew
           ./gradlew "$gradle_task" --stacktrace --no-daemon
 
-      # 步骤3机制：check-in 生成类后默认构建零注解处理器；此处用 -ProomRegen 再生并上传，供本地同步 check-in
-      # 门禁阶段（生成类 check-in 完成后）追加 tools/room_codegen_sync.py --check 硬门禁
-      - name: Room codegen export (-ProomRegen)
+      # 步骤3机制：默认构建零注解处理器（生成类已 check-in）；此处 -ProomRegen 再生后跑 --check 硬门禁，漂移即红
+      - name: Room codegen check (-ProomRegen)
         if: github.event_name == 'workflow_dispatch'
         shell: bash
         run: |
           set -euo pipefail
           ./gradlew :app:kaptDebugKotlin -ProomRegen --no-daemon
+          python3 tools/room_codegen_sync.py --check
           mkdir -p staging/room-generated
           cp -r app/build/generated/source/kapt*/debug/com staging/room-generated/com
 

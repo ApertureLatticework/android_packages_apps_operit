@@ -35,10 +35,10 @@ Room 的 `*_Dao_Impl`、`*_Database_Impl` 等实现类由 kapt 在构建期生�
 - tools/room_codegen_sync.py：同步/检查/剪除工具，支持 --from 指向 CI artifact 解压目录
 - android-build.yml：构建后追加 -ProomRegen 再生步骦，上传 staging/room-generated artifact
 
-阶段二（生成类 check-in 后）：
+阶段二（已落地，CI run 35457543673 artifact 取回）：
 
-- 从 artifact 取回生成类（含 AppDatabase 与 MemoryDatabase 全套 _Impl.java）提交入库
-- workflow 追加 tools/room_codegen_sync.py --check 硬门禁，漂移即红
+- 生成类 11 文件入库（AppDatabase 五 DAO + AppDatabase_Impl + MemoryDatabase 四 DAO + MemoryDatabase_Impl）
+- workflow 追加 tools/room_codegen_sync.py --check 硬门禁，漂移即红；artifact 保留供后续 schema 变更同步
 
 风险同步：阶段一到阶段二之间的默认构建产物不含 Room 实现类（运行时才会暴露），两阶段必须同一分支连续落地，不留长窗口
 
