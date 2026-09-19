@@ -25,7 +25,6 @@ import com.ai.assistance.operit.core.tools.SimplifiedUINode
 import com.ai.assistance.operit.core.config.FunctionalPrompts
 import com.ai.assistance.operit.data.preferences.ApiPreferences
 import com.ai.assistance.operit.data.preferences.DisplayPreferencesManager
-import com.ai.assistance.operit.data.preferences.WaifuPreferences
 import com.ai.assistance.operit.data.preferences.CharacterCardManager
 import com.ai.assistance.operit.data.preferences.ActivePromptManager
 import com.ai.assistance.operit.data.preferences.CharacterCardToolAccessResolver
@@ -69,7 +68,6 @@ class ConversationService(
 
     private val apiPreferences = ApiPreferences.getInstance(context)
     private val displayPreferencesManager = DisplayPreferencesManager.getInstance(context)
-    private val waifuPreferences = WaifuPreferences.getInstance(context)
     private val characterCardManager = CharacterCardManager.getInstance(context)
     private val characterCardToolAccessResolver = CharacterCardToolAccessResolver.getInstance(context)
     private val activePromptManager = ActivePromptManager.getInstance(context)
@@ -582,9 +580,6 @@ class ConversationService(
                     dispatchToolPromptComposeHooks = dispatchToolPromptComposeHooks
                 )
 
-                // 构建waifu特殊规则
-                val waifuRulesText = if(waifuPreferences.enableWaifuModeFlow.first()) buildWaifuRulesText() else ""
-
                 // 构建最终的系统提示词
                 val finalSystemPrompt = buildString {
                     append(systemPrompt)
@@ -593,7 +588,6 @@ class ConversationService(
                         append(proxyRolePrompt)
                         append("\n</assistant_role>")
                     }
-                    append(waifuRulesText)
                     if (!disableUserPreferenceDescription && userProfileMarkdown.isNotEmpty()) {
                         append("\n\n<user_profile source=\"memory-space/$effectiveMemorySpaceId/user.md\">\n")
                         append(userProfileMarkdown)
@@ -820,74 +814,6 @@ class ConversationService(
     /** Data class for search-replace operations, used for JSON deserialization. */
     private data class SearchReplaceOperation(val search: String, val replace: String)
 
-    /**
-     * Flattens the hierarchical UI node structure into a simple, flat list of key elements.
-     * This provides a much cleaner context for the AI to make decisions.
-     */
-    private fun flattenUiInfo(pageInfo: UIPageResultData): String {
-        val clickableElements = mutableListOf<String>()
-        val screenTexts = mutableListOf<String>()
-
-        fun traverse(node: SimplifiedUINode) {
-            // If the node is clickable, treat it as an atomic unit. We'll gather all text from
-            // its entire subtree to form a comprehensive description for the AI.
-            if (node.isClickable) {
-                val parts = mutableListOf<String>()
-                
-                // Start by collecting standard properties like resource ID, class, and bounds.
-                node.resourceId?.takeIf { it.isNotBlank() }?.let { parts.add("id: $it") }
-
-                // --- NEW: Recursively find all text and content descriptions in the subtree ---
-                val descriptiveTexts = mutableListOf<String>()
-                fun findTextsRecursively(n: SimplifiedUINode) {
-                    n.text?.takeIf { it.isNotBlank() }?.let { descriptiveTexts.add(it) }
-                    n.contentDesc?.takeIf { it.isNotBlank() }?.let { descriptiveTexts.add(it) }
-                    n.children.forEach(::findTextsRecursively)
-                }
-                findTextsRecursively(node)
-
-                // Combine all found texts into a single descriptive string. This is crucial for
-                // elements where the text label is in a child node of the clickable area.
-                val combinedText = descriptiveTexts.distinct().joinToString(" | ")
-                if (combinedText.isNotBlank()) {
-                    // Using "desc" to signify this is a constructed description. Increased length.
-                    parts.add("desc: \"${combinedText.replace("\"", "'").take(80)}\"")
-                }
-                // --- END NEW ---
-
-                node.className?.let { parts.add("class: ${it.substringAfterLast('.')}") }
-                node.bounds?.let { parts.add("bounds: ${it.replace(' ', ',')}") }
-
-                // Only add the element if it has some identifiable information.
-                if (parts.isNotEmpty()) {
-                    clickableElements.add("[${parts.joinToString(", ")}]")
-                }
-                // Once an element is identified as clickable, we don't process its children separately.
-            } else {
-                // If the node is not clickable, add its text for general context and continue traversal.
-                node.text?.takeIf { it.isNotBlank() }?.let {
-                    screenTexts.add("\"${it.replace("\"", "'").take(70)}\"")
-                }
-                node.children.forEach(::traverse)
-            }
-        }
-
-        traverse(pageInfo.uiElements)
-
-        // Use distinct to remove duplicate text entries from non-clickable elements.
-        val distinctScreenTexts = screenTexts.distinct()
-
-        return """
-        Package: ${pageInfo.packageName}
-        Activity: ${pageInfo.activityName}
-        Clickable Elements:
-        ${clickableElements.joinToString("\n")}
-        Screen Text (
-        for context):
-        ${distinctScreenTexts.joinToString("\n")}
-        """.trimIndent()
-    }
-
     private fun JSONObject.toMap(): Map<String, Any> {
         val map = mutableMapOf<String, Any>()
         val keysItr = this.keys()
@@ -949,16 +875,6 @@ class ConversationService(
             }
         }
         return AITool(type, parameters)
-    }
-
-    private fun shouldInjectMoodRules(promptFunctionType: PromptFunctionType): Boolean {
-        if (promptFunctionType != PromptFunctionType.VOICE) {
-            return false
-        }
-
-        val settings = avatarRepository.settings.value
-        val currentAvatar = avatarRepository.currentAvatar.value
-        return settings.isVoiceCallAvatarEnabled && currentAvatar != null
     }
 
     /**

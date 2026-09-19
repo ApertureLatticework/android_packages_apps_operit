@@ -705,8 +705,6 @@ sealed class Screen(
         }
     }
 
-    }
-
     data object Workflow : Screen(navItem = NavItem.Workflow) {
         @Composable
         override fun Content(
