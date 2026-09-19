@@ -94,3 +94,7 @@
 # Reactor BlockHound integration with Netty
 -dontwarn reactor.blockhound.integration.BlockHoundIntegration
 -dontwarn io.netty.util.internal.Hidden$NettyBlockHoundIntegration
+
+# 体积精简第一梯队：R8 启用后的反射热点保留
+# JS 引擎（QuickJS 注册的 Kotlin 桥接方法与 DSL 解析线，运行期按名调用）
+-keep class com.ai.assistance.operit.core.tools.javascript.** { *; }

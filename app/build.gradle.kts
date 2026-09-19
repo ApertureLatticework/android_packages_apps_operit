@@ -392,6 +392,11 @@ android {
         }
     }
 
+    // ROM-only 分发：仅保留中文（默认）与英文资源，八语出包（体积精简第一梯队）
+    androidResources {
+        localeFilters.addAll(listOf("zh", "en"))
+    }
+
     defaultConfig {
         applicationId = "com.ai.assistance.operit"
         minSdk = 26
@@ -421,8 +426,9 @@ android {
         val releaseSigningConfig = signingConfigs.findByName("release")
 
         release {
-            isMinifyEnabled = false
-            isShrinkResources = false
+            // ROM-only 分发：R8 全量压缩与资源收缩（体积精简第一梯队）
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -446,8 +452,8 @@ android {
             resValue("string", "app_name", "Operit Clone")
         }
         create("nightly") {
-            isMinifyEnabled = false
-            isShrinkResources = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -697,7 +703,11 @@ dependencies {
     // Room 数据库
     implementation(libs.room.runtime)
     implementation(libs.room.ktx) // Kotlin扩展和协程支持
-    kapt(libs.room.compiler) // 使用kapt代替ksp
+    // 步骤3机制：Room 生成类已 check-in 进 src/main/java，默认构建零注解处理器；
+    // 仅在再生成时以 -ProomRegen 注入 compiler，供 tools/room_codegen_sync.py 同步
+    if (project.hasProperty("roomRegen")) {
+        kapt(libs.room.compiler)
+    }
 
     implementation(libs.commons.compress.v2)
     implementation(libs.junrar)

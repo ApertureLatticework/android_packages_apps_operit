@@ -207,6 +207,26 @@ jobs:
           chmod +x ./gradlew
           ./gradlew "$gradle_task" --stacktrace --no-daemon
 
+      # 步骤3机制：check-in 生成类后默认构建零注解处理器；此处用 -ProomRegen 再生并上传，供本地同步 check-in
+      # 门禁阶段（生成类 check-in 完成后）追加 tools/room_codegen_sync.py --check 硬门禁
+      - name: Room codegen export (-ProomRegen)
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./gradlew :app:kaptDebugKotlin -ProomRegen --no-daemon
+          mkdir -p staging/room-generated
+          cp -r app/build/generated/source/kapt*/debug/com staging/room-generated/com
+
+      - name: Upload Room generated sources
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: room-generated-${{ github.run_number }}
+          path: staging/room-generated/**/*.java
+          if-no-files-found: error
+          retention-days: 14
+
       - name: Upload Android reports
         if: always()
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6

@@ -27,6 +27,21 @@ Room 的 `*_Dao_Impl`、`*_Database_Impl` 等实现类由 kapt 在构建期生�
 - 删除本地 build 目录后 Gradle 构建通过，证明编译只依赖 check-in 生成类而非重新生成
 - Soong 侧 spike：仅含 check-in 生成类与 Room runtime 源码时模块可编
 
+## 执行记录（2026-09-19，两阶段落地）
+
+阶段一（已落地）：
+
+- app/build.gradle.kts：kapt(room.compiler) 改为 -ProomRegen 条件注入，默认构建零注解处理器
+- tools/room_codegen_sync.py：同步/检查/剪除工具，支持 --from 指向 CI artifact 解压目录
+- android-build.yml：构建后追加 -ProomRegen 再生步骦，上传 staging/room-generated artifact
+
+阶段二（生成类 check-in 后）：
+
+- 从 artifact 取回生成类（含 AppDatabase 与 MemoryDatabase 全套 _Impl.java）提交入库
+- workflow 追加 tools/room_codegen_sync.py --check 硬门禁，漂移即红
+
+风险同步：阶段一到阶段二之间的默认构建产物不含 Room 实现类（运行时才会暴露），两阶段必须同一分支连续落地，不留长窗口
+
 ## 树内基建备注（LOS 23.2 静态验证）
 
 - SystemUI 在树内声明 `plugins: ["androidx.room_room-compiler-plugin"]`，Room 编译器存在 Soong 插件通路，但仅覆盖 javac 源集；Operit 实体为 Kotlin 依赖 kapt，不走此通路，check-in 方案维持
