@@ -31,12 +31,14 @@ def find_generated_root(from_dir: str | None) -> Path:
         if not root.is_dir():
             sys.exit(f"--from 目录不存在: {root}")
         return root
-    candidates = sorted(
+    candidates = [
         p for p in REPO_ROOT.glob(f"app/build/{GENERATED_GLOB}/{VARIANT}") if p.is_dir()
-    )
+    ]
     if not candidates:
         sys.exit(f"未找到 kapt 生成目录（先跑 ./gradlew :app:kapt{VARIANT.capitalize()}Kotlin -ProomRegen，或用 --from 指定 CI artifact 解压目录）")
-    return candidates[-1]
+    # kapt* 族含 kapt/（处理器 java 输出）与 kaptKotlin/（stub 输出，恒空），
+    # 按所含 .java 数量取最丰者
+    return max(candidates, key=lambda p: sum(1 for _ in p.rglob("*.java")))
 
 
 def collect_files(root: Path) -> dict[str, Path]:
