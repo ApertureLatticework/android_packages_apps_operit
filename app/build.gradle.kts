@@ -704,9 +704,11 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.room.ktx) // Kotlin扩展和协程支持
     // 步骤3机制：Room 生成类已 check-in 进 src/main/java，默认构建零注解处理器；
-    // 仅在再生成时以 -ProomRegen 注入 compiler，供 tools/room_codegen_sync.py 同步
+    // 再生成时（-ProomRegen）注入 compiler，并从编译源集排除 check-in 生成类，
+    // 避免 kapt 输出与 check-in 副本在 stub 编译期撞 duplicate class
     if (project.hasProperty("roomRegen")) {
         kapt(libs.room.compiler)
+        sourceSets["main"].java.exclude("**/*_Impl.java")
     }
 
     implementation(libs.commons.compress.v2)
