@@ -35,10 +35,12 @@ Room 的 `*_Dao_Impl`、`*_Database_Impl` 等实现类由 kapt 在构建期生�
 - tools/room_codegen_sync.py：同步/检查/剪除工具，支持 --from 指向 CI artifact 解压目录
 - android-build.yml：构建后追加 -ProomRegen 再生步骦，上传 staging/room-generated artifact
 
-阶段二（已落地，CI run 35457543673 artifact 取回）：
+阶段二（已完成，CI run 35464703998 绿灯）：
 
 - 生成类 11 文件入库（AppDatabase 五 DAO + AppDatabase_Impl + MemoryDatabase 四 DAO + MemoryDatabase_Impl）
-- workflow 追加 tools/room_codegen_sync.py --check 硬门禁，漂移即红；artifact 保留供后续 schema 变更同步
+- 生成类落位独立源目录 src/main/room-generated（默认构建条件 srcDir 纳入，-ProomRegen 再生成时移出，消解 kapt 撞类）
+- workflow 硬门禁生效：-ProomRegen 再生后 room_codegen_sync.py --check 比对，漂移即红；artifact 保留供后续 schema 变更同步
+- kapt 输出目录甄别经验：kapt*/ 族含恒空的 kaptKotlin/，同步脚本按 .java 数量取最丰目录
 
 风险同步：阶段一到阶段二之间的默认构建产物不含 Room 实现类（运行时才会暴露），两阶段必须同一分支连续落地，不留长窗口
 

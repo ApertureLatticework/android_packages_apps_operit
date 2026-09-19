@@ -1,7 +1,7 @@
 ---
 Repository: https://github.com/ApertureLatticework/android_packages_apps_operit
 Branch: feat/native-rom-integration
-Status: executing（第一梯队落地中）
+Status: executing（第一梯队完成，CI 编译验证通过）
 ---
 
 # APK 体积精简
@@ -40,7 +40,10 @@ ROM 独占分发，system 分区寸土寸金；安装包体积按梯队压缩，
 - accessibility.apk 2.7M：无障碍档现役，步骤 4 权限阶梯改造时评估保留形态
 - emoji/ 3.7M：CustomEmojiRepository 运行时读取，现役
 
-## 验证
+## 验证与实测（2026-09-19）
 
 - CI Android Build 编译通过（R8 规则缺失会在此暴露）
-- workflow 产物体积对比：本轮 APK 与上轮差值应显著（语言资源约省 4M、bridge 1.4M、png 1.3M，minify 收益视类规模）
+- artifact 实测：353.4MB → 322.8MB（run 35455207472 → 35464703998，debug APK 口径）
+- 差值 -30.6MB 中：随 examples 裁撤退出的打包 toolpkg 占大头，语言资源约 4M、bridge 1.4M、png 1.3M
+- minify 与 shrinkResources 仅作用于 release/nightly 构建型，debug 口径未体现；release 收益待 bundleRelease 实测
+- 另：用户侧 Drop examples（f936608，540 文件 -15.7 万行）与 CI toolpkg 车道撤除已配套落地
