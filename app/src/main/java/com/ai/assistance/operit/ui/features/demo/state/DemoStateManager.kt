@@ -182,7 +182,6 @@ class DemoStateManager(private val context: Context, private val coroutineScope:
      * 刷新所有状态
      */
     suspend fun refreshAllStates() {
-        refreshNodejsPythonEnvironment()
     }
 
     /**

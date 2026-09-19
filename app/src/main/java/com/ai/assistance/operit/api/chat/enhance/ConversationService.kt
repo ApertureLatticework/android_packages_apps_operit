@@ -51,8 +51,6 @@ import com.ai.assistance.operit.util.LocaleUtils
 import com.ai.assistance.operit.api.chat.enhance.MultiServiceManager
 import com.ai.assistance.operit.data.repository.CustomEmojiRepository
 import com.ai.assistance.operit.api.chat.llmprovider.MediaLinkBuilder
-import com.ai.assistance.operit.data.repository.getCustomMoodDefinitions
-import com.ai.assistance.operit.data.repository.getMoodAnimationMapping
 
 /** 处理会话相关功能的服务类，包括会话总结、偏好处理和对话切割准备 */
 class ConversationService(
@@ -951,80 +949,6 @@ class ConversationService(
             }
         }
         return AITool(type, parameters)
-    }
-
-    /**
-     * 构建waifu模式的特殊规则文本
-     * @return 格式化的waifu规则文本，如果没有规则则返回空字符串
-     */
-    private suspend fun buildWaifuRulesText(): String {
-        val activePrompt = activePromptManager.getActivePrompt()
-        val waifuEnableEmoticons = waifuPreferences.waifuEnableEmoticonsFlow.first()
-        val waifuEnableSelfie = waifuPreferences.waifuEnableSelfieFlow.first()
-        val waifuCustomPrompt = waifuPreferences.waifuCustomPromptFlow.first()
-        val waifuSelfiePrompt = waifuPreferences.waifuSelfiePromptFlow.first()
-        val waifuRules = mutableListOf<String>()
-
-        if (waifuEnableEmoticons) {
-            // 动态获取当前可用的表情分组
-            val availableCategories = try {
-                customEmojiRepository.initializeBuiltinEmojis(activePrompt)
-                customEmojiRepository.getAllCategories(activePrompt).first()
-            } catch (e: Exception) {
-                com.ai.assistance.operit.util.AppLogger.e("ConversationService", "获取表情分组失败", e)
-                emptyList()
-            }
-            
-            if (availableCategories.isNotEmpty()) {
-                val emotionListText = availableCategories.joinToString(", ")
-                waifuRules.add(FunctionalPrompts.waifuEmotionRule(emotionListText))
-            } else {
-                // 如果没有自定义表情，则不添加情绪规则，或明确告知没有可用表情
-                waifuRules.add(FunctionalPrompts.waifuNoCustomEmojiRule())
-            }
-        }
-        
-        if (waifuEnableSelfie) {
-            waifuRules.add(FunctionalPrompts.waifuSelfieRule(waifuSelfiePrompt))
-        }
-
-        if (waifuCustomPrompt.isNotBlank()) {
-            waifuRules.add(FunctionalPrompts.waifuCustomPromptRule(waifuCustomPrompt))
-        }
-
-        return if (waifuRules.isNotEmpty()) {
-            buildString {
-                append("\n\n[Extra Rules]")
-                waifuRules.forEach { rule ->
-                    append("\n- $rule")
-                }
-            }
-        } else ""
-    }
-
-    /**
-     * 虚拟形象的 <mood> 标签规则，仅在语音头像环境下添加到系统提示中。
-     * 会自动拼接当前头像启用的自定义 mood 类型。
-     */
-    private fun buildAvatarMoodRulesText(useEnglish: Boolean): String {
-        val currentAvatarId = avatarRepository.currentAvatar.value?.id
-        val currentConfig =
-            avatarRepository.configs.value.firstOrNull { config ->
-                config.id == currentAvatarId
-            }
-
-        val moodAnimationMapping = currentConfig?.getMoodAnimationMapping().orEmpty()
-        val customMoodDefinitions =
-            currentConfig?.getCustomMoodDefinitions()
-                .orEmpty()
-                .filter { definition ->
-                    moodAnimationMapping[definition.key]?.isNotBlank() == true
-                }
-
-        return FunctionalPrompts.avatarMoodRulesText(
-            customMoodDefinitions = customMoodDefinitions,
-            useEnglish = useEnglish
-        )
     }
 
     private fun shouldInjectMoodRules(promptFunctionType: PromptFunctionType): Boolean {

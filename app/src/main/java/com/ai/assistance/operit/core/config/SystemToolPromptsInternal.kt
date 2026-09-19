@@ -54,12 +54,6 @@ object SystemToolPromptsInternal {
     2. **If you need to modify an existing file**: you **MUST** use `type=replace` (or `type=delete`) and provide `old` / `new`. Do **NOT** delete the whole file and rewrite it.
 """
                         ),
-                        ,
-                        ,
-                        ,
-                        ,
-                        ,
-                        ,
                         ToolPrompt(
                             name = "music_play",
                             description = "Play audio inside the app using the built-in music player.",
@@ -695,10 +689,6 @@ object SystemToolPromptsInternal {
                                 ToolParameterSchema(name = "path", type = "string", description = "file path", required = true),
                                 ToolParameterSchema(name = "title", type = "string", description = "optional share title", required = false, default = "\"Share File\"")
                             )
-                        )
-                    )
-            ),
-                                )
                         )
                     )
             ),
@@ -2884,12 +2874,6 @@ object SystemToolPromptsInternal {
     2. **如果需要修改已存在文件**：必须用 `type=replace`（或 `type=delete`）并提供 `old/new`（或 `old`）。不要删除整个文件再重写。
 """
                         ),
-                        ,
-                        ,
-                        ,
-                        ,
-                        ,
-                        ,
                         ToolPrompt(
                             name = "music_play",
                             description = "使用应用内置音乐播放器播放音频。",

@@ -115,6 +115,7 @@ object ScreenRouteRegistry {
                 launchNavItem = NavItem.AiChat,
                 icon = NavItem.AiChat.icon,
                 order = 10
+            ),
             hostEntryDefinition(
                 entryId = "main.memory_base",
                 screen = Screen.MemoryBase,
