@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddComment
 import androidx.compose.material.icons.filled.Chat
@@ -54,12 +53,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.ai.assistance.operit.R
-import com.ai.assistance.operit.core.avatar.common.control.AvatarSettingKeys
-import com.ai.assistance.operit.core.avatar.common.state.AvatarEmotion
-import com.ai.assistance.operit.core.avatar.common.view.AvatarView
-import com.ai.assistance.operit.core.avatar.impl.factory.AvatarControllerFactoryImpl
-import com.ai.assistance.operit.core.avatar.impl.factory.AvatarModelFactoryImpl
-import com.ai.assistance.operit.core.avatar.impl.factory.AvatarRendererFactoryImpl
 import com.ai.assistance.operit.data.preferences.CharacterCardManager
 import com.ai.assistance.operit.data.preferences.CharacterGroupCardManager
 import com.ai.assistance.operit.data.preferences.ActivePromptManager
@@ -67,10 +60,6 @@ import com.ai.assistance.operit.data.model.ActivePrompt
 import com.ai.assistance.operit.data.preferences.SpeechServiceProfilesPreferences
 import com.ai.assistance.operit.data.preferences.UserPreferencesManager
 import com.ai.assistance.operit.data.preferences.WakeWordPreferences
-import com.ai.assistance.operit.data.repository.AvatarRepository
-import com.ai.assistance.operit.data.repository.AvatarSettings
-import com.ai.assistance.operit.data.repository.getEmotionAnimationMapping
-import com.ai.assistance.operit.data.repository.getMoodAnimationMapping
 import com.ai.assistance.operit.ui.floating.FloatContext
 import com.ai.assistance.operit.ui.floating.FloatingMode
 import com.ai.assistance.operit.ui.floating.ui.fullscreen.components.BottomControlBar
@@ -83,7 +72,6 @@ import java.util.Random
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.launch
 import android.graphics.Bitmap
 import android.graphics.Color as AndroidColor
 
@@ -140,45 +128,6 @@ fun FloatingFullscreenMode(floatContext: FloatContext) {
         }
     val themeSnapshot = LocalThemePreferenceSnapshot.current
     val aiAvatarUri = activeCharacterAvatarUri ?: themeSnapshot.customAiAvatarUri
-
-    val avatarModelFactory = remember { AvatarModelFactoryImpl() }
-    val avatarRepository = remember { AvatarRepository.getInstance(context, avatarModelFactory) }
-    val avatarControllerFactory = remember { AvatarControllerFactoryImpl() }
-    val avatarRendererFactory = remember { AvatarRendererFactoryImpl() }
-    val currentAvatarModel by avatarRepository.currentAvatar.collectAsState(initial = null)
-    val avatarSettings by avatarRepository.settings.collectAsState(initial = AvatarSettings())
-    val avatarConfigs by avatarRepository.configs.collectAsState(initial = emptyList())
-    val avatarInstanceSettings by avatarRepository.instanceSettings.collectAsState(initial = emptyMap())
-    val currentAvatarConfig = remember(avatarConfigs, currentAvatarModel?.id) {
-        currentAvatarModel?.let { avatar -> avatarConfigs.find { it.id == avatar.id } }
-    }
-    val currentAvatarEmotionMapping = remember(currentAvatarConfig) {
-        currentAvatarConfig?.getEmotionAnimationMapping().orEmpty()
-    }
-    val currentAvatarMoodAnimationMapping = remember(currentAvatarConfig) {
-        currentAvatarConfig?.getMoodAnimationMapping().orEmpty()
-    }
-    val currentAvatarSettings = remember(currentAvatarModel?.id, avatarInstanceSettings) {
-        currentAvatarModel?.id?.let { avatarId -> avatarInstanceSettings[avatarId] }
-    }
-    val currentAvatarRuntimeSettings = remember(currentAvatarSettings) {
-        currentAvatarSettings?.let { settings ->
-            mutableMapOf<String, Any>(
-                AvatarSettingKeys.SCALE to settings.scale,
-                AvatarSettingKeys.TRANSLATE_X to settings.translateX,
-                AvatarSettingKeys.TRANSLATE_Y to settings.translateY
-            ).apply {
-                settings.customSettings.forEach { (key, value) ->
-                    this[key] = value
-                }
-            }
-        }
-    }
-    val voiceAvatarController = currentAvatarModel?.let { avatarControllerFactory.createController(it) }
-    val isVoiceAvatarEnabled =
-        avatarSettings.isVoiceCallAvatarEnabled &&
-            currentAvatarModel != null &&
-            voiceAvatarController != null
 
     val speechServiceProfiles = remember { SpeechServiceProfilesPreferences(context) }
     val currentTtsProfile by speechServiceProfiles.currentTtsProfileOrNullFlow.collectAsState(initial = null)
@@ -256,66 +205,6 @@ fun FloatingFullscreenMode(floatContext: FloatContext) {
         )
     }
 
-    LaunchedEffect(latestMessage?.timestamp, latestMessage?.contentStream == null) {
-        viewModel.handleVoiceAvatarMessage(latestMessage)
-    }
-
-    LaunchedEffect(floatContext.inputProcessingState.value, latestMessage?.timestamp, latestMessage?.contentStream == null) {
-        viewModel.syncVoiceAvatarWithProcessingState(
-            state = floatContext.inputProcessingState.value,
-            latestMessage = latestMessage
-        )
-    }
-
-    LaunchedEffect(voiceAvatarController, currentAvatarEmotionMapping) {
-        voiceAvatarController?.updateEmotionAnimationMapping(currentAvatarEmotionMapping)
-    }
-
-    LaunchedEffect(voiceAvatarController, currentAvatarMoodAnimationMapping) {
-        voiceAvatarController?.updateTriggerAnimationMapping(currentAvatarMoodAnimationMapping)
-    }
-
-    LaunchedEffect(voiceAvatarController, currentAvatarRuntimeSettings) {
-        currentAvatarRuntimeSettings?.let { settings ->
-            voiceAvatarController?.updateSettings(settings)
-        }
-    }
-
-    LaunchedEffect(voiceAvatarController, isVoiceAvatarEnabled, viewModel.voiceAvatarMotionRequest.sequence) {
-        val controller = voiceAvatarController ?: return@LaunchedEffect
-        if (!isVoiceAvatarEnabled) {
-            return@LaunchedEffect
-        }
-
-        val request = viewModel.voiceAvatarMotionRequest
-        val triggerName = request.triggerName?.trim().orEmpty()
-        if (triggerName.isNotEmpty()) {
-            val handled = controller.playTrigger(triggerName, loop = if (request.playOnce) 1 else 0)
-            if (handled) {
-                if (request.playOnce) {
-                    val durationMillis =
-                        controller.estimateTriggerDurationMillis(triggerName)
-                            ?: controller.estimateEmotionDurationMillis(request.emotion)
-                    durationMillis?.let {
-                        delay(durationMillis)
-                        controller.setEmotion(AvatarEmotion.IDLE)
-                    }
-                }
-                return@LaunchedEffect
-            }
-        }
-
-        if (request.playOnce) {
-            controller.playEmotion(request.emotion, loop = 1)
-            controller.estimateEmotionDurationMillis(request.emotion)?.let { durationMillis ->
-                delay(durationMillis)
-                controller.setEmotion(AvatarEmotion.IDLE)
-            }
-        } else {
-            controller.setEmotion(request.emotion)
-        }
-    }
-    
     // 清理资源
     DisposableEffect(Unit) {
         onDispose {
@@ -489,9 +378,9 @@ fun FloatingFullscreenMode(floatContext: FloatContext) {
             // 波浪可视化和头像：仅在语音模式下显示
             if (effectiveWaveActive) {
                 val waveOffsetY = (-64).dp
-                val activeWaveSize = if (isVoiceAvatarEnabled) 420.dp else 300.dp
-                val activeAvatarSize = if (isVoiceAvatarEnabled) 320.dp else 120.dp
-                val centerTapTargetSize = if (isVoiceAvatarEnabled) 220.dp else 140.dp
+                val activeWaveSize = 300.dp
+                val activeAvatarSize = 120.dp
+                val centerTapTargetSize = 140.dp
                 WaveVisualizerSection(
                     isWaveActive = viewModel.isWaveActive,
                     isRecording = viewModel.isRecording,
@@ -499,21 +388,6 @@ fun FloatingFullscreenMode(floatContext: FloatContext) {
                     volumeLevelFlow = if (viewModel.isWaveActive && viewModel.isRecording)
                         viewModel.volumeLevelFlow else null,
                     aiAvatarUri = aiAvatarUri,
-                    avatarContent =
-                        if (isVoiceAvatarEnabled) {
-                            {
-                                AvatarView(
-                                    modifier = Modifier.fillMaxSize(),
-                                    model = currentAvatarModel!!,
-                                    controller = voiceAvatarController!!,
-                                    rendererFactory = avatarRendererFactory
-                                )
-                            }
-                        } else {
-                            null
-                        },
-                    clipAvatarContent = false,
-                    avatarShape = CircleShape,
                     activeWaveSize = activeWaveSize,
                     activeAvatarSize = activeAvatarSize,
                     onToggleActive = {
@@ -529,7 +403,7 @@ fun FloatingFullscreenMode(floatContext: FloatContext) {
                         .zIndex(1f)
                 )
 
-                // 语音态：头像区域提供一个最高层的点击出口，确保“点头像退出语音态”不被其它层拦截
+                // 语音态：中心控件提供一个最高层的点击出口，确保“点中心退出语音态”不被其它层拦截
                 Box(
                     modifier = Modifier
                         .align(Alignment.Center)
@@ -540,7 +414,7 @@ fun FloatingFullscreenMode(floatContext: FloatContext) {
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null
                         ) {
-                            viewModel.onCenterAvatarClick()
+                            viewModel.onCenterControlClick()
                         }
                 )
             }

@@ -116,15 +116,6 @@ object ScreenRouteRegistry {
                 launchNavItem = NavItem.AiChat,
                 icon = NavItem.AiChat.icon,
                 order = 10
-            ),
-            hostEntryDefinition(
-                entryId = "main.assistant_config",
-                screen = Screen.AssistantConfig,
-                surface = NavigationSurface.MAIN_SIDEBAR_AI,
-                launchNavItem = NavItem.AssistantConfig,
-                icon = NavItem.AssistantConfig.icon,
-                order = 20
-            ),
             hostEntryDefinition(
                 entryId = "main.memory_base",
                 screen = Screen.MemoryBase,

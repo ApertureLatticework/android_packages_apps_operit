@@ -26,7 +26,6 @@ import androidx.navigation.NavController
 import com.ai.assistance.operit.R
 import com.ai.assistance.operit.ui.common.NavItem
 import com.ai.assistance.operit.ui.features.about.screens.AboutScreen
-import com.ai.assistance.operit.ui.features.assistant.screens.AssistantConfigScreen
 import com.ai.assistance.operit.ui.features.chat.screens.AIChatScreen
 import com.ai.assistance.operit.ui.features.demo.screens.ShizukuDemoScreen
 import com.ai.assistance.operit.ui.features.help.screens.HelpScreen
@@ -84,10 +83,10 @@ import com.ai.assistance.operit.ui.features.toolbox.screens.sqlviewer.SqlViewerT
 import com.ai.assistance.operit.ui.features.toolbox.screens.ffmpegtoolbox.FFmpegToolboxScreen
 import com.ai.assistance.operit.ui.features.toolbox.screens.htmlpackager.HtmlPackagerScreen
 import com.ai.assistance.operit.ui.features.toolbox.screens.speechtotext.SpeechToTextToolScreen
-import com.ai.assistance.operit.ui.features.toolbox.screens.texttospeech.TextToSpeechToolScreen
-import com.ai.assistance.operit.ui.features.toolbox.screens.tooltester.ToolTesterScreen
 import com.ai.assistance.operit.ui.features.toolbox.screens.autoglm.AutoGlmOneClickToolScreen
 import com.ai.assistance.operit.ui.features.toolbox.screens.autoglm.AutoGlmToolScreen
+import com.ai.assistance.operit.ui.features.toolbox.screens.texttospeech.TextToSpeechToolScreen
+import com.ai.assistance.operit.ui.features.toolbox.screens.tooltester.ToolTesterScreen
 import com.ai.assistance.operit.ui.features.update.screens.UpdateScreen
 import com.ai.assistance.operit.ui.features.workflow.screens.WorkflowListScreen
 import com.ai.assistance.operit.ui.features.workflow.screens.WorkflowDetailScreen
@@ -708,23 +707,6 @@ sealed class Screen(
         }
     }
 
-    data object AssistantConfig :
-            Screen(
-                    navItem = NavItem.AssistantConfig,
-                    participatesInCrossfadeTransition = false
-            ) {
-        @Composable
-        override fun Content(
-                navController: NavController,
-                navigateTo: ScreenNavigationHandler,
-                onGoBack: () -> Unit,
-                hasBackgroundImage: Boolean,
-                onLoading: (Boolean) -> Unit,
-                onError: (String) -> Unit,
-                onGestureConsumed: (Boolean) -> Unit
-        ) {
-            AssistantConfigScreen()
-        }
     }
 
     data object Workflow : Screen(navItem = NavItem.Workflow) {

@@ -90,3 +90,6 @@ tmp
 temp
 .tmp
 .temp
+
+# agent-mobile-use 参考仓库（机制参考用，不入库）
+ref/

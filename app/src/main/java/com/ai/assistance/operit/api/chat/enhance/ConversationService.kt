@@ -32,8 +32,6 @@ import com.ai.assistance.operit.data.preferences.CharacterCardToolAccessResolver
 import com.ai.assistance.operit.data.model.PromptFunctionType
 import com.ai.assistance.operit.data.preferences.MemorySpaceProfileDocumentRepository
 import com.ai.assistance.operit.data.preferences.UserPreferencesManager
-import com.ai.assistance.operit.core.avatar.impl.factory.AvatarModelFactoryImpl
-import com.ai.assistance.operit.data.repository.AvatarRepository
 import com.ai.assistance.operit.util.ChatMarkupRegex
 import com.ai.assistance.operit.util.ChatUtils
 import com.ai.assistance.operit.core.tools.ToolProgressBus
@@ -80,9 +78,6 @@ class ConversationService(
     private val memorySpaceProfileDocumentRepository =
         MemorySpaceProfileDocumentRepository.getInstance(context)
     private val userPreferencesManager = UserPreferencesManager.getInstance(context)
-    private val avatarRepository by lazy {
-        AvatarRepository.getInstance(context, AvatarModelFactoryImpl())
-    }
     private val conversationMutex = Mutex()
 
     /**
@@ -591,18 +586,9 @@ class ConversationService(
 
                 // 构建waifu特殊规则
                 val waifuRulesText = if(waifuPreferences.enableWaifuModeFlow.first()) buildWaifuRulesText() else ""
-                // 语音头像模式：添加 <mood> 标签协议
-                val avatarMoodRulesText =
-                    if (shouldInjectMoodRules(promptFunctionType)) {
-                        buildAvatarMoodRulesText(useEnglish)
-                    } else {
-                        ""
-                    }
-                AppLogger.d("petRules", avatarMoodRulesText)
 
                 // 构建最终的系统提示词
                 val finalSystemPrompt = buildString {
-                    append(avatarMoodRulesText)
                     append(systemPrompt)
                     if (proxyRolePrompt.isNotEmpty()) {
                         append("\n\n<assistant_role source=\"proxy_character_card\">\n")

@@ -577,19 +577,12 @@ kotlin {
 
 dependencies {
     implementation("com.github.jelmerk:hnswlib-core:1.2.1")
-    implementation(project(":dragonbones"))
     implementation(project(":terminal"))
     implementation(project(":mnn"))
     implementation(project(":llama"))
-    implementation(project(":mmd"))
-    implementation(project(":fbx"))
     implementation(project(":showerclient"))
     implementation(project(":quickjs"))
 
-    // glTF runtime rendering (Filament)
-    implementation("com.google.android.filament:filament-android:1.69.2")
-    implementation("com.google.android.filament:gltfio-android:1.69.2")
-    implementation("com.google.android.filament:filament-utils-android:1.69.2")
     implementation(libs.androidx.ui.graphics.android)
     // The only vendored artifact is the custom FFmpegKit AAR.
     implementation(files("libs/ffmpeg-kit-local.aar"))
@@ -626,9 +619,6 @@ dependencies {
     // ZIP处理库 - 用于APK解压和重打包
     implementation(libs.commons.compress)
     implementation(libs.commons.io) // 添加Apache Commons IO
-    
-    // 图片处理库
-    implementation(libs.glide) // 用于处理图像
     
     // XML处理
     implementation(libs.androidx.core.ktx)
@@ -829,10 +819,6 @@ dependencies {
     // BouncyCastle - explicitly include jdk18on version to avoid conflicts
     implementation("org.bouncycastle:bcprov-jdk18on:1.78")
 
-    // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
     implementation(libs.okhttp.logging.interceptor)
 
 

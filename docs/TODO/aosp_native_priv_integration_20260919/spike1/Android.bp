@@ -1,0 +1,14 @@
+android_app {
+    name: "spike-compose",
+    srcs: ["src/com/operit/spike/*.kt"],
+    static_libs: [
+        "androidx.compose.runtime_runtime",
+    ],
+    compose: true,
+    kotlincflags: [
+        "-Xjvm-default=all",
+        "-P plugin:androidx.compose.compiler.plugins.kotlin:sourceInformation=true",
+    ],
+    manifest: "AndroidManifest.xml",
+    min_sdk_version: "26",
+}
