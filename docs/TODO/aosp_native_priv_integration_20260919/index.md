@@ -1,7 +1,7 @@
 ---
 Repository: https://github.com/ApertureLatticework/android_packages_apps_operit
 Branch: feat/native-rom-integration
-Status: executing（步骤 1-4 全部完成并通过 CI 编译验证：PRIVILEGED 档上线，五档收三档）
+Status: executing（步骤 1-4 完成；步骤 5 骨架落地：repo 直克隆定案、Android.bp.tree、privapp 白名单、DEPS 工单；收源节奏待定，6/7/8 推进中）
 ---
 
 # 原生集成特权版：LineageOS 源码进树改造

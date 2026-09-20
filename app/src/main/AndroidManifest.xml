@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- package 属性为 Soong manifest 处理器硬需求（spike1 实锤）；
+     与 AGP namespace 同值时 Gradle 仅警告，双构建共存 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.ai.assistance.operit">
 
     <uses-feature
         android:name="android.hardware.telephony"

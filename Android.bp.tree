@@ -1,0 +1,174 @@
+// Operit 主模块的暂存 Soong 定义 —— 文件名刻意避开 "Android.bp"，
+// 因为 repo sync 会把本仓库整体克隆为 packages/apps/Operit，
+// Soong 只解析 Android.bp 文件名；翻牌前本文件对树零影响。
+//
+// 翻牌规则（步骤 5 执行序，docs/TODO/.../5_InTreePackageAndSoongModules.md）：
+// 1. libs/ 下各依赖以独立 Soong 模块增量落地（自带 Android.bp，树内可独立编译，
+//    未被引用时对全树构建零破坏）
+// 2. 全部 operit-* 模块齐备后，本文件更名为 Android.bp，static_libs 已可全量解析
+// 3. app 模块翻牌是最后一步：此前树内 m 全量构建不受本包影响
+//
+// 形态依据（2026-09-19 spike1 树内实测 + LOS 23.2 范本）：
+// - 无 compose 属性；Compose 编译器由 kotlinc_incremental 内嵌，模块只需
+//   static_libs 引树内 androidx Compose 模块 + 可选 -P 插件参数
+// - platform_apis: true 为特权应用路线（SystemApi/@hide 直调前提），与 sdk_version 二选一
+// - manifest 必须带 package 属性（已在 app/src/main/AndroidManifest.xml 注入）
+// - androidx 预编译位于 prebuilts/sdk/current/androidx/，模块名按 pom2bp 约定
+
+android_library {
+    name: "operit-lib",
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+    platform_apis: true,
+    min_sdk_version: "26",
+
+    // 副屏原生化（步骤 7）删除 Shower 线后，quickjs 模块 Kotlin 源并入本库；
+    // showerclient 的 AIDL 由原生后端替代，不再参与树内构建
+    srcs: [
+        "app/src/main/java/**/*.kt",
+        "app/src/main/java/**/*.java",
+        "app/src/main/room-generated/**/*.java",
+        "app/src/main/aidl/**/*.aidl",
+        "quickjs/src/main/java/**/*.kt",
+        // 树内版 BuildConfig（Gradle 生成物不进树；见 libs/DEPS.md）
+        "app/src/soong/java/**/*.java",
+    ],
+    resource_dirs: ["app/src/main/res"],
+    // aapt2 依赖 manifest package 生成 R 类（com.ai.assistance.operit.R）
+    manifest: "app/src/main/AndroidManifest.xml",
+
+    static_libs: [
+        // ---- 树内 androidx / Kotlin（零 vendoring，直接引模块名） ----
+        "kotlin-stdlib",
+        "kotlin-reflect",
+        "kotlinx-coroutines-android",
+        "kotlinx-serialization-json",
+        "androidx.core_core-ktx",
+        "androidx.activity_activity-compose",
+        "androidx.activity_activity-ktx",
+        "androidx.appcompat_appcompat",
+        "com.google.android.material_material",
+        "androidx.compose.runtime_runtime",
+        "androidx.compose.ui_ui",
+        "androidx.compose.ui_ui-graphics",
+        "androidx.compose.ui_ui-text",
+        "androidx.compose.foundation_foundation",
+        "androidx.compose.material3_material3",
+        "androidx.compose.material3_material3-window-size-class",
+        "androidx.compose.material_material-icons-extended",
+        "androidx.compose.animation_animation",
+        "androidx.compose.animation_animation-core",
+        "androidx.lifecycle_lifecycle-runtime-ktx",
+        "androidx.navigation_navigation-compose",
+        "androidx.room_room-runtime",
+        "androidx.room_room-ktx",
+        "androidx.datastore_datastore-preferences",
+        "androidx.datastore_datastore-preferences-core",
+        "androidx.work_work-runtime-ktx",
+        "androidx.window_window",
+        "androidx.webkit_webkit",
+        "androidx.glance_glance-appwidget",
+        "androidx.glance_glance-material3",
+        "androidx.security_security-crypto",
+        // exoplayer 2.x → media3 迁移（步骤 1 改判保留项，收源期执行包名替换）
+        "androidx.media3_media3-common",
+        "androidx.media3_media3-exoplayer",
+        "androidx.media3_media3-ui",
+
+        // ---- 包内收源模块（libs/，逐个落地，模块名 operit- 前缀） ----
+        "operit-okio",
+        "operit-okhttp",
+        "operit-okhttp-sse",
+        "operit-okhttp-logging-interceptor",
+        "operit-ktor-client-okhttp",
+        "operit-mcp-sdk-client",
+        "operit-jsoup",
+        "operit-zxing-core",
+        "operit-java-diff-utils",
+        "operit-apksig",
+        "operit-apk-parser",
+        "operit-axml",
+        "operit-zipalign-java",
+        "operit-commons-compress",
+        "operit-commons-io",
+        "operit-zip4j",
+        "operit-androidsvg",
+        "operit-android-gif",
+        "operit-image-cropper",
+        "operit-jlatexmath",
+        "operit-renderx",
+        "operit-coil",
+        "operit-coil-compose",
+        "operit-coil-gif",
+        "operit-itextg",
+        "operit-pdfbox-android",
+        "operit-junrar",
+        "operit-poi",
+        "operit-poi-ooxml",
+        "operit-poi-scratchpad",
+        "operit-gson",
+        "operit-hjson",
+        "operit-uuid",
+        "operit-jieba",
+        "operit-hnswlib-core",
+        "operit-hnswlib-utils",
+        "operit-bcprov",
+        "operit-nanohttpd",
+        "operit-colorpicker",
+        "operit-backdrop",
+        "operit-liquid",
+        "operit-reorderable",
+        "operit-swipe",
+        "operit-accompanist-systemuicontroller",
+        "operit-smart-exception",
+        // 记忆/向量推理线（native 伴生 Java 模块在 libs/ 各自 Android.bp 声明）
+        "operit-tensorflow-lite",
+        "operit-mediapipe-tasks-text",
+        "operit-onnxruntime",
+
+        // ---- 唯一 prebuilt 例外：ML Kit 文本识别五条（libs/mlkit/） ----
+        "operit-mlkit-text-recognition",
+        "operit-mlkit-text-recognition-chinese",
+        "operit-mlkit-text-recognition-japanese",
+        "operit-mlkit-text-recognition-korean",
+        "operit-mlkit-text-recognition-devanagari",
+    ],
+
+    kotlincflags: [
+        "-jvm-target 17",
+        "-Xjvm-default=all",
+        "-P plugin:androidx.compose.compiler.plugins.kotlin:sourceInformation=true",
+    ],
+}
+
+android_app {
+    name: "Operit",
+    defaults: ["platform_app_defaults"],
+    privileged: true,
+    certificate: "platform",
+    platform_apis: true,
+    min_sdk_version: "26",
+
+    manifest: "app/src/main/AndroidManifest.xml",
+    static_libs: ["operit-lib"],
+    asset_dirs: ["app/src/main/assets"],
+
+    // native 库经 required 随包安装到 priv-app lib 目录；
+    // 各 cc/rust 模块随 libs/native 收源落地（见 libs/DEPS.md）
+    required: [
+        "libquickjsjni",
+        "libstreamnative",
+        "libtoolpkgwasm",
+        "libsherpa-ncnn-jni",
+        "libffmpegkit",
+        "libonnxruntime",
+        "libtensorflowlite_jni",
+        "liboperit_ripgrep",
+    ],
+
+    // 体积对齐 Gradle 版（R8 全量压缩 + 资源收缩）
+    optimize: {
+        enabled: true,
+        shrink: true,
+        proguard_flags_files: ["app/proguard-rules.pro"],
+    },
+}

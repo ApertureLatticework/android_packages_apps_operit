@@ -38,7 +38,7 @@ packages/apps/Operit/
 
 ## 作用域
 
-- LOS fork 侧新增 `packages/apps/Operit` 仓库，Operit 主仓提供源码同步与依赖裁剪
+- ~~LOS fork 侧新增 `packages/apps/Operit` 仓库，Operit 主仓提供源码同步与依赖裁剪~~（已修正，见下）
 - 每个依赖库的 CMake 或 Maven 源码树到 Soong 模块的转写
 
 ## 验证
@@ -66,3 +66,25 @@ packages/apps/Operit/
 Soong 的 manifest 处理器要求 `manifest:package` 显式声明；AGP 8 项目（Operit 现状）
 包名在 build.gradle.kts 的 namespace（com.ai.assistance.operit），manifest 里没有该属性。
 进树时迁移脚本需向 AndroidManifest.xml 注入 `package="com.ai.assistance.operit"`。
+
+## 同步机制定案（2026-09-20，用户拍板）
+
+本仓 origin 即 `android_packages_app_operit`，LOS repo manifest 直接挂本仓 URL，
+`repo sync` 克隆本仓即成 `packages/apps/Operit` 包：
+
+- 无独立树仓、无导出脚本；Soong 文件（Android.bp 系）与本仓 Gradle 结构共存，
+  Gradle 构建全程可用（Trebuchet 双轨同款），Soong 直接引用 `app/src/main/...` 路径
+- 未被 git 跟踪的 ref/、预编产物不进树；docs/、ci/、tools/ 对 Soong 惰性无害
+- 依赖收源全部落在包内 libs/ 与 native/，工单见 [libs/DEPS.md](../../libs/DEPS.md)
+
+## 执行情况（2026-09-20 骨架落地）
+
+- `app/src/main/AndroidManifest.xml` 注入 package 属性（与 namespace 同值，AGP 同值仅警告）
+- `etc/privapp-permissions-operit.xml` 特权白名单建位（权限面为步骤 4/6/7 定案八条）
+- `Android.bp.tree` 主模块暂存定义：android_library operit-lib + android_app Operit 壳
+  （privileged/certificate platform/platform_apis/optimize shrink），翻牌规则见文件头——
+  依赖模块先增量落地，主模块最后翻牌，过渡期树内 m 全量构建零破坏
+- `libs/DEPS.md` 收源工单：树内直引模块名、Java/Kotlin 收源坐标、native 收源、
+  ML Kit 唯一 prebuilt 例外、STT 模型资产化、树内 BuildConfig
+- exoplayer→androidx.media3 迁移、STT 模型入 assets、约 40 坐标收源为后续增量批次，
+  推进节奏待用户定案（收源量数据已呈交）

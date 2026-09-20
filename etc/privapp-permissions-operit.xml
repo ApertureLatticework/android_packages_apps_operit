@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Operit 特权应用权限白名单（随 ROM 分发，platform 签名 + priv-app）。
+  经 vendor/lineage 或 device.mk 以 PRODUCT_COPY_FILES 拷入
+  $(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-operit.xml。
+
+  权限面依据 docs/TODO/aosp_native_priv_integration_20260919 步骤 4/6/7：
+    CAPTURE_VIDEO_OUTPUT       Live 主屏观察：免弹窗持续镜像采集
+    CAPTURE_SECURE_VIDEO_OUTPUT 安全页面采集，默认关闭可配置
+    INJECT_EVENTS              input 注入直调（触控/按键，携带 displayId）
+    WRITE_SECURE_SETTINGS      settings 直写与无障碍服务自启
+    INSTALL_PACKAGES           PackageInstaller 静默安装
+    FORCE_STOP_PACKAGES        am force-stop 等价
+    ADD_TRUSTED_DISPLAY        副屏 TRUSTED 旗标（原生副屏后端）
+    INTERNAL_SYSTEM_WINDOW     任意屏启动 Activity 与系统窗口
+-->
+<permissions>
+    <privapp-permissions package="com.ai.assistance.operit">
+        <permission name="android.permission.CAPTURE_VIDEO_OUTPUT" />
+        <permission name="android.permission.CAPTURE_SECURE_VIDEO_OUTPUT" />
+        <permission name="android.permission.INJECT_EVENTS" />
+        <permission name="android.permission.WRITE_SECURE_SETTINGS" />
+        <permission name="android.permission.INSTALL_PACKAGES" />
+        <permission name="android.permission.FORCE_STOP_PACKAGES" />
+        <permission name="android.permission.ADD_TRUSTED_DISPLAY" />
+        <permission name="android.permission.INTERNAL_SYSTEM_WINDOW" />
+    </privapp-permissions>
+</permissions>
