@@ -63,3 +63,16 @@ SystemUI 的 static_libs 里），没验证 `compose: true` 属性本身——LO
   static_libs 引 Compose 模块 + kotlincflags 带 -P 可选参数，仅此而已
 
 spike1/Android.bp 已按范本对齐重写，待树内 `m spike-compose` 终验。
+
+## 终验通过（2026-09-19，用户树内实测）
+
+`m operit`（含 spike 同款配置的 operit 模块）编译全绿：
+out/target/product/dodge/system/app/operit/ 出 odex 产物，4949/4949。
+
+Spike 1 三连坑全记录（后续模块化的既定规则）：
+1. `compose: true` 属性不存在 → Compose 模块直接进 static_libs
+2. sdk_version 空置报冲突 → platform_apis: true（特权应用路线）
+3. manifest 缺 package 属性 → 注入 package="com.ai.assistance.operit"
+
+当前产物落位 system/app/（未设 privileged），步骤 6 补 privileged: true
++ certificate: "platform" 后迁入 system/priv-app/。
