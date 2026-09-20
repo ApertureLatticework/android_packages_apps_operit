@@ -1,0 +1,7 @@
+// com.github.Sable:axml:2.0.0 · jitpack prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+java_import {
+    name: "operit-axml",
+    jars: ["axml-2.0.0.jar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

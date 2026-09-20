@@ -1,0 +1,7 @@
+// org.slf4j:slf4j-api:1.7.36 · central prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+java_import {
+    name: "operit-slf4j-api",
+    jars: ["slf4j-api-1.7.36.jar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

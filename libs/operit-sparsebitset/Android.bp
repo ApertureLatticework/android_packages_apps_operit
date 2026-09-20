@@ -1,0 +1,7 @@
+// com.zaxxer:SparseBitSet:1.2 · central prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+java_import {
+    name: "operit-sparsebitset",
+    jars: ["SparseBitSet-1.2.jar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

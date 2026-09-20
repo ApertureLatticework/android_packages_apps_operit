@@ -1,0 +1,7 @@
+// org.jetbrains.kotlinx:kotlinx-io-bytestring:0.8.2 · central prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+java_import {
+    name: "operit-kotlinx-io-bytestring",
+    jars: ["kotlinx-io-bytestring-0.8.2.jar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

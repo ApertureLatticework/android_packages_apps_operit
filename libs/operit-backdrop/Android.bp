@@ -1,0 +1,7 @@
+// io.github.kyant0:backdrop:1.0.6 · central prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+android_library_import {
+    name: "operit-backdrop",
+    aars: ["backdrop-1.0.6.aar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

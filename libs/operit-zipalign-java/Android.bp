@@ -1,0 +1,7 @@
+// com.github.iyxan23:zipalign-java:1.2.1 · jitpack prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+java_import {
+    name: "operit-zipalign-java",
+    jars: ["zipalign-java-1.2.1.jar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

@@ -1,0 +1,7 @@
+// com.google.android.gms:play-services-mlkit-text-recognition-japanese:16.0.0 · google prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+android_library_import {
+    name: "operit-play-services-mlkit-text-recognition-japanese",
+    aars: ["play-services-mlkit-text-recognition-japanese-16.0.0.aar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

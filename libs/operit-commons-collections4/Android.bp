@@ -1,0 +1,7 @@
+// org.apache.commons:commons-collections4:4.4 · central prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+java_import {
+    name: "operit-commons-collections4",
+    jars: ["commons-collections4-4.4.jar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

@@ -1,0 +1,7 @@
+// org.checkerframework:checker-compat-qual:2.5.3 · central prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+java_import {
+    name: "operit-checker-compat-qual",
+    jars: ["checker-compat-qual-2.5.3.jar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

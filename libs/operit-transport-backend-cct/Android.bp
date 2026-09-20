@@ -1,0 +1,7 @@
+// com.google.android.datatransport:transport-backend-cct:3.1.0 · google prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+android_library_import {
+    name: "operit-transport-backend-cct",
+    aars: ["transport-backend-cct-3.1.0.aar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

@@ -1,0 +1,7 @@
+// com.itextpdf:itextg:5.5.10 · central prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+java_import {
+    name: "operit-itextg",
+    jars: ["itextg-5.5.10.jar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

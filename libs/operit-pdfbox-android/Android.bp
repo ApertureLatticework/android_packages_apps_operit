@@ -1,0 +1,7 @@
+// com.tom-roush:pdfbox-android:2.0.27.0 · central prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+android_library_import {
+    name: "operit-pdfbox-android",
+    aars: ["pdfbox-android-2.0.27.0.aar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

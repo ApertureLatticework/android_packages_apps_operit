@@ -1,0 +1,7 @@
+// org.bouncycastle:bcpkix-jdk15to18:1.72 · central prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+java_import {
+    name: "operit-bcpkix-jdk15to18",
+    jars: ["bcpkix-jdk15to18-1.72.jar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}
