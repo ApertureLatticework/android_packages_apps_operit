@@ -35,6 +35,20 @@
 
 ## 验证
 
-- `rg -in "linux|ubuntu|proot|terminal_session" app/src/main/java/com/ai/assistance/operit/core/config/` 零残留
-- 工具 schema 与工具实现类逐一对照，无孤儿声明
-- token 计数对比入档
+- `rg -in "linux|ubuntu|proot|terminal_session" app/src/main/java/com/ai/assistance/operit/core/config/` 零残留（已达成，2026-09-20）
+- 工具 schema 与工具实现类逐一对照，无孤儿声明（已达成：155 声明 vs ToolRegistration 零孤儿）
+- token 计数对比入档（见下）
+
+## 执行情况（2026-09-20）
+
+- SystemToolPrompts/SystemToolPromptsInternal：environment 参数收敛为 `"android" | "repo:<仓库名>"`，copy_file 跨环境描述改仓库语义（中英双语，Internal 内 4+4 处）
+- SystemPromptConfig：工作区指引删除 Linux 终端挂载说明与“直接执行”两条（中英），改纯 Android 沙箱语义
+- PathMapper 整删：linux 分支不可达，resolvePath 恒等，五个调用点直通原路径
+- 孤儿字符串：检测器全量扫描（java R.string + res/manifest @string 双向引用），按本 TODO 已裁功能簇（终端/termux、Shizuku/ROOT/ADMIN 档、avatar/pet/mood、部署桥）清除 343 键，八语共 2739 条目；检Localization 门禁零错
+- token 对比：四文件 482427 → 481733 字符（Δ-694，粗估 token ~131380 → ~131171）；大额削减已在步骤 1 完成五个终端工具族与 schema 的删除，本轮为语义收敛尾刀
+- autoglm 保留定案（步骤 7）：警告文案三处引用均在，不动
+
+## 遗留（非本轮面）
+
+- MCPConfigScreen 本地插件表单与 MCPLocalServer 插件管理面（步骤 1 遗留登记项，涉及 3000 行子系统，待专项）
+- 历史性孤儿字符串约 1800 键（非本 TODO 功能裁剪所致），属仓库级 i18n 债务，另行专项

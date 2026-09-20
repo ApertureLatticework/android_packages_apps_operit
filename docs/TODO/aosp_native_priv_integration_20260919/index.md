@@ -1,7 +1,7 @@
 ---
 Repository: https://github.com/ApertureLatticework/android_packages_apps_operit
 Branch: feat/native-rom-integration
-Status: executing（步骤 1-4 完成；步骤 5 骨架落地：repo 直克隆定案、Android.bp.tree、privapp 白名单、DEPS 工单；收源节奏待定，6/7/8 推进中）
+Status: executing（步骤 1-8 应用侧全部落地：PRIVILEGED 档、Live 镜像免弹窗采集与常驻服务、原生副屏 TRUSTED+OWN_FOCUS、提示词收敛；待办：依赖收源增量批次（libs/DEPS.md 工单）、树内 m Operit 翻牌与四场景实测、MCP 本地表单专项）
 ---
 
 # 原生集成特权版：LineageOS 源码进树改造
@@ -59,7 +59,7 @@ Operit 以 Gradle 构建产出通用 APK，系统能力通过五档权限阶梯�
 2. [ObjectBox 迁移 Room 并删除整线](2_ObjectBoxToRoom.md)（已完成，CI 编译验证通过）
 3. [Room 生成代码 check-in 机制](3_RoomGeneratedCodeCheckin.md)（已完成：生成类 11 文件入库，CI --check 硬门禁生效）
 4. [权限阶梯改造与 PRIVILEGED 档](4_PrivilegedExecutorAndTierRemoval.md)
-5. [包内 Soong 模块化与 Android.bp](5_InTreePackageAndSoongModules.md)
-6. [LOS 接入、特权白名单与 Live 服务](6_LOSIntegrationAndLiveService.md)
-7. [副屏底座原生化与前台抢占规避](7_VirtualDisplayBackend.md)
-8. [提示词精简](8_PromptCleanup.md)
+5. [包内 Soong 模块化与 Android.bp](5_InTreePackageAndSoongModules.md)（骨架落地，收源增量推进中）
+6. [LOS 接入、特权白名单与 Live 服务](6_LOSIntegrationAndLiveService.md)（应用侧完成，树内接入件就绪）
+7. [副屏底座原生化与前台抢占规避](7_VirtualDisplayBackend.md)（应用侧完成，待设备实测）
+8. [提示词精简](8_PromptCleanup.md)（完成）
