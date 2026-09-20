@@ -6,11 +6,10 @@ import android.content.Context
 import android.view.KeyEvent
 import com.ai.assistance.operit.core.tools.defaultTool.accessbility.AccessibilityUITools
 import com.ai.assistance.operit.core.tools.system.privileged.PrivilegedSystemApi
+import com.ai.assistance.operit.core.tools.StringResultData
+import com.ai.assistance.operit.core.tools.UIActionResultData
+import com.ai.assistance.operit.data.model.AITool
 import com.ai.assistance.operit.data.model.ToolResult
-import com.ai.assistance.operit.core.tools.ToolInterface
-import com.ai.assistance.operit.core.tools.AITool
-import com.ai.assistance.operit.data.model.StringResultData
-import com.ai.assistance.operit.data.model.UIActionResultData
 import com.ai.assistance.operit.util.AppLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
