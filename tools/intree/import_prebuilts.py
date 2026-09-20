@@ -239,8 +239,11 @@ def should_skip(g: str, a: str) -> bool:
     coord = f"{g}:{a}"
     if coord in SKIP_EXACT:
         return True
-    if any(g.startswith(p) for p in SKIP_GROUP_PREFIXES):
-        return True
+    # 点边界匹配：org.jetbrains.kotlin 不得误伤 org.jetbrains.kotlinx
+    for prefix in SKIP_GROUP_PREFIXES:
+        base = prefix.rstrip(".")
+        if g == base or g.startswith(base + "."):
+            return True
     if any(coord.startswith(p) for p in SKIP_ARTIFACT_PREFIXES):
         return True
     return False
@@ -248,6 +251,32 @@ def should_skip(g: str, a: str) -> bool:
 
 def module_for(g: str, a: str) -> str:
     return "operit-" + re.sub(r"[^a-z0-9]+", "-", a.lower()).strip("-")
+
+
+def pick_publishable(variants: list) -> dict | None:
+    """多变体选型：剔除 sources/javadoc，runtime > api > 其他；AGP 多 buildType 只取 release。"""
+    def build_type_is_release(variant: dict) -> bool:
+        attrs = variant.get("attributes", {})
+        value = attrs.get("com.android.build.api.attributes.BuildTypeAttr")
+        return value in (None, "release")
+
+    def score(variant: dict) -> int:
+        name = str(variant.get("name", "")).lower()
+        if "sources" in name or "javadoc" in name:
+            return -1
+        usage = str(variant.get("attributes", {}).get("org.gradle.usage", ""))
+        if "runtime" in name or usage.endswith("java-runtime"):
+            return 3
+        if "api" in name or usage.endswith("java-api"):
+            return 2
+        return 1
+
+    publishable = [v for v in variants if v.get("files") and score(v) >= 0]
+    release_only = [v for v in publishable if build_type_is_release(v)]
+    pool = release_only or publishable
+    if not pool:
+        return None
+    return max(pool, key=score)
 
 
 def parse_gradle_module(doc: dict) -> dict | None:
@@ -264,19 +293,11 @@ def parse_gradle_module(doc: dict) -> dict | None:
         candidates = [v for v in variants if platform_of(v) == want]
         if not candidates:
             continue
-        # AGP 发布的库同平台多 buildType 变体，只取 release
-        def is_release(variant: dict) -> bool:
-            attrs = variant.get("attributes", {})
-            build_type = attrs.get("com.android.build.api.attributes.BuildTypeAttr")
-            if build_type is None:
-                build_type = attrs.get("org.jetbrains.kotlinx.kotlin.buildtype")
-            return build_type in (None, "release")
-
-        release_candidates = [v for v in candidates if is_release(v)]
-        chosen = (release_candidates or candidates)[0]
-        break
+        chosen = pick_publishable(candidates)
+        if chosen is not None:
+            break
     if chosen is None:
-        chosen = next((v for v in variants if v.get("files")), None)
+        chosen = pick_publishable(variants)
     if chosen is None:
         return None
 
