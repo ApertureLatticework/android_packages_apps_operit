@@ -29,7 +29,7 @@ Live 服务：
     → 执行：INJECT_EVENTS 直注入 + 无障碍语义树融合定位
 ```
 
-- 帧泵与模型侧复用现有 mnn、llama 栈与云端 Provider 通道
+- 帧泵与模型侧复用现有云端 Provider 通道（本地 mnn/llama 已随步骤 4 切割出仓）
 - 安全页面采集依赖 CAPTURE_SECURE_VIDEO_OUTPUT，默认关闭可配置
 
 ## 作用域
@@ -47,3 +47,42 @@ Live 服务：
 ## 风险
 
 - CAPTURE_SECURE_VIDEO_OUTPUT 在部分设备上受 DRM 策略限制，按设备实测调整默认值
+
+## 执行情况（2026-09-20 应用侧落地）
+
+- `LiveScreenMirror`（core/tools/system/live/）：AUTO_MIRROR 虚拟显示器 + ImageReader，
+  引用计数生命周期，captureFrame 等待首合成周期；SECURE 旗标由显示设置
+  live_secure_capture 开关控制（默认关，GlobalDisplaySettingsScreen 入口，八语同步）
+- `LiveService` + `LiveBootReceiver`（services/live/）：specialUse 前台服务开机自启
+  （BOOT_COMPLETED + 应用启动双入口，特权档判定收敛在 ensureStarted）；
+  服务创建时 AccessibilityAutoEnable 直写 enabled_accessibility_services 登记无障碍
+  provider（步骤 4 遗留项闭环，非 priv 环境显式失败走手动引导）
+- manifest：八条特权权限（tools:ignore ProtectedPermissions）+ Live 服务/接收器声明
+- 档位默认：preferredPermissionLevelFlow 未设置时默认 PRIVILEGED（ROM-only 本位档）
+- 采集通道分路：特权档主屏 PhoneAgent 截屏与 capture_screenshot 工具
+  （PrivilegedUITools 覆写）走镜像免弹窗直采；副屏会话归步骤 7；
+  原跨屏兑底采集（副屏截不到回退主屏截）同刀删除
+
+LOS fork 侧接入片段（树内操作，非本仓文件）：
+
+repo manifest（局部）：
+
+```xml
+<project path="packages/apps/Operit"
+         name="ApertureLatticework/android_packages_app_operit"
+         revision="<集成分支>" />
+```
+
+device.mk 或 vendor/lineage/config/common.mk：
+
+```make
+PRODUCT_PACKAGES += Operit
+PRODUCT_COPY_FILES += \
+    packages/apps/Operit/etc/privapp-permissions-operit.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-operit.xml
+```
+
+## 待实测项
+
+- 树内 privileged + platform 签名后 priv-app 落位与开机自启链路
+- Live 四场景（导航/输入/安装/强停）与重启长期存活
+- DRM 页面在具体设备上的 CAPTURE_SECURE_VIDEO_OUTPUT 行为

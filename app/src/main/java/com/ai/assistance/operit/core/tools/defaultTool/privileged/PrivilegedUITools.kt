@@ -3,8 +3,10 @@ package com.ai.assistance.operit.core.tools.defaultTool.privileged
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.graphics.Bitmap
 import android.view.KeyEvent
 import com.ai.assistance.operit.core.tools.defaultTool.accessbility.AccessibilityUITools
+import com.ai.assistance.operit.core.tools.system.live.LiveScreenMirror
 import com.ai.assistance.operit.core.tools.system.privileged.PrivilegedSystemApi
 import com.ai.assistance.operit.core.tools.StringResultData
 import com.ai.assistance.operit.core.tools.UIActionResultData
@@ -24,6 +26,27 @@ open class PrivilegedUITools(context: Context) : AccessibilityUITools(context) {
 
     companion object {
         private const val TAG = "PrivilegedUITools"
+    }
+
+    /**
+     * 截屏升级为 Live 镜像直采（步骤 6）：CAPTURE_VIDEO_OUTPUT 免弹窗，
+     * 不再经无障碍/投屏授权链。失败返回 null 由上层显式报错。
+     */
+    override suspend fun captureScreenshotBitmap(tool: AITool): Pair<Bitmap?, Pair<Int, Int>?> {
+        if (!LiveScreenMirror.acquire(context)) {
+            AppLogger.e(TAG, "LiveScreenMirror acquire failed; privileged capture unavailable")
+            return Pair(null, null)
+        }
+        try {
+            val bitmap = LiveScreenMirror.captureFrame()
+            if (bitmap == null) {
+                AppLogger.e(TAG, "Live mirror returned no frame for capture_screenshot")
+                return Pair(null, null)
+            }
+            return Pair(bitmap, Pair(bitmap.width, bitmap.height))
+        } finally {
+            LiveScreenMirror.release()
+        }
     }
 
     override suspend fun tap(tool: AITool): ToolResult {

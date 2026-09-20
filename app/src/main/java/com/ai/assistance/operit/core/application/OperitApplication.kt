@@ -25,6 +25,7 @@ import com.ai.assistance.operit.api.chat.AIForegroundService
 import com.ai.assistance.operit.api.chat.library.MemoryAutoSaveScheduler
 import com.ai.assistance.operit.plugins.PluginRegistry
 import com.ai.assistance.operit.plugins.lifecycle.AppLifecycleEvent
+import com.ai.assistance.operit.services.live.LiveService
 import com.ai.assistance.operit.plugins.lifecycle.AppLifecycleHookParams
 import com.ai.assistance.operit.plugins.lifecycle.AppLifecycleHookPluginRegistry
 import com.ai.assistance.operit.core.config.SystemPromptConfig
@@ -123,6 +124,11 @@ class OperitApplication : Application(), ImageLoaderFactory, WorkConfiguration.P
         // Workers and receivers can cold-start the process without creating an Activity.
         // Initialize process-wide preference dependencies before those entry points can run.
         initAndroidPermissionPreferences(applicationContext)
+
+        // Live 常驻服务（步骤 6）：特权档下随应用启动拉起，开机自启由 LiveBootReceiver 覆盖
+        applicationScope.launch {
+            LiveService.ensureStarted(this@OperitApplication)
+        }
 
         configureOpenMpEnvironment()
         Thread.setDefaultUncaughtExceptionHandler(GlobalExceptionHandler(this))

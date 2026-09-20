@@ -4831,6 +4831,11 @@
     <string name="ui_accessibility_mode_description">TalkBack과 같은 접근성 사용자를 위한 UI 자동화 동작을 최적화하고, 읽을 수 있는 작업 단계를 제공하는 데 우선순위를 두고, 자동 탭을 신중하게 실행하세요.</string>
     <string name="experimental_virtual_display">실험적인 가상 디스플레이</string>
     <string name="experimental_virtual_display_description">가상 디스플레이 기반 ADB+Shizuku 자동화를 사용합니다. 이 기능은 아직 실험적이므로 불안정할 수 있습니다.</string>
+    <string name="live_service_notification_title">Operit Live</string>
+    <string name="live_capture_unavailable">메인 화면 관찰 채널을 사용할 수 없습니다(권한 있는 ROM 환경 필요)</string>
+    <string name="live_service_notification_text">Live 관찰 및 자동화 채널 실행 중</string>
+    <string name="live_secure_capture">보안 페이지 캡처</string>
+    <string name="live_secure_capture_description">Live 화면 미러에 SECURE 플래그를 추가해 DRM 보호 콘텐츠를 캡처합니다; 일부 기기는 DRM 정책에 의해 제한되며 기본값은 꺼짐입니다</string>
     <string name="hide_runtime_task_view">런타임 작업 보기 숨기기</string>
     <string name="hide_runtime_task_view_description">실수로 닫히는 일을 줄이기 위해, AI가 메시지를 처리하거나 도구를 실행하는 동안 시스템 최근 앱에서 앱 카드를 숨깁니다.</string>
     <string name="default_profile_name">기본 프로필</string>

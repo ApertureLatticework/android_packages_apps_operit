@@ -17,6 +17,7 @@ import com.ai.assistance.operit.core.tools.AIToolHandler
 import com.ai.assistance.operit.core.tools.AppListData
 import com.ai.assistance.operit.core.tools.defaultTool.standard.StandardUITools
 import com.ai.assistance.operit.core.tools.system.AndroidPermissionLevel
+import com.ai.assistance.operit.core.tools.system.live.LiveScreenMirror
 import com.ai.assistance.operit.data.model.AITool
 import com.ai.assistance.operit.data.model.ToolParameter
 import com.ai.assistance.operit.data.model.ToolResult
@@ -343,6 +344,16 @@ class PhoneAgent(
             return requiredVirtualScreenError
         }
 
+        // Live 主屏观察通道（步骤 6）：特权档主屏会话整程持有镜像引用，
+        // 采集免弹窗；副屏会话的镜像面归步骤 7 原生副屏后端
+        val holdLiveMirror = isMainScreenAgent && resolvePrivilegedExecutionState(
+            context = context,
+            androidPermissionPreferences = androidPermissionPreferences
+        ).isPrivilegedLevel
+        if (holdLiveMirror && !LiveScreenMirror.acquire(context)) {
+            return context.getString(R.string.live_capture_unavailable)
+        }
+
         val mainScreenShowerReady = prewarmMainScreenShowerIfPossible()
         actionHandler.setMainScreenShowerPrepared(mainScreenShowerReady)
         if (mainScreenShowerReady) {
@@ -537,6 +548,9 @@ class PhoneAgent(
         } finally {
             AppLogger.d("PhoneAgent", "[$agentId] run: finishing, restoring UI")
             pauseFlow = null
+            if (holdLiveMirror) {
+                LiveScreenMirror.release()
+            }
             floatingService?.setFloatingWindowVisible(true)
             if (isMainScreenAgent) {
                 floatingService?.setStatusIndicatorVisible(false)
@@ -806,13 +820,25 @@ class ActionHandler(
             progressOverlay.setOverlayVisible(false)
             delay(200)
 
-            if (showerCtx.canUseShowerForInput) {
+            // 通道分路（步骤 6）：特权档主屏走 Live 镜像免弹窗采集；
+            // 副屏会话走 Shower 帧流（步骤 7 换原生副屏）；非特权档走工具链采集
+            if (showerCtx.isPrivilegedLevel && isMainScreenAgent()) {
+                val bitmap = LiveScreenMirror.captureFrame()
+                if (bitmap != null) {
+                    val (link, dims) = saveCompressedScreenshotFromBitmap(bitmap)
+                    screenshotLink = link
+                    dimensions = dims
+                    bitmap.recycle()
+                } else {
+                    AppLogger.e("ActionHandler", "[$agentId] Live mirror returned no frame")
+                }
+            } else if (showerCtx.canUseShowerForInput && !isMainScreenAgent()) {
                 val (link, dims) = captureScreenshotViaShower()
                 screenshotLink = link
                 dimensions = dims
             }
 
-            if (screenshotLink == null) {
+            if (screenshotLink == null && !showerCtx.isPrivilegedLevel) {
                 val screenshotTool = buildScreenshotTool()
                 val (bitmap, fallbackDims) = toolImplementations.captureScreenshotBitmap(screenshotTool)
 
@@ -852,11 +878,7 @@ class ActionHandler(
 
     private suspend fun captureScreenshotViaShower(): Pair<String?, Pair<Int, Int>?> {
         return try {
-            val pngBytes = if (isMainScreenAgent()) {
-                ShowerController.requestScreenshot(agentId)
-            } else {
-                VirtualDisplayOverlay.getInstance(context, agentId).captureCurrentFramePng()
-            }
+            val pngBytes = VirtualDisplayOverlay.getInstance(context, agentId).captureCurrentFramePng()
             if (pngBytes == null || pngBytes.isEmpty()) {
                 AppLogger.w("ActionHandler", "[$agentId] Shower WS screenshot returned no data")
                 Pair(null, null)

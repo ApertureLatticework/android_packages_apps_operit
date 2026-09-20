@@ -65,6 +65,7 @@ fun GlobalDisplaySettingsScreen(
     val startWithNewChat by displayPreferencesManager.startWithNewChat.collectAsState(initial = false)
     val enableBackgroundKeepAlive by displayPreferencesManager.enableBackgroundKeepAlive.collectAsState(initial = false)
     val enableExperimentalVirtualDisplay by displayPreferencesManager.enableExperimentalVirtualDisplay.collectAsState(initial = true)
+    val enableLiveSecureCapture by displayPreferencesManager.enableLiveSecureCapture.collectAsState(initial = false)
     val hideRuntimeTaskView by displayPreferencesManager.hideRuntimeTaskView.collectAsState(initial = false)
     val globalUserName by displayPreferencesManager.globalUserName.collectAsState(initial = null)
     val screenshotFormat by displayPreferencesManager.screenshotFormat.collectAsState(initial = "JPG")
@@ -582,6 +583,20 @@ fun GlobalDisplaySettingsScreen(
                     scope.launch {
                         displayPreferencesManager.saveDisplaySettings(
                             enableExperimentalVirtualDisplay = it
+                        )
+                    }
+                },
+                backgroundColor = componentBackgroundColor
+            )
+
+            DisplayToggleItem(
+                title = stringResource(R.string.live_secure_capture),
+                subtitle = stringResource(R.string.live_secure_capture_description),
+                checked = enableLiveSecureCapture,
+                onCheckedChange = {
+                    scope.launch {
+                        displayPreferencesManager.saveDisplaySettings(
+                            enableLiveSecureCapture = it
                         )
                     }
                 },

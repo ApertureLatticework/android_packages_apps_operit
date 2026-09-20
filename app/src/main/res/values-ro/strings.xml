@@ -5548,6 +5548,11 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="ui_accessibility_mode_description">Pentru TalkBack Optimizări pentru utilizatorii cu dizabilități etc. UI În cazul operațiunilor automate, se vor prezenta în primul rând pașii de operare care pot fi citiți cu voce tare, iar clicurile automate se vor efectua cu prudență.</string>
     <string name="experimental_virtual_display">Ecran virtual experimental</string>
     <string name="experimental_virtual_display_description">Utilizarea pe baza ecranului virtual ADB+Shizuku Automatizare: funcția se află încă în faza experimentală și poate fi instabilă.</string>
+    <string name="live_service_notification_title">Operit Live</string>
+    <string name="live_capture_unavailable">Canalul de observare a ecranului principal nu este disponibil (necesită mediul ROM privilegiat)</string>
+    <string name="live_service_notification_text">Canalul de observare și automatizare Live rulează</string>
+    <string name="live_secure_capture">Capturare pagini securizate</string>
+    <string name="live_secure_capture_description">Adaugă fanionul SECURE la oglinda de ecran Live pentru a captura conținut protejat DRM; limitat de politica DRM pe unele dispozitive, dezactivat implicit</string>
     <string name="hide_runtime_task_view">Vizualizarea sarcinilor în timpul rulării este ascunsă</string>
     <string name="hide_runtime_task_view_description">AI Atunci când procesezi mesaje sau utilizezi instrumente, ascunde fișa aplicației din lista de activități recente a sistemului, pentru a evita închiderea accidentală a acesteia prin glisare.</string>
 

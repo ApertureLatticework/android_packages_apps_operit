@@ -47,11 +47,11 @@ class AndroidPermissionPreferences(private val context: Context) {
         private val PREFERRED_PERMISSION_LEVEL = stringPreferencesKey("preferred_permission_level")
     }
 
-    /** 首选权限级别Flow 返回用户配置的首选Android权限级别，如果未设置则返回null */
+    /** 首选权限级别Flow：ROM-only 分发，未设置时默认 PRIVILEGED（随 ROM 分发的本位档） */
     val preferredPermissionLevelFlow: Flow<AndroidPermissionLevel?> =
             context.androidPermissionDataStore.data.map { preferences ->
                 val levelString = preferences[PREFERRED_PERMISSION_LEVEL]
-                if (levelString != null) AndroidPermissionLevel.fromString(levelString) else null
+                if (levelString != null) AndroidPermissionLevel.fromString(levelString) else AndroidPermissionLevel.PRIVILEGED
             }
 
     /**

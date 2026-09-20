@@ -4418,6 +4418,11 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="ui_accessibility_mode_description">Otimize o comportamento de automação da IU para usuários acessíveis, como o TalkBack, dê prioridade a etapas de operação legíveis e execute cliques automáticos com cautela.</string>
     <string name="experimental_virtual_display">tela virtual experimental</string>
     <string name="experimental_virtual_display_description">Usando a automação ADB+Shizuku baseada em telas virtuais, a funcionalidade ainda é experimental e pode ser instável.</string>
+    <string name="live_service_notification_title">Operit Live</string>
+    <string name="live_capture_unavailable">Canal de observação da tela principal indisponível (requere o ambiente ROM privilegiado)</string>
+    <string name="live_service_notification_text">Canal de observação e automação Live em execução</string>
+    <string name="live_secure_capture">Captura de páginas seguras</string>
+    <string name="live_secure_capture_description">Adiciona a flag SECURE ao espelho de tela do Live para capturar conteúdo protegido por DRM; limitado pela política de DRM em alguns dispositivos, desativado por padrão</string>
     <string name="default_profile_name">Configuração padrão</string>
     <string name="removed_character_card_binding">As vinculações de cartas de personagem foram removidas em %1$d diálogos</string>
     <string name="assigned_chats_to_character_card">%1$d conversas foram classificadas em "%2$s"</string>

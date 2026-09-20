@@ -4791,6 +4791,11 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="ui_accessibility_mode_description">Mengoptimumkan tingkah laku automasi UI untuk pengguna aksesibiliti seperti TalkBack, mengutamakan langkah-langkah operasi yang boleh dibaca, dan melaksanakan klik automatik dengan berhati-hati.</string>
     <string name="experimental_virtual_display">Skrin Maya Eksperimen</string>
     <string name="experimental_virtual_display_description">Menggunakan automasi ADB+Shizuku berasaskan skrin maya, fungsi masih dalam fasa eksperimen dan mungkin tidak stabil.</string>
+    <string name="live_service_notification_title">Operit Live</string>
+    <string name="live_capture_unavailable">Saluran pemerhatian skrin utama tidak tersedia (memerlukan persekitaran ROM istimewa)</string>
+    <string name="live_service_notification_text">Saluran pemerhatian dan automasi Live sedang berjalan</string>
+    <string name="live_secure_capture">Tangkapan halaman selamat</string>
+    <string name="live_secure_capture_description">Menambahkan flag SECURE pada cermin skrin Live supaya kandungan dilindungi DRM boleh ditangkap; dihadkan dasar DRM pada sesetengah peranti, dilumpuhkan secara lalai</string>
     <string name="hide_runtime_task_view">Sembunyikan Paparan Tugas Semasa Runtime</string>
     <string name="hide_runtime_task_view_description">Semasa AI memproses mesej atau melaksanakan alat, sembunyikan kad tugas aplikasi dari tugas terkini sistem untuk mengelakkan ditutup secara tidak sengaja dalam tugas terkini.</string>
     <string name="default_profile_name">Profil Lalai</string>

@@ -4891,6 +4891,11 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="ui_accessibility_mode_description">Optimizar el comportamiento de automatización de la interfaz de usuario para usuarios de accesibilidad como TalkBack, priorizando pasos legibles y evitando clics automáticos.</string>
     <string name="experimental_virtual_display">Pantalla virtual experimental</string>
     <string name="experimental_virtual_display_description">Usar automatización ADB+Shizuku basada en pantalla virtual, aún en fase experimental, puede ser inestable.</string>
+    <string name="live_service_notification_title">Operit Live</string>
+    <string name="live_capture_unavailable">Canal de observación de pantalla principal no disponible (requiere el entorno ROM privilegiado)</string>
+    <string name="live_service_notification_text">Canal de observación y automatización Live en ejecución</string>
+    <string name="live_secure_capture">Captura de páginas seguras</string>
+    <string name="live_secure_capture_description">Añade el indicador SECURE al espejo de pantalla Live para capturar contenido protegido por DRM; limitado por la política DRM en algunos dispositivos, desactivado por defecto</string>
     <string name="hide_runtime_task_view">Ocultar vista de tarea en tiempo de ejecución</string>
     <string name="hide_runtime_task_view_description">Ocultar la tarjeta de tarea de la aplicación de las tareas recientes del sistema mientras la IA procesa mensajes o ejecuta herramientas, para evitar que se cierre accidentalmente.</string>
     <string name="default_profile_name">Perfil predeterminado</string>

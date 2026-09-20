@@ -5805,6 +5805,11 @@
     <string name="confirm_skill_git_import_deployment">I confirm that this Skill can be properly installed and used through the app\'s Git repository import method</string>
     <string name="experimental_virtual_display">Experimental Virtual Display</string>
     <string name="experimental_virtual_display_description">Use ADB+Shizuku automation based on virtual display. This feature is still experimental and may be unstable.</string>
+    <string name="live_service_notification_title">Operit Live</string>
+    <string name="live_capture_unavailable">Main-screen observation channel unavailable (requires the privileged ROM environment)</string>
+    <string name="live_service_notification_text">Live observation and automation channel running</string>
+    <string name="live_secure_capture">Secure page capture</string>
+    <string name="live_secure_capture_description">Adds the SECURE flag to the Live screen mirror so DRM-protected content can be captured; limited by DRM policy on some devices, off by default</string>
     <string name="hide_runtime_task_view">Hide runtime task view</string>
     <string name="hide_runtime_task_view_description">Hide the app card from system recents while AI is processing or executing tools to reduce accidental dismissal.</string>
     <string name="get_skill">Get Skill</string>

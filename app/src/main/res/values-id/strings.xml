@@ -4710,6 +4710,11 @@ Sekarang Anda dapat menggunakan mode AutoGLM di antarmuka percakapan.</string>
     <string name="ui_accessibility_mode_description">Mengoptimalkan perilaku otomatisasi UI untuk pengguna aksesibilitas seperti TalkBack, memprioritaskan langkah-langkah operasi yang dapat dibacakan, dan berhati-hati dalam mengeksekusi klik otomatis.</string>
     <string name="experimental_virtual_display">Layar Virtual Eksperimental</string>
     <string name="experimental_virtual_display_description">Menggunakan otomatisasi ADB+Shizuku berbasis layar virtual, fitur masih dalam tahap eksperimen dan mungkin tidak stabil.</string>
+    <string name="live_service_notification_title">Operit Live</string>
+    <string name="live_capture_unavailable">Saluran observasi layar utama tidak tersedia (memerlukan lingkungan ROM istimewa)</string>
+    <string name="live_service_notification_text">Saluran observasi dan otomatisasi Live sedang berjalan</string>
+    <string name="live_secure_capture">Pengambilan halaman aman</string>
+    <string name="live_secure_capture_description">Menambahkan flag SECURE pada cermin layar Live sehingga konten berlindung DRM dapat diambil; dibatasi kebijakan DRM pada sebagian perangkat, nonaktif secara bawaan</string>
     <string name="hide_runtime_task_view">Sembunyikan Tampilan Tugas Runtime</string>
 
     <string name="deleted_selected_chats_with_skipped_locked">Telah menghapus %1$d catatan percakapan, melewati %2$d percakapan terkunci</string>

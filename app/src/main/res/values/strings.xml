@@ -5734,6 +5734,11 @@
     <string name="ui_accessibility_mode_description">为 TalkBack 等无障碍用户优化 UI 自动化行为，优先给出可朗读的操作步骤，谨慎执行自动点击。</string>
     <string name="experimental_virtual_display">实验性虚拟屏幕</string>
     <string name="experimental_virtual_display_description">使用基于虚拟屏幕的 ADB+Shizuku 自动化，功能仍在实验阶段，可能不稳定。</string>
+    <string name="live_service_notification_title">Operit Live</string>
+    <string name="live_capture_unavailable">主屏观察通道不可用（需要 ROM 特权环境）</string>
+    <string name="live_service_notification_text">Live 观察与自动化通道运行中</string>
+    <string name="live_secure_capture">安全页面采集</string>
+    <string name="live_secure_capture_description">Live 主屏观察通道叠加 SECURE 旗标，可采集 DRM 等安全页面；部分设备受 DRM 策略限制，默认关闭</string>
     <string name="hide_runtime_task_view">运行时任务视图隐藏</string>
     <string name="hide_runtime_task_view_description">AI 处理消息或执行工具时，从系统最近任务中隐藏应用任务卡片，避免在最近任务里被误滑关闭。</string>
     
