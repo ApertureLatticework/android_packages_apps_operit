@@ -50,3 +50,13 @@ packages/apps/Operit/
 
 - Compose 编译器与树内 Kotlin 版本兼容矩阵是首要技术验证项，落在步骤 6 的 spike
 - mnn 与 llama.cpp 的 Soong 转写工作量最大，在步骤 1 依赖清单定稿后立即启动；若排期过长则裁剪功能面减小模块面，不引入任何 prebuilt 过渡产物
+
+## 树内 Compose 用法定稿（2026-09-19，spike1 翻车后实锤）
+
+- `compose: true` 属性不存在于 LOS 23.2 Soong，写法为：Compose 模块直接进 static_libs
+- Compose 编译器由 kotlinc_incremental 内嵌（kotlin-compose-compiler-embeddable 2.2.0），
+  全树 Kotlin 模块默认可用；`-P plugin:androidx.compose.compiler.plugins.kotlin:...`
+  为可选插件参数（官方 SceneTransitionLayoutDemo 同款）
+- androidx 预编译落位 prebuilts/sdk/current/androidx/，非 prebuilts/androidx
+- Operit 的 Soong 模块按 SceneTransitionLayoutDemo 范本组织（android_library 承载 Kotlin/Compose 源，
+  android_app 壳引库 + platform_apis/platform_app_defaults）

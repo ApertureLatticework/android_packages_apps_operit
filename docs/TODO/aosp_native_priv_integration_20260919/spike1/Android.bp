@@ -1,17 +1,25 @@
+// LOS 23.2 Compose spike（结论版，对齐 development/samples/SceneTransitionLayoutDemo 范本）
+//
+// 关键结论（2026-09-19 树内实测定稿）：
+// - Soong 无 "compose" 属性（unrecognized property，勿用）
+// - Compose 编译器由 kotlinc_incremental 内嵌（kotlin-compose-compiler-embeddable），
+//   全树 Kotlin 模块默认可用，无需 plugins: 或 -Xplugin
+// - "-P plugin:androidx.compose.compiler.plugins.kotlin:sourceInformation=true"
+//   只是可选的插件参数（生成源信息定位），官方范本同款
 android_app {
     name: "spike-compose",
     srcs: ["src/com/operit/spike/*.kt"],
     static_libs: [
         "androidx.compose.runtime_runtime",
+        "androidx.compose.foundation_foundation",
+        "androidx.compose.material3_material3",
+        "androidx.compose.ui_ui",
+        "androidx.activity_activity-compose",
     ],
-    // 注意：LOS 23.2 Soong 无 "compose" 属性（实测 unrecognized property，已删）。
-    // Compose 模块直接进 static_libs（SystemUI 同款）。
     kotlincflags: [
         "-Xjvm-default=all",
         "-P plugin:androidx.compose.compiler.plugins.kotlin:sourceInformation=true",
     ],
-    // Compose 编译器插件本体挂载方式待树内 grep 定位
-    // （SystemUI 的 plugins: 只列了 room/dagger，-P 参数的宿主插件从哪挂是关键未知点）
     manifest: "AndroidManifest.xml",
     min_sdk_version: "26",
 }
