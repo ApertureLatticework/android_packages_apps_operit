@@ -210,8 +210,7 @@ open class PrivilegedUITools(context: Context) : AccessibilityUITools(context) {
                     success = true,
                     result = UIActionResultData(
                         actionType = "pressKey",
-                        actionDescription = "Successfully pressed key $keyCodeRaw via input injection",
-                        error = ""
+                        actionDescription = "Successfully pressed key $keyCodeRaw via input injection"
                     ),
                     error = ""
                 )
@@ -248,8 +247,7 @@ open class PrivilegedUITools(context: Context) : AccessibilityUITools(context) {
                     success = true,
                     result = UIActionResultData(
                         actionType = "textInput",
-                        actionDescription = "Successfully cleared input field",
-                        error = ""
+                        actionDescription = "Successfully cleared input field"
                     ),
                     error = ""
                 )
@@ -264,8 +262,7 @@ open class PrivilegedUITools(context: Context) : AccessibilityUITools(context) {
                     success = true,
                     result = UIActionResultData(
                         actionType = "textInput",
-                        actionDescription = "Successfully set input text to: $text via clipboard paste injection",
-                        error = ""
+                        actionDescription = "Successfully set input text to: $text via clipboard paste injection"
                     ),
                     error = ""
                 )

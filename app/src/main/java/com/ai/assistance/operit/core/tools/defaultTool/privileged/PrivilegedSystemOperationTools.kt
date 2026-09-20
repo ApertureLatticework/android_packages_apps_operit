@@ -27,6 +27,9 @@ import kotlin.coroutines.resume
  */
 open class PrivilegedSystemOperationTools(context: Context) : AccessibilitySystemOperationTools(context) {
 
+    // 父系 context 为 private，特权档自持应用上下文
+    private val appContext: Context = context.applicationContext
+
     companion object {
         private const val TAG = "PrivilegedSystemOperationTools"
         private const val INSTALL_TIMEOUT_MS = 120_000L
@@ -52,9 +55,9 @@ open class PrivilegedSystemOperationTools(context: Context) : AccessibilitySyste
         return try {
             val ok = withContext(Dispatchers.IO) {
                 when (namespace) {
-                    "global" -> Settings.Global.putString(context.contentResolver, setting, value)
-                    "secure" -> Settings.Secure.putString(context.contentResolver, setting, value)
-                    "system" -> Settings.System.putString(context.contentResolver, setting, value)
+                    "global" -> Settings.Global.putString(appContext.contentResolver, setting, value)
+                    "secure" -> Settings.Secure.putString(appContext.contentResolver, setting, value)
+                    "system" -> Settings.System.putString(appContext.contentResolver, setting, value)
                     else -> return ToolResult(
                         toolName = tool.name,
                         success = false,
@@ -168,7 +171,7 @@ open class PrivilegedSystemOperationTools(context: Context) : AccessibilitySyste
             )
         }
         return try {
-            val ok = PrivilegedSystemApi.forceStopPackage(context, packageName)
+            val ok = PrivilegedSystemApi.forceStopPackage(appContext, packageName)
             if (ok) {
                 ToolResult(
                     toolName = tool.name,
@@ -203,16 +206,16 @@ open class PrivilegedSystemOperationTools(context: Context) : AccessibilitySyste
     /** PackageInstaller 静默安装，挂起等待状态回调（status==0 成功） */
     private suspend fun installViaPackageInstaller(file: File): Boolean =
         suspendCancellableCoroutine { cont ->
-            val installer = context.packageManager.packageInstaller
+            val installer = appContext.packageManager.packageInstaller
             val params = android.content.pm.PackageInstaller.SessionParams(
                 android.content.pm.PackageInstaller.SessionParams.MODE_FULL_INSTALL
             )
             val sessionId = installer.createSession(params)
             val session = installer.openSession(sessionId)
 
-            val statusIntent = Intent(installStatusAction).setPackage(context.packageName)
+            val statusIntent = Intent(installStatusAction).setPackage(appContext.packageName)
             val statusSender = PendingIntent.getBroadcast(
-                context,
+                appContext,
                 sessionId,
                 statusIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
@@ -222,7 +225,7 @@ open class PrivilegedSystemOperationTools(context: Context) : AccessibilitySyste
                 override fun onReceive(ctx: Context, intent: Intent) {
                     val status = intent.getIntExtra(android.content.pm.PackageInstaller.EXTRA_STATUS, Int.MIN_VALUE)
                     try {
-                        context.unregisterReceiver(this)
+                        appContext.unregisterReceiver(this)
                     } catch (_: Exception) {
                     }
                     if (cont.isActive) cont.resume(status == android.content.pm.PackageInstaller.STATUS_SUCCESS)
@@ -230,9 +233,9 @@ open class PrivilegedSystemOperationTools(context: Context) : AccessibilitySyste
             }
             val filter = android.content.IntentFilter(installStatusAction)
             if (android.os.Build.VERSION.SDK_INT >= 33) {
-                context.registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED)
+                appContext.registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED)
             } else {
-                context.registerReceiver(receiver, filter)
+                appContext.registerReceiver(receiver, filter)
             }
 
             try {
@@ -242,7 +245,7 @@ open class PrivilegedSystemOperationTools(context: Context) : AccessibilitySyste
                 session.commit(statusSender)
             } catch (e: Exception) {
                 session.abandon()
-                context.unregisterReceiver(receiver)
+                appContext.unregisterReceiver(receiver)
                 if (cont.isActive) cont.resume(false)
                 return@suspendCancellableCoroutine
             }
@@ -253,7 +256,7 @@ open class PrivilegedSystemOperationTools(context: Context) : AccessibilitySyste
                 } catch (_: Exception) {
                 }
                 try {
-                    context.unregisterReceiver(receiver)
+                    appContext.unregisterReceiver(receiver)
                 } catch (_: Exception) {
                 }
             }
