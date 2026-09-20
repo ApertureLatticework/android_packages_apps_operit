@@ -1,6 +1,5 @@
 package com.ai.assistance.operit.core.tools.system.privileged
 
-import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.view.InputEvent
@@ -19,6 +18,7 @@ import com.ai.assistance.operit.util.AppLogger
 class PrivilegedShellExecutor(private val context: Context) : ShellExecutor {
     companion object {
         private const val TAG = "PrivilegedShellExecutor"
+        private const val PERMISSION_INJECT_EVENTS = "android.permission.INJECT_EVENTS"
     }
 
     override fun getPermissionLevel(): AndroidPermissionLevel = AndroidPermissionLevel.PRIVILEGED
@@ -27,7 +27,8 @@ class PrivilegedShellExecutor(private val context: Context) : ShellExecutor {
     override fun isAvailable(): Boolean = hasPermission().granted
 
     override fun hasPermission(): ShellExecutor.PermissionStatus {
-        val granted = context.checkSelfPermission(Manifest.permission.INJECT_EVENTS) ==
+        // INJECT_EVENTS 为 signature|privileged 权限，manifest 常量对 public SDK 不可见，字面量比对
+        val granted = context.checkSelfPermission(PERMISSION_INJECT_EVENTS) ==
             PackageManager.PERMISSION_GRANTED &&
             context.checkSelfPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) ==
             PackageManager.PERMISSION_GRANTED

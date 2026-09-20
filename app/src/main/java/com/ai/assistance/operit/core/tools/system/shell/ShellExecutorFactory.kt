@@ -3,6 +3,7 @@ package com.ai.assistance.operit.core.tools.system.shell
 import android.content.Context
 import com.ai.assistance.operit.util.AppLogger
 import com.ai.assistance.operit.core.tools.system.AndroidPermissionLevel
+import com.ai.assistance.operit.core.tools.system.privileged.PrivilegedShellExecutor
 import com.ai.assistance.operit.data.preferences.androidPermissionPreferences
 
 /** Shell执行器工厂类 根据权限级别提供相应的执行器实例 */

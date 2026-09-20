@@ -52,18 +52,20 @@ open class PrivilegedSystemOperationTools(context: Context) : AccessibilitySyste
             )
         }
 
+        if (namespace !in listOf("system", "secure", "global")) {
+            return ToolResult(
+                toolName = tool.name,
+                success = false,
+                result = StringResultData(""),
+                error = "Namespace must be one of: system, secure, global"
+            )
+        }
         return try {
             val ok = withContext(Dispatchers.IO) {
                 when (namespace) {
                     "global" -> Settings.Global.putString(appContext.contentResolver, setting, value)
                     "secure" -> Settings.Secure.putString(appContext.contentResolver, setting, value)
-                    "system" -> Settings.System.putString(appContext.contentResolver, setting, value)
-                    else -> return ToolResult(
-                        toolName = tool.name,
-                        success = false,
-                        result = StringResultData(""),
-                        error = "Namespace must be one of: system, secure, global"
-                    )
+                    else -> Settings.System.putString(appContext.contentResolver, setting, value)
                 }
             }
             if (ok) {

@@ -23,33 +23,34 @@ object PrivilegedSystemApi {
     private const val INJECT_INPUT_EVENT_MODE_ASYNC = 0
 
     private val injectInputEventMethod by lazy {
-        // InputManager.getInstance() 为 public API；injectInputEvent(InputEvent, int) 为 @hide SystemApi
-        val instance = android.hardware.input.InputManager.getInstance()
-        instance.javaClass.getMethod(
+        // injectInputEvent(InputEvent, int) 为 @hide SystemApi；InputManager 实例经 getSystemService public 通道获取
+        android.hardware.input.InputManager::class.java.getMethod(
             "injectInputEvent",
             InputEvent::class.java,
             Int::class.javaPrimitiveType
         ).apply { isAccessible = true }
     }
 
+    private fun inputManager(): android.hardware.input.InputManager =
+        INPUT_MANAGER_CLASS.getDeclaredMethod("getInstance").invoke(null) as android.hardware.input.InputManager
+
+    private val INPUT_MANAGER_CLASS = android.hardware.input.InputManager::class.java
+
     /** 注入一个输入事件（MotionEvent/KeyEvent），成功返回 true */
     fun injectInputEvent(event: InputEvent): Boolean {
         return try {
-            val instance = android.hardware.input.InputManager.getInstance()
-            injectInputEventMethod.invoke(instance, event, INJECT_INPUT_EVENT_MODE_ASYNC) as Boolean
+            injectInputEventMethod.invoke(inputManager(), event, INJECT_INPUT_EVENT_MODE_ASYNC) as Boolean
         } catch (e: Exception) {
             Log.e(TAG, "injectInputEvent failed: ${e.cause ?: e}")
             false
         }
     }
 
-    /** 构造并注入一次坐标点击（down + up） */
-    fun injectTap(x: Int, y: Int, displayId: Int = android.view.Display.DEFAULT_DISPLAY): Boolean {
+    /** 构造并注入一次坐标点击（down + up），注入目标为焦点显示屏 */
+    fun injectTap(x: Int, y: Int): Boolean {
         val now = android.os.SystemClock.uptimeMillis()
         val down = MotionEvent.obtain(now, now, MotionEvent.ACTION_DOWN, x.toFloat(), y.toFloat(), 0)
-            .apply { displayId(displayId) }
         val up = MotionEvent.obtain(now, now + 50, MotionEvent.ACTION_UP, x.toFloat(), y.toFloat(), 0)
-            .apply { displayId(displayId) }
         val okDown = injectInputEvent(down)
         val okUp = injectInputEvent(up)
         down.recycle()

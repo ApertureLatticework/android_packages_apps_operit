@@ -3,6 +3,7 @@ package com.ai.assistance.operit.core.tools.system.action
 import android.content.Context
 import com.ai.assistance.operit.util.AppLogger
 import com.ai.assistance.operit.core.tools.system.AndroidPermissionLevel
+import com.ai.assistance.operit.core.tools.system.privileged.PrivilegedActionListener
 import com.ai.assistance.operit.data.preferences.androidPermissionPreferences
 
 /** UI操作监听器工厂类 根据权限级别提供相应的监听器实例 */
