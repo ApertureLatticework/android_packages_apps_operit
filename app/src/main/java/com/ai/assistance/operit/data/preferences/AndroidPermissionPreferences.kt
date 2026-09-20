@@ -58,6 +58,13 @@ class AndroidPermissionPreferences(private val context: Context) {
      * 获取当前首选的权限级别 这是一个阻塞调用，应在非UI线程使用或谨慎使用
      * @return 当前配置的首选权限级别，如果未设置则返回null
      */
+    suspend fun savePreferredPermissionLevel(permissionLevel: AndroidPermissionLevel) {
+        AppLogger.d(TAG, "Saving preferred permission level: $permissionLevel")
+        context.androidPermissionDataStore.edit { preferences ->
+            preferences[PREFERRED_PERMISSION_LEVEL] = permissionLevel.name
+        }
+    }
+
     fun getPreferredPermissionLevel(): AndroidPermissionLevel? {
         return runBlocking {
             try {
