@@ -109,7 +109,7 @@ object SystemToolPrompts {
                     ToolParameterSchema(
                         name = "environment",
                         type = "string",
-                        description = "optional, execution environment. Values: \"android\" (default, Android file system) | \"linux\" (local Ubuntu 24 terminal environment via proot; Linux paths like /home/... /etc/hosts) | \"repo:<repositoryName>\" (attached local storage repository)",
+                        description = "optional, execution environment. Values: \"android\" (default, Android file system) | \"repo:<repositoryName>\" (attached local storage repository)",
                         required = false
                     ),
                     ToolParameterSchema(
@@ -189,7 +189,7 @@ object SystemToolPrompts {
                 name = "find_files",
                 description = "Search for files matching a pattern.",
                 parametersStructured = listOf(
-                    ToolParameterSchema(name = "path", type = "string", description = "search path, for Android use /sdcard/..., for Linux use /home/... or /etc/...", required = true),
+                    ToolParameterSchema(name = "path", type = "string", description = "search path, e.g. /sdcard/...", required = true),
                     ToolParameterSchema(name = "environment", type = "string", description = "optional, same as read_file environment", required = false),
                     ToolParameterSchema(name = "pattern", type = "string", description = "search pattern, e.g. \"*.jpg\"", required = true),
                     ToolParameterSchema(name = "max_depth", type = "integer", description = "optional, controls depth of subdirectory search, -1=unlimited", required = false),
@@ -256,7 +256,7 @@ object SystemToolPrompts {
                     ToolParameterSchema(
                         name = "environment",
                         type = "string",
-                        description = "可选，执行环境。取值：\"android\"（默认，Android文件系统）| \"linux\"（本地Ubuntu 24终端环境，通过proot实现；路径用Linux格式，如/home/...、/etc/hosts）| \"repo:<仓库名>\"（附加本地储存仓库）",
+                        description = "可选，执行环境。取值：\"android\"（默认，Android文件系统）| \"repo:<仓库名>\"（附加本地储存仓库）",
                         required = false
                     ),
                     ToolParameterSchema(
@@ -336,7 +336,7 @@ object SystemToolPrompts {
                 name = "find_files",
                 description = "搜索匹配模式的文件。",
                 parametersStructured = listOf(
-                    ToolParameterSchema(name = "path", type = "string", description = "搜索路径，Android用/sdcard/...，Linux用/home/...或/etc/...", required = true),
+                    ToolParameterSchema(name = "path", type = "string", description = "搜索路径，如/sdcard/...", required = true),
                     ToolParameterSchema(name = "environment", type = "string", description = "可选，同 read_file 的 environment", required = false),
                     ToolParameterSchema(name = "pattern", type = "string", description = "搜索模式，例如\"*.jpg\"", required = true),
                     ToolParameterSchema(name = "max_depth", type = "integer", description = "可选，控制子目录搜索深度，-1=无限", required = false),

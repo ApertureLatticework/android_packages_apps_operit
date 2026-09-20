@@ -526,8 +526,6 @@ AVAILABLE_TOOLS_SECTION""".trimIndent()
               - When using tools to read, write, search, list, move, or delete workspace files, do not use relative paths; always use absolute paths rooted at `$workspacePath`.
               ${if (shouldShowEnv) "- When operating on workspace files via tools, always pass `environment=\"$envLabel\"` together with the workspace path." else ""}
               - Relative paths are only for file contents or project-internal references, not for tool parameters.
-              - Terminal mount note: common mounts include `$externalStoragePath -> /sdcard`, `$externalStoragePath -> $externalStoragePath`, and app sandbox `$appFilesPath -> same path`.
-              - If the workspace is under mounted paths, execute workspace files directly in the Linux terminal environment; do not copy files before execution.
               - **Best Practice for Code Modifications**: Before modifying any file, use `grep_code` and `grep_context` to locate and understand relevant code with surrounding context. This ensures you understand the codebase structure before making changes.
               """.trimIndent()
           } else {
@@ -538,8 +536,6 @@ AVAILABLE_TOOLS_SECTION""".trimIndent()
               - 使用工具读取、写入、搜索、列目录、移动或删除工作区文件时，不要使用相对路径，必须使用以 `$workspacePath` 为根的绝对路径。
               ${if (shouldShowEnv) "- 通过工具操作工作区文件时，每次都必须同时传入 `environment=\"$envLabel\"` 和对应的工作区路径。" else ""}
               - 相对路径只用于文件内容里的项目内部引用，不用于工具参数。
-              - 终端挂载说明：常见挂载包括 `$externalStoragePath -> /sdcard`、`$externalStoragePath -> $externalStoragePath`，以及应用沙箱 `$appFilesPath -> 同路径`。
-              - 若工作区位于已挂载路径中，直接在 Linux 终端环境中执行工作区文件；无需先复制再执行。
               - **代码修改最佳实践**：修改任何文件之前，建议组合使用 `grep_code` 与 `grep_context` 定位并理解相关代码及其上下文，避免在未理解项目结构时盲改。
               """.trimIndent()
           }

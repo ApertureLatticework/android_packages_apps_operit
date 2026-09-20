@@ -40,7 +40,6 @@ import java.util.zip.ZipFile
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 import com.ai.assistance.operit.util.FileUtils
-import com.ai.assistance.operit.util.PathMapper
 import com.ai.assistance.operit.util.ImagePoolManager
 import com.ai.assistance.operit.util.MediaPoolManager
 import com.ai.assistance.operit.util.HttpMultiPartDownloader
@@ -3302,8 +3301,8 @@ open class StandardFileSystemTools(protected val context: Context) {
         PathValidator.validateAndroidPath(sourcePath, tool.name, "source")?.let { return it }
         PathValidator.validateAndroidPath(zipPath, tool.name, "destination")?.let { return it }
 
-        val actualSourcePath = PathMapper.resolvePath(context, sourcePath, environment)
-        val actualZipPath = PathMapper.resolvePath(context, zipPath, environment)
+        val actualSourcePath = sourcePath
+        val actualZipPath = zipPath
 
         if (sourcePath.isBlank() || zipPath.isBlank()) {
             return ToolResult(
@@ -3459,8 +3458,8 @@ open class StandardFileSystemTools(protected val context: Context) {
         PathValidator.validateAndroidPath(zipPath, tool.name, "source")?.let { return it }
         PathValidator.validateAndroidPath(destPath, tool.name, "destination")?.let { return it }
 
-        val actualZipPath = PathMapper.resolvePath(context, zipPath, environment)
-        val actualDestPath = PathMapper.resolvePath(context, destPath, environment)
+        val actualZipPath = zipPath
+        val actualDestPath = destPath
 
         if (zipPath.isBlank() || destPath.isBlank()) {
             return ToolResult(
@@ -4069,7 +4068,7 @@ open class StandardFileSystemTools(protected val context: Context) {
         val environment = tool.parameters.find { it.name == "environment" }?.value
         PathValidator.validateAndroidPath(destPath, tool.name, "destination")?.let { return it }
 
-        val actualDestPath = PathMapper.resolvePath(context, destPath, environment)
+        val actualDestPath = destPath
 
         fun parseHeaders(headersJson: String?): Map<String, String> {
             if (headersJson.isNullOrBlank()) return emptyMap()

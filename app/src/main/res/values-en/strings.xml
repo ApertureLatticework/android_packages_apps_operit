@@ -133,7 +133,6 @@
     <string name="menu">Menu</string>
     <string name="token_config">Get API Key</string>
     <string name="package_category_plugin">Plugin</string>
-    <string name="desktop_pet_start">Start Desktop Pet</string>
     
     <!-- Workflow related -->
     <string name="workflow_list_title">Workflow List</string>
@@ -372,9 +371,6 @@
     <string name="importing_model">Importing model...</string>
     <string name="processing">Processing...</string>
     <string name="error_occurred">Error occurred: %1$s</string>
-    <string name="avatar_config">Avatar Configuration</string>
-    <string name="avatar_voice_call_enable_title">Enable virtual avatar</string>
-    <string name="avatar_voice_call_enable_summary">When enabled, the voice call UI uses the virtual avatar and plays emotion actions from returned &lt;mood&gt; tags.</string>
     <string name="dragon_bones_config">DragonBones Config</string>
     <string name="collapse">Collapse</string>
     <string name="expand">Expand</string>
@@ -389,76 +385,12 @@
     <string name="confirm_delete_model_message">This action cannot be undone. Are you sure you want to delete this model?</string>
     <string name="rename_avatar_model_title">Rename Model</string>
     <string name="rename_avatar_model_message">Enter a new display name for this model</string>
-    <string name="avatar_model_name_label">Model Name</string>
     <string name="no_models_available">No models available</string>
     <string name="please_select_model">Please select a model</string>
     <string name="unsupported_model_type">Unsupported model type: %1$s</string>
-    <string name="avatar_preview_error_log">Avatar preview error: %1$s</string>
     <string name="how_to_import">How to create and import models?</string>
     <string name="how_to_import_tap_to_expand">How to create and import models? (tap to expand)</string>
     <string name="how_to_import_tap_to_collapse">How to create and import models? (tap to collapse)</string>
-    <string name="avatar_config_supported_formats">Supported: DragonBones (.json + _tex.json + _tex.png), WebP (.webp), MP4 (.mp4), MMD (.pmx/.pmd + optional .vmd), glTF (.glb/.gltf), FBX (.fbx).</string>
-    <string name="avatar_config_import_methods">Direct file import supports .glb/.gltf/.mp4/.fbx; use .zip for DragonBones, WebP, MP4, MMD, multi-file glTF, or FBX packages with external textures/resources.</string>
-    <string name="avatar_mood_trigger_mapping_title">Mood Trigger Mapping</string>
-    <string name="avatar_mood_trigger_mapping_desc">Returned &lt;mood&gt; values from the desktop pet and voice avatar will match these triggers first. Only custom types that already have an animation binding will be appended to the prompt.</string>
-    <string name="avatar_no_model_actions">No model actions found for this avatar</string>
-    <string name="avatar_custom_types_title">Custom Types</string>
-    <string name="avatar_custom_type_add">Add Custom Type</string>
-    <string name="avatar_custom_type_none">No custom types yet</string>
-    <string name="avatar_trigger_key_label">Trigger Key: %1$s</string>
-    <string name="avatar_fallback_emotion_label">Fallback Emotion: %1$s</string>
-    <string name="avatar_edit_custom_mood_type">Edit custom type</string>
-    <string name="avatar_delete_custom_mood_type">Delete custom type</string>
-    <string name="avatar_mapped_action">Mapped Action</string>
-    <string name="avatar_preview_action">Preview</string>
-    <string name="avatar_unmapped">Unmapped</string>
-    <string name="avatar_custom_type_add_title">Add Custom Type</string>
-    <string name="avatar_custom_type_edit_title">Edit Custom Type</string>
-    <string name="avatar_custom_type_key">Type Key</string>
-    <string name="avatar_custom_type_key_hint">Only lowercase letters, digits, _ and - are allowed. Normalized key: %1$s</string>
-    <string name="avatar_empty_value_placeholder">&lt;empty&gt;</string>
-    <string name="avatar_custom_type_prompt_hint_label">Prompt Hint</string>
-    <string name="avatar_custom_type_prompt_hint_help">This hint will be appended to the desktop pet and voice avatar mood rules so the model knows when to use this type.</string>
-    <string name="avatar_emotion_mapping_title">Emotion Mapping</string>
-    <string name="avatar_emotion_mapping_chip">%1$s: %2$s</string>
-    <string name="avatar_emotion_label">Emotion</string>
-    <string name="avatar_clear_selected_mapping">Clear Selected Mapping</string>
-    <string name="avatar_emotion_idle">Idle</string>
-    <string name="avatar_emotion_listening">Listening</string>
-    <string name="avatar_emotion_thinking">Thinking</string>
-    <string name="avatar_emotion_happy">Happy</string>
-    <string name="avatar_emotion_sad">Sad</string>
-    <string name="avatar_emotion_confused">Confused</string>
-    <string name="avatar_emotion_surprised">Surprised</string>
-    <string name="avatar_mood_angry_name">Angry</string>
-    <string name="avatar_mood_happy_name">Happy</string>
-    <string name="avatar_mood_shy_name">Shy</string>
-    <string name="avatar_mood_aojiao_name">Tsundere</string>
-    <string name="avatar_mood_cry_name">Cry</string>
-    <string name="avatar_mood_angry_hint">Use when the user sounds insulting, unfair, accusatory, angry, or strongly dissatisfied.</string>
-    <string name="avatar_mood_happy_hint">Use when the user is clearly praising, achieving a goal, receiving a gift, or obviously happy.</string>
-    <string name="avatar_mood_shy_hint">Use when the user compliments the character, gets flirtatious, or hits a cute and embarrassing point.</string>
-    <string name="avatar_mood_aojiao_hint">Use when the user is teasing lightly or in a playful argument where the character acts tough but softens.</string>
-    <string name="avatar_mood_cry_hint">Use when the user feels upset, disappointed, frustrated, venting sadness, or becomes low after apologizing.</string>
-    <string name="avatar_custom_type_prompt_hint_required">Prompt hint cannot be empty</string>
-    <string name="avatar_custom_type_invalid_key">Custom type keys may only use lowercase letters, digits, _ or -, and cannot conflict with built-in keys</string>
-    <string name="avatar_custom_type_duplicate_key">Custom type key already exists</string>
-    <string name="avatar_mmd_camera_pitch">MMD Camera Pitch (%1$s)</string>
-    <string name="avatar_mmd_camera_yaw">MMD Camera Yaw (%1$s)</string>
-    <string name="avatar_mmd_camera_distance">MMD Camera Distance (%1$s)</string>
-    <string name="avatar_mmd_orbit_pivot_height">MMD Orbit Pivot Height (%1$s)</string>
-    <string name="avatar_gltf_camera_pitch">glTF Camera Pitch (%1$s)</string>
-    <string name="avatar_gltf_camera_yaw">glTF Camera Yaw (%1$s)</string>
-    <string name="avatar_gltf_camera_distance">glTF Camera Distance (%1$s)</string>
-    <string name="avatar_gltf_orbit_pivot_height">glTF Orbit Pivot Height (%1$s)</string>
-    <string name="avatar_fbx_camera_pitch">FBX Camera Pitch (%1$s)</string>
-    <string name="avatar_fbx_camera_yaw">FBX Camera Yaw (%1$s)</string>
-    <string name="avatar_fbx_camera_distance">FBX Camera Distance (%1$s)</string>
-    <string name="avatar_fbx_orbit_pivot_height">FBX Orbit Pivot Height (%1$s)</string>
-    <string name="avatar_supported_formats_title">Supported formats</string>
-    <string name="avatar_supported_formats_desc">- DragonBones: skeleton .json + *_tex.json + *_tex.png\n- WebP: one or more .webp files\n- MP4: one or more .mp4 files\n- MMD: .pmx or .pmd model, optional .vmd motions\n- glTF: .glb or .gltf (plus referenced .bin/textures when needed)\n- FBX: .fbx (direct upload supports self-contained assets only)</string>
-    <string name="avatar_import_methods_title">Import methods</string>
-    <string name="avatar_import_methods_desc">- Direct file picker: .glb / .gltf / .mp4 / .fbx\n- ZIP import: DragonBones, WebP, MP4, MMD, multi-file glTF, or FBX packages with external textures/resources</string>
     <string name="import_structure_guide_tap_to_expand">Import structure guide (tap to expand)</string>
     <string name="import_structure_guide_tap_to_collapse">Import structure guide (tap to collapse)</string>
     <string name="import_structure_guide_content">This is the IMPORT PACKAGE layout (files inside your ZIP / picked file), not app internal storage.\n\nDragonBones (.zip)\n  my_dragonbones.zip\n    any_folder_name/\n      hero_ske.json\n      hero_tex.json\n      hero_tex.png\n  Requirement: ske/tex json/png files must share the same filename prefix.\n\nWebP (.zip)\n  my_webp.zip\n    any_folder_name/\n      idle.webp\n      talking.webp\n      happy.webp\n  Requirement: include at least one .webp file.\n\nMP4\n  Method A (direct file):\n    avatar.mp4\n  Method B (.zip):\n    my_mp4.zip\n      any_folder_name/\n        idle.mp4\n        talking.mp4\n        happy.mp4\n  Requirement: include at least one .mp4 file.\n\nMMD (.zip)\n  my_mmd.zip\n    any_folder_name/\n      character.pmx (or .pmd)\n      motions/idle.vmd (optional)\n      textures/...\n  Requirement: keep relative paths referenced by PMX/PMD unchanged.\n\nglTF\n  Method A (direct file):\n    avatar.glb\n  Method B (.zip for multi-file glTF):\n    my_gltf.zip\n      any_folder_name/\n        avatar.gltf\n        avatar.bin\n        textures/...\n  Requirement: keep relative paths referenced by .gltf unchanged.\n\nFBX\n  Method A (direct file, self-contained assets only):\n    avatar.fbx\n  Method B (use .zip for external textures/resources):\n    my_fbx.zip\n      any_folder_name/\n        avatar.fbx\n        textures/...\n  Requirement: direct .fbx upload only supports embedded resources; if the model references external textures or other assets, keep the relative paths and package everything in ZIP.</string>
@@ -476,7 +408,6 @@
     <string name="packaging_and_importing">4. Packaging and Importing:</string>
     <string name="packaging_and_importing_desc">    · Package the three exported files into one .zip file for import.</string>
     <string name="important_tip">Important Note: In the old editor download page, the Windows and Mac download links are reversed. Please make sure to select the correct link.</string>
-    <string name="dragonbones_important_tip">Important Note: In the old editor download page, the Windows and Mac download links are reversed. Please make sure to select the correct link.</string>
     <string name="download_old_editor">Download Old Editor</string>
     <string name="visit_online_editor">Visit Online Editor</string>
 
@@ -539,7 +470,6 @@
     <!-- NavItem class identifiers -->
     <string name="tool_permissions">Tool Permission Settings</string>
     <string name="about">About</string>
-    <string name="terminal">Terminal</string>
     <string name="toolbox">Toolbox</string>
     <string name="mcp">MCP</string>
     <string name="token_config_title">DeepSeek Token Configuration</string>
@@ -565,11 +495,7 @@
     <string name="faq_backup">FAQ</string>
     
     <!-- Terminal Screen -->
-    <string name="termux_not_installed">Termux Not Installed</string>
-    <string name="termux_not_running">Termux Not Running</string>
-    <string name="termux_command">Termux Command</string>
     <string name="execute_termux_command">Execute Command</string>
-    <string name="termux_result">Command Result</string>
     
     <!-- Termux Installation -->
     <string name="install_termux_title">Install Termux</string>
@@ -578,7 +504,6 @@
     <string name="installing_bundled_termux">Installing bundled Termux, please grant installation permissions</string>
     <string name="install_termux_failed">Termux Installation Failed</string>
     <string name="open_termux">Open Termux</string>
-    <string name="termux_setup_guide">Termux Setup Guide</string>
     
     <!-- About Screen -->
     <string name="about_title">About Operit AI</string>
@@ -709,9 +634,6 @@
     <string name="plugin_deploy_complete">Plugin deployment complete, continuing startup: %1$s</string>
     <string name="plugin_runtime_error">Runtime error: %1$s</string>
     <string name="plugin_runtime_output">Runtime output:\n%1$s</string>
-    <string name="plugin_auto_deploy">Plugin not deployed, starting auto-deployment</string>
-    <string name="plugin_auto_deploy_complete">Auto-deployment complete</string>
-    <string name="plugin_terminal_service_unavailable">Terminal service unavailable, please start it first</string>
     <string name="plugin_pnpm_missing">pnpm not installed in terminal, please install it first</string>
 
     <!-- Permission Guide Screen -->
@@ -1004,8 +926,6 @@
     <string name="no">No</string>
     <string name="authorized">Authorized</string>
     <string name="unauthorized">Unauthorized</string>
-    <string name="install_shizuku">Install Shizuku</string>
-    <string name="open_shizuku">Open Shizuku App</string>
     <string name="show_help">Show help</string>
     <string name="hide_help">Hide help</string>
     <string name="request_permission">Request Shizuku permission</string>
@@ -1020,7 +940,6 @@
     <string name="executing">Executing...</string>
     <string name="command_success">Command executed successfully:\n%1$s</string>
     <string name="command_failure">Command execution failed (exit code: %1$d):\n%2$s</string>
-    <string name="start_shizuku_first">Please start Shizuku service first</string>
     <string name="grant_permission_first">Please grant Shizuku permission</string>
     <string name="feature_unavailable">ADB command feature unavailable</string>
     <string name="thinking_process">Thinking Process</string>
@@ -1304,61 +1223,10 @@
     <string name="wizard_open_docs">Official Docs</string>
     
     <!-- RootWizardCard -->
-    <string name="root_wizard_step1">Step 1: Root Device</string>
-    <string name="root_wizard_step2">Step 2: Grant Root Permission</string>
     
     <!-- ShizukuWizardCard -->
-    <string name="shizuku_wizard_step1">Step 1: Install Shizuku App</string>
-    <string name="shizuku_wizard_step2">Step 2: Start Shizuku Service</string>
-    <string name="shizuku_wizard_step3">Step 3: Grant Shizuku Permission</string>
-    <string name="shizuku_wizard_method1_title">Method 1: In-App Start (Recommended)</string>
-    <string name="shizuku_wizard_method1_steps">1. Click the \"Open Shizuku\" button below\n2. In the Shizuku app, select \"Start via Wireless Debugging\"\n3. Follow the prompts to enable \"Developer Options\" and \"Wireless Debugging\"\n4. Allow Shizuku to get wireless debugging permissions</string>
-    <string name="shizuku_wizard_method2_title">Method 2: Start via USB</string>
-    <string name="shizuku_wizard_method2_steps">1. Install ADB tools on your computer\n2. Connect your phone to your computer via USB\n3. Execute in computer command line:\n   adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh</string>
     
     <!-- TermuxWizardCard -->
-    <string name="termux_wizard_title">Termux Setup Wizard</string>
-    <string name="termux_wizard_step1">Step 1: Install Termux</string>
-    <string name="termux_wizard_step2">Step 2: Authorize Termux</string>
-    <string name="termux_wizard_step3">Step 3: Launch Termux</string>
-    <string name="termux_wizard_step4">Step 4: Set Battery Optimization Exemption</string>
-    <string name="termux_wizard_step5">Step 5: Configure Tuna Mirror</string>
-    <string name="termux_wizard_step6">Step 6: Install Python Environment</string>
-    <string name="termux_wizard_step7">Step 7: Install UV Package Manager</string>
-    <string name="termux_wizard_step8">Step 8: Install Node.js Environment</string>
-    <string name="termux_wizard_completed">Termux Setup Complete</string>
-    <string name="termux_wizard_reinstall_auth">Re-authorize</string>
-    <string name="termux_wizard_install_message">Termux is a powerful terminal emulator that allows you to use various command line tools. We need to install this app first.</string>
-    <string name="termux_wizard_install_note">After installation, please open Termux for the first time and wait for initialization to complete, then return to this app to complete the authorization step.</string>
-    <string name="termux_wizard_install">Install Termux</string>
-    <string name="termux_wizard_auth_message">Termux is installed. Now you need to grant Termux the necessary permissions so we can execute commands.</string>
-    <string name="termux_wizard_auth_note">Before authorizing, make sure:</string>
-    <string name="termux_wizard_auth_note_details">1. Termux is installed and has been opened at least once\n2. Click the \"Check and Authorize\" button to complete authorization</string>
-    <string name="termux_wizard_start">Launch</string>
-    <string name="termux_wizard_check_auth">Check and Authorize</string>
-    <string name="termux_wizard_start_message">Termux is installed and authorized but not currently running. Configuration operations require Termux to be running in the background.</string>
-    <string name="termux_wizard_start_note">Note:</string>
-    <string name="termux_wizard_start_note_details">Termux is authorized but not running. Please launch Termux to continue with the next setup steps.</string>
-    <string name="termux_wizard_start_termux">Launch Termux</string>
-    <string name="termux_wizard_battery_title">Set Battery Optimization Exemption</string>
-    <string name="termux_wizard_battery_message">Termux is running. Now you need to exempt Termux from battery optimization so it can run stably in the background for extended periods. Android\'s battery optimization feature may close Termux in the background, affecting scripts and services.</string>
-    <string name="termux_wizard_battery_optimize">Set Battery Optimization Exemption</string>
-    <string name="termux_wizard_tuna_title">Configure Tuna Mirror</string>
-    <string name="termux_wizard_tuna_message">Termux is exempt from battery optimization. Now you need to configure the Tuna mirror to speed up package downloads. Tuna mirror is a Chinese mirror that can significantly increase Termux package download speeds.</string>
-    <string name="termux_wizard_tuna_config">Configure Tuna Mirror</string>
-    <string name="termux_wizard_tuna_skip">Skip this step</string>
-    <string name="termux_wizard_python_title">Install Python Environment</string>
-    <string name="termux_wizard_python_message">Tuna mirror is configured. Now you need to install the Python environment. Python is a popular programming language that many AI tools and automation scripts require.</string>
-    <string name="termux_wizard_python_install">Install Python</string>
-    <string name="termux_wizard_uv_title">Install UV Package Manager</string>
-    <string name="termux_wizard_uv_message">Python is installed. Now you need to install the UV package manager. UV is a fast Python package manager and resolver that can replace pip and provide better dependency management.</string>
-    <string name="termux_wizard_uv_install">Install UV</string>
-    <string name="termux_wizard_node_title">Install Node.js Environment</string>
-    <string name="termux_wizard_node_message">UV is installed. Now you need to install the Node.js environment. Node.js is a JavaScript runtime environment used for running JavaScript code and web applications.</string>
-    <string name="termux_wizard_node_install">Install Node.js</string>
-    <string name="termux_wizard_success_title">Congratulations! Termux environment is fully configured</string>
-    <string name="termux_wizard_success_message">You can now use Termux for various command line operations</string>
-    <string name="termux_wizard_open">Open Termux</string>
     
     <!-- ShizukuDemoScreen -->
 
@@ -1375,7 +1243,6 @@
     <string name="status_not_granted">Not Granted</string>
     <string name="accessibility_permission">Accessibility Permission</string>
     <string name="accessibility_service">Accessibility Service</string>
-    <string name="admin_permission">Admin Permission</string>
     <string name="debug_permission">Debug Permission</string>
     <string name="status_not_installed">Not Installed</string>
     <string name="status_not_running">Not Running</string>
@@ -1384,36 +1251,21 @@
     <string name="overlay_permission">Overlay Permission</string>
     <string name="battery_optimization">Battery Optimization Exemption</string>
     <string name="location_permission">Location Permission</string>
-    <string name="operit_terminal">Operit Terminal</string>
     
     <!-- Permission Level Descriptions -->
     <string name="permission_level_standard">Standard Permission</string>
     <string name="permission_level_accessibility">Accessibility Permission</string>
-    <string name="permission_level_admin">Admin Permission</string>
-    <string name="permission_level_debugger">Debug Permission</string>
-    <string name="permission_level_root">Root Permission</string>
     <string name="permission_level_standard_desc">Basic application permissions, no special system authorization required</string>
     <string name="permission_level_accessibility_desc">Added accessibility service support, can simulate screen operations</string>
-    <string name="permission_level_admin_desc">Added device administrator permissions, can access more system functions</string>
-    <string name="permission_level_debugger_desc">Provides ADB-level system access through Shizuku</string>
-    <string name="permission_level_root_desc">Superuser permissions, can execute any system operations</string>
     <string name="permission_level_standard_full_desc">Standard Permissions: Basic application permissions, no special privileges required</string>
     <string name="permission_level_accessibility_full_desc">Accessibility Permissions: Allows the app to simulate user operations, requires enabling accessibility services</string>
-    <string name="permission_level_admin_full_desc">Admin Permissions: Allows the app to access more system functions, such as location services</string>
-    <string name="permission_level_debugger_full_desc">Debug Permissions: Allows advanced operations through ADB debugging functions, requires Shizuku service</string>
-    <string name="permission_level_root_full_desc">Root Permissions: Allows the app to run as superuser, requires a rooted device</string>
     
     <!-- Root Status Information -->
-    <string name="device_rooted_request_permission">Device is rooted, click to request app permissions</string>
-    <string name="device_not_rooted">Device is not rooted, unable to obtain Root permissions</string>
     
     <!-- Toast Messages -->
     <string name="toast_download_link_failed">Unable to open download link</string>
     <string name="toast_apk_extract_failed">Failed to extract APK, please try again later</string>
-    <string name="toast_open_termux_first">Please start Termux first</string>
     <string name="toast_operation_failed">Operation failed: %1$s</string>
-    <string name="toast_skip_tuna_source">Skipped Tuna mirror configuration, you can configure the mirror in Termux later</string>
-    <string name="toast_skip_tuna_source_dialog">You have chosen to skip Tuna mirror configuration. For manual configuration later, run the following command in Termux:\n\ntermux-change-repo\n\nThen select Tuna or another mirror from the list.</string>
     
     <!-- Chat History Selector -->
     <string name="chat_history">Chat History</string>
@@ -1445,15 +1297,6 @@
     <string name="disabled">Disabled</string>
     
     <!-- Termux Related -->
-    <string name="termux_not_installed_message">Please install Termux first</string>
-    <string name="termux_manual_auth_title">Manual Authorization Required</string>
-    <string name="termux_manual_auth_message">Cannot automatically grant Termux Run Command permission, please follow these steps:\n\n1. Open Termux\n2. Long press the screen, select \'More\'\n3. Select \'Settings\'\n4. Enable \'Allow External Apps\'</string>
-    <string name="termux_storage_permission_message">Cannot automatically grant Termux storage permission, please check the following:\n\n1. Shell environment: Make sure you have a working Shell (such as ADB or Root). Note: If using Shizuku, do not start in Root mode.\n2. Termux version: Make sure your installed Termux is the built-in version or a Debug version from its official GitHub repository.</string>
-    <string name="termux_all_permissions_granted">Termux permissions granted successfully</string>
-    <string name="termux_some_permissions_failed">Some permission grants failed, please check the logs or set manually</string>
-    <string name="termux_app_association_granted">App authorized to associate with Termux</string>
-    <string name="termux_manual_setting_hint">Please enable \'Allow External Apps\' option in Termux</string>
-    <string name="termux_manual_setting_failed">Cannot open Termux, please set manually</string>
     <string name="open_settings">Open Settings</string>
     <string name="cannot_open_settings">Cannot open settings</string>
 
@@ -1621,12 +1464,8 @@
     <string name="chat_function_desc">Main conversation function, customize chatbot prompt configuration</string>
     <string name="voice_function">Voice</string>
     <string name="voice_function_desc">Voice interaction function, customize voice assistant prompt configuration</string>
-    <string name="desktop_pet_function">Desktop Pet</string>
-    <string name="desktop_pet_function_desc">Desktop pet function, customize pet personality and interaction style</string>
     
     <!-- Desktop Pet Service Notification -->
-    <string name="pet_service_notification_title">Desktop Pet Service</string>
-    <string name="pet_service_notification_text">Desktop pet is running</string>
     
     <!-- Settings Screen Additional Strings -->
     <string name="settings_prompt_section">Prompt Configuration</string>
@@ -1717,8 +1556,6 @@
     <string name="accessibility_risk_warning_cancel">Cancel</string>
 
     <!-- Toast Messages -->
-    <string name="pip_package_install_success">PIP package installation successful</string>
-    <string name="pip_package_install_failed">PIP package installation failed</string>
     <string name="please_press_back_to_return">Please press back button to return</string>
     <string name="please_input_command">Please enter command</string>
     <string name="background_image_migrated">Background image migrated to internal storage</string>
@@ -1746,7 +1583,6 @@
     <string name="message_info_token_hit_rate_short">Hit rate</string>
     <string name="message_info_unavailable">Not recorded</string>
     <string name="selected_content_copied">Selected content copied</string>
-    <string name="requesting_root_permission">Requesting Root permission...</string>
     <string name="command_execution_success">Command execution successful</string>
     <string name="command_execution_failed">Command execution failed</string>
     <string name="please_start_termux_first">Please start Termux first</string>
@@ -1767,23 +1603,6 @@
     <string name="download_success">Download successful: %1$s</string>
     <string name="download_start">Download started: %1$s</string>
     <string name="deploy_date">Deploy: %1$s</string>
-    <string name="termux_start_command_sent">Termux start command sent</string>
-    <string name="termux_start_failed">Termux start failed</string>
-    <string name="termux_already_running">Termux is already running</string>
-    <string name="termux_authorized_success">Termux authorization successful</string>
-    <string name="termux_authorization_failed">Termux authorization failed, please check Termux settings</string>
-    <string name="tuna_source_setup_success">Tuna mirror setup successful</string>
-    <string name="tuna_source_setup_failed">Tuna mirror setup failed</string>
-    <string name="tuna_source_setup_error">Error configuring Tuna mirror</string>
-    <string name="python_install_success">Python installation successful</string>
-    <string name="python_install_failed">Python installation failed</string>
-    <string name="python_install_error">Error installing Python environment</string>
-    <string name="uv_install_success">UV installation successful</string>
-    <string name="uv_install_failed">UV installation failed</string>
-    <string name="uv_install_error">Error installing UV package manager</string>
-    <string name="nodejs_install_success">Node.js installation successful</string>
-    <string name="nodejs_install_failed">Node.js installation failed</string>
-    <string name="nodejs_install_error">Error installing Node.js environment</string>
     <string name="battery_optimization_reminder">Please allow Termux battery optimization exemption in system settings</string>
     <string name="cannot_open_termux_battery_settings">Cannot open Termux battery optimization settings</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
@@ -1793,8 +1612,6 @@
     <string name="cannot_open_accessibility_settings">Cannot open accessibility service settings</string>
     <string name="accessibility_provider_installed">Service provider installed</string>
     <string name="cannot_open_root_tutorial">Cannot open Root tutorial link</string>
-    <string name="cannot_find_shizuku_app">Cannot find Shizuku app</string>
-    <string name="cannot_launch_shizuku_app">Cannot launch Shizuku app</string>
     <string name="cannot_open_docs_link">Cannot open documentation link</string>
     <string name="plugin_loading_skipped">Plugin loading skipped</string>
     <string name="press_back_again_to_exit">Press back again to exit</string>
@@ -1814,9 +1631,6 @@
     <string name="floating_window_attachment_note">Note: Only special attachments are supported in floating window\nTo add files or images, please open the full chat interface</string>
     <string name="ai_assistant">AI Assistant</string>
     <string name="send_message">Send Message</string>
-    <string name="chat_with_pet">Chat with Pet</string>
-    <string name="dragonbones_mode">DragonBones Mode</string>
-    <string name="avatar_mode">Avatar Mode</string>
     <string name="loading_failed">Loading failed: %1$s</string>
     <string name="loading">Loading...</string>
     <string name="floating_service_description">Display AI assistant floating window service</string>
@@ -1984,7 +1798,6 @@
     <string name="ffmpeg_description">FFmpeg is a powerful audio/video processing tool. In this interface, you can execute FFmpeg commands directly.</string>
 
     <!-- Status and Error Messages -->
-    <string name="check_video_size_error">Error checking video size</string>
     <string name="cannot_read_image_file">Cannot read image file: %1$s</string>
     <string name="cannot_decode_bitmap_from_uri">Cannot decode Bitmap from URI</string>
     <string name="cannot_open_uri_input_stream">Cannot open URI input stream</string>
@@ -2116,11 +1929,6 @@
     <string name="tool_user_agreement_desc">View the application\'s user agreement and privacy policy</string>
     <string name="tool_default_assistant_guide">Default Assistant Setup</string>
     <string name="tool_default_assistant_guide_desc">Set Operit voice floating as system default assistant</string>
-    <string name="tool_terminal">Command Terminal</string>
-    <string name="tool_terminal_desc">Powerful command-line terminal for executing system commands</string>
-    <string name="tool_terminal_auto_config">Terminal Auto Configuration</string>
-    <string name="tool_terminal_auto_config_desc">Automatically install and configure Python, PIP and other development tools</string>
-    <string name="tool_terminal_auto_config_under_construction">Terminal auto configuration feature is being refactored...</string>
     <string name="tool_ui_debugger">UI Debug Tool</string>
     <string name="tool_ui_debugger_desc">Debug and analyze interface elements with element search and interaction support</string>
     <string name="ui_debugger_title">UI Debugging Tool</string>
@@ -2342,16 +2150,8 @@
     <string name="confirmation_code_copied">Confirmation code copied!</string>
     <string name="message_copied">Message copied to clipboard</string>
 
-    <string name="requesting_root">Requesting Root permission...</string>
     <string name="command_failed">Command execution failed</string>
     <string name="start_termux_first">Please start Termux first</string>
-    <string name="termux_not_found">Termux app not found</string>
-    <string name="termux_auth_failed">Termux authorization failed, please check Termux settings</string>
-    <string name="tsinghua_source_success">Tsinghua source configured successfully</string>
-    <string name="tsinghua_source_failed">Tsinghua source configuration failed</string>
-    <string name="tsinghua_source_error">Error configuring Tsinghua source</string>
-    <string name="termux_battery_optimization">Please allow Termux battery optimization exemption in system settings</string>
-    <string name="termux_battery_settings_failed">Failed to open Termux battery optimization settings</string>
     <string name="permission_settings_failed">Failed to open permission settings</string>
     <string name="overlay_settings_failed">Failed to open overlay settings</string>
     <string name="battery_settings_failed">Failed to open battery optimization settings</string>
@@ -2539,44 +2339,8 @@
     <string name="file_op_confirm_overwrite_message">A file with the same name already exists at the destination. Do you want to overwrite it?</string>
     
     <!-- Terminal -->
-    <string name="terminal_title">Terminal Emulator</string>
-    <string name="terminal_new_session">New session</string>
-    <string name="terminal_close_session">Close session</string>
-    <string name="terminal_clear_screen">Clear screen</string>
-    <string name="terminal_font_size">Font size</string>
-    <string name="terminal_zoom_in">Zoom in font</string>
-    <string name="terminal_zoom_out">Zoom out font</string>
-    <string name="terminal_copy">Copy</string>
-    <string name="terminal_paste">Paste</string>
-    <string name="terminal_select_all">Select all</string>
-    <string name="terminal_search">Search</string>
-    <string name="terminal_settings">Settings</string>
-    <string name="terminal_session">Session %d</string>
-    <string name="terminal_working_dir">Working directory: %s</string>
-    <string name="terminal_command_history">Command history</string>
-    <string name="terminal_no_history">No command history</string>
-    <string name="terminal_interactive_input">Interactive input</string>
-    <string name="terminal_input_prompt">Please enter: %s</string>
-    <string name="terminal_input_confirm">Confirm</string>
-    <string name="terminal_input_cancel">Cancel</string>
-    <string name="terminal_execution_error">Command execution error</string>
-    <string name="terminal_permission_required">Permission required</string>
-    <string name="terminal_root_access">Root permission required to execute this command</string>
-    <string name="terminal_command_not_found">Command not found</string>
-    <string name="terminal_process_running">Process is running...</string>
-    <string name="terminal_process_completed">Process completed</string>
     
     <!-- Terminal Auto Config -->
-    <string name="terminal_auto_config_title">Terminal Auto Config</string>
-    <string name="terminal_auto_config_desc">Automatically detect and configure terminal environment</string>
-    <string name="terminal_auto_config_detect">Detect environment</string>
-    <string name="terminal_auto_config_apply">Apply configuration</string>
-    <string name="terminal_auto_config_reset">Reset configuration</string>
-    <string name="terminal_auto_config_status">Configuration status</string>
-    <string name="terminal_auto_config_completed">Configuration completed</string>
-    <string name="terminal_auto_config_failed">Configuration failed</string>
-    <string name="terminal_auto_config_detecting">Detecting environment...</string>
-        <string name="terminal_auto_config_applying">Applying configuration...</string>
     
     <!-- FFmpeg Toolbox -->
     <string name="ffmpeg_toolbox_title">FFmpeg Toolbox</string>
@@ -3114,18 +2878,13 @@
     <string name="ffmpeg_video_trim_desc">Trim video to specific duration</string>
     <string name="ffmpeg_view_more_info">View More Information</string>
     <string name="start_comprehensive_test">Start Comprehensive Test</string>
-    <string name="terminal_no_n">No (N)</string>
-    <string name="terminal_send_custom_input">Send Custom Input</string>
-    <string name="terminal_yes_y">Yes (Y)</string>
     <string name="test_input_field">Test Input Field</string>
     
     <!-- ShizukuDemoScreen strings -->
     <string name="loading_app_state">Loading application state...</string>
     <string name="setup_wizard">Setup Wizard</string>
     <string name="setup_wizard_icon_desc">Setup wizard icon</string>
-    <string name="cannot_start_shizuku_app">Cannot start Shizuku app</string>
     <string name="cannot_open_doc_link">Cannot open documentation link</string>
-    <string name="welcome_termux_config">Welcome to Termux configuration tool\nClick the corresponding button to start configuration</string>
     <string name="executing_task">Executing: %1$s...</string>
     
     <!-- Permission Level Features -->
@@ -3133,7 +2892,6 @@
     <string name="feature_file_operations">File Operations</string>
     <string name="feature_screen_auto_click">Screen Auto Click</string>
     <string name="feature_system_permission_modification">System Permission Modification</string>
-    <string name="feature_termux_support">Terminal Support</string>
     <string name="feature_run_js">Virtual Screen</string>
     <string name="feature_plugin_market_mcp">Plugin Market MCP</string>
     <string name="supported">Supported</string>
@@ -3286,7 +3044,6 @@
     <string name="stream_tag_required">Tag must be set</string>
     <string name="stream_data_required">Data stream must be set</string>
     <string name="deepseek_request_body">Final DeepSeek reasoning mode request body: </string>
-    <string name="admin_shell_permission">Device administrator permission required to execute system operations</string>
     <string name="virtual_display_not_ready">Virtual display not ready</string>
     <string name="xml_content">XML Content</string>
     <string name="browser_preview">Browser Preview</string>
@@ -3542,17 +3299,7 @@
     <string name="workspace_opening_hint">Starting the local preview service, please wait</string>
     <string name="chat_update_workspace_server_failed">Failed to update web workspace: %1$s</string>
     <string name="chat_stop_workspace_server_failed">Failed to stop web workspace: %1$s</string>
-    <string name="chat_terminal_requires_android_8">Terminal features require Android 8.0 or higher</string>
-    <string name="chat_create_dedicated_terminal_session_failed">Failed to create dedicated terminal session</string>
-    <string name="chat_create_workspace_terminal_session_failed">Failed to create workspace terminal session</string>
     <string name="chat_execute_command_failed">Command execution failed: %1$s</string>
-    <string name="workspace_command_already_running">A workspace command is already running</string>
-    <string name="workspace_command_running">Command running</string>
-    <string name="workspace_command_cancelling">Cancelling command...</string>
-    <string name="workspace_command_finished">Execution complete</string>
-    <string name="workspace_command_waiting_output">Waiting for command output...</string>
-    <string name="workspace_command_no_output">Command produced no output</string>
-    <string name="workspace_command_hide">Hide</string>
     <string name="chat_start_ai_computer_failed">Failed to start AI computer: %1$s</string>
     <string name="chat_ai_computer_closed_due_to_workspace">AI computer closed (workspace opened)</string>
     <string name="ai_planning_desc">Will perform task decomposition and trigger multiple sub-agents to collect information, then summarize. Sub-agents have the same tool-calling capabilities as the chat agent. This can be very time-consuming, only recommended when collecting information.</string>
@@ -3716,7 +3463,6 @@
     <string name="perf_action_resume">Resume sampling</string>
     <string name="perf_kind_app">App</string>
     <string name="perf_kind_plugin">Plugins</string>
-    <string name="perf_kind_terminal">Terminals</string>
     <string name="perf_kind_device">Device</string>
     <string name="perf_cpu_device">Device CPU</string>
     <string name="perf_cpu_cores">%1$d cores</string>
@@ -4310,8 +4056,6 @@
     <string name="screen_title_chat_backup_settings">Data Backup &amp; Restore</string>
     <string name="screen_title_language_settings">Language Settings</string>
     <string name="screen_title_file_manager">File Manager</string>
-    <string name="screen_title_terminal">Command Terminal</string>
-    <string name="screen_title_terminal_auto_config">Terminal Auto Configuration</string>
     <string name="screen_title_app_permissions">App Permissions Manager</string>
     <string name="screen_title_ui_debugger">UI Debugger</string>
     <string name="screen_title_shell_executor">Shell Executor</string>
@@ -4536,17 +4280,6 @@
     <string name="delete_tag_confirm">Are you sure you want to delete tag "%1$s"? This action cannot be undone.</string>
 
     <!-- OperitTerminal Wizard Card -->
-    <string name="operit_terminal_wizard_title">OperitTerminal Setup Wizard</string>
-    <string name="operit_terminal_not_installed">OperitTerminal not installed</string>
-    <string name="operit_terminal_update_available">OperitTerminal update available</string>
-    <string name="operit_terminal_up_to_date">OperitTerminal is up to date</string>
-    <string name="operit_terminal_install_description">OperitTerminal is a powerful terminal application that provides a complete Linux environment and package management capabilities. We need to install this application first.</string>
-    <string name="operit_terminal_install_button">Install OperitTerminal</string>
-    <string name="operit_terminal_update_description">A new version of OperitTerminal is available. It is recommended to update for better features and compatibility.</string>
-    <string name="operit_terminal_release_notes">Release Notes: %1$s</string>
-    <string name="operit_terminal_update_button">Update OperitTerminal</string>
-    <string name="operit_terminal_latest_description">Congratulations! You have installed the latest version of OperitTerminal and can start using its powerful terminal features.</string>
-    <string name="operit_terminal_open_button">Open OperitTerminal</string>
 
     <!-- Function Types -->
     <string name="function_type_translation">Translation Function</string>
@@ -4575,15 +4308,6 @@
     <string name="settings_config">Settings</string>
     
     <!-- Terminal Environment Wizard -->
-    <string name="configure_terminal_environment">Configure Terminal Environment</string>
-    <string name="nodejs_pip_environment_ready">NodeJS and pip environment ready</string>
-    <string name="pnpm_installed_need_pip">pnpm installed, need to configure pip</string>
-    <string name="pip_installed_need_pnpm">pip installed, need to configure pnpm</string>
-    <string name="need_configure_nodejs_pip">Need to configure NodeJS and pip environment</string>
-    <string name="terminal_environment_setup_description">Need to configure NodeJS (pnpm) and pip environment in terminal to support MCP plugins. Click the button below to enter terminal configuration interface.</string>
-    <string name="go_to_terminal_config">Go to Terminal Configuration</string>
-    <string name="nodejs_pip_environment_configured">NodeJS and pip environment are configured and ready to use MCP plugins.</string>
-    <string name="open_terminal">Open Terminal</string>
     
     <!-- MCP Market Screen -->
     <string name="login_github_to_manage_mcp_plugins">Login to GitHub to publish and manage your MCP plugins</string>
@@ -5651,12 +5375,9 @@
     <string name="toolreg_execute_shell_desc">Execute ADB shell: %1$s</string>
     <string name="toolreg_close_all_virtual_displays_desc">Close all virtual displays</string>
     <string name="toolreg_unnamed">Unnamed</string>
-    <string name="toolreg_create_terminal_session_desc">Create or get terminal session: %1$s</string>
     <string name="toolreg_execute_in_terminal_session_desc">Execute in terminal session [%1$s]: %2$s</string>
     <string name="toolreg_execute_hidden_terminal_command_desc">Execute in hidden terminal executor [%1$s]: %2$s</string>
-    <string name="toolreg_close_terminal_session_desc">Close terminal session: %1$s</string>
     <string name="toolreg_input_in_terminal_session_desc">Write input to terminal session [%1$s] (control=%2$s)</string>
-    <string name="toolreg_get_terminal_session_screen_desc">Get current terminal screen content for session [%1$s] (single screen)</string>
     <string name="toolreg_query_memory_desc">Query memory library: %1$s</string>
     <string name="toolreg_get_memory_by_title_desc">Get memory by title: %1$s</string>
 
@@ -6285,21 +6006,14 @@
     <string name="stream_markdown_static_render">Static Rendering</string>
 
     <!-- MCP Deploy Progress Dialog -->
-    <string name="mcp_deploy_success">Deployment Successful</string>
-    <string name="mcp_deploy_failed">Deployment Failed</string>
-    <string name="mcp_deploy_in_progress">Deploying</string>
     <string name="mcp_env_variables">Environment Variables</string>
     <string name="mcp_close">Close</string>
     <string name="mcp_preparing_deploy">Preparing to deploy...</string>
-    <string name="mcp_deploy_completed">Deployment Completed</string>
-    <string name="mcp_deploy_log">Deployment Log</string>
     <string name="mcp_lines_count">%1$d lines</string>
     <string name="mcp_retry">Retry</string>
 
     <!-- MCP Deploy Confirm Dialog -->
-    <string name="mcp_deploy_confirm_title">Deployment Confirmation</string>
     <string name="mcp_deploying_plugin">About to deploy plugin: %1$s</string>
-    <string name="mcp_deploy_choice_hint">You can choose direct deployment or customize deployment commands</string>
     <string name="mcp_cancel">Cancel</string>
     <string name="mcp_custom_command">Custom Command</string>
     <string name="mcp_direct_deploy">Direct Deploy</string>
@@ -6307,7 +6021,6 @@
     <!-- MCP Commands Edit Dialog -->
     <string name="mcp_edit_deploy_commands">Edit Deployment Commands</string>
     <string name="mcp_command_hint">One command per line. Ensure correctness. Start command will be skipped.</string>
-    <string name="mcp_deploy_commands">Deployment Commands</string>
     <string name="mcp_loading_commands">Loading commands...</string>
     <string name="mcp_lines_suffix">%1$d lines</string>
     <string name="mcp_confirm_and_deploy">Confirm and Deploy</string>
@@ -6590,28 +6303,6 @@
     <string name="attachment_unknown_file">Unknown file</string>
 
     <!-- MCP Deployment Messages -->
-    <string name="mcp_deployment_start">Starting plugin deployment: %1$s</string>
-    <string name="mcp_deployment_output_prefix">Output: </string>
-    <string name="mcp_deployment_virtual_plugin_detected">Detected %1$s type plugin, executing minimal deployment</string>
-    <string name="mcp_deployment_cannot_create_terminal">Cannot create terminal session</string>
-    <string name="mcp_deployment_creating_directory">Creating plugin directory: %1$s</string>
-    <string name="mcp_deployment_create_directory_failed">Failed to create plugin directory</string>
-    <string name="mcp_deployment_minimal_complete">%1$s type plugin minimal deployment complete, ready to use</string>
-    <string name="mcp_deployment_plugin_not_exist">Plugin directory does not exist: %1$s</string>
-    <string name="mcp_deployment_using_market_config">Using market config to deploy plugin...</string>
-    <string name="mcp_deployment_analyzing_structure">Analyzing project structure...</string>
-    <string name="mcp_deployment_saving_config">Saving MCP config...</string>
-    <string name="mcp_deployment_save_config_failed">Failed to save MCP config</string>
-    <string name="mcp_deployment_error">Deployment error: %1$s</string>
-    <string name="mcp_deployment_cannot_determine">Cannot determine how to deploy this plugin: %1$s</string>
-    <string name="mcp_deployment_copying_files">Copying plugin files to target directory...</string>
-    <string name="mcp_deployment_copy_failed">Failed to copy files to target directory: %1$s</string>
-    <string name="mcp_deployment_switching_directory">Switching to plugin directory</string>
-    <string name="mcp_deployment_switch_failed">Failed to switch to plugin directory</string>
-    <string name="mcp_deployment_executing_command">Executing command (%1$d/%2$d): %3$s</string>
-    <string name="mcp_deployment_non_critical_failed">Non-critical command failed, continuing: %1$s</string>
-    <string name="mcp_deployment_command_failed">Command execution failed: %1$s</string>
-    <string name="mcp_deployment_success">Plugin deployed successfully: %1$s\nDeployment path: %2$s\nServer name: %3$s\nDeployment time: %4$s</string>
 
     <!-- MCP Repository -->
     <string name="mcp_repository_server_not_found">Cannot find corresponding server information</string>
@@ -6786,11 +6477,6 @@
     <string name="context_reset_all_settings">Reset All Settings</string>
 
     <!-- MCP Deploy -->
-    <string name="mcp_deploy_error_cannot_get_path">Cannot get plugin path: %1$s</string>
-    <string name="mcp_deploy_error_cannot_determine">Cannot determine how to deploy this plugin, please check README for manual deployment</string>
-    <string name="mcp_deploy_error_analysis_failed">Error analyzing plugin: %1$s</string>
-    <string name="mcp_deploy_status_preparing">Preparing plugin deployment</string>
-    <string name="mcp_deploy_output_prefix">Output:</string>
 
     <!-- Model Config Screen -->
     <string name="model_config_error_valid_context_length">Please enter a valid context length</string>
@@ -6988,7 +6674,6 @@
     <string name="gemini_default">Default</string>
     <string name="mcp_no_available_tools">No available tools</string>
     <string name="run">Run</string>
-    <string name="admin_shell_requires_permission">Requires root or ADB permission</string>
     <string name="default_option">Default</string>
     <string name="character_card_single_char">Single character</string>
     <string name="waifu_config_bound_to_card">Bound to character card</string>
@@ -7121,27 +6806,6 @@
     <string name="workflow_node_no_action">Node does not have actionType configured</string>
 
     <!-- StandardTerminalCommandExecutor -->
-    <string name="terminal_error_missing_session_name">Missing parameter: session_name</string>
-    <string name="terminal_error_create_session">Error creating or getting terminal session: %1$s</string>
-    <string name="terminal_error_missing_command">Missing parameter: command</string>
-    <string name="terminal_error_missing_session_id">Missing parameter: session_id</string>
-    <string name="terminal_error_session_not_exist">Terminal session \'%1$s\' does not exist or is closed</string>
-    <string name="terminal_error_command_failed">Terminal command execution failed</string>
-    <string name="terminal_error_command_non_zero_exit">Terminal command exited with non-zero status (exitCode=%1$d)</string>
-    <string name="terminal_error_execute_command">Error executing terminal command: %1$s</string>
-    <string name="terminal_error_hidden_command_non_zero_exit">Hidden terminal command exited with non-zero status (exitCode=%1$d)</string>
-    <string name="terminal_error_execute_hidden_command">Error executing hidden terminal command: %1$s</string>
-    <string name="terminal_session_closed">Terminal session \'%1$s\' closed successfully.</string>
-    <string name="terminal_error_close_session">Error closing terminal session \'%1$s\': %2$s</string>
-    <string name="terminal_error_missing_input_or_control">Missing parameter: input or control (at least one is required)</string>
-    <string name="terminal_error_control_requires_input">Parameter %1$s requires input</string>
-    <string name="terminal_error_ctrl_input_single_char">When control=ctrl, input must be a single character</string>
-    <string name="terminal_error_ctrl_input_unsupported">Unsupported input for control=ctrl: %1$s</string>
-    <string name="terminal_error_unsupported_control">Unsupported control: %1$s</string>
-    <string name="terminal_error_input">Error writing input to terminal session</string>
-    <string name="terminal_error_input_with_reason">Error writing input to terminal session: %1$s</string>
-    <string name="terminal_error_get_screen">Error reading current terminal screen content: %1$s</string>
-    <string name="terminal_input_sent">Input sent to terminal session \'%1$s\' (acceptedChars=%2$d)</string>
 
     <!-- OpenAISttProvider -->
     <string name="openai_stt_error_url_not_set">OpenAI STT URL not set, please enter the complete interface address (e.g., https://api.openai.com/v1/audio/transcriptions).</string>
@@ -7277,11 +6941,7 @@
     <string name="sys_op_cannot_get_location">Cannot get location information, please ensure location service is enabled</string>
 
     <!-- AdminActionListener -->
-    <string name="admin_device_admin_component_name_not_set">Device admin component name not set</string>
-    <string name="admin_device_admin_permission_not_activated">App device admin permission not activated</string>
-    <string name="admin_need_device_admin_permission">Device admin permission required to listen to system UI operations</string>
     <string name="admin_already_listening">Already listening</string>
-    <string name="admin_ui_listener_started">Device admin UI operation listener started</string>
     <string name="admin_start_failed">Start failed: %1$s</string>
 
     <!-- MarkdownConverter -->
@@ -7301,9 +6961,6 @@
     <string name="pathfinder_cannot_find_path">Cannot find valid state path from \'%1$s\' to \'%2$s\'</string>
 
     <!-- ShizukuAuthorizer -->
-    <string name="shizuku_step1_ensure_installed">1. Ensure Shizuku app is installed\n</string>
-    <string name="shizuku_step2_adb_command">2. Use ADB command to start Shizuku:\n</string>
-    <string name="shizuku_step2_follow_instructions">2. Open Shizuku app and follow on-screen instructions</string>
 
     <!-- ShizukuInstaller -->
 

@@ -643,13 +643,13 @@ object SystemToolPromptsInternal {
                         ),
                         ToolPrompt(
                             name = "copy_file",
-                            description = "Copy a file or directory. Supports cross-environment copying between Android and Linux.",
+                            description = "Copy a file or directory. Supports copying across environments (Android or an attached storage repository).",
                             parametersStructured = listOf(
                                 ToolParameterSchema(name = "source", type = "string", description = "source path", required = true),
                                 ToolParameterSchema(name = "destination", type = "string", description = "destination path", required = true),
                                 ToolParameterSchema(name = "recursive", type = "boolean", description = "boolean", required = false, default = "false"),
-                                ToolParameterSchema(name = "source_environment", type = "string", description = "optional, \"android\" or \"linux\"", required = false, default = "\"android\""),
-                                ToolParameterSchema(name = "dest_environment", type = "string", description = "optional, \"android\" or \"linux\". For cross-environment copy (e.g., Android → Linux or Linux → Android), specify both source_environment and dest_environment", required = false, default = "\"android\"")
+                                ToolParameterSchema(name = "source_environment", type = "string", description = "optional, \"android\" or \"repo:<repositoryName>\"", required = false, default = "\"android\""),
+                                ToolParameterSchema(name = "dest_environment", type = "string", description = "optional, \"android\" or \"repo:<repositoryName>\". For cross-environment copy (e.g., Android → repo), specify both source_environment and dest_environment", required = false, default = "\"android\"")
                             )
                         ),
                         ToolPrompt(
@@ -1233,7 +1233,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "environment",
                                         type = "string",
-                                        description = "optional, \"android\" (default) or \"linux\"",
+                                        description = "optional, \"android\" (default) or \"repo:<repositoryName>\"",
                                         required = false
                                     ),
                                     ToolParameterSchema(
@@ -1259,7 +1259,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "environment",
                                         type = "string",
-                                        description = "optional, \"android\" (default) or \"linux\"",
+                                        description = "optional, \"android\" (default) or \"repo:<repositoryName>\"",
                                         required = false
                                     )
                                 )
@@ -1291,7 +1291,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "environment",
                                         type = "string",
-                                        description = "optional, \"android\" (default) or \"linux\"",
+                                        description = "optional, \"android\" (default) or \"repo:<repositoryName>\"",
                                         required = false
                                     )
                                 )
@@ -1316,7 +1316,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "environment",
                                         type = "string",
-                                        description = "optional, \"android\" (default) or \"linux\"",
+                                        description = "optional, \"android\" (default) or \"repo:<repositoryName>\"",
                                         required = false
                                     )
                                 )
@@ -3433,13 +3433,13 @@ object SystemToolPromptsInternal {
                         ),
                         ToolPrompt(
                             name = "copy_file",
-                            description = "复制文件或目录。支持Android和Linux之间的跨环境复制。",
+                            description = "复制文件或目录。支持Android与附加本地储存仓库之间的跨环境复制。",
                             parametersStructured = listOf(
                                 ToolParameterSchema(name = "source", type = "string", description = "源路径", required = true),
                                 ToolParameterSchema(name = "destination", type = "string", description = "目标路径", required = true),
                                 ToolParameterSchema(name = "recursive", type = "boolean", description = "布尔值", required = false, default = "false"),
-                                ToolParameterSchema(name = "source_environment", type = "string", description = "可选，\"android\"或\"linux\"", required = false, default = "\"android\""),
-                                ToolParameterSchema(name = "dest_environment", type = "string", description = "可选，\"android\"或\"linux\"。跨环境复制（如Android → Linux或Linux → Android）时，需指定source_environment和dest_environment", required = false, default = "\"android\"")
+                                ToolParameterSchema(name = "source_environment", type = "string", description = "可选，\"android\"或\"repo:<仓库名>\"", required = false, default = "\"android\""),
+                                ToolParameterSchema(name = "dest_environment", type = "string", description = "可选，\"android\"或\"repo:<仓库名>\"。跨环境复制（如Android → 仓库）时，需指定source_environment和dest_environment", required = false, default = "\"android\"")
                             )
                         ),
                         ToolPrompt(
@@ -4023,7 +4023,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "environment",
                                         type = "string",
-                                        description = "可选，\"android\"（默认）或 \"linux\"",
+                                        description = "可选，\"android\"（默认）或 \"repo:<仓库名>\"",
                                         required = false
                                     ),
                                     ToolParameterSchema(
@@ -4049,7 +4049,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "environment",
                                         type = "string",
-                                        description = "可选，\"android\"（默认）或 \"linux\"",
+                                        description = "可选，\"android\"（默认）或 \"repo:<仓库名>\"",
                                         required = false
                                     )
                                 )
@@ -4081,7 +4081,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "environment",
                                         type = "string",
-                                        description = "可选，\"android\"（默认）或 \"linux\"",
+                                        description = "可选，\"android\"（默认）或 \"repo:<仓库名>\"",
                                         required = false
                                     )
                                 )
@@ -4106,7 +4106,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "environment",
                                         type = "string",
-                                        description = "可选，\"android\"（默认）或 \"linux\"",
+                                        description = "可选，\"android\"（默认）或 \"repo:<仓库名>\"",
                                         required = false
                                     )
                                 )
