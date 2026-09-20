@@ -88,3 +88,17 @@ Soong 的 manifest 处理器要求 `manifest:package` 显式声明；AGP 8 项�
   ML Kit 唯一 prebuilt 例外、STT 模型资产化、树内 BuildConfig
 - exoplayer→androidx.media3 迁移、STT 模型入 assets、约 40 坐标收源为后续增量批次，
   推进节奏待用户定案（收源量数据已呈交）
+
+## 依赖策略修订（2026-09-20，用户拍板）
+
+推翻“ML Kit 唯一 prebuilt 例外、其余零二进制”的原决策：
+
+- 非 androidx 依赖一律包内 prebuilt（AAR/jar import，钉 sha256），接线器
+  `tools/intree/import_prebuilts.py`（Gradle .module 变体语义闭包 + 三仓路由 +
+  Android.bp/NOTICE/lock 生成）；树内直引（okhttp/gson 等 12 项已按 LOS manifest
+  实证）降级为日后优化项
+- ffmpeg 为唯一源码线例外：external/ffmpeg（dvab-sarma fork）+ 包内薄壳
+  liboperit_ffmpeg + 树内同名门面，ffmpeg-kit AAR 与 smart-exception 随之退役
+  （消费面实测仅 6 函数）；fork 清单在 libs/DEPS.md 与 local_manifests 注释
+- 第三方 external/ 移植仓探索记录：onnxruntime 的 Jibar-OS 仓（prebuilt 包裹）
+  搁置——包内 prebuilt 已含 onnxruntime-android AAR，无需外部仓

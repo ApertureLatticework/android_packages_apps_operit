@@ -1,111 +1,70 @@
-# 依赖收源登记表（libs/）
+# 依赖接入登记表（libs/）
 
-本仓库经 repo sync 直接克隆为 `packages/apps/Operit`，因此包内全部第三方依赖源码收进本仓。本表是收源工单与依赖图审计基线，每条落地后在状态列打勾。
+本仓库经 repo sync 直接克隆为 `packages/apps/Operit`，包内全部第三方依赖在此登记。
+模块命名一律 `operit-` 前缀，`visibility: ["//packages/apps/Operit:__subpackages__"]`。
 
-模块命名一律 `operit-` 前缀，`visibility: ["//packages/apps/Operit:__subpackages__"]`，各库自带 `Android.bp` 增量落地（独立可编，未接线前对全树零破坏）。主模块 `Android.bp.tree` 在全部模块齐备后翻牌。
+## 策略（2026-09-20 修订定案）
 
-## 树内直引（零收源）
-
-androidx 与 Kotlin 走 `prebuilts/sdk/current/androidx/` 与 `external/kotlin*` 既有模块，pom2bp 命名约定 `group:artifact → group_artifact`：
-
-| 模块名 | 对应坐标 | 核实状态 |
+| 类别 | 路径 | 说明 |
 | --- | --- | --- |
-| androidx.compose.runtime_runtime 等 Compose 全家 | compose-bom 2024.x | spike1 树内已核实 |
-| androidx.appcompat_appcompat、com.google.android.material_material | appcompat / material | 1.txt pom2bp 清单已核实 |
-| androidx.room_room-runtime / room-ktx | room 2.x | spike1 已核实（树内有 room-compiler-plugin） |
-| androidx.datastore、work、window、webkit、glance、security-crypto、media3 | — | 待树内 `module-info.json` 核对 |
-| kotlin-stdlib、kotlin-reflect、kotlinx-coroutines-android、kotlinx-serialization-json | — | manifest 已实证 external/kotlinc、kotlinx.coroutines、kotlinx.serialization |
+| androidx / Kotlin 系 | 树内直引 | prebuilts/sdk/current/androidx 与 external/kotlin*，模块名按 pom2bp 约定 |
+| 非 androidx Java/Kotlin | **包内 prebuilt** | AAR/jar 原样入库，`android_library_import`/`java_import` 接线；由 [tools/intree/import_prebuilts.py](../tools/intree/import_prebuilts.py) 生成每库 Android.bp/NOTICE 与 `prebuilts.lock`（sha256 钉扎）。Gradle 与 Soong 消费同一份二进制，行为一致 |
+| ffmpeg | **树内源码线** | `external/ffmpeg`（dvab-sarma fork，ffmpeg 8.0 全源码 Soong 化）+ 包内薄壳 `liboperit_ffmpeg`（JNI）+ 树内同名门面（app/src/soong/java/.../ffmpeg/）。ffmpeg-kit AAR 与 smart-exception 依赖在树内不复存在 |
+| native（sherpa-ncnn/wamr/quickjs/ripgrep/streamnative） | 收源进包 | 包内 cc/rust 模块（quickjs/streamnative 源已在库；sherpa/wamr/ripgrep 为构建期 git fetch，收源时入包） |
 
-### 非 androidx 树内命中（2026-09-20 对 LOS 23.2 default.xml 实证）
+修订史：原决策“ML Kit 唯一 prebuilt 例外、其余零二进制源码收齐”作废——收源量（ffmpeg 400 万行、poi 250 万行起）与收益不匹配，且 AOSP/LOS 树自身即以 prebuilts/ 运行。
 
-收源量大幅缩减：以下坐标树内已有源码仓，改引树内模块（每项待树内核对 Android.bp 模块名与版本窗口）：
+## prebuilt 接线（tools/intree/import_prebuilts.py）
 
-| 我们的坐标 | 树内项目 |
-| --- | --- |
-| okhttp 4.12 三条 + okio | external/okhttp、external/okio |
-| gson 2.10.1 | external/gson |
-| bcprov-jdk18on 1.78 | external/bouncycastle |
-| jsoup 1.16.2 | external/jsoup |
-| apksig 8.1.0 | tools/apksig |
-| zxing-core 3.5.3 | external/zxing |
-| nanohttpd 2.3.1 | external/nanohttpd |
-| commons-compress 1.25.0 / commons-io 2.13.0 | external/apache-commons-compress、external/apache-commons-io |
-| accompanist-systemuicontroller 0.32.0 | external/accompanist（是否含该 artifact 待核实） |
+- 根坐标 51 条与 app/build.gradle.kts 对齐；传递闭包按 Gradle Module Metadata（.module）
+  变体语义解析（KMP 库走 androidTarget/androidJvm 变体，AGP 多 buildType 只取 release），
+  树内已有供应的组（androidx/kotlin/coroutines/serialization）不进闭包
+- 三仓路由：maven central / google maven / jitpack
+- 产物：`libs/<module>/{工件, Android.bp, NOTICE}` + `libs/prebuilts.lock`
+- 用法：`--dry-run` 看闭包 / `--fetch` 落盘 / `--verify` 校验 sha256
+- 升级流程：改脚本根坐标版本 → 重跑 → 人工过 lock diff → 提交
 
-存疑：external/tensorflow 在树，但仅 tflite runtime 可用与否需树内验证；frameworks/opt/colorpicker 为平台组件，与本项目 Compose colorpicker 非同一物，不计入。
+### 树内直引核对记录（LOS 23.2 default.xml 实证）
 
-exoplayer 2.19.1 按[步骤 1 改判](../docs/TODO/aosp_native_priv_integration_20260919/1_ScopeCutAndDependencyManifest.md)迁 androidx.media3：收源期执行 `com.google.android.exoplayer2` → `androidx.media3` 包名替换，11 文件。
+以下坐标树内已有源码仓，**作为日后优化项**（想蹭 ROM 全局升级时逐个换，非当前路径）：
+okhttp/okio（external/okhttp、external/okio）、gson、bouncycastle、jsoup、apksig
+（tools/apksig）、zxing、nanohttpd、commons-compress/io、accompanist、tensorflow
+（external/tensorflow，tflite 可用性待树内核）。frameworks/opt/colorpicker 为平台组件，
+与本项目 Compose colorpicker 非同一物。
 
-## Java/Kotlin 收源（libs/<name>/）
+## ffmpeg 源码线
 
-| 模块名 | 坐标 | 版本 | 支撑面 | 上游 | 状态 |
-| --- | --- | --- | --- | --- | --- |
-| operit-okio | com.squareup.okio:okio | 3.x | okhttp 伴生 | github.com/square/okio | 待收 |
-| operit-okhttp | com.squareup.okhttp3:okhttp | 4.12.0 | 网络栈全量 | github.com/square/okhttp | **树内命中改直引** |
-| operit-okhttp-sse | okhttp3:okhttp-sse | 4.12.0 | SSE 流 | 同上 | **树内命中改直引** |
-| operit-okhttp-logging-interceptor | okhttp3:logging-interceptor | 4.12.0 | 调试日志 | 同上 | **树内命中改直引** |
-| operit-ktor-client-okhttp | io.ktor:ktor-client-okhttp | 3.2.3 | MCP SDK 传输 | github.com/ktorio/ktor | 待收 |
-| operit-mcp-sdk-client | io.modelcontextprotocol:kotlin-sdk-client | 0.10.0 | 远程 MCP | github.com/modelcontextprotocol/kotlin-sdk | 待收 |
-| operit-jsoup | org.jsoup:jsoup | 1.16.2 | HTML 解析 | jsoup.org | **树内命中改直引** |
-| operit-zxing-core | com.google.zxing:core | 3.5.3 | 二维码 | github.com/zxing/zxing | **树内命中改直引** |
-| operit-java-diff-utils | io.github.java-diff-utils | 4.12 | diff 工具 | github.com/java-diff-utils | 待收 |
-| operit-apksig | com.android.tools.build:apksig | 8.1.0 | APK 签名/校验 | cs.android.com (platform tools base) | **树内命中改直引** |
-| operit-apk-parser | net.dongliu:apk-parser | 2.6.10 | APK manifest 解析 | github.com/hsiafan/apk-parser | 待收 |
-| operit-axml | com.github.Sable:axml | 2.0.0 | 二进制 XML | github.com/Sable/axml | 待收 |
-| operit-zipalign-java | com.github.iyxan23:zipalign-java | 1.2.1 | ZIP 对齐 | github.com/iyxan23/zipalign-java | 待收 |
-| operit-commons-compress | org.apache.commons:commons-compress | 1.25.0 | 压缩格式 | commons.apache.org | **树内命中改直引** |
-| operit-commons-io | commons-io | 2.13.0 | IO 工具 | commons.apache.org | **树内命中改直引** |
-| operit-zip4j | net.lingala.zip4j:zip4j | 2.11.5 | ZIP 加解密 | github.com/srikanth-lingala/zip4j | 待收 |
-| operit-androidsvg | com.caverock:androidsvg-aar | 1.4 | SVG 渲染 | github.com/badlogic/androidsvg | 待收 |
-| operit-android-gif | com.github.penfeizhou.android-gif-drawable | — | GIF 解码 | github.com/penfeizhou/... | 待收 |
-| operit-image-cropper | com.github.CanHub:Android-Image-Cropper | — | 背景裁剪 | github.com/CanHub/Android-Image-Cropper | 待收 |
-| operit-jlatexmath | ru.noties:jlatexmath-android | 0.2.0 | LaTeX 渲染 | github.com/noties/markwon | 待收 |
-| operit-renderx | — | 1.0.0 | LaTeX 渲染链 4 文件 | 依 libs.versions.toml 溯源 | 待收 |
-| operit-coil 三条 | io.coil-kt | 2.5.0 | 图片加载 33 文件 | github.com/coil-kt/coil | 待收 |
-| operit-itextg | com.itextpdf:itextg | 5.5.10 | PDF 导出 | github.com/LibrePDF/OpenPDF 系 | 待收 |
-| operit-pdfbox-android | com.tom-roush:pdfbox-android | 2.0.27.0 | PDF 解析 | github.com/TomRoush/PdfBox-Android | 待收 |
-| operit-junrar | com.github.junrar:junrar | 7.5.5 | RAR | github.com/junrar/junrar | 待收 |
-| operit-poi 三条 | org.apache.poi | 5.2.3 | DOC/DOCX 工具与预览 | poi.apache.org | 待收 |
-| operit-gson | com.google.code.gson | 2.10.1 | JSON | github.com/google/gson | **树内命中改直引** |
-| operit-hjson | org.hjson:hjson | 3.0.0 | 人读 JSON | hjson.org | 待收 |
-| operit-uuid | com.benasher44:uuid | 0.8.2 | Kotlin UUID | github.com/benasher44/uuid | 待收 |
-| operit-jieba | com.huaban:jieba-analysis | 1.0.2 | 中文分词 + 词典 | github.com/huaban/jieba-analysis | 待收 |
-| operit-hnswlib 双条 | com.github.jelmerk | 0.0.46 | 向量近邻 | github.com/jelmerk/hnswlib-java | 待收 |
-| operit-bcprov | org.bouncycastle:bcprov-jdk18on | 1.78 | 加密 | bouncycastle.org | **树内命中改直引** |
-| operit-nanohttpd | org.nanohttpd:nanohttpd | 2.3.1 | 本地 HTTP | nanohttpd.org | **树内命中改直引** |
-| operit-colorpicker / backdrop / liquid / reorderable / swipe | compose 主题件 | 各版本 | UI 组件 | 各上游 | 待收 |
-| operit-accompanist-systemuicontroller | com.google.accompanist | 0.32.0 | 状态栏控制 | github.com/google/accompanist | **树内命中待核实 artifact** |
-| operit-smart-exception 双条 | com.arthenica | 0.2.1 | ffmpegkit 伴生 | github.com/tanersener/... | 待收 |
+- manifest：`../local_manifests/upstream-ports.xml` 钉 dvab-sarma `android-16.0_r3-8.0`
+  分支 commit 5dbfbaa
+- fork 清单（建议 fork 至 ApertureLatticework 后切 manifest）：
+    1. 根 Android.bp `ffmpeg_defaults`：`vendor: true → false`（system priv-app 不可链 vendor 库）
+    2. 补 `libavfilter/Android.bp` 与 `libavdevice/Android.bp`（仿 libavcodec，源在树；现状 404）
+    3. 新增 `libffmpeg_cli` 模块：fftools 全套 .c 以 `-Dmain=ffmpeg_cli_main` 编成库
+    4. 核对 configure 产物（config.h 等）已随仓 check-in
+- 包内侧：`native/operit-ffmpeg/`（Android.bp.tree 暂存，链 libav* + libffmpeg_cli）；
+  消费面实测仅 6 函数（execute×4 / getMediaInformation×3 / 版本串×2），
+  门面 `app/src/soong/java/.../ffmpeg/FFmpegKit.kt` 与 ffmpeg-kit 同名同形，
+  翻牌时 FFmpegUtil/StandardFFmpegTool/OpenSourceLicenses 仅改 import 行
+- Gradle 过渡期不动：Gradle 继续消费 ffmpeg-kit AAR，薄壳只进树内构建
 
-## 记忆/向量推理线（Java 壳 + native）
-
-| 模块 | 坐标 | native 伴生 | 状态 |
-| --- | --- | --- | --- |
-| operit-tensorflow-lite | org.tensorflow:tensorflow-lite 2.10.0 | libtensorflowlite_jni | 待收（源码入 native/tflite） |
-| operit-mediapipe-tasks-text | com.google.mediapipe:tasks-text 0.10.11 | libmediapipe_tasks_text_jni | 待收 |
-| operit-onnxruntime | com.microsoft.onnxruntime 1.17.1 | libonnxruntime | 待收；当前仅 Silero VAD 单用途 |
-
-## 唯一 prebuilt 例外
-
-ML Kit text-recognition 五条 AAR 收 `libs/mlkit/` 以 `android_library_import` 引入（步骤 1 决策，全树唯一二进制例外）。
-
-## native 收源（native/）
+## native 收源（收源时落包内 Android.bp）
 
 | 模块 | Soong 形态 | 来源 | 状态 |
 | --- | --- | --- | --- |
-| libquickjsjni | cc_library_shared | quickjs/src/main/cpp 已在库（C 源现为构建期 git fetch，收源入 native/quickjs，版号对齐 fetch tag） | 待收 |
-| libstreamnative | cc_library_shared | app/src/main/cpp/streamnative 已在库 | 待接线 |
-| libtoolpkgwasm + wamr | cc_library_static | wasm-micro-runtime（现构建期 fetch） | 待收 |
-| libsherpa-ncnn-jni (+ncnn+openfst) | cc_library_shared | sherpa-ncnn（现构建期 fetch） | 待收 |
-| libffmpegkit | cc_library_shared | ffmpeg-kit 自编 AAR 改源码直编，configure→Soong 转写为最大单项 | 待收 |
-| liboperit_ripgrep | rust_ffi_shared | tools/native_ripgrep 已在库（rust 源） | 待接线 |
+| libquickjsjni | cc_library_shared | quickjs/src/main/cpp 在库（C 源现为构建期 git fetch，收源入 native/quickjs） | 待收 |
+| libstreamnative | cc_library_shared | app/src/main/cpp/streamnative 在库 | 待接线 |
+| libtoolpkgwasm + wamr | cc_library_static | wasm-micro-runtime（构建期 fetch） | 待收 |
+| libsherpa-ncnn-jni (+ncnn+openfst) | cc_library_shared | sherpa-ncnn（构建期 fetch） | 待收 |
+| liboperit_ripgrep | rust_ffi_shared | tools/native_ripgrep 在库（rust 源） | 待接线 |
 
 ## 资产
 
-- STT 模型群（sherpa-ncnn zipformer 双语 ~140MB、silero-vad onnx）：取消构建期下载，收源时由 `app/config/stt-model-assets.properties` 校验后直接落 `app/src/main/assets/models/`
-- accessibility.apk 已在库随 assets 走；desktop.apk 与 showerclient 随步骤 7 删除
+- STT 模型群（sherpa-ncnn zipformer 双语 ~140MB、silero-vad onnx）：取消构建期下载，
+  收源时经 `app/config/stt-model-assets.properties` 校验后直接落 `app/src/main/assets/models/`
+- accessibility.apk 已在库随 assets 走；desktop.apk 与 showerclient 已随步骤 7 删除
 
 ## 树内专用文件
 
-- `app/src/soong/java/com/ai/assistance/operit/BuildConfig.java`：Soong 不生成 BuildConfig，翻牌时落此文件（VERSION_NAME/VERSION_CODE 随发版同步；Gradle 侧仍走 AGP 生成，两轨不同源）
+- `app/src/soong/java/`：Gradle 不编译、Soong 编译的源（BuildConfig 与 ffmpeg 门面）
 - `Android.bp.tree`：主模块暂存名，翻牌规则见文件头
+- `native/operit-ffmpeg/Android.bp.tree`：薄壳模块暂存名（随 ffmpeg fork 落地翻牌）

@@ -14,6 +14,12 @@
 // - platform_apis: true 为特权应用路线（SystemApi/@hide 直调前提），与 sdk_version 二选一
 // - manifest 必须带 package 属性（已在 app/src/main/AndroidManifest.xml 注入）
 // - androidx 预编译位于 prebuilts/sdk/current/androidx/，模块名按 pom2bp 约定
+// - okhttp/gson/jsoup/zxing 等已按 LOS 23.2 manifest 核对为树内项目（见 libs/DEPS.md），
+//   翻牌时以树内实核模块名替换下方 operit-* 同名占位
+// - 依赖策略修订（2026-09-20）：非 androidx 依赖一律包内 prebuilt（AAR/jar import，
+//   钉 sha256，由 tools/intree/import_prebuilts.py 生成 Android.bp/NOTICE/lock）；
+//   唯一源码线例外为 ffmpeg（external/ffmpeg 树内源码 + 包内薄壳 liboperit_ffmpeg，
+//   树内门面 app/src/soong/java/.../ffmpeg/，翻牌时消费方仅改 import 行）
 
 android_library {
     name: "operit-lib",
@@ -119,13 +125,12 @@ android_library {
         "operit-reorderable",
         "operit-swipe",
         "operit-accompanist-systemuicontroller",
-        "operit-smart-exception",
         // 记忆/向量推理线（native 伴生 Java 模块在 libs/ 各自 Android.bp 声明）
         "operit-tensorflow-lite",
         "operit-mediapipe-tasks-text",
         "operit-onnxruntime",
 
-        // ---- 唯一 prebuilt 例外：ML Kit 文本识别五条（libs/mlkit/） ----
+        // prebuilt 默认策略：ML Kit 五条与其他坐标同机制（android_library_import）
         "operit-mlkit-text-recognition",
         "operit-mlkit-text-recognition-chinese",
         "operit-mlkit-text-recognition-japanese",
@@ -153,13 +158,13 @@ android_app {
     asset_dirs: ["app/src/main/assets"],
 
     // native 库经 required 随包安装到 priv-app lib 目录；
-    // 各 cc/rust 模块随 libs/native 收源落地（见 libs/DEPS.md）
+    // ffmpeg 走源码线薄壳（native/operit-ffmpeg/Android.bp.tree，链树内 libav* + libffmpeg_cli）
     required: [
         "libquickjsjni",
         "libstreamnative",
         "libtoolpkgwasm",
         "libsherpa-ncnn-jni",
-        "libffmpegkit",
+        "liboperit_ffmpeg",
         "libonnxruntime",
         "libtensorflowlite_jni",
         "liboperit_ripgrep",
