@@ -14,7 +14,25 @@ androidx 与 Kotlin 走 `prebuilts/sdk/current/androidx/` 与 `external/kotlin*`
 | androidx.appcompat_appcompat、com.google.android.material_material | appcompat / material | 1.txt pom2bp 清单已核实 |
 | androidx.room_room-runtime / room-ktx | room 2.x | spike1 已核实（树内有 room-compiler-plugin） |
 | androidx.datastore、work、window、webkit、glance、security-crypto、media3 | — | 待树内 `module-info.json` 核对 |
-| kotlin-stdlib、kotlin-reflect、kotlinx-coroutines-android、kotlinx-serialization-json | — | 待树内核对 |
+| kotlin-stdlib、kotlin-reflect、kotlinx-coroutines-android、kotlinx-serialization-json | — | manifest 已实证 external/kotlinc、kotlinx.coroutines、kotlinx.serialization |
+
+### 非 androidx 树内命中（2026-09-20 对 LOS 23.2 default.xml 实证）
+
+收源量大幅缩减：以下坐标树内已有源码仓，改引树内模块（每项待树内核对 Android.bp 模块名与版本窗口）：
+
+| 我们的坐标 | 树内项目 |
+| --- | --- |
+| okhttp 4.12 三条 + okio | external/okhttp、external/okio |
+| gson 2.10.1 | external/gson |
+| bcprov-jdk18on 1.78 | external/bouncycastle |
+| jsoup 1.16.2 | external/jsoup |
+| apksig 8.1.0 | tools/apksig |
+| zxing-core 3.5.3 | external/zxing |
+| nanohttpd 2.3.1 | external/nanohttpd |
+| commons-compress 1.25.0 / commons-io 2.13.0 | external/apache-commons-compress、external/apache-commons-io |
+| accompanist-systemuicontroller 0.32.0 | external/accompanist（是否含该 artifact 待核实） |
+
+存疑：external/tensorflow 在树，但仅 tflite runtime 可用与否需树内验证；frameworks/opt/colorpicker 为平台组件，与本项目 Compose colorpicker 非同一物，不计入。
 
 exoplayer 2.19.1 按[步骤 1 改判](../docs/TODO/aosp_native_priv_integration_20260919/1_ScopeCutAndDependencyManifest.md)迁 androidx.media3：收源期执行 `com.google.android.exoplayer2` → `androidx.media3` 包名替换，11 文件。
 
@@ -23,20 +41,20 @@ exoplayer 2.19.1 按[步骤 1 改判](../docs/TODO/aosp_native_priv_integration_
 | 模块名 | 坐标 | 版本 | 支撑面 | 上游 | 状态 |
 | --- | --- | --- | --- | --- | --- |
 | operit-okio | com.squareup.okio:okio | 3.x | okhttp 伴生 | github.com/square/okio | 待收 |
-| operit-okhttp | com.squareup.okhttp3:okhttp | 4.12.0 | 网络栈全量 | github.com/square/okhttp | 待收 |
-| operit-okhttp-sse | okhttp3:okhttp-sse | 4.12.0 | SSE 流 | 同上 | 待收 |
-| operit-okhttp-logging-interceptor | okhttp3:logging-interceptor | 4.12.0 | 调试日志 | 同上 | 待收 |
+| operit-okhttp | com.squareup.okhttp3:okhttp | 4.12.0 | 网络栈全量 | github.com/square/okhttp | **树内命中改直引** |
+| operit-okhttp-sse | okhttp3:okhttp-sse | 4.12.0 | SSE 流 | 同上 | **树内命中改直引** |
+| operit-okhttp-logging-interceptor | okhttp3:logging-interceptor | 4.12.0 | 调试日志 | 同上 | **树内命中改直引** |
 | operit-ktor-client-okhttp | io.ktor:ktor-client-okhttp | 3.2.3 | MCP SDK 传输 | github.com/ktorio/ktor | 待收 |
 | operit-mcp-sdk-client | io.modelcontextprotocol:kotlin-sdk-client | 0.10.0 | 远程 MCP | github.com/modelcontextprotocol/kotlin-sdk | 待收 |
-| operit-jsoup | org.jsoup:jsoup | 1.16.2 | HTML 解析 | jsoup.org | 待收 |
-| operit-zxing-core | com.google.zxing:core | 3.5.3 | 二维码 | github.com/zxing/zxing | 待收 |
+| operit-jsoup | org.jsoup:jsoup | 1.16.2 | HTML 解析 | jsoup.org | **树内命中改直引** |
+| operit-zxing-core | com.google.zxing:core | 3.5.3 | 二维码 | github.com/zxing/zxing | **树内命中改直引** |
 | operit-java-diff-utils | io.github.java-diff-utils | 4.12 | diff 工具 | github.com/java-diff-utils | 待收 |
-| operit-apksig | com.android.tools.build:apksig | 8.1.0 | APK 签名/校验 | cs.android.com (platform tools base) | 待收 |
+| operit-apksig | com.android.tools.build:apksig | 8.1.0 | APK 签名/校验 | cs.android.com (platform tools base) | **树内命中改直引** |
 | operit-apk-parser | net.dongliu:apk-parser | 2.6.10 | APK manifest 解析 | github.com/hsiafan/apk-parser | 待收 |
 | operit-axml | com.github.Sable:axml | 2.0.0 | 二进制 XML | github.com/Sable/axml | 待收 |
 | operit-zipalign-java | com.github.iyxan23:zipalign-java | 1.2.1 | ZIP 对齐 | github.com/iyxan23/zipalign-java | 待收 |
-| operit-commons-compress | org.apache.commons:commons-compress | 1.25.0 | 压缩格式 | commons.apache.org | 待收 |
-| operit-commons-io | commons-io | 2.13.0 | IO 工具 | commons.apache.org | 待收 |
+| operit-commons-compress | org.apache.commons:commons-compress | 1.25.0 | 压缩格式 | commons.apache.org | **树内命中改直引** |
+| operit-commons-io | commons-io | 2.13.0 | IO 工具 | commons.apache.org | **树内命中改直引** |
 | operit-zip4j | net.lingala.zip4j:zip4j | 2.11.5 | ZIP 加解密 | github.com/srikanth-lingala/zip4j | 待收 |
 | operit-androidsvg | com.caverock:androidsvg-aar | 1.4 | SVG 渲染 | github.com/badlogic/androidsvg | 待收 |
 | operit-android-gif | com.github.penfeizhou.android-gif-drawable | — | GIF 解码 | github.com/penfeizhou/... | 待收 |
@@ -48,15 +66,15 @@ exoplayer 2.19.1 按[步骤 1 改判](../docs/TODO/aosp_native_priv_integration_
 | operit-pdfbox-android | com.tom-roush:pdfbox-android | 2.0.27.0 | PDF 解析 | github.com/TomRoush/PdfBox-Android | 待收 |
 | operit-junrar | com.github.junrar:junrar | 7.5.5 | RAR | github.com/junrar/junrar | 待收 |
 | operit-poi 三条 | org.apache.poi | 5.2.3 | DOC/DOCX 工具与预览 | poi.apache.org | 待收 |
-| operit-gson | com.google.code.gson | 2.10.1 | JSON | github.com/google/gson | 待收 |
+| operit-gson | com.google.code.gson | 2.10.1 | JSON | github.com/google/gson | **树内命中改直引** |
 | operit-hjson | org.hjson:hjson | 3.0.0 | 人读 JSON | hjson.org | 待收 |
 | operit-uuid | com.benasher44:uuid | 0.8.2 | Kotlin UUID | github.com/benasher44/uuid | 待收 |
 | operit-jieba | com.huaban:jieba-analysis | 1.0.2 | 中文分词 + 词典 | github.com/huaban/jieba-analysis | 待收 |
 | operit-hnswlib 双条 | com.github.jelmerk | 0.0.46 | 向量近邻 | github.com/jelmerk/hnswlib-java | 待收 |
-| operit-bcprov | org.bouncycastle:bcprov-jdk18on | 1.78 | 加密 | bouncycastle.org | 待收 |
-| operit-nanohttpd | org.nanohttpd:nanohttpd | 2.3.1 | 本地 HTTP | nanohttpd.org | 待收 |
+| operit-bcprov | org.bouncycastle:bcprov-jdk18on | 1.78 | 加密 | bouncycastle.org | **树内命中改直引** |
+| operit-nanohttpd | org.nanohttpd:nanohttpd | 2.3.1 | 本地 HTTP | nanohttpd.org | **树内命中改直引** |
 | operit-colorpicker / backdrop / liquid / reorderable / swipe | compose 主题件 | 各版本 | UI 组件 | 各上游 | 待收 |
-| operit-accompanist-systemuicontroller | com.google.accompanist | 0.32.0 | 状态栏控制 | github.com/google/accompanist | 待收 |
+| operit-accompanist-systemuicontroller | com.google.accompanist | 0.32.0 | 状态栏控制 | github.com/google/accompanist | **树内命中待核实 artifact** |
 | operit-smart-exception 双条 | com.arthenica | 0.2.1 | ffmpegkit 伴生 | github.com/tanersener/... | 待收 |
 
 ## 记忆/向量推理线（Java 壳 + native）
