@@ -31,7 +31,7 @@ import com.ai.assistance.operit.util.OperitPaths
 import com.ai.assistance.operit.core.tools.agent.ActionHandler
 import com.ai.assistance.operit.core.tools.agent.AgentConfig
 import com.ai.assistance.operit.core.tools.agent.PhoneAgent
-import com.ai.assistance.operit.core.tools.agent.ShowerController
+import com.ai.assistance.operit.core.tools.agent.NativeVirtualDisplay
 import com.ai.assistance.operit.core.tools.agent.ToolImplementations
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -466,7 +466,7 @@ open class StandardUITools(protected val context: Context) : ToolImplementations
             )
 
             val displayId = try {
-                ShowerController.getDisplayId(agentId)
+                NativeVirtualDisplay.getDisplayId(agentId)
             } catch (_: Exception) {
                 null
             }

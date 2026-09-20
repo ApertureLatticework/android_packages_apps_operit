@@ -6819,7 +6819,7 @@
     <string name="stream_data_required">数据流必须设置</string>
     <string name="deepseek_request_body">最终DeepSeek推理模式请求体: </string>
     <string name="admin_shell_permission">需要设备管理员权限以执行系统操作</string>
-    <string name="virtual_display_not_ready">Shower 虚拟屏尚未就绪</string>
+    <string name="virtual_display_not_ready">副屏尚未就绪</string>
     <string name="xml_content">XML内容</string>
     <string name="browser_preview">浏览器预览</string>
     <string name="edittext_empty">EditText不能为空</string>
@@ -7221,7 +7221,6 @@
     <string name="openai_connection_test_failed">连接测试失败: %1$s</string>
 
     <!-- Phone Agent -->
-    <string name="phone_agent_virtual_screen_service_start_failed">虚拟屏幕服务启动失败。</string>
     <string name="phone_agent_virtual_screen_create_failed">虚拟屏幕创建失败。</string>
     <string name="phone_agent_virtual_screen_prewarm_failed">虚拟屏幕预启动失败：%1$s</string>
     <string name="phone_agent_virtual_screen_not_started">虚拟屏幕未能启动，已中止以避免在主屏幕执行操作。</string>
@@ -7317,7 +7316,6 @@
 
     <!-- Global Display Settings -->
     <string name="global_display_automation_behavior">自动化显示与行为</string>
-    <string name="global_display_virtual_screen_bitrate">虚拟屏幕码率</string>
     <string name="global_display_status_indicator_style">自动化状态指示样式</string>
     <string name="global_display_screenshot_settings">自动化截图设置</string>
     <string name="global_display_image_format">图片格式</string>

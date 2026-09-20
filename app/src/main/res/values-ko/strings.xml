@@ -5804,7 +5804,7 @@
     <string name="stream_data_required">데이터 스트림을 설정해야 합니다.</string>
     <string name="deepseek_request_body">최종 DeepSeek 추론 모드 요청 본문:</string>
     <string name="admin_shell_permission">시스템 작업을 실행하려면 장치 관리자 권한이 필요합니다.</string>
-    <string name="virtual_display_not_ready">Shower 가상 디스플레이가 준비되지 않았습니다.</string>
+    <string name="virtual_display_not_ready">가상 디스플레이가 아직 준비되지 않았습니다</string>
     <string name="xml_content">XML 콘텐츠</string>
     <string name="browser_preview">브라우저 미리보기</string>
     <string name="edittext_empty">EditText는 비워둘 수 없습니다.</string>
@@ -6170,7 +6170,6 @@
     <string name="openai_connection_test_failed">연결 테스트 실패: %1$s</string>
     <string name="phone_agent_need_debug_permission">가상 화면 자동화를 사용하려면 디버그/관리자/루트 권한과 실험적 가상 화면 활성화가 필요합니다.</string>
     <string name="phone_agent_shizuku_unavailable">Shizuku를 사용할 수 없어 가상 화면을 시작할 수 없습니다.</string>
-    <string name="phone_agent_virtual_screen_service_start_failed">Virtual Screen 서비스를 시작하지 못했습니다.</string>
     <string name="phone_agent_virtual_screen_create_failed">가상 화면 생성에 실패했습니다.</string>
     <string name="phone_agent_virtual_screen_prewarm_failed">가상 화면 사전 준비 실패: %1$s</string>
     <string name="phone_agent_virtual_screen_not_started">가상 화면을 시작하지 못하여 메인 화면에서 작업을 피하기 위해 중단되었습니다.</string>
@@ -6261,7 +6260,6 @@
     <string name="root_execution_mode_force_exec">수동 KernelSU</string>
     <string name="root_custom_su_command">사용자 정의 su 명령(KernelSU 모드)</string>
     <string name="root_custom_su_command_description">KernelSU 모드에서만 적용됩니다. su 또는 su --mount-master와 같은 명령을 입력할 수 있습니다.</string>
-    <string name="global_display_virtual_screen_bitrate">가상 화면 비트 전송률</string>
     <string name="global_display_status_indicator_style">상태 표시 스타일</string>
     <string name="global_display_screenshot_settings">스크린샷 설정</string>
     <string name="global_display_image_format">이미지 형식</string>

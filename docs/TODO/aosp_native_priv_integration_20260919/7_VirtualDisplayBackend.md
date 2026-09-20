@@ -48,7 +48,7 @@ LOS 23.2 源码验证依据（lineage-23.2 分支实拉）：
 
 ## 作用域
 
-- packages/apps/Operit 内新增 vd 控制服务与 init rc 文件
+- packages/apps/Operit 内新增 vd 控制服务与 init rc 文件（见下方执行情况的重定案）
 - 旧 Shower 后端的原子切换：删除 ShowerController、ShowerServerManager、ShowerBinderRegistry、ShowerVideoRenderer、ShowerBinderReceiver、OperitShowerShellRunner、ShowerSurfaceView、showerclient 模块与 desktop.apk，PhoneAgent、StandardUITools、PackageManager、ActivityLifecycleManager、autoglm 工具页同步重接原生副屏（TRUSTED+OWN_FOCUS），或按功能裁剪决策一并删除
 - Live 服务与副屏底座的执行链对接（与步骤 6 衔接）
 - 不涉及 frameworks/base 改动，无需维护 framework fork
@@ -63,3 +63,33 @@ LOS 23.2 源码验证依据（lineage-23.2 分支实拉）：
 
 - ref/ 目录本身不进入 LOS 树，机制吸收后在本文档登记对应原生实现
 - 与步骤 6 的分工：6 负责主屏观察模式与权限面，本步骤负责副屏执行模式，Live 服务同时挂两条通道
+
+## 执行情况（2026-09-20 原生化落地）
+
+机制映射实现登记：
+
+| ref/ 机制 | 原生实现（已落地） |
+| --- | --- |
+| 副屏创建 | `NativeVirtualDisplay`（core/tools/agent/）：DisplayManager 直建，PUBLIC \| OWN_CONTENT \| SHOW_SYSTEM_DECORATIONS \| TRUSTED(1<<10) \| OWN_FOCUS(1<<11) 隐藏旗标字面量，进树后换常量 |
+| 焦点抢占拦截 | OWN_FOCUS 旗标，零 framework 补丁 |
+| vd CLI / HTTP 网关 | 不实现：副屏生命周期由 Operit 进程内主导，外部控制面无实际消费方，待有真实委托职责再补 rc 服务（避免投设性代码） |
+| 触控/按键注入 | PrivilegedSystemApi 按屏注入族（setDisplayId 反射，进树同名直调），MotionEvent 全参转发保留时序精度 |
+| 文字静默注入 | 与 ref/ 的 ACTION_SET_TEXT 不同：改为全选清空 + ACTION_MULTIPLE 字符事件注入——后台剪贴板写对非焦点应用关闭，字符通道无剪贴板/软键盘依赖且 ASCII/CJK 统一；实测项 |
+| 截屏/预览 | VD 输出到 ImageReader，会话帧缓存刷新 + 副本读取（静止画面不依赖新帧）；悬浮窗预览轮询缩放副本，触控直通 session.injectTouchEvent |
+| 开机自启 | LiveService（步骤 6）常驻宿主，副屏会话按需建销 |
+
+删陳面：
+
+- showerclient 模块（settings.gradle、build.gradle 依赖、AIDL/binder 全套）与 desktop.apk、desktop_version.txt 资产
+- app 侧 ShowerController/ShowerServerManager/ShowerBinderRegistry/ShowerBinderReceiver/ShowerVideoRenderer/OperitShowerShellRunner/ShowerSurfaceView 七文件与 shower 目录
+- PhoneAgent：主屏 Shower 预热链、desktop 启动兑底、跨屏兑底采集、码率参数链（偏好 + 设置 UI + 八语字符串同步清除）
+- VirtualDisplayOverlay：H.264 解码渲染管线换 ImageReader 帧轮询，Shower 断连监测换会话存活监测
+- autoglm 工具页保留重接（用户定案）：虚拟屏开关改原生会话，页面/ViewModel/提示词继续可用
+- manifest：ShowerBinderReceiver 声明移除；OperitApplication 的 ShowerEnvironment 装配与终止清理改原生后端
+- 调试信息键 ui.shower_display → ui.virtual_display；孤儿字符串（virtual_screen_service_start_failed、码率、Shower 措辞）八语清除/改写
+
+待实测项：
+
+- ACTION_MULTIPLE 字符注入在目标应用编辑控件的接收度（TextView 系直接插入，自绘编辑器例外）
+- 加固应用无障碍树压制场景的视觉主链路端到端用例
+- 主屏视频不中断、105 步连续手势、息屏持续执行（ref/ 场景复现）

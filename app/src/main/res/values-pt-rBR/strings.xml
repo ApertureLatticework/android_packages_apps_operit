@@ -5366,7 +5366,7 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="stream_data_required">O fluxo de dados deve ser definido</string>
     <string name="deepseek_request_body">O corpo final da solicitação do modo de inferência do DeepSeek:</string>
     <string name="admin_shell_permission">São necessários privilégios de administrador do dispositivo para executar operações do sistema</string>
-    <string name="virtual_display_not_ready">A tela virtual do chuveiro ainda não está pronta</string>
+    <string name="virtual_display_not_ready">Tela virtual ainda não está pronta</string>
     <string name="xml_content">Conteúdo XML</string>
     <string name="browser_preview">Visualização do navegador</string>
     <string name="edittext_empty">EditText não pode ficar vazio</string>
@@ -5729,7 +5729,6 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="openai_connection_test_failed">Falha no teste de conexão: %1$s</string>
     <string name="phone_agent_need_debug_permission">Requer permissões de depuração/administrador/root e telas virtuais experimentais habilitadas para usar automação de tela virtual.</string>
     <string name="phone_agent_shizuku_unavailable">Shizuku não está disponível e não consegue iniciar a tela virtual.</string>
-    <string name="phone_agent_virtual_screen_service_start_failed">O serviço de tela virtual falhou ao iniciar.</string>
     <string name="phone_agent_virtual_screen_create_failed">Falha na criação da tela virtual.</string>
     <string name="phone_agent_virtual_screen_prewarm_failed">Falha na pré-inicialização da tela virtual: %1$s</string>
     <string name="phone_agent_virtual_screen_not_started">A tela virtual falhou ao iniciar e foi abortada para evitar a execução de ações na tela inicial.</string>
@@ -5820,7 +5819,6 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="root_execution_mode_force_exec">Manual KernelSU</string>
     <string name="root_custom_su_command">Comando su personalizado (modo KernelSU)</string>
     <string name="root_custom_su_command_description">Só entra em vigor no modo KernelSU. Você pode preencher comandos como su ou su --mount-master.</string>
-    <string name="global_display_virtual_screen_bitrate">Taxa de bits da tela virtual</string>
     <string name="global_display_status_indicator_style">Estilo de indicação de status de automação</string>
     <string name="global_display_screenshot_settings">Configurações automatizadas de captura de tela</string>
     <string name="global_display_image_format">Formato de imagem</string>

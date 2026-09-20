@@ -19,5 +19,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Operit"
 include(":app")
-include(":showerclient")
 include(":quickjs")

@@ -2,6 +2,7 @@ package com.ai.assistance.operit.core.tools.system.privileged
 
 import android.content.Context
 import android.util.Log
+import android.view.Display
 import android.view.InputEvent
 import android.view.KeyEvent
 import android.view.MotionEvent
@@ -21,6 +22,27 @@ object PrivilegedSystemApi {
 
     /** InputManager.injectInputEvent 的 mode 常量：异步注入（不等待分发完成） */
     private const val INJECT_INPUT_EVENT_MODE_ASYNC = 0
+
+    /**
+     * InputEvent.setDisplayId(@hide)：指定注入目标显示器。
+     * 步骤 5 进树后替换为直调（同名同参）。
+     */
+    private val setDisplayIdMethod by lazy {
+        InputEvent::class.java.getMethod("setDisplayId", Int::class.javaPrimitiveType).apply {
+            isAccessible = true
+        }
+    }
+
+    /** 为输入事件标记目标显示器，返回同一事件 */
+    fun withDisplayId(event: InputEvent, displayId: Int): InputEvent {
+        return try {
+            setDisplayIdMethod.invoke(event, displayId)
+            event
+        } catch (e: Exception) {
+            Log.e(TAG, "setDisplayId($displayId) failed: ${e.cause ?: e}")
+            event
+        }
+    }
 
     private val injectInputEventMethod by lazy {
         // injectInputEvent(InputEvent, int) 为 @hide SystemApi；InputManager 实例经 getSystemService public 通道获取
@@ -46,36 +68,49 @@ object PrivilegedSystemApi {
         }
     }
 
-    /** 构造并注入一次坐标点击（down + up），注入目标为焦点显示屏 */
-    fun injectTap(x: Int, y: Int): Boolean {
+    /** 构造并注入一次坐标点击（down + up），注入目标为指定显示器 */
+    fun injectTapOnDisplay(x: Int, y: Int, displayId: Int): Boolean {
         val now = android.os.SystemClock.uptimeMillis()
         val down = MotionEvent.obtain(now, now, MotionEvent.ACTION_DOWN, x.toFloat(), y.toFloat(), 0)
         val up = MotionEvent.obtain(now, now + 50, MotionEvent.ACTION_UP, x.toFloat(), y.toFloat(), 0)
-        val okDown = injectInputEvent(down)
-        val okUp = injectInputEvent(up)
+        val okDown = injectInputEvent(withDisplayId(down, displayId))
+        val okUp = injectInputEvent(withDisplayId(up, displayId))
         down.recycle()
         up.recycle()
         return okDown && okUp
     }
 
-    /** 构造并注入长按（down + duration 毫秒 + up） */
-    fun injectLongPress(x: Int, y: Int, durationMs: Long): Boolean {
+    /** 注入目标为焦点显示屏（默认显示器） */
+    fun injectTap(x: Int, y: Int): Boolean = injectTapOnDisplay(x, y, Display.DEFAULT_DISPLAY)
+
+    /** 构造并注入长按（down + duration 毫秒 + up）到指定显示器 */
+    fun injectLongPressOnDisplay(x: Int, y: Int, durationMs: Long, displayId: Int): Boolean {
         val downTime = android.os.SystemClock.uptimeMillis()
         val down = MotionEvent.obtain(downTime, downTime, MotionEvent.ACTION_DOWN, x.toFloat(), y.toFloat(), 0)
-        injectInputEvent(down)
+        injectInputEvent(withDisplayId(down, displayId))
         Thread.sleep(durationMs.coerceIn(300L, 5000L))
         val up = MotionEvent.obtain(downTime, downTime + durationMs, MotionEvent.ACTION_UP, x.toFloat(), y.toFloat(), 0)
-        val ok = injectInputEvent(up)
+        val ok = injectInputEvent(withDisplayId(up, displayId))
         down.recycle()
         up.recycle()
         return ok
     }
 
-    /** 构造并注入滑动手势（多点路径插值 move 事件） */
-    fun injectSwipe(startX: Int, startY: Int, endX: Int, endY: Int, durationMs: Long): Boolean {
+    fun injectLongPress(x: Int, y: Int, durationMs: Long): Boolean =
+        injectLongPressOnDisplay(x, y, durationMs, Display.DEFAULT_DISPLAY)
+
+    /** 构造并注入滑动手势（多点路径插值 move 事件）到指定显示器 */
+    fun injectSwipeOnDisplay(
+        startX: Int,
+        startY: Int,
+        endX: Int,
+        endY: Int,
+        durationMs: Long,
+        displayId: Int
+    ): Boolean {
         val downTime = android.os.SystemClock.uptimeMillis()
         val down = MotionEvent.obtain(downTime, downTime, MotionEvent.ACTION_DOWN, startX.toFloat(), startY.toFloat(), 0)
-        var ok = injectInputEvent(down)
+        var ok = injectInputEvent(withDisplayId(down, displayId))
 
         val steps = (durationMs / 16L).coerceIn(2, 120).toInt()
         val dx = (endX - startX).toFloat() / steps
@@ -86,22 +121,72 @@ object PrivilegedSystemApi {
                 downTime, t, MotionEvent.ACTION_MOVE,
                 startX + dx * i, startY + dy * i, 0
             )
-            ok = ok and injectInputEvent(move)
+            ok = ok and injectInputEvent(withDisplayId(move, displayId))
             move.recycle()
         }
         val up = MotionEvent.obtain(downTime, downTime + durationMs, MotionEvent.ACTION_UP, endX.toFloat(), endY.toFloat(), 0)
-        ok = ok and injectInputEvent(up)
+        ok = ok and injectInputEvent(withDisplayId(up, displayId))
         down.recycle()
         up.recycle()
         return ok
     }
 
-    /** 构造并注入一次按键（down + up） */
-    fun injectKey(keyCode: Int): Boolean {
+    fun injectSwipe(startX: Int, startY: Int, endX: Int, endY: Int, durationMs: Long): Boolean =
+        injectSwipeOnDisplay(startX, startY, endX, endY, durationMs, Display.DEFAULT_DISPLAY)
+
+    /** 构造并注入一次按键（down + up，可携带 meta）到指定显示器 */
+    fun injectKeyEventOnDisplay(keyCode: Int, metaState: Int, displayId: Int): Boolean {
         val now = android.os.SystemClock.uptimeMillis()
-        val down = KeyEvent(now, now, KeyEvent.ACTION_DOWN, keyCode, 0)
-        val up = KeyEvent(now, now + 20, KeyEvent.ACTION_UP, keyCode, 0)
-        val ok = injectInputEvent(down) && injectInputEvent(up)
+        val down = KeyEvent(now, now, KeyEvent.ACTION_DOWN, keyCode, 0, metaState)
+        val up = KeyEvent(now, now + 20, KeyEvent.ACTION_UP, keyCode, 0, metaState)
+        val ok = injectInputEvent(withDisplayId(down, displayId)) &&
+            injectInputEvent(withDisplayId(up, displayId))
+        return ok
+    }
+
+    /** 注入一次按键（down + up） */
+    fun injectKey(keyCode: Int): Boolean = injectKeyEventOnDisplay(keyCode, 0, Display.DEFAULT_DISPLAY)
+
+    /**
+     * 字符序列注入（副屏静默输入）：ACTION_MULTIPLE KeyEvent 承载字符块，
+     * TextView 系编辑控件直接插入，无剪贴板/软键盘依赖；分批防单事件过大。
+     */
+    fun injectCharactersOnDisplay(text: String, displayId: Int): Boolean {
+        if (text.isEmpty()) return true
+        val now = android.os.SystemClock.uptimeMillis()
+        var ok = true
+        text.chunked(64).forEach { chunk ->
+            val event = KeyEvent(now, chunk)
+            ok = ok and injectInputEvent(withDisplayId(event, displayId))
+        }
+        return ok
+    }
+
+    /**
+     * 按整份 MotionEvent 参数构造并注入单事件到指定显示器（悬浮窗触控转发用，
+     * 保留 downTime/eventTime/pressure/precision 等全部语义）。
+     */
+    fun injectMotionEventOnDisplay(
+        action: Int,
+        x: Float,
+        y: Float,
+        downTime: Long,
+        eventTime: Long,
+        pressure: Float,
+        size: Float,
+        metaState: Int,
+        xPrecision: Float,
+        yPrecision: Float,
+        deviceId: Int,
+        edgeFlags: Int,
+        displayId: Int
+    ): Boolean {
+        val event = MotionEvent.obtain(
+            downTime, eventTime, action, x, y, pressure, size,
+            metaState, xPrecision, yPrecision, deviceId, edgeFlags
+        )
+        val ok = injectInputEvent(withDisplayId(event, displayId))
+        event.recycle()
         return ok
     }
 

@@ -5642,7 +5642,7 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="stream_data_required">Aliran data mesti ditetapkan</string>
     <string name="deepseek_request_body">Badan permintaan mod penaakulan DeepSeek akhir: </string>
     <string name="admin_shell_permission">Memerlukan keizinan pentadbir peranti untuk melaksanakan operasi sistem</string>
-    <string name="virtual_display_not_ready">Skrin maya Shower belum sedia</string>
+    <string name="virtual_display_not_ready">Paparan maya belum sedia</string>
     <string name="xml_content">Kandungan XML</string>
     <string name="browser_preview">Pratonton pelayar</string>
     <string name="edittext_empty">EditText tidak boleh kosong</string>
@@ -6058,7 +6058,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="openai_connection_test_failed">Ujian sambungan gagal: %1$s</string>
     <string name="phone_agent_need_debug_permission">Memerlukan kebenaran nyahpepijat/pentadbir/Root dan skrin maya eksperimen diaktifkan untuk menggunakan automasi skrin maya.</string>
     <string name="phone_agent_shizuku_unavailable">Shizuku tidak tersedia, tidak dapat memulakan skrin maya.</string>
-    <string name="phone_agent_virtual_screen_service_start_failed">Gagal memulakan perkhidmatan skrin maya.</string>
     <string name="phone_agent_virtual_screen_create_failed">Gagal mencipta skrin maya.</string>
     <string name="phone_agent_virtual_screen_prewarm_failed">Gagal pra-mula skrin maya: %1$s</string>
 
@@ -6314,7 +6313,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="root_execution_mode_force_exec">KernelSU Manual</string>
     <string name="root_custom_su_command">Perintah su tersuai (Mod KernelSU)</string>
     <string name="root_custom_su_command_description">Hanya berkesan dalam mod KernelSU, boleh isi perintah seperti su atau su --mount-master.</string>
-    <string name="global_display_virtual_screen_bitrate">Kadar bit skrin maya</string>
     <string name="global_display_status_indicator_style">Gaya penunjuk status automasi</string>
     <string name="global_display_screenshot_settings">Tetapan tangkapan skrin automasi</string>
     <string name="global_display_image_format">Format imej</string>

@@ -5686,7 +5686,7 @@ Sekarang Anda dapat menggunakan mode AutoGLM di antarmuka percakapan.</string>
     <string name="stream_data_required">Aliran data harus diatur</string>
     <string name="deepseek_request_body">Badan permintaan mode inferensi DeepSeek akhir: </string>
     <string name="admin_shell_permission">Diperlukan izin administrator perangkat untuk menjalankan operasi sistem</string>
-    <string name="virtual_display_not_ready">Layar virtual Shower belum siap</string>
+    <string name="virtual_display_not_ready">Layar virtual belum siap</string>
     <string name="xml_content">Konten XML</string>
     <string name="browser_preview">Pratinjau browser</string>
     <string name="edittext_empty">EditText tidak boleh kosong</string>
@@ -6058,7 +6058,6 @@ Sekarang Anda dapat menggunakan mode AutoGLM di antarmuka percakapan.</string>
     <string name="openai_connection_test_failed">Tes koneksi gagal: %1$s</string>
     <string name="phone_agent_need_debug_permission">Diperlukan izin debug/admin/Root dan mengaktifkan layar virtual eksperimental untuk menggunakan otomatisasi layar virtual.</string>
     <string name="phone_agent_shizuku_unavailable">Shizuku tidak tersedia, tidak dapat memulai layar virtual.</string>
-    <string name="phone_agent_virtual_screen_service_start_failed">Gagal memulai layanan layar virtual.</string>
     <string name="phone_agent_virtual_screen_create_failed">Gagal membuat layar virtual.</string>
     <string name="phone_agent_virtual_screen_prewarm_failed">Gagal memanaskan layar virtual: %1$s</string>
     <string name="phone_agent_virtual_screen_not_started">Layar virtual gagal dimulai, dibatalkan untuk menghindari operasi di layar utama.</string>
@@ -6148,7 +6147,6 @@ Sekarang Anda dapat menggunakan mode AutoGLM di antarmuka percakapan.</string>
     <string name="root_execution_mode_force_exec">KernelSU manual</string>
     <string name="root_custom_su_command">Perintah su kustom (mode KernelSU)</string>
     <string name="root_custom_su_command_description">Hanya berlaku dalam mode KernelSU, dapat diisi dengan perintah seperti su atau su --mount-master.</string>
-    <string name="global_display_virtual_screen_bitrate">Bitrate layar virtual</string>
     <string name="global_display_status_indicator_style">Gaya indikator status otomatisasi</string>
     <string name="global_display_screenshot_settings">Pengaturan screenshot otomatisasi</string>
     <string name="global_display_image_format">Format gambar</string>

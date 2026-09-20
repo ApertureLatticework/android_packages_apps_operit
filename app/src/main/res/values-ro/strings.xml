@@ -6631,7 +6631,7 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="stream_data_required">Fluxul de date trebuie configurat</string>
     <string name="deepseek_request_body">În finalDeepSeekCorpul cererii pentru modelul de deducție: </string>
     <string name="admin_shell_permission">Sunt necesare drepturi de administrator de echipamente pentru a efectua operațiuni de sistem</string>
-    <string name="virtual_display_not_ready">Shower Ecranul virtual nu este încă pregătit</string>
+    <string name="virtual_display_not_ready">Ecranul virtual nu este încă pregătit</string>
     <string name="xml_content">XMLConținut</string>
     <string name="browser_preview">Previzualizare în browser</string>
     <string name="edittext_empty">EditTextNu poate fi gol</string>
@@ -7036,7 +7036,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <!-- Phone Agent -->
     <string name="phone_agent_need_debug_permission">Este necesară depanarea/Administrator/Root Trebuie să aveți permisiunile necesare și să activați ecranul virtual experimental pentru a putea utiliza automatizarea ecranului virtual.</string>
     <string name="phone_agent_shizuku_unavailable">Shizuku Indisponibil, ecranul virtual nu poate fi pornit.</string>
-    <string name="phone_agent_virtual_screen_service_start_failed">Pornirea serviciului de ecran virtual a eșuat.</string>
     <string name="phone_agent_virtual_screen_create_failed">Crearea ecranului virtual a eșuat.</string>
     <string name="phone_agent_virtual_screen_prewarm_failed">Eroare la preîncărcarea ecranului virtual:%1$s</string>
     <string name="phone_agent_virtual_screen_not_started">Ecranul virtual nu a putut fi pornit; procesul a fost întrerupt pentru a evita efectuarea unor operațiuni pe ecranul principal.</string>
@@ -7139,7 +7138,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="root_execution_mode_force_exec">Manual KernelSU</string>
     <string name="root_custom_su_command">Personalizare su Comandă (KernelSU (modul)</string>
     <string name="root_custom_su_command_description">Numai în KernelSU Modelul a intrat în vigoare, se poate completa su sau su --mount-master comenzi precum acestea.</string>
-    <string name="global_display_virtual_screen_bitrate">Rata de transfer a ecranului virtual</string>
     <string name="global_display_status_indicator_style">Stiluri de afișare a stării automatizării</string>
     <string name="global_display_screenshot_settings">Setări automate pentru capturi de ecran</string>
     <string name="global_display_image_format">Formate de imagine</string>

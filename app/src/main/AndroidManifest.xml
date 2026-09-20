@@ -430,15 +430,6 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-
-        <!-- Receive Shower Binder handoff broadcast from the Shower server -->
-        <receiver
-            android:name=".core.tools.agent.ShowerBinderReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.ai.assistance.operit.action.SHOWER_BINDER_READY" />
-            </intent-filter>
-        </receiver>
         
         <!-- Workflow Tasker 插件随 Tasker 集成线裁撤 -->
         

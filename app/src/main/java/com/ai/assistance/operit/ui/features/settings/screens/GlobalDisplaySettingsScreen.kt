@@ -73,7 +73,6 @@ fun GlobalDisplaySettingsScreen(
     val screenshotScalePercent by displayPreferencesManager.screenshotScalePercent.collectAsState(initial = 75)
     val visitWebWaitSeconds by displayPreferencesManager.visitWebWaitSeconds.collectAsState(initial = 0)
     val toolPkgHookTimeoutSeconds by displayPreferencesManager.toolPkgHookTimeoutSeconds.collectAsState(initial = 10)
-    val virtualDisplayBitrateKbps by displayPreferencesManager.virtualDisplayBitrateKbps.collectAsState(initial = 3000)
     val keepScreenOn by apiPreferences.keepScreenOnFlow.collectAsState(initial = true)
     val convertLongPastedTextToFile by userPreferences.convertLongPastedTextToFile.collectAsState(initial = true)
     val longPastedTextFileThreshold by userPreferences.longPastedTextFileThreshold.collectAsState(
@@ -616,72 +615,6 @@ fun GlobalDisplaySettingsScreen(
                 },
                 backgroundColor = componentBackgroundColor
             )
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 4.dp)
-                    .clip(RoundedCornerShape(6.dp))
-                    .background(componentBackgroundColor)
-                    .padding(horizontal = 12.dp, vertical = 8.dp)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.global_display_virtual_screen_bitrate),
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Medium
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    FilterChip(
-                        selected = virtualDisplayBitrateKbps == 1500,
-                        onClick = {
-                            scope.launch {
-                                displayPreferencesManager.saveDisplaySettings(virtualDisplayBitrateKbps = 1500)
-                            }
-                        },
-                        label = { Text("1.5 Mbps") }
-                    )
-                    FilterChip(
-                        selected = virtualDisplayBitrateKbps == 3000,
-                        onClick = {
-                            scope.launch {
-                                displayPreferencesManager.saveDisplaySettings(virtualDisplayBitrateKbps = 3000)
-                            }
-                        },
-                        label = { Text("3 Mbps") }
-                    )
-                    FilterChip(
-                        selected = virtualDisplayBitrateKbps == 5000,
-                        onClick = {
-                            scope.launch {
-                                displayPreferencesManager.saveDisplaySettings(virtualDisplayBitrateKbps = 5000)
-                            }
-                        },
-                        label = { Text("5 Mbps") }
-                    )
-                    FilterChip(
-                        selected = virtualDisplayBitrateKbps == 10000,
-                        onClick = {
-                            scope.launch {
-                                displayPreferencesManager.saveDisplaySettings(virtualDisplayBitrateKbps = 10000)
-                            }
-                        },
-                        label = { Text("10 Mbps") }
-                    )
-                    FilterChip(
-                        selected = virtualDisplayBitrateKbps == 20000,
-                        onClick = {
-                            scope.launch {
-                                displayPreferencesManager.saveDisplaySettings(virtualDisplayBitrateKbps = 20000)
-                            }
-                        },
-                        label = { Text("20 Mbps") }
-                    )
-                }
-            }
 
             Column(
                 modifier = Modifier

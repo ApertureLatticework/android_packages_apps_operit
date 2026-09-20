@@ -43,6 +43,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -53,14 +54,13 @@ import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import com.ai.assistance.operit.services.ServiceLifecycleOwner
 import com.ai.assistance.operit.util.AppLogger
-import com.ai.assistance.operit.core.tools.agent.ShowerController
+import com.ai.assistance.operit.core.tools.agent.NativeVirtualDisplay
 import com.ai.assistance.operit.core.tools.agent.PhoneAgentJobRegistry
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -125,8 +125,6 @@ class VirtualDisplayOverlay private constructor(private val context: Context, pr
     private var lifecycleOwner: ServiceLifecycleOwner? = null
     private var layoutParams: WindowManager.LayoutParams? = null
     private var displayId: Int? = null
-    @Volatile
-    private var surfaceView: ShowerSurfaceView? = null
     private var isFullscreen by mutableStateOf(false)
     private var isSnapped by mutableStateOf(false)
     private var snappedToRight by mutableStateOf(false)
@@ -252,7 +250,8 @@ class VirtualDisplayOverlay private constructor(private val context: Context, pr
         }
     }
 
-    suspend fun captureCurrentFramePng(): ByteArray? = surfaceView?.captureCurrentFramePng()
+    suspend fun captureCurrentFramePng(): ByteArray? =
+        NativeVirtualDisplay.getSession(agentId)?.requestScreenshotPng()
 
     fun showAutomationControls(
         totalSteps: Int,
@@ -298,7 +297,7 @@ class VirtualDisplayOverlay private constructor(private val context: Context, pr
                 if (cancelAutomation) {
                     PhoneAgentJobRegistry.cancelAgent(agentId, cancelReason)
                 }
-                ShowerController.shutdown(agentId)
+                NativeVirtualDisplay.shutdown(agentId)
                 overlayView?.let { view ->
                     lifecycleOwner?.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE)
                     lifecycleOwner?.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
@@ -315,14 +314,13 @@ class VirtualDisplayOverlay private constructor(private val context: Context, pr
                 windowManager = null
                 displayId = null
                 currentAppPackageName = null
-                surfaceView = null
             } catch (e: Exception) {
                 AppLogger.e("VirtualDisplayOverlay", "Error hiding overlay", e)
             }
         }
     }
 
-    fun setShowerBorderVisible(visible: Boolean) {
+    fun setDisplayBorderVisible(visible: Boolean) {
         runOnMainThread {
             rainbowBorderVisible = visible
         }
@@ -593,37 +591,37 @@ class VirtualDisplayOverlay private constructor(private val context: Context, pr
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                var hasShowerDisplay by remember { mutableStateOf(ShowerController.getVideoSize(agentId) != null) }
+                var hasDisplay by remember { mutableStateOf(NativeVirtualDisplay.getVideoSize(agentId) != null) }
                 LaunchedEffect(Unit) {
-                    var lastReady = hasShowerDisplay
+                    var lastReady = hasDisplay
                     while (true) {
-                        val ready = ShowerController.getVideoSize(agentId) != null
+                        val ready = NativeVirtualDisplay.getVideoSize(agentId) != null
                         if (lastReady && !ready) {
                             AppLogger.w(
                                 "VirtualDisplayOverlay",
-                                "OverlayCard: Shower 虚拟屏已关闭/断开，取消自动化任务 agentId=$agentId"
+                                "OverlayCard: 原生副屏已关闭，取消自动化任务 agentId=$agentId"
                             )
                             PhoneAgentJobRegistry.cancelAgent(agentId, "Virtual screen closed")
                         }
-                        if (hasShowerDisplay != ready) {
+                        if (hasDisplay != ready) {
                             AppLogger.d(
                                 "VirtualDisplayOverlay",
-                                "OverlayCard: hasShowerDisplay changed from $hasShowerDisplay to $ready, videoSize=${ShowerController.getVideoSize(agentId)}"
+                                "OverlayCard: hasDisplay changed from $hasDisplay to $ready, videoSize=${NativeVirtualDisplay.getVideoSize(agentId)}"
                             )
-                            hasShowerDisplay = ready
+                            hasDisplay = ready
                         }
                         lastReady = ready
                         delay(500)
                     }
                 }
-                if (hasShowerDisplay) {
+                if (hasDisplay) {
                     val density = LocalDensity.current
 
-                    // Always keep a single ShowerSurfaceView attached; only adjust its layout
+                    // 预览视图常驻附着，仅调布局（贴边时缩到 1dp 维持轮询节奏）
                     val videoModifierBase = when {
                         // 全屏模式：保持原来的视频 fillMaxSize 布局
                         isFullscreen -> Modifier.fillMaxSize()
-                        // 保持 ShowerSurfaceView 附着但几乎不可见，仅用于维持渲染管线
+                        // 贴边模式：预览附着但几乎不可见
                         snapped -> Modifier
                             .size(1.dp)
                             .align(if (snappedToRight) Alignment.CenterEnd else Alignment.CenterStart)
@@ -655,7 +653,8 @@ class VirtualDisplayOverlay private constructor(private val context: Context, pr
                     Box(
                         modifier = videoModifier
                     ) {
-                        AndroidView(
+                        NativeDisplayPreview(
+                            agentId = agentId,
                             modifier = if (isFullscreen && !snapped) {
                                 Modifier
                                     .fillMaxSize()
@@ -672,7 +671,8 @@ class VirtualDisplayOverlay private constructor(private val context: Context, pr
                                         }
 
                                         val os = overlaySize
-                                        val vs = ShowerController.getVideoSize(agentId) ?: return@pointerInteropFilter false
+                                        val vs = NativeVirtualDisplay.getVideoSize(agentId) ?: return@pointerInteropFilter false
+                                        val touchSession = NativeVirtualDisplay.getSession(agentId) ?: return@pointerInteropFilter false
                                         if (os.width <= 0 || os.height <= 0) return@pointerInteropFilter false
 
                                         val copied = MotionEvent.obtain(event)
@@ -689,8 +689,7 @@ class VirtualDisplayOverlay private constructor(private val context: Context, pr
                                                             val hx = copied.getHistoricalX(0, i)
                                                             val hy = copied.getHistoricalY(0, i)
                                                             val pt = mapOffsetToRemote(Offset(hx, hy), os, vs) ?: continue
-                                                            ShowerController.injectTouchEvent(
-                                                                agentId = agentId,
+                                                            touchSession.injectTouchEvent(
                                                                 action = MotionEvent.ACTION_MOVE,
                                                                 x = pt.first.toFloat(),
                                                                 y = pt.second.toFloat(),
@@ -711,8 +710,7 @@ class VirtualDisplayOverlay private constructor(private val context: Context, pr
                                                     val cy = copied.getY(0)
                                                     val pt = mapOffsetToRemote(Offset(cx, cy), os, vs)
                                                     if (pt != null) {
-                                                        ShowerController.injectTouchEvent(
-                                                            agentId = agentId,
+                                                        touchSession.injectTouchEvent(
                                                             action = action,
                                                             x = pt.first.toFloat(),
                                                             y = pt.second.toFloat(),
@@ -738,22 +736,6 @@ class VirtualDisplayOverlay private constructor(private val context: Context, pr
                             } else {
                                 Modifier.fillMaxSize()
                             },
-                            factory = { ctx ->
-                                ShowerSurfaceView(ctx).also { view ->
-                                    try {
-                                        view.bindController(ShowerController.getInstance(agentId))
-                                    } catch (_: Exception) {
-                                    }
-                                    surfaceView = view
-                                }
-                            },
-                            update = { view ->
-                                surfaceView = view
-                                try {
-                                    view.bindController(ShowerController.getInstance(agentId))
-                                } catch (_: Exception) {
-                                }
-                            }
                         )
                         if (rainbowBorderVisible && !snapped) {
                             RainbowStatusBorderOverlay()
@@ -984,7 +966,7 @@ class VirtualDisplayOverlay private constructor(private val context: Context, pr
                 } else {
                     AppLogger.d(
                         "VirtualDisplayOverlay",
-                        "OverlayCard: Shower 虚拟屏尚未就绪, id=$id, hasShowerDisplay=$hasShowerDisplay, videoSize=${ShowerController.getVideoSize(agentId)}"
+                        "OverlayCard: 原生副屏尚未就绪, id=$id, hasDisplay=$hasDisplay, videoSize=${NativeVirtualDisplay.getVideoSize(agentId)}"
                     )
                     Box(
                         modifier = Modifier.fillMaxSize(),
@@ -1293,4 +1275,36 @@ private fun getStatusBarHeight(): Int {
 @Composable
 private fun RainbowStatusBorderOverlay() {
     RainbowBorderOverlay()
+}
+
+/**
+ * 原生副屏预览：轮询会话帧缓存渲染缩放副本（ImageReader 渲染面，无解码器）。
+ * 预览位图交由 GC 回收（轮询频率下的分配压力可接受），触控转发由调用侧修饰符承载。
+ */
+@Composable
+private fun NativeDisplayPreview(agentId: String, modifier: Modifier = Modifier) {
+    var frame by remember(agentId) { mutableStateOf<ImageBitmap?>(null) }
+    LaunchedEffect(agentId) {
+        while (true) {
+            val session = NativeVirtualDisplay.getSession(agentId)
+            if (session != null) {
+                val bitmap = session.refreshAndCapturePreview(480)
+                if (bitmap != null) {
+                    frame = bitmap.asImageBitmap()
+                }
+            }
+            delay(120)
+        }
+    }
+    val current = frame
+    if (current != null) {
+        Image(
+            bitmap = current,
+            contentDescription = null,
+            modifier = modifier,
+            contentScale = ContentScale.Fit
+        )
+    } else {
+        Box(modifier = modifier)
+    }
 }
