@@ -8,7 +8,7 @@
 | 类别 | 路径 | 说明 |
 | --- | --- | --- |
 | androidx / Kotlin 系 | 树内直引 | prebuilts/sdk/current/androidx 与 external/kotlin*，模块名按 pom2bp 约定 |
-| 非 androidx Java/Kotlin | **包内 prebuilt** | AAR/jar 原样入库，`android_library_import`/`java_import` 接线；由 [tools/intree/import_prebuilts.py](../tools/intree/import_prebuilts.py) 生成每库 Android.bp/NOTICE 与 `prebuilts.lock`（sha256 钉扎）。Gradle 与 Soong 消费同一份二进制，行为一致 |
+| 非 androidx Java/Kotlin | **包内 prebuilt** | 首批已入库：122 模块 / 125.2MB / sha256 lock 钉扎（最大单件 onnxruntime 24MB）；由 [tools/intree/import_prebuilts.py](../tools/intree/import_prebuilts.py) 生成每库 Android.bp/NOTICE。Gradle 与 Soong 消费同一份二进制，行为一致 |
 | ffmpeg | **树内源码线** | `external/ffmpeg`（dvab-sarma fork，ffmpeg 8.0 全源码 Soong 化）+ 包内薄壳 `liboperit_ffmpeg`（JNI）+ 树内同名门面（app/src/soong/java/.../ffmpeg/）。ffmpeg-kit AAR 与 smart-exception 依赖在树内不复存在 |
 | native（sherpa-ncnn/wamr/quickjs/ripgrep/streamnative） | 收源进包 | 包内 cc/rust 模块（quickjs/streamnative 源已在库；sherpa/wamr/ripgrep 为构建期 git fetch，收源时入包） |
 
