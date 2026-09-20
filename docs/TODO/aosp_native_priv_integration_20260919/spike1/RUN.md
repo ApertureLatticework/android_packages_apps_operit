@@ -52,3 +52,14 @@ SystemUI 的 static_libs 里），没验证 `compose: true` 属性本身——LO
 待树内 grep 定位（见会话记录）：
 1. prebuilts/androidx 内 compose 编译器插件的模块名与类型（java_plugin?）
 2. 其它 compose 消费者 bp 的完整挂载写法
+
+## 结论定稿（同日，用户树内 grep + LOS 镜像范本双证）
+
+- LOS 23.2 的 androidx 预编译在 `prebuilts/sdk/current/androidx/`（manifests 亦在此）
+- Compose 编译器 jar 定义于 `external/kotlin-compose-compiler/`（2.2.0，java_import_host 双形态）
+- Soong 的 Kotlin 编译驱动 `build/soong/cmd/kotlinc_incremental/` static_libs 内嵌
+  `kotlin-compose-compiler-embeddable` → 插件对全树 Kotlin 模块默认常驻，无属性无声明
+- 官方范本 `development/samples/SceneTransitionLayoutDemo/Android.bp`（LOS 23.2 版）：
+  static_libs 引 Compose 模块 + kotlincflags 带 -P 可选参数，仅此而已
+
+spike1/Android.bp 已按范本对齐重写，待树内 `m spike-compose` 终验。

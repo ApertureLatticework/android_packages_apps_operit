@@ -4,11 +4,14 @@ android_app {
     static_libs: [
         "androidx.compose.runtime_runtime",
     ],
-    compose: true,
+    // 注意：LOS 23.2 Soong 无 "compose" 属性（实测 unrecognized property，已删）。
+    // Compose 模块直接进 static_libs（SystemUI 同款）。
     kotlincflags: [
         "-Xjvm-default=all",
         "-P plugin:androidx.compose.compiler.plugins.kotlin:sourceInformation=true",
     ],
+    // Compose 编译器插件本体挂载方式待树内 grep 定位
+    // （SystemUI 的 plugins: 只列了 room/dagger，-P 参数的宿主插件从哪挂是关键未知点）
     manifest: "AndroidManifest.xml",
     min_sdk_version: "26",
 }
