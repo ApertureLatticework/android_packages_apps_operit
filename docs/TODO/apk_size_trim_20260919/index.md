@@ -26,9 +26,7 @@ ROM 独占分发，system 分区寸土寸金；安装包体积按梯队压缩，
 - 删除 assets/bridge/（terminal 线尸体，MCPStarter 已改 remote-only，零代码引用，f44c9d4 漏删）
 - operit.png 1024×1024 RGBA 1.4M 重编码为 512×512 WebP，改引用名
 
-第二梯队（步骤 4 Shizuku 线整删时一并）：
-
-- shizuku.apk 2.5M 与 ShizukuInstaller
+第二梯队（已随步骤 4 落地）：shizuku.apk 2.5M 与 Shizuku 线已删
 
 第三梯队（步骤 7 副屏后端原子切换时一并）：
 

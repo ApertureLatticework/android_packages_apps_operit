@@ -1,7 +1,7 @@
 ---
 Repository: https://github.com/ApertureLatticework/android_packages_apps_operit
 Branch: feat/native-rom-integration
-Status: executing（步骤 1-3 完成；spike1 树内终验通过，Compose/平台 API 路线坐实）
+Status: executing（步骤 1-4 主体落地：PRIVILEGED 档上线，三借权档与 Shizuku/libsu 整线裁撤）
 ---
 
 # 原生集成特权版：LineageOS 源码进树改造

@@ -31,9 +31,7 @@ class ShellExecutorFactory {
             // 创建新的执行器实例
             val executor =
                     when (permissionLevel) {
-                        AndroidPermissionLevel.ROOT -> RootShellExecutor(context)
-                        AndroidPermissionLevel.ADMIN -> AdminShellExecutor(context)
-                        AndroidPermissionLevel.DEBUGGER -> DebuggerShellExecutor(context)
+                        AndroidPermissionLevel.PRIVILEGED -> PrivilegedShellExecutor(context)
                         AndroidPermissionLevel.ACCESSIBILITY -> AccessibilityShellExecutor(context)
                         AndroidPermissionLevel.STANDARD -> StandardShellExecutor(context)
                     }
@@ -59,9 +57,7 @@ class ShellExecutorFactory {
             // 按权限从高到低尝试
             val levels =
                     listOf(
-                            AndroidPermissionLevel.ROOT,
-                            AndroidPermissionLevel.ADMIN,
-                            AndroidPermissionLevel.DEBUGGER,
+                            AndroidPermissionLevel.PRIVILEGED,
                             AndroidPermissionLevel.ACCESSIBILITY,
                             AndroidPermissionLevel.STANDARD
                     )

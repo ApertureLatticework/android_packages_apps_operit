@@ -114,8 +114,6 @@ private fun getOpenSourceLibraries(): List<OpenSourceLibrary> {
         OpenSourceLibrary("Bouncy Castle", "Cryptography library", "MIT", "https://www.bouncycastle.org/"),
 
         // System & Root
-        OpenSourceLibrary("libsu", "Root access library for Android", "Apache-2.0", "https://github.com/topjohnwu/libsu"),
-        OpenSourceLibrary("Shizuku", "System service for apps to use system APIs directly", "Apache-2.0", "https://github.com/RikkaApps/Shizuku"),
 
         // Terminal & Native
         OpenSourceLibrary("Code FA", "VS Code for Android (code-server based)", "BSD-3-Clause", "https://github.com/nightmare-space/code_lfa"),

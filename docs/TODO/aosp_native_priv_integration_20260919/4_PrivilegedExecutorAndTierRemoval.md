@@ -45,6 +45,14 @@ ROM 独占后借权通道整档删除，阶梯收缩为三档，特权档直调 
 - STT 面收敛为：本地 sherpa-ncnn / OpenAI / Deepgram
 - Soong 侧受益：卸掉 llama.cpp 与 MNN 两个 C++ 大库，保留 sherpa-ncnn（+ncnn）与 onnxruntime
 
+## 执行结果（2026-09-19 落地，51 文件）
+
+- 新增 PRIVILEGED 档：PrivilegedSystemApi（InputManager 注入/forceStopPackage 反射通路，Gradle 期以反射调 @hide，步骤 5 进树后同名直调替换）、PrivilegedShellExecutor（受限命令族翻译：input/settings put/am force-stop）、PrivilegedActionListener（组合无障碍通道）、privileged 工具包四件（UITools 注入系 5 方法、SystemOperationTools settings 直写/PackageInstaller 静默安装/force-stop、FileSystem/DeviceInfo 空壳继承）
+- 删除：ROOT/ADMIN/DEBUGGER 三档执行器监听器 6 文件、三档工具包 12 文件（Debugger 包即 Shizuku 工具实质）、RootAuthorizer、ShizukuInstaller/ShizukuAuthorizer、shizuku.apk、libsu 与 Shizuku 全部依赖与 proguard/manifest/许可条目、RootWizardCard/ShizukuWizardCard/ShizukuDemoScreen、孤儿 PermissionLevelCard（1200 行零消费）、DemoStateManager 重写去借权状态机、RootCommandExecutionMode 偏好整套、shizuku_commands 导航路由
+- PhoneAgent/PackageManager 判定重构：三档 when 收敛为 PRIVILEGED 单判（Shizuku 双检删除）
+- 枚举三档：PRIVILEGED > ACCESSIBILITY > STANDARD；ROM-only 无旧档位值迁移
+- 无障碍自启（platform 签名写 enabled_accessibility_services）留步骤 6 落地
+
 ## 验证
 
 - 原 root 档命令面的逐条对照测试：每条命令在新档有等价行为

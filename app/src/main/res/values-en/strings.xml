@@ -537,7 +537,6 @@
     <string name="voice_keyword_attachments_type_label">Type</string>
 
     <!-- NavItem class identifiers -->
-    <string name="shizuku_commands">Permissions</string>
     <string name="tool_permissions">Tool Permission Settings</string>
     <string name="about">About</string>
     <string name="terminal">Terminal</string>
@@ -994,11 +993,9 @@
     <string name="settings_total">Total</string>
     
     <!-- Shizuku Command Screen -->
-    <string name="shizuku_command_executor">Shizuku ADB Command Executor</string>
     <string name="device_info">Device Information</string>
     <string name="android_version">Android Version: %1$s (API %2$d)</string>
     <string name="device_model">Device Model: %1$s %2$s</string>
-    <string name="shizuku_status">Shizuku Status</string>
     <string name="refresh">Refresh</string>
     <string name="installed">Installed</string>
     <string name="service_running">Service Running: %1$s</string>
@@ -1284,10 +1281,9 @@
     <string name="permission_guide_standard_desc">Basic app operation permissions, no special permissions required</string>
     <string name="permission_guide_accessibility_title">Accessibility Permissions</string>
     <string name="permission_guide_accessibility_desc">Enables screen content analysis and operation simulation via accessibility service</string>
-    <string name="permission_guide_debugger_title">Debug Permissions</string>
-    <string name="permission_guide_debugger_desc">Provides ADB-level system access through Shizuku</string>
-    <string name="permission_guide_root_title">Root Permissions</string>
-    <string name="permission_guide_root_desc">Superuser permissions, can perform any system operations</string>
+    <string name="permission_guide_privileged_title">Platform Privileged (ROM built-in)</string>
+    <string name="permission_guide_privileged_desc">Built into the ROM with platform signature; injection, install and system settings run natively without borrowed privileges</string>
+    <string name="phone_agent_need_privileged_permission">PRIVILEGED level required: the app must be built into the ROM priv-app partition with platform signature</string>
     <string name="permission_guide_confirm">Confirm Selection</string>
     <string name="permission_guide_change_anytime">You can change the permission level in settings at any time</string>
     
@@ -1308,46 +1304,17 @@
     <string name="wizard_open_docs">Official Docs</string>
     
     <!-- RootWizardCard -->
-    <string name="root_wizard_title">Root Permission Setup Wizard</string>
     <string name="root_wizard_step1">Step 1: Root Device</string>
     <string name="root_wizard_step2">Step 2: Grant Root Permission</string>
-    <string name="root_wizard_completed">Root Permission Setup Complete</string>
-    <string name="root_wizard_success_message">Congratulations! Root permission has been granted. You can now perform privileged operations.</string>
-    <string name="root_wizard_test_command">Test Root Command</string>
-    <string name="root_wizard_device_rooted_message">Your device is rooted, but the app hasn\'t been granted root permission. Please click the button below to request permission from your ROOT manager (like Magisk, SuperSU, etc.).</string>
-    <string name="root_wizard_how_to_get_root">How to get Root permission:</string>
-    <string name="root_wizard_how_to_get_root_steps">1. Click the \"Request Root Permission\" button below\n2. Select \"Allow\" in the ROOT manager popup\n3. If you don\'t see a popup, check your ROOT manager settings</string>
-    <string name="root_wizard_request_permission">Request Root Permission</string>
-    <string name="root_wizard_view_tutorial">View Root Tutorial</string>
-    <string name="root_wizard_device_not_rooted">Your device is not rooted. ROOT requires specific system modifications and may void your warranty. If you need to use ROOT features, please complete the device ROOT process first.</string>
-    <string name="root_wizard_risk_notice">Note: Root Operation Risk Warning</string>
-    <string name="root_wizard_risk_details">1. ROOT operations carry risk and may void your warranty\n2. Some apps may refuse to run on rooted devices\n3. Improper ROOT operations may cause system instability</string>
     
     <!-- ShizukuWizardCard -->
-    <string name="shizuku_wizard_title">Shizuku Setup Wizard</string>
-    <string name="shizuku_wizard_update_title">Shizuku Update Wizard</string>
     <string name="shizuku_wizard_step1">Step 1: Install Shizuku App</string>
     <string name="shizuku_wizard_step2">Step 2: Start Shizuku Service</string>
     <string name="shizuku_wizard_step3">Step 3: Grant Shizuku Permission</string>
-    <string name="shizuku_wizard_completed">Shizuku Setup Complete</string>
-    <string name="shizuku_wizard_install_message">Shizuku is a tool that grants apps advanced permissions without requiring root. We need to install this app first.</string>
-    <string name="shizuku_wizard_install_bundled">Install Bundled Version</string>
-    <string name="shizuku_wizard_start_message">Shizuku is installed. Now you need to start the Shizuku service. Please follow one of the methods below:</string>
     <string name="shizuku_wizard_method1_title">Method 1: In-App Start (Recommended)</string>
     <string name="shizuku_wizard_method1_steps">1. Click the \"Open Shizuku\" button below\n2. In the Shizuku app, select \"Start via Wireless Debugging\"\n3. Follow the prompts to enable \"Developer Options\" and \"Wireless Debugging\"\n4. Allow Shizuku to get wireless debugging permissions</string>
     <string name="shizuku_wizard_method2_title">Method 2: Start via USB</string>
     <string name="shizuku_wizard_method2_steps">1. Install ADB tools on your computer\n2. Connect your phone to your computer via USB\n3. Execute in computer command line:\n   adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh</string>
-    <string name="shizuku_wizard_open_shizuku">Open Shizuku</string>
-    <string name="shizuku_wizard_permission_message">Shizuku service is running. Now you need to grant permission to this app. Click the button below and select \"Allow\" in the dialog that appears.</string>
-    <string name="shizuku_wizard_permission_notice">Note: If you don\'t see the authorization dialog, check:</string>
-    <string name="shizuku_wizard_permission_notice_details">1. Whether the Shizuku service is running\n2. Try restarting the Shizuku service\n3. Confirm you\'ve allowed overlay display permission</string>
-    <string name="shizuku_wizard_grant_permission">Grant Shizuku Permission</string>
-    <string name="shizuku_wizard_success_message">Congratulations! Shizuku is fully set up. You can now use debugging permission features.</string>
-    <string name="shizuku_wizard_update_available">New Version Available</string>
-    <string name="shizuku_wizard_update_message">The app has a newer version of Shizuku built in. We recommend updating for better compatibility and features.</string>
-    <string name="shizuku_wizard_current_version">Current version: %1$s</string>
-    <string name="shizuku_wizard_latest_version">Latest version: %1$s</string>
-    <string name="shizuku_wizard_update">Update Shizuku</string>
     
     <!-- TermuxWizardCard -->
     <string name="termux_wizard_title">Termux Setup Wizard</string>
@@ -1394,27 +1361,6 @@
     <string name="termux_wizard_open">Open Termux</string>
     
     <!-- ShizukuDemoScreen -->
-    <string name="shizuku_demo_loading">Loading application status...</string>
-    <string name="shizuku_demo_permission_failed">Cannot open permission settings</string>
-    <string name="shizuku_demo_overlay_failed">Cannot open overlay settings</string>
-    <string name="shizuku_demo_battery_failed">Cannot open battery optimization settings</string>
-    <string name="shizuku_demo_accessibility_failed">Cannot open accessibility service settings</string>
-    <string name="shizuku_demo_title">Setup Wizard</string>
-    <string name="shizuku_demo_download_failed">Cannot open download link</string>
-    <string name="shizuku_demo_extract_failed">Failed to extract APK, please try again later</string>
-    <string name="shizuku_demo_install_notify">Shizuku installation started, please follow system prompts to complete installation</string>
-    <string name="shizuku_demo_update_notify">Shizuku update started, please follow system prompts to complete installation</string>
-    <string name="shizuku_demo_install_failed">Installation failed: %1$s</string>
-    <string name="shizuku_demo_update_failed">Update failed: %1$s</string>
-    <string name="shizuku_demo_shizuku_not_found">Cannot find Shizuku app</string>
-    <string name="shizuku_demo_shizuku_launch_failed">Cannot launch Shizuku app</string>
-    <string name="shizuku_demo_root_tutorial_failed">Cannot open Root tutorial link</string>
-    <string name="shizuku_demo_shizuku_permission_granted">Shizuku permission granted</string>
-    <string name="shizuku_demo_shizuku_permission_denied">Shizuku permission request denied</string>
-    <string name="shizuku_demo_termux_install_success">Termux installation started, please follow system prompts to complete installation</string>
-    <string name="shizuku_demo_termux_install_failed_store">Built-in APK installation failed, opening download page</string>
-    <string name="shizuku_demo_termux_download_failed">Cannot open download link, please download and install Termux manually</string>
-    <string name="shizuku_demo_termux_tuna_skipped">Skipped Tuna mirror configuration, you can configure the mirror in Termux later</string>
 
     <!-- Permission Level Cards -->
     <string name="permission_level">Permission Level</string>
@@ -1431,9 +1377,6 @@
     <string name="accessibility_service">Accessibility Service</string>
     <string name="admin_permission">Admin Permission</string>
     <string name="debug_permission">Debug Permission</string>
-    <string name="shizuku_service">Shizuku Service</string>
-    <string name="root_permission">Root Permission</string>
-    <string name="root_access_permission">Root Access Permission</string>
     <string name="status_not_installed">Not Installed</string>
     <string name="status_not_running">Not Running</string>
     <string name="status_update_needed">Update Needed</string>
@@ -1461,7 +1404,6 @@
     <string name="permission_level_root_full_desc">Root Permissions: Allows the app to run as superuser, requires a rooted device</string>
     
     <!-- Root Status Information -->
-    <string name="root_access_granted">App has gained Root access, can execute privileged commands</string>
     <string name="device_rooted_request_permission">Device is rooted, click to request app permissions</string>
     <string name="device_not_rooted">Device is not rooted, unable to obtain Root permissions</string>
     
@@ -1805,8 +1747,6 @@
     <string name="message_info_unavailable">Not recorded</string>
     <string name="selected_content_copied">Selected content copied</string>
     <string name="requesting_root_permission">Requesting Root permission...</string>
-    <string name="root_permission_granted">Root permission granted</string>
-    <string name="root_permission_denied">Root permission request denied</string>
     <string name="command_execution_success">Command execution successful</string>
     <string name="command_execution_failed">Command execution failed</string>
     <string name="please_start_termux_first">Please start Termux first</string>
@@ -2403,8 +2343,6 @@
     <string name="message_copied">Message copied to clipboard</string>
 
     <string name="requesting_root">Requesting Root permission...</string>
-    <string name="root_granted">Root permission granted</string>
-    <string name="root_denied">Root permission denied</string>
     <string name="command_failed">Command execution failed</string>
     <string name="start_termux_first">Please start Termux first</string>
     <string name="termux_not_found">Termux app not found</string>
@@ -2419,10 +2357,7 @@
     <string name="battery_settings_failed">Failed to open battery optimization settings</string>
     <string name="accessibility_settings_failed">Failed to open accessibility service settings</string>
     <string name="provider_installed">Service provider is installed</string>
-    <string name="shizuku_not_found">Shizuku app not found</string>
-    <string name="shizuku_start_failed">Failed to start Shizuku app</string>
     <string name="doc_link_failed">Failed to open documentation link</string>
-    <string name="root_tutorial_failed">Failed to open Root tutorial link</string>
     <string name="file_open_failed">Failed to open file: %1$s</string>
     
     <!-- Snackbar Messages -->
@@ -6574,14 +6509,6 @@
     <string name="demo_cmd_update_package_manager">Update package manager (Ubuntu)</string>
     <string name="demo_cmd_install_python">Install Python (Ubuntu)</string>
     <string name="demo_cmd_show_network">Show network information</string>
-    <string name="demo_cmd_remount_system">Remount system partition as writable</string>
-    <string name="demo_cmd_check_kernel">Check kernel version</string>
-    <string name="demo_cmd_list_data_dir">List /data directory contents</string>
-    <string name="demo_cmd_check_selinux">Check SELinux status</string>
-    <string name="demo_cmd_list_processes">List all processes</string>
-    <string name="demo_cmd_check_memory">Check memory information</string>
-    <string name="demo_cmd_list_features">List system features</string>
-    <string name="demo_cmd_check_power">Check power management status</string>
 
     <!-- File Types -->
     <string name="file_type_pdf">PDF Document</string>
@@ -6777,8 +6704,6 @@
     <string name="openai_connection_test_failed">Connection test failed: %1$s</string>
 
     <!-- Phone Agent -->
-    <string name="phone_agent_need_debug_permission">Requires Debug/Admin/Root permission and experimental virtual screen enabled to use virtual screen automation.</string>
-    <string name="phone_agent_shizuku_unavailable">Shizuku is not available, cannot start virtual screen.</string>
     <string name="phone_agent_virtual_screen_service_start_failed">Virtual screen service failed to start.</string>
     <string name="phone_agent_virtual_screen_create_failed">Failed to create virtual screen.</string>
     <string name="phone_agent_virtual_screen_prewarm_failed">Virtual screen prewarm failed: %1$s</string>
@@ -6875,13 +6800,6 @@
 
     <!-- Global Display Settings -->
     <string name="global_display_automation_behavior">Automation Display &amp; Behavior</string>
-    <string name="root_execution_mode_title">Root Execution Mode</string>
-    <string name="root_execution_mode_description">Auto picks based on environment; manual mode overrides auto selection.</string>
-    <string name="root_execution_mode_auto">Auto</string>
-    <string name="root_execution_mode_force_libsu">Manual Magisk SU</string>
-    <string name="root_execution_mode_force_exec">Manual KernelSU</string>
-    <string name="root_custom_su_command">Custom su command (KernelSU mode)</string>
-    <string name="root_custom_su_command_description">Applies only in KernelSU mode. You can enter commands like su or su --mount-master.</string>
     <string name="global_display_virtual_screen_bitrate">Virtual Screen Bitrate</string>
     <string name="global_display_status_indicator_style">Status Indicator Style</string>
     <string name="global_display_screenshot_settings">Screenshot Settings</string>
@@ -7318,15 +7236,12 @@
     <string name="exe_editor_change_icon_failed">Failed to change EXE icon</string>
 
     <!-- RootAuthorizer -->
-    <string name="root_authorizer_not_initialized">Root executor not initialized or no Root permission</string>
-    <string name="root_authorizer_execute_error">Execution error: %1$s</string>
 
     <!-- StandardActionListener -->
     <string name="standard_action_listener_started">Standard UI operation listener started</string>
     <string name="standard_action_listener_start_failed">Start failed: %1$s</string>
 
     <!-- RootShellExecutor -->
-    <string name="root_shell_error">Error: %1$s</string>
 
     <!-- Graph -->
     <string name="graph_from_node_not_exist">Source node \'%1$s\' does not exist</string>
@@ -7383,21 +7298,13 @@
     <string name="pathfinder_cannot_find_path">Cannot find valid state path from \'%1$s\' to \'%2$s\'</string>
 
     <!-- ShizukuAuthorizer -->
-    <string name="shizuku_start_service_intro">To start Shizuku service:\n</string>
     <string name="shizuku_step1_ensure_installed">1. Ensure Shizuku app is installed\n</string>
     <string name="shizuku_step2_adb_command">2. Use ADB command to start Shizuku:\n</string>
-    <string name="shizuku_or">Or\n\n</string>
     <string name="shizuku_step2_follow_instructions">2. Open Shizuku app and follow on-screen instructions</string>
 
     <!-- ShizukuInstaller -->
-    <string name="shizuku_install_update">Update</string>
-    <string name="shizuku_install_install">Install</string>
-    <string name="shizuku_install_unknown">Unknown</string>
 
     <!-- RootActionListener -->
-    <string name="root_no_root_permission">No root permission on device</string>
-    <string name="root_check_permission_error">Error checking root permission: %1$s</string>
-    <string name="root_ui_listener_started">Root UI operation listener started</string>
 
     <!-- MCPLocalServer -->
     <string name="mcp_local_auto_detected_server">MCP server auto-detected from configuration file</string>

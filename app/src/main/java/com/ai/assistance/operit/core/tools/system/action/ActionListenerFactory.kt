@@ -27,9 +27,7 @@ class ActionListenerFactory {
 
             // 创建新的监听器实例
             val listener = when (permissionLevel) {
-                AndroidPermissionLevel.ROOT -> RootActionListener(context)
-                AndroidPermissionLevel.ADMIN -> AdminActionListener(context)
-                AndroidPermissionLevel.DEBUGGER -> DebuggerActionListener(context)
+                AndroidPermissionLevel.PRIVILEGED -> PrivilegedActionListener(context)
                 AndroidPermissionLevel.ACCESSIBILITY -> AccessibilityActionListener(context)
                 AndroidPermissionLevel.STANDARD -> StandardActionListener(context)
             }
@@ -55,9 +53,7 @@ class ActionListenerFactory {
 
             // 按权限从高到低尝试
             val levels = listOf(
-                AndroidPermissionLevel.ROOT,
-                AndroidPermissionLevel.ADMIN,
-                AndroidPermissionLevel.DEBUGGER,
+                AndroidPermissionLevel.PRIVILEGED,
                 AndroidPermissionLevel.ACCESSIBILITY,
                 AndroidPermissionLevel.STANDARD
             )

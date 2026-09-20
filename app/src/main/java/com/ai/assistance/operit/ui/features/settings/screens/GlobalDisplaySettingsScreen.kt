@@ -33,7 +33,6 @@ import com.ai.assistance.operit.core.tools.system.AndroidPermissionLevel
 import com.ai.assistance.operit.data.preferences.AndroidPermissionPreferences
 import com.ai.assistance.operit.data.preferences.ApiPreferences
 import com.ai.assistance.operit.data.preferences.DisplayPreferencesManager
-import com.ai.assistance.operit.data.preferences.RootCommandExecutionMode
 import com.ai.assistance.operit.data.preferences.ToolCollapseMode
 import com.ai.assistance.operit.data.preferences.UserPreferencesManager
 import com.ai.assistance.operit.data.preferences.androidPermissionPreferences
@@ -86,11 +85,8 @@ fun GlobalDisplaySettingsScreen(
         initial = UserPreferencesManager.SOFTWARE_IDENTITY_OPERIT
     )
     val preferredPermissionLevel by androidPermissionPreferences.preferredPermissionLevelFlow.collectAsState(initial = null)
-    val rootExecutionMode by androidPermissionPreferences.rootExecutionModeFlow.collectAsState(initial = RootCommandExecutionMode.AUTO)
-    val customSuCommand by androidPermissionPreferences.customSuCommandFlow.collectAsState(initial = AndroidPermissionPreferences.DEFAULT_SU_COMMAND)
 
     var userNameInput by remember { mutableStateOf(globalUserName ?: "") }
-    var customSuCommandInput by remember { mutableStateOf(customSuCommand) }
     val collapseModeOptions = remember {
         listOf(ToolCollapseMode.READ_ONLY, ToolCollapseMode.ALL, ToolCollapseMode.FULL)
     }
@@ -139,9 +135,6 @@ fun GlobalDisplaySettingsScreen(
         userNameInput = globalUserName ?: ""
     }
 
-    LaunchedEffect(customSuCommand) {
-        customSuCommandInput = customSuCommand
-    }
 
     LaunchedEffect(
         collapseModeSliderValue,
@@ -820,92 +813,6 @@ fun GlobalDisplaySettingsScreen(
                 }
             }
 
-            if (preferredPermissionLevel == AndroidPermissionLevel.ROOT) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 4.dp)
-                        .clip(RoundedCornerShape(6.dp))
-                        .background(componentBackgroundColor)
-                        .padding(horizontal = 12.dp, vertical = 8.dp)
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.root_execution_mode_title),
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Medium
-                    )
-                    Spacer(modifier = Modifier.height(2.dp))
-                    Text(
-                        text = stringResource(id = R.string.root_execution_mode_description),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        FilterChip(
-                            selected = rootExecutionMode == RootCommandExecutionMode.AUTO,
-                            onClick = {
-                                scope.launch {
-                                    androidPermissionPreferences.saveRootExecutionMode(RootCommandExecutionMode.AUTO)
-                                }
-                            },
-                            label = { Text(stringResource(R.string.root_execution_mode_auto)) }
-                        )
-                        FilterChip(
-                            selected = rootExecutionMode == RootCommandExecutionMode.FORCE_LIBSU,
-                            onClick = {
-                                scope.launch {
-                                    androidPermissionPreferences.saveRootExecutionMode(RootCommandExecutionMode.FORCE_LIBSU)
-                                }
-                            },
-                            label = { Text(stringResource(R.string.root_execution_mode_force_libsu)) }
-                        )
-                        FilterChip(
-                            selected = rootExecutionMode == RootCommandExecutionMode.FORCE_EXEC,
-                            onClick = {
-                                scope.launch {
-                                    androidPermissionPreferences.saveRootExecutionMode(RootCommandExecutionMode.FORCE_EXEC)
-                                }
-                            },
-                            label = { Text(stringResource(R.string.root_execution_mode_force_exec)) }
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-                    OutlinedTextField(
-                        value = customSuCommandInput,
-                        onValueChange = { customSuCommandInput = it },
-                        label = { Text(stringResource(id = R.string.root_custom_su_command)) },
-                        supportingText = {
-                            Text(stringResource(id = R.string.root_custom_su_command_description))
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-                        trailingIcon = {
-                            if (customSuCommandInput.trim() != customSuCommand.trim()) {
-                                IconButton(
-                                    onClick = {
-                                        scope.launch {
-                                            androidPermissionPreferences.saveCustomSuCommand(customSuCommandInput)
-                                        }
-                                    }
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Save,
-                                        contentDescription = stringResource(id = R.string.save)
-                                    )
-                                }
-                            }
-                        }
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-            }
-
             Spacer(modifier = Modifier.height(16.dp))
 
             // ======= 重置按钮 =======
@@ -913,7 +820,6 @@ fun GlobalDisplaySettingsScreen(
                 onClick = {
                     scope.launch {
                         displayPreferencesManager.resetDisplaySettings()
-                        androidPermissionPreferences.resetRootExecutionSettings()
                     }
                 },
                 modifier = Modifier

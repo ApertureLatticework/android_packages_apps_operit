@@ -17,7 +17,6 @@ import com.ai.assistance.operit.core.tools.AIToolHandler
 import com.ai.assistance.operit.core.tools.AppListData
 import com.ai.assistance.operit.core.tools.defaultTool.standard.StandardUITools
 import com.ai.assistance.operit.core.tools.system.AndroidPermissionLevel
-import com.ai.assistance.operit.core.tools.system.ShizukuAuthorizer
 import com.ai.assistance.operit.data.model.AITool
 import com.ai.assistance.operit.data.model.ToolParameter
 import com.ai.assistance.operit.data.model.ToolResult
@@ -61,27 +60,20 @@ data class ParsedAgentAction(
 )
 
 private data class PrivilegedExecutionState(
-    val isAdbOrHigher: Boolean,
-    val hasDebuggerShizukuAccess: Boolean
+    val isPrivilegedLevel: Boolean
 )
 
 private fun resolvePrivilegedExecutionState(
     context: Context,
     androidPermissionPreferences: AndroidPermissionPreferences,
-    checkDebuggerShizuku: Boolean = true,
     onExperimentalFlagReadError: ((Exception) -> Unit)? = null
 ): PrivilegedExecutionState {
     val preferredLevel = androidPermissionPreferences.getPreferredPermissionLevel()
         ?: AndroidPermissionLevel.STANDARD
 
-    var isAdbOrHigher = when (preferredLevel) {
-        AndroidPermissionLevel.DEBUGGER,
-        AndroidPermissionLevel.ADMIN,
-        AndroidPermissionLevel.ROOT -> true
-        else -> false
-    }
+    var isPrivilegedLevel = preferredLevel == AndroidPermissionLevel.PRIVILEGED
 
-    if (isAdbOrHigher) {
+    if (isPrivilegedLevel) {
         val experimentalEnabled = try {
             DisplayPreferencesManager.getInstance(context).isExperimentalVirtualDisplayEnabled()
         } catch (e: Exception) {
@@ -89,25 +81,11 @@ private fun resolvePrivilegedExecutionState(
             true
         }
         if (!experimentalEnabled) {
-            isAdbOrHigher = false
+            isPrivilegedLevel = false
         }
     }
 
-    val hasDebuggerShizukuAccess = if (checkDebuggerShizuku &&
-        isAdbOrHigher &&
-        preferredLevel == AndroidPermissionLevel.DEBUGGER
-    ) {
-        val isShizukuRunning = ShizukuAuthorizer.isShizukuServiceRunning()
-        val hasShizukuPermission = if (isShizukuRunning) ShizukuAuthorizer.hasShizukuPermission() else false
-        isShizukuRunning && hasShizukuPermission
-    } else {
-        true
-    }
-
-    return PrivilegedExecutionState(
-        isAdbOrHigher = isAdbOrHigher,
-        hasDebuggerShizukuAccess = hasDebuggerShizukuAccess
-    )
+    return PrivilegedExecutionState(isPrivilegedLevel = isPrivilegedLevel)
 }
 
 /**
@@ -183,12 +161,8 @@ class PhoneAgent(
             context = context,
             androidPermissionPreferences = androidPermissionPreferences
         )
-        if (!permissionState.isAdbOrHigher) {
-            return context.getString(R.string.phone_agent_need_debug_permission)
-        }
-
-        if (!permissionState.hasDebuggerShizukuAccess) {
-            return context.getString(R.string.phone_agent_shizuku_unavailable)
+        if (!permissionState.isPrivilegedLevel) {
+            return context.getString(R.string.phone_agent_need_privileged_permission)
         }
 
         val okServer = try {
@@ -250,10 +224,7 @@ class PhoneAgent(
             context = context,
             androidPermissionPreferences = androidPermissionPreferences
         )
-        if (!permissionState.isAdbOrHigher) return Pair(false, null)
-        if (!permissionState.hasDebuggerShizukuAccess) {
-            return Pair(false, context.getString(R.string.phone_agent_shizuku_unavailable))
-        }
+        if (!permissionState.isPrivilegedLevel) return Pair(false, null)
 
         AppLogger.d(
             "PhoneAgent",
@@ -290,8 +261,7 @@ class PhoneAgent(
             context = context,
             androidPermissionPreferences = androidPermissionPreferences
         )
-        if (!permissionState.isAdbOrHigher) return false
-        if (!permissionState.hasDebuggerShizukuAccess) return false
+        if (!permissionState.isPrivilegedLevel) return false
 
         val okServer = try {
             ShowerServerManager.ensureServerStarted(context)
@@ -790,11 +760,11 @@ class ActionHandler(
     }
 
     private data class ShowerUsageContext(
-        val isAdbOrHigher: Boolean,
+        val isPrivilegedLevel: Boolean,
         val showerDisplayId: Int?
     ) {
         val hasShowerDisplay: Boolean get() = showerDisplayId != null
-        val canUseShowerForInput: Boolean get() = isAdbOrHigher && showerDisplayId != null
+        val canUseShowerForInput: Boolean get() = isPrivilegedLevel && showerDisplayId != null
     }
 
     private fun isMainScreenAgent(): Boolean = agentId.isBlank() || agentId == "default"
@@ -802,14 +772,13 @@ class ActionHandler(
     private fun resolveShowerUsageContext(): ShowerUsageContext {
         if (isMainScreenAgent()) {
             return ShowerUsageContext(
-                isAdbOrHigher = mainScreenShowerPrepared,
+                isPrivilegedLevel = mainScreenShowerPrepared,
                 showerDisplayId = if (mainScreenShowerPrepared) 0 else null
             )
         }
         val permissionState = resolvePrivilegedExecutionState(
             context = context,
             androidPermissionPreferences = androidPermissionPreferences,
-            checkDebuggerShizuku = false,
             onExperimentalFlagReadError = { e ->
                 AppLogger.e("ActionHandler", "[$agentId] Error reading experimental virtual display flag", e)
             }
@@ -820,7 +789,7 @@ class ActionHandler(
             AppLogger.e("ActionHandler", "[$agentId] Error getting Shower display id", e)
             null
         }
-        return ShowerUsageContext(isAdbOrHigher = permissionState.isAdbOrHigher, showerDisplayId = showerId)
+        return ShowerUsageContext(isPrivilegedLevel = permissionState.isPrivilegedLevel, showerDisplayId = showerId)
     }
 
     suspend fun captureScreenshotForAgent(): String? {
@@ -971,11 +940,7 @@ class ActionHandler(
                         context = context,
                         androidPermissionPreferences = androidPermissionPreferences
                     )
-                    if (permissionState.isAdbOrHigher && !permissionState.hasDebuggerShizukuAccess) {
-                        return fail(shouldFinish = true, message = context.getString(R.string.phone_agent_shizuku_unavailable))
-                    }
-
-                    if (showerCtx.isAdbOrHigher && !isMainScreenAgent()) {
+                    if (showerCtx.isPrivilegedLevel && !isMainScreenAgent()) {
                         val pm = context.packageManager
                         val hasLaunchableTarget = pm.getLaunchIntentForPackage(packageName) != null
                         ensureVirtualDisplayIfAdbOrHigher()
@@ -1182,9 +1147,8 @@ class ActionHandler(
             val permissionState = resolvePrivilegedExecutionState(
                 context = context,
                 androidPermissionPreferences = androidPermissionPreferences,
-                checkDebuggerShizuku = false
             )
-            if (!permissionState.isAdbOrHigher) return
+            if (!permissionState.isPrivilegedLevel) return
 
             val ok = ShowerServerManager.ensureServerStarted(context)
             if (ok) {

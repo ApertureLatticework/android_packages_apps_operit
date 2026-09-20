@@ -2,9 +2,7 @@ package com.ai.assistance.operit.core.tools.defaultTool
 
 import android.content.Context
 import com.ai.assistance.operit.core.tools.defaultTool.accessbility.*
-import com.ai.assistance.operit.core.tools.defaultTool.admin.*
-import com.ai.assistance.operit.core.tools.defaultTool.debugger.*
-import com.ai.assistance.operit.core.tools.defaultTool.root.*
+import com.ai.assistance.operit.core.tools.defaultTool.privileged.*
 import com.ai.assistance.operit.core.tools.defaultTool.standard.*
 import com.ai.assistance.operit.core.tools.system.AndroidPermissionLevel
 import com.ai.assistance.operit.data.preferences.androidPermissionPreferences
@@ -19,9 +17,7 @@ object ToolGetter {
      */
     fun getFileSystemTools(context: Context): StandardFileSystemTools {
         return when (androidPermissionPreferences.getPreferredPermissionLevel()) {
-            AndroidPermissionLevel.ROOT -> RootFileSystemTools(context)
-            AndroidPermissionLevel.ADMIN -> AdminFileSystemTools(context)
-            AndroidPermissionLevel.DEBUGGER -> DebuggerFileSystemTools(context)
+            AndroidPermissionLevel.PRIVILEGED -> PrivilegedFileSystemTools(context)
             AndroidPermissionLevel.ACCESSIBILITY -> AccessibilityFileSystemTools(context)
             AndroidPermissionLevel.STANDARD -> StandardFileSystemTools(context)
             null -> StandardFileSystemTools(context) // 默认使用标准权限级别
@@ -44,9 +40,7 @@ object ToolGetter {
      */
     fun getUITools(context: Context): StandardUITools {
         return when (androidPermissionPreferences.getPreferredPermissionLevel()) {
-            AndroidPermissionLevel.ROOT -> RootUITools(context)
-            AndroidPermissionLevel.ADMIN -> AdminUITools(context)
-            AndroidPermissionLevel.DEBUGGER -> DebuggerUITools(context)
+            AndroidPermissionLevel.PRIVILEGED -> PrivilegedUITools(context)
             AndroidPermissionLevel.ACCESSIBILITY -> AccessibilityUITools(context)
             AndroidPermissionLevel.STANDARD -> StandardUITools(context)
             null -> StandardUITools(context) // 默认使用标准权限级别
@@ -60,9 +54,7 @@ object ToolGetter {
      */
     fun getSystemOperationTools(context: Context): StandardSystemOperationTools {
         return when (androidPermissionPreferences.getPreferredPermissionLevel()) {
-            AndroidPermissionLevel.ROOT -> RootSystemOperationTools(context)
-            AndroidPermissionLevel.ADMIN -> AdminSystemOperationTools(context)
-            AndroidPermissionLevel.DEBUGGER -> DebuggerSystemOperationTools(context)
+            AndroidPermissionLevel.PRIVILEGED -> PrivilegedSystemOperationTools(context)
             AndroidPermissionLevel.ACCESSIBILITY -> AccessibilitySystemOperationTools(context)
             AndroidPermissionLevel.STANDARD -> StandardSystemOperationTools(context)
             null -> StandardSystemOperationTools(context) // 默认使用标准权限级别
@@ -76,9 +68,7 @@ object ToolGetter {
      */
     fun getDeviceInfoToolExecutor(context: Context): StandardDeviceInfoToolExecutor {
         return when (androidPermissionPreferences.getPreferredPermissionLevel()) {
-            AndroidPermissionLevel.ROOT -> RootDeviceInfoToolExecutor(context)
-            AndroidPermissionLevel.ADMIN -> AdminDeviceInfoToolExecutor(context)
-            AndroidPermissionLevel.DEBUGGER -> DebuggerDeviceInfoToolExecutor(context)
+            AndroidPermissionLevel.PRIVILEGED -> PrivilegedDeviceInfoToolExecutor(context)
             AndroidPermissionLevel.ACCESSIBILITY -> AccessibilityDeviceInfoToolExecutor(context)
             AndroidPermissionLevel.STANDARD -> StandardDeviceInfoToolExecutor(context)
             null -> StandardDeviceInfoToolExecutor(context) // 默认使用标准权限级别

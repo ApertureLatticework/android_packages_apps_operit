@@ -20,23 +20,11 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# 保留 Shizuku 相关类
--keep class rikka.shizuku.** { *; }
-
 # 保留 Shower 相关 Binder IPC 类型，确保与 shower-server.jar 的类名保持一致
 -keep class com.ai.assistance.shower.ShowerBinderContainer { *; }
 -keep class com.ai.assistance.shower.IShowerService { *; }
 -keep class com.ai.assistance.shower.IShowerVideoSink { *; }
 
-# 保留自定义的 UserService 类及 AIDL 接口
--keep class com.ai.assistance.operit.core.tools.system.shizuku.OperitShizukuShellUserService { *; }
--keep class com.ai.assistance.operit.core.tools.system.shizuku.IOperitShizukuShellService { *; }
--keep interface com.ai.assistance.operit.core.tools.system.shizuku.IOperitShizukuShellService { *; }
--keep class com.ai.assistance.operit.core.tools.system.shizuku.IOperitShizukuShellCallback { *; }
--keep interface com.ai.assistance.operit.core.tools.system.shizuku.IOperitShizukuShellCallback { *; }
--keep class com.lyneon.cytoidinfoquerier.service.FileService { *; }
--keep class com.lyneon.cytoidinfoquerier.IFileService { *; }
--keep interface com.lyneon.cytoidinfoquerier.IFileService { *; }
 
 # 保留 ServiceConnection 和 Binder 相关方法
 -keepclassmembers class * implements android.os.Parcelable {
