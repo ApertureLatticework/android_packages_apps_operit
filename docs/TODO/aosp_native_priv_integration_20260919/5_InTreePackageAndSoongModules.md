@@ -75,7 +75,7 @@ Soong 的 manifest 处理器要求 `manifest:package` 显式声明；AGP 8 项�
 - 无独立树仓、无导出脚本；Soong 文件（Android.bp 系）与本仓 Gradle 结构共存，
   Gradle 构建全程可用（Trebuchet 双轨同款），Soong 直接引用 `app/src/main/...` 路径
 - 未被 git 跟踪的 ref/、预编产物不进树；docs/、ci/、tools/ 对 Soong 惰性无害
-- 依赖收源全部落在包内 libs/ 与 native/，工单见 [libs/DEPS.md](../../libs/DEPS.md)
+- 依赖收源全部落在包内 libs/ 与 native/，工单见 [libs/DEPS.md](../../../libs/DEPS.md)
 
 ## 执行情况（2026-09-20 骨架落地）
 
