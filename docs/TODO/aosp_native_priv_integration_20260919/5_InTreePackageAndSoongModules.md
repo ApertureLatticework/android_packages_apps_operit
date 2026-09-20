@@ -60,3 +60,9 @@ packages/apps/Operit/
 - androidx 预编译落位 prebuilts/sdk/current/androidx/，非 prebuilts/androidx
 - Operit 的 Soong 模块按 SceneTransitionLayoutDemo 范本组织（android_library 承载 Kotlin/Compose 源，
   android_app 壳引库 + platform_apis/platform_app_defaults）
+
+## AGP→Soong 迁移机械动作：manifest package 属性（2026-09-19 踩坑）
+
+Soong 的 manifest 处理器要求 `manifest:package` 显式声明；AGP 8 项目（Operit 现状）
+包名在 build.gradle.kts 的 namespace（com.ai.assistance.operit），manifest 里没有该属性。
+进树时迁移脚本需向 AndroidManifest.xml 注入 `package="com.ai.assistance.operit"`。
