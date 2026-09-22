@@ -12,7 +12,7 @@ import androidx.core.app.NotificationCompat
 import com.ai.assistance.operit.R
 import com.ai.assistance.operit.core.application.ForegroundServiceCompat
 import com.ai.assistance.operit.core.tools.system.AccessibilityAutoEnable
-import com.ai.assistance.operit.data.preferences.AndroidPermissionLevel
+import com.ai.assistance.operit.core.tools.system.AndroidPermissionLevel
 import com.ai.assistance.operit.data.preferences.androidPermissionPreferences
 import com.ai.assistance.operit.ui.main.MainActivity
 import com.ai.assistance.operit.util.AppLogger
@@ -38,9 +38,9 @@ class LiveService : Service() {
          * 非特权档不启动——观察与执行通道在该档均不可用。
          */
         fun ensureStarted(context: Context) {
-            val preferredLevel = runCatching {
-                context.androidPermissionPreferences.getPreferredPermissionLevel()
-            }.getOrNull()
+            // 全局由 OperitApplication.onCreate 先行 initAndroidPermissionPreferences；
+            // 本入口（应用启动/开机广播）必在进程 onCreate 之后，直接读，坏序即抛（不吞）
+            val preferredLevel = androidPermissionPreferences.getPreferredPermissionLevel()
             if (preferredLevel != AndroidPermissionLevel.PRIVILEGED) {
                 return
             }

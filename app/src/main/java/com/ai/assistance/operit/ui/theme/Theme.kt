@@ -57,7 +57,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.ui.AspectRatioFrameLayout
-import androidx.media3.ui.StyledPlayerView
+import androidx.media3.ui.PlayerView
 import java.io.File
 import kotlinx.coroutines.launch
 import androidx.compose.ui.unit.dp
@@ -435,7 +435,7 @@ fun OperitTheme(content: @Composable () -> Unit) {
                                         R.layout.view_background_texture_player,
                                         null,
                                         false,
-                                    ) as StyledPlayerView).apply {
+                                    ) as PlayerView).apply {
                                         this.player = player
                                         useController = false
                                         layoutParams =

@@ -156,7 +156,7 @@ object PrivilegedSystemApi {
         val now = android.os.SystemClock.uptimeMillis()
         var ok = true
         text.chunked(64).forEach { chunk ->
-            val event = KeyEvent(now, chunk)
+            val event = KeyEvent(now, chunk, 0, 0)
             ok = ok and injectInputEvent(withDisplayId(event, displayId))
         }
         return ok

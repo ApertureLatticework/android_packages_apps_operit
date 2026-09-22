@@ -30,7 +30,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.ui.AspectRatioFrameLayout
-import androidx.media3.ui.StyledPlayerView
+import androidx.media3.ui.PlayerView
 
 @Composable
 fun AppBackgroundLayer(
@@ -157,7 +157,7 @@ fun AppBackgroundLayer(
                     AndroidView(
                         factory = { ctx ->
                             (LayoutInflater.from(ctx)
-                                .inflate(R.layout.view_background_texture_player, null, false) as StyledPlayerView)
+                                .inflate(R.layout.view_background_texture_player, null, false) as PlayerView)
                                 .apply {
                                     this.player = player
                                     useController = false

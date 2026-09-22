@@ -10,7 +10,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.common.MediaItem
-import androidx.media3.ui.StyledPlayerView
+import androidx.media3.ui.PlayerView
 
 @Composable
 fun AudioAttachmentPlayer(
@@ -43,7 +43,7 @@ fun AudioAttachmentPlayer(
 
     AndroidView(
         factory = { ctx ->
-            StyledPlayerView(ctx).apply {
+            PlayerView(ctx).apply {
                 this.player = player
                 useController = true
             }

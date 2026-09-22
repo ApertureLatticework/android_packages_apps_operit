@@ -8,7 +8,7 @@ import android.hardware.display.DisplayManager
 import android.hardware.display.VirtualDisplay
 import android.media.Image
 import android.media.ImageReader
-import android.os.ActivityOptions
+import android.app.ActivityOptions
 import android.view.Surface
 import com.ai.assistance.operit.core.tools.system.privileged.PrivilegedSystemApi
 import com.ai.assistance.operit.util.AppLogger
