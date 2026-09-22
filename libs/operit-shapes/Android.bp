@@ -1,7 +1,7 @@
-// io.github.kyant0:shapes:1.2.0 · central prebuilt
+// io.github.kyant0:shapes-android:1.2.0 · central prebuilt
 // 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
-java_import {
+android_library_import {
     name: "operit-shapes",
-    jars: ["shapes-1.2.0.jar"],
+    aars: ["shapes-android-1.2.0.aar"],
     visibility: ["//packages/apps/Operit:__subpackages__"],
 }

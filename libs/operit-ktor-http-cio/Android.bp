@@ -1,7 +1,7 @@
-// io.ktor:ktor-http-cio:3.2.3 · central prebuilt
+// io.ktor:ktor-http-cio-jvm:3.2.3 · central prebuilt
 // 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
 java_import {
     name: "operit-ktor-http-cio",
-    jars: ["ktor-http-cio-3.2.3.jar"],
+    jars: ["ktor-http-cio-jvm-3.2.3.jar"],
     visibility: ["//packages/apps/Operit:__subpackages__"],
 }

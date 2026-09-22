@@ -50,7 +50,7 @@ ROOTS = [
     ("androidx.media3", "media3-exoplayer", "1.8.0", "operit-media3-exoplayer"),
     ("androidx.media3", "media3-ui", "1.8.0", "operit-media3-ui"),
     ("androidx.security", "security-crypto", "1.1.0-alpha06", "operit-security-crypto"),
-    ("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.9.0", "operit-kotlinx-serialization-json"),
+    ("org.jetbrains.kotlinx", "kotlinx-serialization-json-jvm", "1.9.0", "operit-kotlinx-serialization-json"),
     # 网络
     ("com.squareup.okhttp3", "okhttp", "4.12.0", "operit-okhttp"),
     ("com.squareup.okhttp3", "okhttp-sse", "4.12.0", "operit-okhttp-sse"),
@@ -249,7 +249,7 @@ ALLOW_TREE_ABSENT = {
     "androidx.security:security-crypto",
     # 树内 1.8.1 vs 应用 1.9.0：1.9 起 JsonElement.serializer() 为库内 companion 成员，
     # 旧版仅扩展形态——应用代码零 import 直调，树内版编不过（dodge 树实锤）
-    "org.jetbrains.kotlinx:kotlinx-serialization-json",
+    "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm",
     "org.jetbrains.kotlinx:kotlinx-serialization-core",
 }
 
@@ -292,7 +292,9 @@ def pick_publishable(variants: list) -> dict | None:
             return 2
         return 1
 
-    publishable = [v for v in variants if v.get("files") and score(v) >= 0]
+    # available-at 变体（KMP 平台子模块重定向）files 为空，同样可选；
+    # 否则会退化选中带壳 files 的 metadata 变体，抓到空壳 jar（serialization 实锤）
+    publishable = [v for v in variants if (v.get("files") or v.get("available-at")) and score(v) >= 0]
     release_only = [v for v in publishable if build_type_is_release(v)]
     pool = release_only or publishable
     if not pool:

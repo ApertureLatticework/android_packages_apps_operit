@@ -1,7 +1,7 @@
-// io.modelcontextprotocol:kotlin-sdk-core:0.10.0 · central prebuilt
+// io.modelcontextprotocol:kotlin-sdk-core-jvm:0.10.0 · central prebuilt
 // 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
 java_import {
     name: "operit-kotlin-sdk-core",
-    jars: ["kotlin-sdk-core-0.10.0.jar"],
+    jars: ["kotlin-sdk-core-jvm-0.10.0.jar"],
     visibility: ["//packages/apps/Operit:__subpackages__"],
 }
