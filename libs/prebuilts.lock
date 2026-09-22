@@ -29,6 +29,7 @@ c165adae5a49167cba8af557b399d268f0d5099433559eac903c275bd9545fd2  operit-commons
 1e56d7b058d28b65abd256b8458e3885b674c1d588fa43cd7d1cbb9c7ef2b308  operit-commons-math3  org.apache.commons:commons-math3:3.6.1  commons-math3-3.6.1.jar  2213560
 8ada4c185ce72416712d63e0b5afdc5f009c0cdf405e5f26efecdf156aa5dfb6  operit-config  com.typesafe:config:1.4.3  config-1.4.3.jar  296029
 b31539cdcf189d9e68a1f6998cba09ea912f99f5f24bcd0650212b1af9d355a2  operit-curvesapi  com.github.virtuald:curvesapi:1.07  curvesapi-1.07.jar  111978
+e9a6e0c786435142274cd319c285b634e8b7492e2ad0ef2ea30802f440d8dbb7  operit-eclipse-collections  org.eclipse.collections:eclipse-collections:9.2.0  eclipse-collections-9.2.0.jar  10019815
 f3fc8a3a0a4020706a373b00e7f57c2512dd26d1f83d28c7d38768f8682b231e  operit-error-prone-annotations  com.google.errorprone:error_prone_annotations:2.28.0  error_prone_annotations-2.28.0.jar  19370
 8a8f81cf9b359e3f6dfa691a1e776985c061ef2f223c9b2c80753e1b458e8064  operit-failureaccess  com.google.guava:failureaccess:1.0.2  failureaccess-1.0.2.jar  4740
 8830f2e8a5e434cbc5e4bd18133073b6e8518a8ce8ec2ce6f3b273c91d9664c2  operit-firebase-annotations  com.google.firebase:firebase-annotations:16.0.0  firebase-annotations-16.0.0.jar  921
@@ -41,8 +42,8 @@ af7f9f049c79f67941e1e47637b20634594788398aa0aabcddbc7af0af3df5b1  operit-flogger
 4241c14a7727c34feea6507ec801318a3d4a90f070e4525681079fb94ee4c593  operit-gson  com.google.code.gson:gson:2.10.1  gson-2.10.1.jar  283367
 2c3e41d1b380f2044d257947a3aa82dabf3ae4b978622745254aa18b6cf89ab0  operit-guava  com.google.guava:guava:33.3.1-android  guava-33.3.1-android.jar  2918070
 8cfe89290f828ccc3f97809260f913b314d4f909db4f14e8bb3d0b1bc9e5aeee  operit-hjson  org.hjson:hjson:3.0.0  hjson-3.0.0.jar  43053
-62bbeecd72892bef5ad66e2acee43eab8b5908d23d0ad5b1651f3a3258b11f61  operit-hnswlib-core  com.github.jelmerk:hnswlib-core:0.0.46  hnswlib-core-0.0.46.jar  64365
-7c2b2533d29cd9451e22d7f0d1df3021ba6ac9be30146061dcd16190c8e41481  operit-hnswlib-utils  com.github.jelmerk:hnswlib-utils:0.0.46  hnswlib-utils-0.0.46.jar  3123
+51d2bf016168dfc48cb07b5c0ba8d639481455c88803510c2b74aa0864d148ed  operit-hnswlib-core  com.github.jelmerk:hnswlib-core:1.2.1  hnswlib-core-1.2.1.jar  56706
+220a6dbfd3bf029ff9404a805040b3f8d708cd59427a49579c5a90c3af599bd0  operit-hnswlib-utils  com.github.jelmerk:hnswlib-utils:1.2.1  hnswlib-utils-1.2.1.jar  1665
 2e71aa31f83a9415277f119de67195726f07d1760e9542c111778c320e3aa1f2  operit-image  com.google.android.odml:image:1.0.0-beta1  image-1.0.0-beta1.aar  23893
 a337cb1e3770cf2ae142b47f0348968d24be2c3a8c5bf92c06d1ee21f602adcc  operit-image-cropper  com.vanniktech:android-image-cropper:4.5.0  android-image-cropper-4.5.0.aar  205696
 20eb3af093e3b1a5d2a2f507be2f38791d171f6bcfd4710ab036bbb120a225c5  operit-itextg  com.itextpdf:itextg:5.5.10  itextg-5.5.10.jar  2250078
@@ -60,6 +61,7 @@ e01b949687e2a5b4c68011c1702aa5d2cc8e6c458656ac2c91658b69cebb1bb3  operit-junrar 
 c2fe133389fc237572bf6db72d9e4d3058381fe381a5ce1feaa78cda01f8776a  operit-kotlin-logging  io.github.oshai:kotlin-logging-android:7.0.14  kotlin-logging-android-7.0.14.aar  53500
 526a19fae32934287280c0b7221cad03c907712420ab2ac5b3525a87e85bc74e  operit-kotlin-sdk-core  io.modelcontextprotocol:kotlin-sdk-core-jvm:0.10.0  kotlin-sdk-core-jvm-0.10.0.jar  1079938
 d767014ad0c9a27d27d26fd38e7afa030aee0d141338f108781ff02ecf2fdab5  operit-kotlinx-collections-immutable  org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:0.4.0  kotlinx-collections-immutable-jvm-0.4.0.jar  235845
+d54c4c9f9f2d3612afa5801daf70a7b68687f78d8936360341f1a89b535abfee  operit-kotlinx-coroutines-guava  org.jetbrains.kotlinx:kotlinx-coroutines-guava:1.10.2  kotlinx-coroutines-guava-1.10.2.jar  17969
 3da805e9da2ff3cb119f744dcd11de6a18e32a5b933518f17418ba5795cfa775  operit-kotlinx-io-bytestring  org.jetbrains.kotlinx:kotlinx-io-bytestring-jvm:0.8.2  kotlinx-io-bytestring-jvm-0.8.2.jar  22535
 610770cc855edf1c57d9fcd7c69fd040af57adaf8834505f91805de680783d13  operit-kotlinx-io-core  org.jetbrains.kotlinx:kotlinx-io-core-jvm:0.8.2  kotlinx-io-core-jvm-0.8.2.jar  152882
 1f0afa172110e45a7231ef1b44ae8fd84c1ebaff96f3fc3ad68ef8c48120b59c  operit-kotlinx-serialization-core  org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.9.0  kotlinx-serialization-core-jvm-1.9.0.jar  399128

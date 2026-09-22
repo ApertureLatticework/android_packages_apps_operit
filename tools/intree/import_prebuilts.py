@@ -51,6 +51,7 @@ ROOTS = [
     ("androidx.media3", "media3-ui", "1.8.0", "operit-media3-ui"),
     ("androidx.security", "security-crypto", "1.1.0-alpha06", "operit-security-crypto"),
     ("org.jetbrains.kotlinx", "kotlinx-serialization-json-jvm", "1.9.0", "operit-kotlinx-serialization-json"),
+    ("org.jetbrains.kotlinx", "kotlinx-coroutines-guava", "1.10.2", "operit-kotlinx-coroutines-guava"),
     # 网络
     ("com.squareup.okhttp3", "okhttp", "4.12.0", "operit-okhttp"),
     ("com.squareup.okhttp3", "okhttp-sse", "4.12.0", "operit-okhttp-sse"),
@@ -89,8 +90,8 @@ ROOTS = [
     ("org.hjson", "hjson", "3.0.0", "operit-hjson"),
     ("com.benasher44", "uuid", "0.8.2", "operit-uuid"),
     ("com.huaban", "jieba-analysis", "1.0.2", "operit-jieba"),
-    ("com.github.jelmerk", "hnswlib-core", "0.0.46", "operit-hnswlib-core"),
-    ("com.github.jelmerk", "hnswlib-utils", "0.0.46", "operit-hnswlib-utils"),
+    ("com.github.jelmerk", "hnswlib-core", "1.2.1", "operit-hnswlib-core"),
+    ("com.github.jelmerk", "hnswlib-utils", "1.2.1", "operit-hnswlib-utils"),
     ("org.bouncycastle", "bcprov-jdk18on", "1.78", "operit-bcprov"),
     ("org.nanohttpd", "nanohttpd", "2.3.1", "operit-nanohttpd"),
     # UI 组件
@@ -251,6 +252,9 @@ ALLOW_TREE_ABSENT = {
     # 旧版仅扩展形态——应用代码零 import 直调，树内版编不过（dodge 树实锤）
     "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm",
     "org.jetbrains.kotlinx:kotlinx-serialization-core",
+    # work-runtime 的 ListenableFuture.await() 扩展（WorkflowScheduler 用）；
+    # 树内 kotlinx.coroutines 无 guava 变体
+    "org.jetbrains.kotlinx:kotlinx-coroutines-guava",
 }
 
 
