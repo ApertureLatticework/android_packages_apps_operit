@@ -76,6 +76,13 @@ static std::vector<std::string> split_args(const std::string &cmd) {
     return out;
 }
 
+// 本库独占进程内的 ffmpeg 日志通道：装载时装一次，永不还原。
+// （ffmpeg 无 av_log_get_callback；此前的存取还原写法建立在虚构 API 上）
+extern "C" JNIEXPORT jint JNI_OnLoad(JavaVM *, void *) {
+    av_log_set_callback(operit_log_callback);
+    return JNI_VERSION_1_6;
+}
+
 extern "C" JNIEXPORT jint JNICALL
 Java_com_ai_assistance_operit_util_ffmpeg_FFmpegKit_nativeExecute(JNIEnv *env, jclass, jstring command) {
     const char *cmdUtf = env->GetStringUTFChars(command, nullptr);
@@ -91,10 +98,7 @@ Java_com_ai_assistance_operit_util_ffmpeg_FFmpegKit_nativeExecute(JNIEnv *env, j
 
     pthread_mutex_lock(&g_ffmpeg_mutex);
     g_log_buffer.clear();
-    void *previousCallback = av_log_get_callback();
-    av_log_set_callback(operit_log_callback);
     int rc = ffmpeg_cli_main(static_cast<int>(argv.size()), argv.data());
-    av_log_set_callback(reinterpret_cast<void (*)(void *, int, const char *, va_list)>(previousCallback));
     g_last_output = g_log_buffer;
     pthread_mutex_unlock(&g_ffmpeg_mutex);
     return rc;
