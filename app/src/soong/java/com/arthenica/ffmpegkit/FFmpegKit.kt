@@ -31,6 +31,7 @@ class FFmpegSession(val returnCode: ReturnCode, val output: String?)
 class ReturnCode(val value: Int) {
     companion object {
         fun isSuccess(returnCode: ReturnCode): Boolean = returnCode.value == success
+        fun isCancel(returnCode: ReturnCode): Boolean = returnCode.value == cancel
         fun isFailure(returnCode: ReturnCode): Boolean =
             returnCode.value != success && returnCode.value != cancel
 

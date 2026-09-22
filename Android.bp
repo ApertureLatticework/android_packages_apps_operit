@@ -34,7 +34,7 @@ android_library {
         "kotlin-stdlib",
         "kotlin-reflect",
         "kotlinx_coroutines_android",  // 树内命名（external/kotlinx.coroutines）
-        "kotlinx_serialization_json",  // 树内命名（external/kotlinx.serialization）
+        "operit-kotlinx-serialization-json",  // 树内 1.8.1 漂移（1.9.0 包内 prebuilt）
         "androidx.core_core-ktx",
         "androidx.activity_activity-compose",
         "androidx.activity_activity-ktx",

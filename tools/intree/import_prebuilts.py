@@ -50,6 +50,7 @@ ROOTS = [
     ("androidx.media3", "media3-exoplayer", "1.8.0", "operit-media3-exoplayer"),
     ("androidx.media3", "media3-ui", "1.8.0", "operit-media3-ui"),
     ("androidx.security", "security-crypto", "1.1.0-alpha06", "operit-security-crypto"),
+    ("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.9.0", "operit-kotlinx-serialization-json"),
     # 网络
     ("com.squareup.okhttp3", "okhttp", "4.12.0", "operit-okhttp"),
     ("com.squareup.okhttp3", "okhttp-sse", "4.12.0", "operit-okhttp-sse"),
@@ -246,6 +247,10 @@ def parse_pom(pom: bytes) -> tuple[str, list[tuple[str, str, str]], list[tuple[s
 ALLOW_TREE_ABSENT_GROUPS = {"androidx.media3"}
 ALLOW_TREE_ABSENT = {
     "androidx.security:security-crypto",
+    # 树内 1.8.1 vs 应用 1.9.0：1.9 起 JsonElement.serializer() 为库内 companion 成员，
+    # 旧版仅扩展形态——应用代码零 import 直调，树内版编不过（dodge 树实锤）
+    "org.jetbrains.kotlinx:kotlinx-serialization-json",
+    "org.jetbrains.kotlinx:kotlinx-serialization-core",
 }
 
 

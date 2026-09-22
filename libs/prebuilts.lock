@@ -60,6 +60,8 @@ e01b949687e2a5b4c68011c1702aa5d2cc8e6c458656ac2c91658b69cebb1bb3  operit-junrar 
 3d84dbd523df46ba71d8130d47e22573a903d398cf740c4ac531487a329f7706  operit-kotlinx-collections-immutable  org.jetbrains.kotlinx:kotlinx-collections-immutable:0.4.0  kotlinx-collections-immutable-0.4.0.jar  47411
 8349804cf59bb0e855399d02f7bdbea1104a428e33777e971bf31d1bbd250d3f  operit-kotlinx-io-bytestring  org.jetbrains.kotlinx:kotlinx-io-bytestring:0.8.2  kotlinx-io-bytestring-0.8.2.jar  9481
 28003ebe5f7c6d0ac65b9dfea34473887e3df29f7dd5f904a45d96c4210b67c2  operit-kotlinx-io-core  org.jetbrains.kotlinx:kotlinx-io-core:0.8.2  kotlinx-io-core-0.8.2.jar  43463
+79ca59dee563f9cfc05e6673bd40c3c940209fc6b050067ef7e6d9da3eebb256  operit-kotlinx-serialization-core  org.jetbrains.kotlinx:kotlinx-serialization-core:1.9.0  kotlinx-serialization-core-1.9.0.jar  55592
+f0d4643605362ab158c11b20f6c8be1726023bb931b9ead5ffa5a14e2338dfde  operit-kotlinx-serialization-json  org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0  kotlinx-serialization-json-1.9.0.jar  43141
 34dfbc053f31ad0c318b90bb1c012c1d14fe5a52dd7e6567df8c6b4c7ef3acba  operit-ktor-client-core  io.ktor:ktor-client-core:3.2.3  ktor-client-core-3.2.3.jar  89649
 089e24417bf9f6c34eec5720eebb2cbcc82ea2855ecef90133eb17e1079d5868  operit-ktor-client-okhttp  io.ktor:ktor-client-okhttp:3.2.3  ktor-client-okhttp-3.2.3.jar  647
 44d19b95ee684c26889ed56008cd70f8fe2ccf313f6676c653d0e366d51a09de  operit-ktor-events  io.ktor:ktor-events:3.2.3  ktor-events-3.2.3.jar  3146
