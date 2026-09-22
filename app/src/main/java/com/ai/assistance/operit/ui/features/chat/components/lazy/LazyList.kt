@@ -144,11 +144,11 @@ internal fun LazyList(
                 .scrollable(
                     state,
                     orientation,
+                    overscrollEffect,
                     userScrollEnabled,
                     reverseLayout,
                     flingBehavior,
                     state.internalInteractionSource,
-                    overscrollEffect,
                 ),
         prefetchState = state.prefetchState,
         measurePolicy = measurePolicy,
