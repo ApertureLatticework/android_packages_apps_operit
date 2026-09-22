@@ -8,6 +8,8 @@ cc_prebuilt_library_shared {
     name: "libsherpa-ncnn-jni",
     visibility: ["//packages/apps/Operit:__subpackages__"],
     compile_multilib: "64",
+    // Soong ELF 审计要求声明 .so 自带的 DT_NEEDED
+    shared_libs: ["libandroid", "libjnigraphics", "liblog"],
 
     arch: {
         arm64: {

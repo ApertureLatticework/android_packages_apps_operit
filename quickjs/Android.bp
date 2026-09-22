@@ -36,6 +36,8 @@ cc_library_shared {
     ],
     shared_libs: ["liblog", "libm"],
     header_libs: ["jni_headers"],
+    // JNI 包装层用 try/throw 管边界（C 引擎文件不受 cppflags 影响）
+    cppflags: ["-fexceptions"],
     stl: "libc++_static",
 
     ldflags: ["-Wl,-z,max-page-size=16384"],
