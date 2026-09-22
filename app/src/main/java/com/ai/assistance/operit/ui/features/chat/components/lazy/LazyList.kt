@@ -33,7 +33,7 @@ import com.ai.assistance.operit.ui.features.chat.components.lazy.StickyItemsPlac
 import com.ai.assistance.operit.ui.features.chat.components.lazy.calculateLazyLayoutPinnedIndices
 import com.ai.assistance.operit.ui.features.chat.components.lazy.lazyLayoutBeyondBoundsModifier
 import com.ai.assistance.operit.ui.features.chat.components.lazy.lazyLayoutSemantics
-import androidx.compose.foundation.scrollable
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
