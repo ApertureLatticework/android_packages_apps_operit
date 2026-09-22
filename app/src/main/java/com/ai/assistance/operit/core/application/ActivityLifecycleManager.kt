@@ -12,7 +12,7 @@ import com.ai.assistance.operit.plugins.lifecycle.AppLifecycleHookParams
 import com.ai.assistance.operit.plugins.lifecycle.AppLifecycleHookPluginRegistry
 import com.ai.assistance.operit.integrations.http.ExternalChatHttpAutoStarter
 import com.ai.assistance.operit.ui.common.displays.VirtualDisplayOverlay
-import com.ai.assistance.operit.core.tools.agent.ShowerController
+import com.ai.assistance.operit.core.tools.agent.NativeVirtualDisplay
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -249,7 +249,7 @@ object ActivityLifecycleManager : Application.ActivityLifecycleCallbacks {
                 )
         )
         
-        // 当最后一个 Activity 被销毁时（包括从最近任务列表滑动关闭），清理虚拟屏幕和 Shower 连接
+        // 当最后一个 Activity 被销毁时（包括从最近任务列表滑动关闭），清理原生副屏会话
         if (activityCount <= 0) {
             AppLogger.d(TAG, "最后一个 Activity 被销毁，清理虚拟屏幕资源")
             try {
@@ -259,10 +259,10 @@ object ActivityLifecycleManager : Application.ActivityLifecycleCallbacks {
                 AppLogger.e(TAG, "清理 VirtualDisplayOverlay 失败", e)
             }
             try {
-                ShowerController.shutdown()
-                AppLogger.d(TAG, "已关闭 ShowerController")
+                NativeVirtualDisplay.shutdownAll()
+                AppLogger.d(TAG, "已关闭原生副屏会话")
             } catch (e: Exception) {
-                AppLogger.e(TAG, "清理 ShowerController 失败", e)
+                AppLogger.e(TAG, "清理原生副屏会话失败", e)
             }
         }
     }

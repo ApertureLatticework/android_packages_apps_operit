@@ -14,7 +14,6 @@ on:
       - ci/script/prepare_android_dependencies.py
       - cmake/**
       - avator/**
-      - examples/**
       - gradle/**
       - gradle.properties
       - gradlew

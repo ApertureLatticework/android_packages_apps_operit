@@ -1,0 +1,159 @@
+[32mdefault-jdk[0m/testing 2:1.25-77 arm64
+  Standard Java or Java compatible Development Kit
+
+[32mdefault-jdk-doc[0m/testing 2:1.25-77 arm64
+  Standard Java or Java compatible Development Kit (documentation)
+
+[32mdefault-jdk-headless[0m/testing 2:1.25-77 arm64
+  Standard Java or Java compatible Development Kit (headless)
+
+[32mdefault-jre[0m/testing 2:1.25-77 arm64
+  Standard Java or Java compatible Runtime
+
+[32mdefault-jre-headless[0m/testing 2:1.25-77 arm64
+  Standard Java or Java compatible Runtime (headless)
+
+[32mjtreg[0m/testing 5.1-b01-2 all
+  Regression Test Harness for the OpenJDK platform
+
+[32mjtreg6[0m/testing 6.2+1-4 all
+  Regression Test Harness for the OpenJDK platform
+
+[32mjtreg7[0m/testing 7.5.2+1+ds2-3 all
+  Regression Test Harness for the OpenJDK platform
+
+[32mjtreg8[0m/testing 8.3+1+ds1-1 all
+  Regression Test Harness for the OpenJDK platform
+
+[32mlibasmtools-java[0m/testing 7.0-b09-3 all
+  OpenJDK AsmTools
+
+[32mlibjax-maven-plugin[0m/testing 0.2+dfsg-2 all
+  Using the xjc goal with OpenJDK 11+
+
+[32mlibreoffice[0m/testing 4:26.8.0.3-2 arm64
+  office productivity suite (metapackage)
+
+[32mlyx[0m/testing 2.5.2-1 arm64
+  document processor
+
+[32mopenjdk-25-dbg[0m/testing 25.0.4+7-1 arm64
+  Java runtime based on OpenJDK (debugging symbols)
+
+[32mopenjdk-25-demo[0m/testing 25.0.4+7-1 arm64
+  Java runtime based on OpenJDK (demos and examples)
+
+[32mopenjdk-25-doc[0m/testing 25.0.4+7-1 all
+  OpenJDK Development Kit (JDK) documentation
+
+[32mopenjdk-25-jdk[0m/testing 25.0.4+7-1 arm64
+  OpenJDK Development Kit (JDK)
+
+[32mopenjdk-25-jdk-headless[0m/testing 25.0.4+7-1 arm64
+  OpenJDK Development Kit (JDK) (headless)
+
+[32mopenjdk-25-jre[0m/testing 25.0.4+7-1 arm64
+  OpenJDK Java runtime, using Hotspot JIT
+
+[32mopenjdk-25-jre-headless[0m/testing 25.0.4+7-1 arm64
+  OpenJDK Java runtime, using Hotspot JIT (headless)
+
+[32mopenjdk-25-jre-zero[0m/testing 25.0.4+7-1 arm64
+  Alternative JVM for OpenJDK, using Zero
+
+[32mopenjdk-25-source[0m/testing 25.0.4+7-1 all
+  OpenJDK Development Kit (JDK) source files
+
+[32mopenjdk-25-testsupport[0m/testing 25.0.4+7-1 arm64
+  Java runtime based on OpenJDK (regression test support)
+
+[32mopenjdk-26-dbg[0m/testing 26.0.2.1+1-1 arm64
+  Java runtime based on OpenJDK (debugging symbols)
+
+[32mopenjdk-26-demo[0m/testing 26.0.2.1+1-1 arm64
+  Java runtime based on OpenJDK (demos and examples)
+
+[32mopenjdk-26-doc[0m/testing 26.0.2.1+1-1 all
+  OpenJDK Development Kit (JDK) documentation
+
+[32mopenjdk-26-jdk[0m/testing 26.0.2.1+1-1 arm64
+  OpenJDK Development Kit (JDK)
+
+[32mopenjdk-26-jdk-headless[0m/testing 26.0.2.1+1-1 arm64
+  OpenJDK Development Kit (JDK) (headless)
+
+[32mopenjdk-26-jre[0m/testing 26.0.2.1+1-1 arm64
+  OpenJDK Java runtime, using Hotspot JIT
+
+[32mopenjdk-26-jre-headless[0m/testing 26.0.2.1+1-1 arm64
+  OpenJDK Java runtime, using Hotspot JIT (headless)
+
+[32mopenjdk-26-jre-zero[0m/testing 26.0.2.1+1-1 arm64
+  Alternative JVM for OpenJDK, using Zero
+
+[32mopenjdk-26-source[0m/testing 26.0.2.1+1-1 all
+  OpenJDK Development Kit (JDK) source files
+
+[32mopenjdk-26-testsupport[0m/testing 26.0.2.1+1-1 arm64
+  Java runtime based on OpenJDK (regression test support)
+
+[32mopenjdk-27-dbg[0m/testing 27~34ea-1 arm64
+  Java runtime based on OpenJDK (debugging symbols)
+
+[32mopenjdk-27-demo[0m/testing 27~34ea-1 arm64
+  Java runtime based on OpenJDK (demos and examples)
+
+[32mopenjdk-27-doc[0m/testing 27~34ea-1 all
+  OpenJDK Development Kit (JDK) documentation
+
+[32mopenjdk-27-jdk[0m/testing 27~34ea-1 arm64
+  OpenJDK Development Kit (JDK)
+
+[32mopenjdk-27-jdk-headless[0m/testing 27~34ea-1 arm64
+  OpenJDK Development Kit (JDK) (headless)
+
+[32mopenjdk-27-jre[0m/testing 27~34ea-1 arm64
+  OpenJDK Java runtime, using Hotspot JIT
+
+[32mopenjdk-27-jre-headless[0m/testing 27~34ea-1 arm64
+  OpenJDK Java runtime, using Hotspot JIT (headless)
+
+[32mopenjdk-27-jre-zero[0m/testing 27~34ea-1 arm64
+  Alternative JVM for OpenJDK, using Zero
+
+[32mopenjdk-27-source[0m/testing 27~34ea-1 all
+  OpenJDK Development Kit (JDK) source files
+
+[32mopenjdk-27-testsupport[0m/testing 27~34ea-1 arm64
+  Java runtime based on OpenJDK (regression test support)
+
+[32mopenjdk-28-dbg[0m/testing 28~11ea-1 arm64
+  Java runtime based on OpenJDK (debugging symbols)
+
+[32mopenjdk-28-demo[0m/testing 28~11ea-1 arm64
+  Java runtime based on OpenJDK (demos and examples)
+
+[32mopenjdk-28-doc[0m/testing 28~11ea-1 all
+  OpenJDK Development Kit (JDK) documentation
+
+[32mopenjdk-28-jdk[0m/testing 28~11ea-1 arm64
+  OpenJDK Development Kit (JDK)
+
+[32mopenjdk-28-jdk-headless[0m/testing 28~11ea-1 arm64
+  OpenJDK Development Kit (JDK) (headless)
+
+[32mopenjdk-28-jre[0m/testing 28~11ea-1 arm64
+  OpenJDK Java runtime, using Hotspot JIT
+
+[32mopenjdk-28-jre-headless[0m/testing 28~11ea-1 arm64
+  OpenJDK Java runtime, using Hotspot JIT (headless)
+
+[32mopenjdk-28-jre-zero[0m/testing 28~11ea-1 arm64
+  Alternative JVM for OpenJDK, using Zero
+
+[32mopenjdk-28-source[0m/testing 28~11ea-1 all
+  OpenJDK Development Kit (JDK) source files
+
+[32mopenjdk-28-testsupport[0m/testing 28~11ea-1 arm64
+  Java runtime based on OpenJDK (regression test support)
+

@@ -77,7 +77,6 @@ private fun getOpenSourceLibraries(): List<OpenSourceLibrary> {
         // AI & Machine Learning
         OpenSourceLibrary("ML Kit", "Google's machine learning toolkit for mobile", "Apache-2.0", "https://developers.google.com/ml-kit"),
         OpenSourceLibrary("MediaPipe", "Cross-platform ML solutions", "Apache-2.0", "https://developers.google.com/mediapipe"),
-        OpenSourceLibrary("MNN", "Alibaba's lightweight deep learning inference engine", "Apache-2.0", "https://github.com/alibaba/MNN"),
         OpenSourceLibrary("ONNX Runtime", "Cross-platform ML inference engine", "MIT", "https://github.com/microsoft/onnxruntime"),
         OpenSourceLibrary("TensorFlow Lite", "On-device machine learning framework", "Apache-2.0", "https://www.tensorflow.org/lite"),
 
@@ -104,7 +103,6 @@ private fun getOpenSourceLibraries(): List<OpenSourceLibrary> {
         OpenSourceLibrary("Moshi", "Modern JSON library for Kotlin", "Apache-2.0", "https://github.com/square/moshi"),
 
         // Database
-        OpenSourceLibrary("ObjectBox", "High-performance NoSQL database", "Apache-2.0", "https://objectbox.io/"),
         OpenSourceLibrary("Room", "Android SQLite ORM library", "Apache-2.0", "https://developer.android.com/training/data-storage/room"),
 
         // LaTeX & Math Rendering
@@ -116,13 +114,9 @@ private fun getOpenSourceLibraries(): List<OpenSourceLibrary> {
         OpenSourceLibrary("Bouncy Castle", "Cryptography library", "MIT", "https://www.bouncycastle.org/"),
 
         // System & Root
-        OpenSourceLibrary("libsu", "Root access library for Android", "Apache-2.0", "https://github.com/topjohnwu/libsu"),
-        OpenSourceLibrary("Shizuku", "System service for apps to use system APIs directly", "Apache-2.0", "https://github.com/RikkaApps/Shizuku"),
-        OpenSourceLibrary("Tasker Plugin Library", "Library for creating Tasker plugins", "Apache-2.0", "https://github.com/joaomgcd/TaskerPluginLibrary"),
 
         // Terminal & Native
         OpenSourceLibrary("Code FA", "VS Code for Android (code-server based)", "BSD-3-Clause", "https://github.com/nightmare-space/code_lfa"),
-        OpenSourceLibrary("DragonBones", "Popular 2D skeletal animation library", "MIT", "https://github.com/DragonBones/DragonBonesCPP"),
         OpenSourceLibrary("scrcpy", "Display and control Android devices", "Apache-2.0", "https://github.com/Genymobile/scrcpy"),
 
         // Kotlin & Logging
@@ -130,7 +124,6 @@ private fun getOpenSourceLibraries(): List<OpenSourceLibrary> {
         OpenSourceLibrary("Kotlin Coroutines", "Kotlin coroutines library", "Apache-2.0", "https://github.com/Kotlin/kotlinx.coroutines"),
         OpenSourceLibrary("kotlin-logging", "Lightweight logging framework for Kotlin", "Apache-2.0", "https://github.com/oshai/kotlin-logging"),
         OpenSourceLibrary("sherpa-ncnn", "Real-time speech recognition with Next-gen Kaldi", "Apache-2.0", "https://github.com/k2-fsa/sherpa-ncnn"),
-        OpenSourceLibrary("sherpa-mnn", "Speech recognition with MNN backend", "Apache-2.0", "https://github.com/k2-fsa/sherpa-mnn"),
         OpenSourceLibrary("SLF4J", "Simple Logging Facade for Java", "MIT", "https://www.slf4j.org/")
     ).sortedBy { it.name }
 }

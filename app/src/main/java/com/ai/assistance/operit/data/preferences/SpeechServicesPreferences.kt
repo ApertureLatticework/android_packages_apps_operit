@@ -110,7 +110,6 @@ class SpeechServicesPreferences(private val context: Context) {
 
         private fun parseSttServiceType(raw: String?): SpeechServiceFactory.SpeechServiceType {
             if (raw == null) return DEFAULT_STT_SERVICE_TYPE
-            if (raw == "SHERPA_MNN") return SpeechServiceFactory.SpeechServiceType.SHERPA_NCNN
             return runCatching { SpeechServiceFactory.SpeechServiceType.valueOf(raw) }
                 .getOrElse { DEFAULT_STT_SERVICE_TYPE }
         }

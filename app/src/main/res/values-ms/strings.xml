@@ -112,7 +112,6 @@
     <string name="menu">Menu</string>
     <string name="token_config">Dapatkan Token</string>
     <string name="package_category_plugin">Plugin</string>
-    <string name="desktop_pet_start">Mulakan Haiwan Peliharaan Desktop</string>
     <string name="workflow_list_title">Senarai Aliran Kerja</string>
     <string name="workflow_create">Cipta Aliran Kerja</string>
     <string name="workflow_name">Nama Aliran Kerja</string>
@@ -331,9 +330,6 @@
     <string name="importing_model">Mengimport model...</string>
     <string name="processing">Memproses...</string>
     <string name="error_occurred">Ralat berlaku: %1$s</string>
-    <string name="avatar_config">Konfigurasi Avatar</string>
-    <string name="avatar_voice_call_enable_title">Aktifkan Avatar?</string>
-    <string name="avatar_voice_call_enable_summary">Apabila diaktifkan, antara muka panggilan suara akan menggunakan avatar dan memainkan aksi emosi berdasarkan tag &lt;mood&gt; yang dikembalikan.</string>
     <string name="select_model">Pilih Model</string>
     <string name="current_model">Model Semasa</string>
     <string name="scale">Skala: %1$s</string>
@@ -343,78 +339,14 @@
     <string name="confirm_delete_model_message">Tidak boleh dipulihkan selepas dipadam. Adakah anda pasti mahu memadam model ini?</string>
     <string name="rename_avatar_model_title">Namakan Semula Model</string>
     <string name="rename_avatar_model_message">Masukkan nama paparan baharu untuk model</string>
-    <string name="avatar_model_name_label">Nama Model</string>
     <string name="no_models_available">Tiada model tersedia</string>
     <string name="please_select_model">Sila pilih satu model</string>
     <string name="unsupported_model_type">Jenis model tidak disokong: %1$s</string>
-    <string name="avatar_preview_error_log">Ralat pratonton avatar: %1$s</string>
     <string name="how_to_import">Bagaimana untuk membuat dan mengimport model?</string>
     <string name="how_to_import_tap_to_expand">Bagaimana untuk membuat dan mengimport model? (Ketik untuk kembangkan)</string>
     <string name="how_to_import_tap_to_collapse">Bagaimana untuk membuat dan mengimport model? (Ketik untuk tutup)</string>
-    <string name="avatar_config_supported_formats">Disokong: DragonBones (.json + _tex.json + _tex.png), WebP (.webp), MP4 (.mp4), MMD (.pmx/.pmd + pilihan .vmd), glTF (.glb/.gltf), FBX (.fbx).</string>
-    <string name="avatar_config_import_methods">Import fail langsung menyokong .glb/.gltf/.mp4/.fbx; DragonBones, WebP, MP4, MMD, glTF berbilang fail, atau FBX dengan tekstur/sumber luaran, sila import .zip.</string>
-    <string name="avatar_mood_trigger_mapping_title">Pemetaan Pencetus Mood</string>
-    <string name="avatar_mood_trigger_mapping_desc">&lt;mood&gt; yang dikembalikan oleh desktop pet dan avatar suara akan dipadankan dengan pencetus di sini terlebih dahulu. Hanya jenis tersuai yang terikat dengan animasi akan dicantumkan ke dalam petunjuk.</string>
-    <string name="avatar_no_model_actions">Avatar semasa tiada aksi tersedia</string>
-    <string name="avatar_custom_types_title">Jenis Tersuai</string>
-    <string name="avatar_custom_type_add">Tambah Jenis Tersuai</string>
-    <string name="avatar_custom_type_none">Belum ada jenis tersuai</string>
-    <string name="avatar_trigger_key_label">Kekunci pencetus: %1$s</string>
-    <string name="avatar_fallback_emotion_label">Emosi fallback: %1$s</string>
-    <string name="avatar_edit_custom_mood_type">Edit Jenis Mood Tersuai</string>
 
-    <string name="avatar_delete_custom_mood_type">Padam jenis tersuai</string>
-    <string name="avatar_mapped_action">Tindakan terikat</string>
-    <string name="avatar_preview_action">Pratonton</string>
-    <string name="avatar_unmapped">Tidak terikat</string>
-    <string name="avatar_custom_type_add_title">Tambah jenis tersuai</string>
-    <string name="avatar_custom_type_edit_title">Edit jenis tersuai</string>
-    <string name="avatar_custom_type_key">Kunci jenis</string>
-    <string name="avatar_custom_type_key_hint">Hanya huruf kecil, nombor, _ dan - dibenarkan. Kunci ternormal: %1$s</string>
-    <string name="avatar_empty_value_placeholder">&lt;空&gt;</string>
-    <string name="avatar_custom_type_prompt_hint_label">Penjelasan petunjuk</string>
-    <string name="avatar_custom_type_prompt_hint_help">Petunjuk ini akan disambungkan ke dalam peraturan mood avatar desktop/suara, untuk membimbing model dalam situasi mana jenis ini patut digunakan.</string>
-    <string name="avatar_emotion_mapping_title">Pemetaan emosi</string>
-    <string name="avatar_emotion_mapping_chip">%1$s：%2$s</string>
-    <string name="avatar_emotion_label">Ekspresi</string>
-    <string name="avatar_clear_selected_mapping">Kosongkan pemetaan semasa</string>
-    <string name="avatar_emotion_idle">Siap sedia</string>
-    <string name="avatar_emotion_listening">Mendengar</string>
-    <string name="avatar_emotion_thinking">Berfikir</string>
-    <string name="avatar_emotion_happy">Gembira</string>
-    <string name="avatar_emotion_sad">Sedih</string>
-    <string name="avatar_emotion_confused">Keliru</string>
-    <string name="avatar_emotion_surprised">Terkejut</string>
-    <string name="avatar_mood_angry_name">Marah</string>
-    <string name="avatar_mood_happy_name">Gembira</string>
-    <string name="avatar_mood_shy_name">Malu</string>
-    <string name="avatar_mood_aojiao_name">Sombong manja</string>
-    <string name="avatar_mood_cry_name">Sedih</string>
-    <string name="avatar_mood_angry_hint">Digunakan apabila pengguna menyatakan penghinaan, ketidakadilan, celaan, kemarahan atau ketidakpuasan yang kuat.</string>
-    <string name="avatar_mood_happy_hint">Digunakan apabila pengguna menyatakan pujian jelas, mencapai matlamat, menerima hadiah atau kegembiraan yang ketara.</string>
-    <string name="avatar_mood_shy_hint">Digunakan apabila pengguna memuji, samar-samar, menyentuh titik comel, dan watak menunjukkan rasa malu.</string>
-    <string name="avatar_mood_aojiao_hint">Digunakan apabila pengguna bergurau, berbalah sedikit, watak degil tetapi kemudian melembut.</string>
-    <string name="avatar_mood_cry_hint">Digunakan apabila pengguna kecewa, sedih, gagal, mengadu atau murung selepas meminta maaf.</string>
-    <string name="avatar_custom_type_prompt_hint_required">Penjelasan petunjuk tidak boleh kosong</string>
-    <string name="avatar_custom_type_invalid_key">Kunci jenis tersuai hanya boleh menggunakan huruf kecil, nombor, _ atau -, dan tidak boleh bercanggah dengan kunci terbina dalam</string>
-    <string name="avatar_custom_type_duplicate_key">Kunci jenis tersuai sudah wujud</string>
-    <string name="avatar_mmd_camera_pitch">Pandangan kamera MMD (%1$s)</string>
-    <string name="avatar_mmd_camera_yaw">Pusingan kamera MMD (%1$s)</string>
-    <string name="avatar_mmd_camera_distance">Jarak kamera MMD (%1$s)</string>
-    <string name="avatar_mmd_orbit_pivot_height">Ketinggian pusat orbit MMD (%1$s)</string>
-    <string name="avatar_gltf_camera_pitch">Pandangan kamera glTF (%1$s)</string>
 
-    <string name="avatar_gltf_camera_yaw">glTF Yaw Kamera (%1$s)</string>
-    <string name="avatar_gltf_camera_distance">glTF Jarak Kamera (%1$s)</string>
-    <string name="avatar_gltf_orbit_pivot_height">glTF Ketinggian Pivot Orbit (%1$s)</string>
-    <string name="avatar_fbx_camera_pitch">FBX Pitch Kamera (%1$s)</string>
-    <string name="avatar_fbx_camera_yaw">FBX Yaw Kamera (%1$s)</string>
-    <string name="avatar_fbx_camera_distance">FBX Jarak Kamera (%1$s)</string>
-    <string name="avatar_fbx_orbit_pivot_height">FBX Ketinggian Pivot Orbit (%1$s)</string>
-    <string name="avatar_supported_formats_title">Format yang Disokong</string>
-    <string name="avatar_supported_formats_desc">- DragonBones: Rangka .json + *_tex.json + *_tex.png\n- WebP: Satu atau lebih fail .webp\n- MP4: Satu atau lebih fail .mp4\n- MMD: Model .pmx atau .pmd, pilihan .vmd untuk animasi\n- glTF: .glb atau .gltf (dan .bin/tekstur dsb. jika dirujuk)\n- FBX: .fbx (hanya sumber terbenam untuk muat naik langsung)</string>
-    <string name="avatar_import_methods_title">Kaedah Import</string>
-    <string name="avatar_import_methods_desc">- Pilih fail terus: .glb / .gltf / .mp4 / .fbx\n- Import ZIP: DragonBones, WebP, MP4, MMD, glTF berbilang fail, atau pakej FBX dengan tekstur/sumber luaran</string>
     <string name="import_structure_guide_tap_to_expand">Panduan Struktur Import (Ketik untuk kembangkan)</string>
     <string name="import_structure_guide_tap_to_collapse">Panduan Struktur Import (Ketik untuk tutup)</string>
     <string name="import_structure_guide_content">Ini adalah struktur direktori untuk "pakej import" (ZIP atau dalam fail yang dipilih), bukan storan dalaman aplikasi.\n\nDragonBones (.zip)\n  my_dragonbones.zip\n    any_folder_name/\n      hero_ske.json\n      hero_tex.json\n      hero_tex.png\n  Keperluan: Awalan nama fail ske/tex json/png mesti sama.\n\nWebP (.zip)\n  my_webp.zip\n    any_folder_name/\n      idle.webp\n      talking.webp\n      happy.webp\n  Keperluan: Mesti mengandungi sekurang-kurangnya satu fail .webp.\n\nMP4\n  Kaedah A (fail terus):\n    avatar.mp4\n  Kaedah B (.zip):\n    my_mp4.zip\n      any_folder_name/\n        idle.mp4\n        talking.mp4\n        happy.mp4\n  Keperluan: Mesti mengandungi sekurang-kurangnya satu fail .mp4.\n\nMMD (.zip)\n  my_mmd.zip\n    any_folder_name/\n      character.pmx (atau .pmd)\n      motions/idle.vmd (pilihan)\n      textures/...\n  Keperluan: Kekalkan laluan relatif yang dirujuk oleh PMX/PMD.\n\nglTF\n  Kaedah A (fail terus):\n    avatar.glb\n  Kaedah B (glTF berbilang fail guna .zip):\n    my_gltf.zip\n      any_folder_name/\n        avatar.gltf\n        avatar.bin\n        textures/...\n  Keperluan: Kekalkan laluan relatif yang dirujuk oleh .gltf.\n\nFBX\n  Kaedah A (fail terus, hanya sumber terbenam):\n    avatar.fbx\n  Kaedah B (guna .zip untuk tekstur/sumber luaran):\n    my_fbx.zip\n      any_folder_name/\n        avatar.fbx\n        textures/...\n  Keperluan: Muat naik langsung .fbx hanya menyokong sumber terbenam; jika model merujuk tekstur luaran atau sumber lain, kekalkan laluan relatif dan masukkan ke dalam ZIP.</string>
@@ -433,7 +365,6 @@
     <string name="packaging_and_importing">4. Membungkus dan mengimport:</string>
     <string name="packaging_and_importing_desc">    · Bungkus tiga fail yang dieksport menjadi satu fail .zip dan kemudian import.</string>
     <string name="important_tip">Petua penting: Pada halaman muat turun penyunting versi lama, pautan muat turun untuk Windows dan Mac diletakkan secara terbalik, sila pilih pautan yang betul untuk dimuat turun.</string>
-    <string name="dragonbones_important_tip">Petua penting: Pada halaman muat turun penyunting versi lama, pautan muat turun untuk Windows dan Mac diletakkan secara terbalik, sila pilih pautan yang betul untuk dimuat turun.</string>
     <string name="download_old_editor">Muat turun penyunting lama</string>
     <string name="visit_online_editor">Lawati penyunting dalam talian</string>
     <string name="voice_wakeup_section_title">Bangunkan Suara</string>
@@ -491,7 +422,6 @@
     <string name="shizuku_commands">Pemberian Kebenaran</string>
     <string name="tool_permissions">Tetapan Kebenaran Alat</string>
     <string name="about">Tentang</string>
-    <string name="terminal">Terminal</string>
     <string name="toolbox">Kotak Alat</string>
     <string name="mcp">MCP</string>
     <string name="token_config_title">Konfigurasi Token DeepSeek</string>
@@ -527,18 +457,13 @@
     <string name="history_auto_switch_chat">Tukar Perbualan Secara Automatik</string>
     <string name="history_auto_switch_chat_desc">Masuk ke perbualan terkini yang sepadan secara automatik apabila menukar kad watak atau kumpulan, cipta jika tiada</string>
 
-    <string name="termux_not_installed">Termux tidak dipasang</string>
-    <string name="termux_not_running">Termux tidak berjalan</string>
-    <string name="termux_command">Arahan Termux</string>
     <string name="execute_termux_command">Laksanakan arahan</string>
-    <string name="termux_result">Keputusan arahan</string>
     <string name="install_termux_title">Pasang Termux</string>
     <string name="install_termux_from_store">Pasang Termux dari kedai aplikasi</string>
     <string name="install_bundled_termux">Pasang versi terbundel</string>
     <string name="installing_bundled_termux">Memasang Termux terbundel, sila berikan kebenaran pemasangan</string>
     <string name="install_termux_failed">Pemasangan Termux gagal</string>
     <string name="open_termux">Buka Termux</string>
-    <string name="termux_setup_guide">Panduan penyediaan Termux</string>
     <string name="about_title">Perihal Operit AI</string>
     <string name="about_version">Versi: %1$s</string>
     <string name="about_description">Operit AI ialah aplikasi pembantu pintar yang membantu pengguna menggunakan peranti dengan lebih cekap, menyediakan analisis antara muka, perbualan sembang dan fungsi lain.</string>
@@ -782,8 +707,6 @@
     <string name="no">Tidak</string>
     <string name="authorized">Telah Dibenarkan</string>
     <string name="unauthorized">Tidak Dibenarkan</string>
-    <string name="install_shizuku">Pasang Shizuku</string>
-    <string name="open_shizuku">Buka Aplikasi Shizuku</string>
 
     <string name="theme_chat_input_liquid_glass">Kotak Input Kaca Matte</string>
     <string name="theme_chat_input_liquid_glass_desc">Apabila diaktifkan, kotak input lutsinar akan memaparkan kesan kaca matte gaya iOS</string>
@@ -861,9 +784,6 @@
     <string name="plugin_deploy_complete">Penyebaran pemalam selesai, teruskan permulaan: %1$s</string>
     <string name="plugin_runtime_error">Ralat masa jalan: %1$s</string>
     <string name="plugin_runtime_output">Output masa jalan:\n%1$s</string>
-    <string name="plugin_auto_deploy">Pemalam tidak disebarkan, mula penyebaran automatik</string>
-    <string name="plugin_auto_deploy_complete">Penyebaran automatik selesai</string>
-    <string name="plugin_terminal_service_unavailable">Perkhidmatan terminal tidak tersedia, sila mulakan dahulu</string>
     <string name="plugin_pnpm_missing">pnpm tidak dipasang dalam terminal, sila pasang dahulu</string>
     <string name="theme_title_mode">Mod Tema</string>
 
@@ -903,8 +823,6 @@
     <string name="wizard_expand">Buka</string>
     <string name="wizard_open_docs">Dokumen Rasmi</string>
     <string name="root_wizard_title">Panduan Tetapan Keizinan Root</string>
-    <string name="root_wizard_step1">Langkah 1: Root Peranti</string>
-    <string name="root_wizard_step2">Langkah 2: Berikan Keizinan Root</string>
     <string name="root_wizard_completed">Tetapan Keizinan Root Telah Selesai</string>
     <string name="root_wizard_success_message">Tahniah! Keizinan Root telah diperoleh, anda kini boleh melaksanakan operasi yang memerlukan keistimewaan.</string>
 
@@ -1001,17 +919,10 @@
     <string name="root_wizard_risk_details">1. Operasi ROOT mempunyai risiko tertentu, boleh menyebabkan waranti peranti terbatal\n2. Sesetengah aplikasi mungkin enggan berjalan pada peranti ROOT\n3. Operasi ROOT yang tidak betul boleh menyebabkan sistem tidak stabil</string>
     <string name="shizuku_wizard_title">Panduan Tetapan Shizuku</string>
     <string name="shizuku_wizard_update_title">Panduan Kemaskini Shizuku</string>
-    <string name="shizuku_wizard_step1">Langkah 1: Pasang Aplikasi Shizuku</string>
-    <string name="shizuku_wizard_step2">Langkah 2: Mulakan Perkhidmatan Shizuku</string>
-    <string name="shizuku_wizard_step3">Langkah 3: Beri Kebenaran Shizuku</string>
     <string name="shizuku_wizard_completed">Shizuku Telah Ditetapkan Sepenuhnya</string>
     <string name="shizuku_wizard_install_message">Shizuku ialah alat yang memberikan kebenaran lanjutan kepada aplikasi tanpa memerlukan root. Kita perlu memasang aplikasi ini terlebih dahulu.</string>
     <string name="shizuku_wizard_install_bundled">Pasang Versi Terbina</string>
     <string name="shizuku_wizard_start_message">Shizuku telah dipasang, kini perlu memulakan perkhidmatan Shizuku. Sila ikuti salah satu kaedah berikut:</string>
-    <string name="shizuku_wizard_method1_title">Kaedah 1: Gunakan Pelancaran Dalam Aplikasi (Disyorkan)</string>
-    <string name="shizuku_wizard_method1_steps">1. Klik butang \"Buka Shizuku\" di bawah\n2. Dalam aplikasi Shizuku, pilih \"Mulakan melalui Nyahpepijat Wayarles\"\n3. Ikuti arahan untuk menghidupkan \"Pilihan Pembangun\" dan \"Nyahpepijat Wayarles\"\n4. Benarkan Shizuku mendapatkan kebenaran nyahpepijat wayarles</string>
-    <string name="shizuku_wizard_method2_title">Kaedah 2: Gunakan Pelancaran USB</string>
-    <string name="shizuku_wizard_method2_steps">1. Pasang alat ADB pada komputer\n2. Sambungkan telefon dan komputer melalui USB\n3. Jalankan pada baris arahan komputer:\n   adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh</string>
     <string name="shizuku_wizard_open_shizuku">Buka Shizuku</string>
     <string name="shizuku_wizard_permission_message">Perkhidmatan Shizuku telah dimulakan, kini perlu memberikan kebenaran kepada aplikasi ini. Klik butang di bawah, pilih \"Benarkan\" dalam dialog yang muncul.</string>
     <string name="shizuku_wizard_permission_notice">Perhatian: Jika tiada dialog pemberian kebenaran muncul, semak:</string>
@@ -1023,13 +934,6 @@
     <string name="shizuku_wizard_current_version">Versi semasa: %1$s</string>
     <string name="shizuku_wizard_latest_version">Versi terkini: %1$s</string>
     <string name="shizuku_wizard_update">Kemaskini Shizuku</string>
-    <string name="termux_wizard_title">Panduan Tetapan Termux</string>
-    <string name="termux_wizard_step1">Langkah 1: Pasang Termux</string>
-    <string name="termux_wizard_step2">Langkah 2: Benarkan Termux</string>
-    <string name="termux_wizard_step3">Langkah 3: Mulakan Termux</string>
-    <string name="termux_wizard_step4">Langkah 4: Tetapkan Pengecualian Pengoptimuman Bateri</string>
-    <string name="termux_wizard_step5">Langkah 5: Konfigurasikan Sumber Tsinghua</string>
-    <string name="termux_wizard_step6">Langkah 6: Pasang Persekitaran Python</string>
 
     <string name="show_help">Tunjukkan bantuan</string>
     <string name="hide_help">Sembunyikan bantuan</string>
@@ -1045,7 +949,6 @@
     <string name="executing">Sedang melaksanakan...</string>
     <string name="command_success">Arahan berjaya dilaksanakan:\n%1$s</string>
     <string name="command_failure">Arahan gagal dilaksanakan (kod keluar: %1$d):\n%2$s</string>
-    <string name="start_shizuku_first">Sila mulakan perkhidmatan Shizuku dahulu</string>
     <string name="grant_permission_first">Sila berikan kebenaran Shizuku</string>
     <string name="feature_unavailable">Fungsi arahan ADB tidak boleh digunakan</string>
     <string name="thinking_process">Proses pemikiran</string>
@@ -1153,10 +1056,6 @@
     <string name="chat_function_desc">Fungsi sembang utama, sesuaikan konfigurasi petunjuk chatbot</string>
     <string name="voice_function">Fungsi Suara</string>
     <string name="voice_function_desc">Fungsi interaksi suara, sesuaikan konfigurasi petunjuk pembantu suara</string>
-    <string name="desktop_pet_function">Fungsi Haiwan Peliharaan Desktop</string>
-    <string name="desktop_pet_function_desc">Fungsi haiwan peliharaan desktop, sesuaikan personaliti dan cara interaksi haiwan peliharaan desktop</string>
-    <string name="pet_service_notification_title">Perkhidmatan Haiwan Peliharaan Desktop</string>
-    <string name="pet_service_notification_text">Haiwan peliharaan desktop sedang berjalan</string>
     <string name="settings_prompt_section">Konfigurasi Petunjuk</string>
     <string name="settings_prompt_title">Sunting Kad Peranan</string>
     <string name="settings_prompt_desc">Petunjuk untuk menyesuaikan tingkah laku dan personaliti pembantu AI</string>
@@ -1191,7 +1090,6 @@
     <string name="status_not_granted">Tidak diberi kebenaran</string>
     <string name="accessibility_permission">Kebenaran Aksesibiliti</string>
     <string name="accessibility_service">Perkhidmatan Aksesibiliti</string>
-    <string name="admin_permission">Kebenaran Pentadbir</string>
     <string name="debug_permission">Kebenaran Nyahpepijat</string>
     <string name="shizuku_service">Perkhidmatan Shizuku</string>
     <string name="root_permission">Kebenaran Root</string>
@@ -1330,31 +1228,16 @@
     <string name="resume_reading">Sambung Bacaan</string>
     <string name="stop_reading">Hentikan Bacaan</string>
 
-    <string name="operit_terminal">Terminal Operit</string>
     <string name="permission_level_standard">Kebenaran Standard</string>
     <string name="permission_level_accessibility">Kebenaran Aksesibiliti</string>
-    <string name="permission_level_admin">Kebenaran Pentadbir</string>
-    <string name="permission_level_debugger">Kebenaran Penyahpepijat</string>
-    <string name="permission_level_root">Kebenaran Root</string>
     <string name="permission_level_standard_desc">Kebenaran asas untuk menjalankan aplikasi, tidak memerlukan kebenaran khas sistem</string>
     <string name="permission_level_accessibility_desc">Menambah sokongan perkhidmatan aksesibiliti, boleh mensimulasikan operasi skrin</string>
-    <string name="permission_level_admin_desc">Menambah kebenaran pentadbir peranti, boleh mengakses lebih banyak fungsi sistem</string>
-    <string name="permission_level_debugger_desc">Menyediakan akses sistem peringkat ADB melalui Shizuku</string>
-    <string name="permission_level_root_desc">Kebenaran pengguna super, boleh melaksanakan sebarang operasi sistem</string>
     <string name="permission_level_standard_full_desc">Kebenaran Standard: Kebenaran asas untuk menjalankan aplikasi, tidak memerlukan kebenaran khas</string>
     <string name="permission_level_accessibility_full_desc">Kebenaran Aksesibiliti: Membenarkan aplikasi mensimulasikan operasi pengguna, perlu menghidupkan perkhidmatan aksesibiliti</string>
-    <string name="permission_level_admin_full_desc">Kebenaran Pentadbir: Membenarkan aplikasi mengakses lebih banyak fungsi sistem, seperti perkhidmatan lokasi, dll.</string>
-    <string name="permission_level_debugger_full_desc">Kebenaran Penyahpepijat: Membenarkan operasi lanjutan melalui fungsi penyahpepijatan ADB, memerlukan perkhidmatan Shizuku</string>
-    <string name="permission_level_root_full_desc">Kebenaran Root: Membenarkan aplikasi berjalan sebagai pengguna super, memerlukan peranti sudah di-Root</string>
     <string name="root_access_granted">Aplikasi telah mendapat kebenaran Root, boleh melaksanakan arahan istimewa</string>
-    <string name="device_rooted_request_permission">Peranti sudah di-Root, klik untuk memohon kebenaran aplikasi</string>
-    <string name="device_not_rooted">Peranti tidak di-Root, tidak boleh mendapatkan kebenaran Root</string>
     <string name="toast_download_link_failed">Tidak dapat membuka pautan muat turun</string>
     <string name="toast_apk_extract_failed">Gagal mengekstrak APK, sila cuba lagi nanti</string>
-    <string name="toast_open_termux_first">Sila mulakan Termux terlebih dahulu</string>
     <string name="toast_operation_failed">Operasi gagal: %1$s</string>
-    <string name="toast_skip_tuna_source">Konfigurasi sumber Tsinghua telah dilangkau, anda boleh mengkonfigurasi sumber sendiri dalam Termux kemudian</string>
-    <string name="toast_skip_tuna_source_dialog">Anda telah memilih untuk melangkau konfigurasi sumber Tsinghua. Jika perlu mengkonfigurasi secara manual kemudian, sila jalankan arahan berikut dalam Termux:\n\ntermux-change-repo\n\nKemudian pilih sumber Tsinghua atau sumber lain dari senarai.</string>
     <string name="chat_history">Sejarah Perbualan</string>
     <string name="search_chat_history_hint">Cari</string>
     <string name="new_chat">Perbualan Baharu</string>
@@ -1379,15 +1262,6 @@
     <string name="ask">Tanya</string>
     <string name="ai_planning_mode">Carian Mendalam:</string>
     <string name="disabled">Dimatikan</string>
-    <string name="termux_not_installed_message">Sila pasang aplikasi Termux terlebih dahulu</string>
-    <string name="termux_manual_auth_title">Pengesahan Manual Diperlukan</string>
-    <string name="termux_manual_auth_message">Tidak dapat memberikan kebenaran menjalankan arahan Termux secara automatik, sila lakukan secara manual:\n\n1. Buka Termux\n2. Tekan dan tahan skrin, pilih \'Lagi\'\n3. Pilih \'Tetapan\'\n4. Dayakan \'Benarkan Akses Aplikasi Luaran\'</string>
-    <string name="termux_storage_permission_message">Tidak dapat memberikan kebenaran storan Termux secara automatik, sila semak konfigurasi berikut:\n\n1. Persekitaran Shell: Pastikan anda mempunyai Shell yang berfungsi (seperti ADB atau Root). Perhatian: Jika menggunakan Shizuku, jangan mulakan dalam mod Root.\n2. Versi Termux: Pastikan Termux yang dipasang adalah versi terbina dalam aplikasi, atau versi Debug yang diperoleh dari repositori GitHub rasminya.</string>
-    <string name="termux_all_permissions_granted">Semua kebenaran Termux berjaya diberikan</string>
-    <string name="termux_some_permissions_failed">Sebahagian kebenaran gagal diberikan, sila lihat log atau tetapkan secara manual</string>
-    <string name="termux_app_association_granted">Aplikasi telah diberi kebenaran untuk dikaitkan dengan Termux</string>
-    <string name="termux_manual_setting_hint">Sila dayakan pilihan \'Benarkan Akses Aplikasi Luaran\' dalam Termux</string>
-    <string name="termux_manual_setting_failed">Tidak dapat membuka Termux, sila tetapkan secara manual</string>
     <string name="open_settings">Buka Tetapan</string>
     <string name="cannot_open_settings">Tidak dapat membuka tetapan</string>
     <string name="text_to_speech_engine_initialized">Enjin teks-ke-ucapan telah dimulakan</string>
@@ -1435,8 +1309,6 @@
     <string name="theme_background_blur">Kabur Latar Belakang</string>
     <string name="theme_background_blur_desc">Tambahkan kesan kabur Gaussian pada imej atau video latar belakang</string>
     <string name="theme_background_blur_radius">Jejari Kabur</string>
-    <string name="pip_package_install_success">Pemasangan Pakej PIP Berjaya</string>
-    <string name="pip_package_install_failed">Pemasangan Pakej PIP Gagal</string>
     <string name="please_press_back_to_return">Sila tekan butang kembali untuk kembali ke halaman sebelumnya</string>
     <string name="please_input_command">Sila masukkan arahan</string>
     <string name="background_image_migrated">Imej latar belakang telah dipindahkan ke storan dalaman</string>
@@ -1453,41 +1325,6 @@
     <string name="message_info_message_time">Masa Mesej</string>
     <string name="message_info_sent_at">Masa Dihantar</string>
 
-    <string name="termux_wizard_step7">Langkah 7: Pasang pengurus pakej UV</string>
-    <string name="termux_wizard_step8">Langkah 8: Pasang persekitaran Node.js</string>
-    <string name="termux_wizard_completed">Konfigurasi Termux selesai</string>
-    <string name="termux_wizard_reinstall_auth">Pemberian kuasa semula</string>
-    <string name="termux_wizard_install_message">Termux ialah emulator terminal yang berkuasa, membolehkan anda menggunakan pelbagai alat baris arahan. Kami perlu memasang aplikasi ini terlebih dahulu.</string>
-    <string name="termux_wizard_install_note">Selepas pemasangan selesai, sila buka Termux buat kali pertama dan tunggu sehingga pengawalan selesai, kemudian kembali ke aplikasi ini untuk melengkapkan langkah pemberian kuasa.</string>
-    <string name="termux_wizard_install">Pasang Termux</string>
-    <string name="termux_wizard_auth_message">Termux telah dipasang, kini perlu memberikan keizinan yang diperlukan kepada Termux supaya kami boleh melaksanakan arahan.</string>
-    <string name="termux_wizard_auth_note">Sebelum pemberian kuasa, pastikan:</string>
-    <string name="termux_wizard_auth_note_details">1. Termux telah dipasang dan dibuka sekurang-kurangnya sekali\n2. Klik butang \"Berikan Kuasa kepada Termux\" untuk melengkapkan pemberian kuasa</string>
-    <string name="termux_wizard_start">Mulakan</string>
-    <string name="termux_wizard_check_auth">Semak dan berikan kuasa</string>
-    <string name="termux_wizard_start_message">Termux telah dipasang dan diberi kuasa, tetapi tidak berjalan pada masa ini. Operasi konfigurasi memerlukan Termux berjalan di latar belakang.</string>
-    <string name="termux_wizard_start_note">Perhatian:</string>
-    <string name="termux_wizard_start_note_details">Termux telah diberi kuasa tetapi tidak berjalan. Sila mulakan Termux untuk meneruskan langkah konfigurasi seterusnya.</string>
-    <string name="termux_wizard_start_termux">Mulakan Termux</string>
-    <string name="termux_wizard_battery_title">Tetapkan pengecualian pengoptimuman bateri</string>
-    <string name="termux_wizard_battery_message">Termux telah dimulakan, kini perlu menetapkan pengecualian pengoptimuman bateri untuk Termux supaya ia boleh berjalan dengan stabil di latar belakang untuk tempoh yang lama. Fungsi pengoptimuman bateri sistem Android mungkin menutup Termux di latar belakang, menjejaskan operasi normal skrip dan perkhidmatan.</string>
-    <string name="termux_wizard_battery_optimize">Tetapkan pengecualian pengoptimuman bateri</string>
-    <string name="termux_wizard_tuna_title">Konfigurasikan sumber Tsinghua</string>
-    <string name="termux_wizard_tuna_message">Pengecualian pengoptimuman bateri untuk Termux telah ditetapkan, kini perlu mengkonfigurasikan sumber Tsinghua untuk mempercepatkan muat turun pakej perisian. Sumber Tsinghua ialah sumber cerminan dalam negara yang boleh meningkatkan kelajuan muat turun pakej Termux dengan ketara.</string>
-    <string name="termux_wizard_tuna_config">Konfigurasikan sumber Tsinghua</string>
-    <string name="termux_wizard_tuna_skip">Langkau langkah ini</string>
-    <string name="termux_wizard_python_title">Pasang persekitaran Python</string>
-    <string name="termux_wizard_python_message">Sumber Tsinghua telah dikonfigurasikan, kini perlu memasang persekitaran Python. Python ialah bahasa pengaturcaraan yang popular, diperlukan oleh banyak alat AI dan skrip automasi.</string>
-    <string name="termux_wizard_python_install">Pasang Python</string>
-    <string name="termux_wizard_uv_title">Pasang pengurus pakej UV</string>
-    <string name="termux_wizard_uv_message">Python telah dipasang, kini perlu memasang pengurus pakej UV. UV ialah pengurus dan penghurai pakej Python yang pantas, boleh menggantikan pip, menyediakan pengurusan kebergantungan yang lebih baik.</string>
-    <string name="termux_wizard_uv_install">Pasang UV</string>
-    <string name="termux_wizard_node_title">Pasang persekitaran Node.js</string>
-    <string name="termux_wizard_node_message">UV telah dipasang, kini perlu memasang persekitaran Node.js. Node.js ialah persekitaran pelaksanaan JavaScript, digunakan untuk menjalankan kod JavaScript dan aplikasi web.</string>
-    <string name="termux_wizard_node_install">Pasang Node.js</string>
-    <string name="termux_wizard_success_title">Tahniah! Persekitaran Termux telah dikonfigurasikan sepenuhnya</string>
-    <string name="termux_wizard_success_message">Kini anda boleh menggunakan Termux untuk pelbagai operasi baris arahan</string>
-    <string name="termux_wizard_open">Buka Termux</string>
     <string name="shizuku_demo_loading">Memuatkan status aplikasi...</string>
     <string name="shizuku_demo_permission_failed">Tidak dapat membuka tetapan keizinan</string>
     <string name="shizuku_demo_overlay_failed">Tidak dapat membuka tetapan tetingkap terapung</string>
@@ -1506,7 +1343,6 @@
     <string name="message_info_token_hit_rate_short">Kadar hit</string>
     <string name="message_info_unavailable">Tidak Direkodkan</string>
     <string name="selected_content_copied">Kandungan Terpilih Disalin</string>
-    <string name="requesting_root_permission">Meminta kebenaran Root...</string>
     <string name="root_permission_granted">Kebenaran Root Diberikan</string>
     <string name="root_permission_denied">Permintaan Kebenaran Root Ditolak</string>
     <string name="command_execution_success">Perintah Berjaya Dilaksanakan</string>
@@ -1529,12 +1365,6 @@
     <string name="download_success">Muat Turun Berjaya: %1$s</string>
     <string name="download_start">Mula Muat Turun: %1$s</string>
     <string name="deploy_date">Masa Penempatan: %1$s</string>
-    <string name="termux_start_command_sent">Perintah Mulakan Termux Dihantar</string>
-    <string name="termux_start_failed">Gagal Memulakan Termux</string>
-    <string name="termux_already_running">Termux Sedang Berjalan</string>
-    <string name="termux_authorized_success">Termux Berjaya Dibenarkan</string>
-    <string name="termux_authorization_failed">Gagal Membenarkan Termux, Sila Semak Tetapan Termux</string>
-    <string name="tuna_source_setup_success">Sumber Tsinghua Berjaya Disetkan</string>
 
     <string name="chinese_language">Bahasa Cina</string>
     <string name="tag_must_be_set">Tag mesti ditetapkan</string>
@@ -1577,17 +1407,6 @@
     <string name="tool_tts_desc">Tukar teks kepada pertuturan, menyokong pelarasan kelajuan dan nada suara</string>
     <string name="tts_title">Demonstrasi Teks ke Pertuturan</string>
 
-    <string name="tuna_source_setup_failed">Penyediaan sumber Tuna gagal</string>
-    <string name="tuna_source_setup_error">Ralat dalam mengkonfigurasi sumber Tuna</string>
-    <string name="python_install_success">Pemasangan Python berjaya</string>
-    <string name="python_install_failed">Pemasangan Python gagal</string>
-    <string name="python_install_error">Ralat dalam memasang persekitaran Python</string>
-    <string name="uv_install_success">Pemasangan UV berjaya</string>
-    <string name="uv_install_failed">Pemasangan UV gagal</string>
-    <string name="uv_install_error">Ralat dalam memasang pengurus pakej UV</string>
-    <string name="nodejs_install_success">Pemasangan Node.js berjaya</string>
-    <string name="nodejs_install_failed">Pemasangan Node.js gagal</string>
-    <string name="nodejs_install_error">Ralat dalam memasang persekitaran Node.js</string>
     <string name="battery_optimization_reminder">Sila benarkan pengecualian pengoptimuman bateri untuk Termux dalam tetapan sistem</string>
     <string name="cannot_open_termux_battery_settings">Tidak dapat membuka tetapan pengoptimuman bateri Termux</string>
     <string name="copied_to_clipboard">Telah disalin ke papan keratan</string>
@@ -1597,8 +1416,6 @@
     <string name="cannot_open_accessibility_settings">Tidak dapat membuka tetapan perkhidmatan kebolehcapaian</string>
     <string name="accessibility_provider_installed">Penyedia perkhidmatan telah dipasang</string>
     <string name="cannot_open_root_tutorial">Tidak dapat membuka pautan tutorial Root</string>
-    <string name="cannot_find_shizuku_app">Tidak dapat mencari aplikasi Shizuku</string>
-    <string name="cannot_launch_shizuku_app">Tidak dapat melancarkan aplikasi Shizuku</string>
     <string name="cannot_open_docs_link">Tidak dapat membuka pautan dokumentasi</string>
     <string name="plugin_loading_skipped">Pemuatan pemalam telah dilangkau</string>
     <string name="press_back_again_to_exit">Tekan sekali lagi untuk keluar aplikasi</string>
@@ -1616,10 +1433,7 @@
     <string name="floating_window_attachment_note">Perhatian: Hanya lampiran khas disokong dalam tetingkap terapung\nUntuk menambah fail atau gambar, sila buka antara muka sembang penuh</string>
     <string name="ai_assistant">Pembantu AI</string>
     <string name="send_message">Hantar mesej</string>
-    <string name="chat_with_pet">Berbual dengan haiwan peliharaan</string>
 
-    <string name="dragonbones_mode">Mod DragonBones</string>
-    <string name="avatar_mode">Mod Avatar Maya</string>
     <string name="loading_failed">Gagal memuat: %1$s</string>
     <string name="loading">Sedang memuat...</string>
     <string name="floating_service_description">Perkhidmatan tetingkap terapung untuk pembantu AI</string>
@@ -1756,10 +1570,6 @@
     <string name="test_input_field">Medan input ujian (untuk ujian UI)</string>
     <string name="batch_testing_in_progress">Melaksanakan ujian kelompok...</string>
     <string name="start_comprehensive_test">Mulakan ujian automatik menyeluruh</string>
-    <string name="terminal_yes_y">Ya (Y)</string>
-    <string name="terminal_no_n">Tidak (N)</string>
-    <string name="terminal_send_custom_input">Hantar input tersuai</string>
-    <string name="check_video_size_error">Ralat semasa menyemak saiz video</string>
     <string name="cannot_read_image_file">Tidak dapat membaca fail imej: %1$s</string>
     <string name="cannot_decode_bitmap_from_uri">Tidak dapat menyahkod Bitmap daripada URI</string>
     <string name="cannot_open_uri_input_stream">Tidak dapat membuka aliran input URI</string>
@@ -1833,11 +1643,6 @@
     <string name="sherpa_k2_ncnn_init_success">Enjin pengecaman suara masa nyata berjaya dimulakan</string>
     <string name="files_selected">%1$d fail telah dipilih</string>
 
-    <string name="tool_terminal">Terminal Perintah</string>
-    <string name="tool_terminal_desc">Terminal baris perintah yang berkuasa, melaksanakan arahan sistem</string>
-    <string name="tool_terminal_auto_config">Konfigurasi Automatik Terminal</string>
-    <string name="tool_terminal_auto_config_desc">Pasang dan konfigurasi alat pembangunan seperti Python, PIP secara automatik</string>
-    <string name="tool_terminal_auto_config_under_construction">Fungsi konfigurasi automatik terminal sedang disusun semula...</string>
     <string name="tool_ui_debugger">Alat Penyahpepijat UI</string>
     <string name="tool_ui_debugger_desc">Sahpepijat dan analisis elemen antara muka, menyokong pencarian dan interaksi elemen</string>
     <string name="ui_debugger_title">Alat Penyahpepijat UI</string>
@@ -2056,14 +1861,10 @@
     <string name="wifi">WiFi</string>
     <string name="confirmation_code_copied">Kod pengesahan telah disalin!</string>
     <string name="message_copied">Mesej telah disalin ke papan keratan</string>
-    <string name="requesting_root">Meminta kebenaran Root...</string>
     <string name="root_granted">Kebenaran Root telah diberikan</string>
     <string name="root_denied">Permintaan kebenaran Root ditolak</string>
     <string name="command_failed">Perintah gagal dilaksanakan</string>
     <string name="start_termux_first">Sila mulakan Termux dahulu</string>
-    <string name="termux_not_found">Aplikasi Termux tidak ditemui</string>
-    <string name="termux_battery_optimization">Sila benarkan pengecualian pengoptimuman bateri untuk Termux dalam tetapan sistem</string>
-    <string name="termux_battery_settings_failed">Tidak dapat membuka tetapan pengoptimuman bateri Termux</string>
     <string name="permission_settings_failed">Tidak dapat membuka tetapan kebenaran</string>
     <string name="overlay_settings_failed">Tidak dapat membuka tetapan tetingkap terapung</string>
     <string name="battery_settings_failed">Tidak dapat membuka tetapan pengoptimuman bateri</string>
@@ -2193,43 +1994,7 @@
     <string name="file_op_confirm_delete_message">Adakah anda pasti mahu memadam fail yang dipilih? Tindakan ini tidak boleh dibatalkan.</string>
     <string name="file_op_confirm_overwrite">Fail Sudah Wujud</string>
     <string name="file_op_confirm_overwrite_message">Fail dengan nama yang sama sudah wujud di lokasi sasaran. Tindih?</string>
-    <string name="terminal_title">Emulator Terminal</string>
-    <string name="terminal_new_session">Sesi Baru</string>
-    <string name="terminal_close_session">Tutup Sesi</string>
-    <string name="terminal_clear_screen">Kosongkan Skrin</string>
-    <string name="terminal_font_size">Saiz Fon</string>
-    <string name="terminal_zoom_in">Zum Masuk Fon</string>
-    <string name="terminal_zoom_out">Zum Keluar Fon</string>
-    <string name="terminal_copy">Salin</string>
-    <string name="terminal_paste">Tampal</string>
 
-    <string name="terminal_select_all">Pilih Semua</string>
-    <string name="terminal_search">Cari</string>
-    <string name="terminal_settings">Tetapan</string>
-    <string name="terminal_session">Sesi %d</string>
-    <string name="terminal_working_dir">Direktori Kerja: %s</string>
-    <string name="terminal_command_history">Sejarah Arahan</string>
-    <string name="terminal_no_history">Tiada sejarah arahan buat masa ini</string>
-    <string name="terminal_interactive_input">Input Interaktif</string>
-    <string name="terminal_input_prompt">Sila masukkan: %s</string>
-    <string name="terminal_input_confirm">Sahkan</string>
-    <string name="terminal_input_cancel">Batal</string>
-    <string name="terminal_execution_error">Ralat pelaksanaan arahan</string>
-    <string name="terminal_permission_required">Kebenaran diperlukan</string>
-    <string name="terminal_root_access">Kebenaran Root diperlukan untuk melaksanakan arahan ini</string>
-    <string name="terminal_command_not_found">Arahan tidak ditemui</string>
-    <string name="terminal_process_running">Proses sedang berjalan...</string>
-    <string name="terminal_process_completed">Proses telah selesai</string>
-    <string name="terminal_auto_config_title">Konfigurasi Automatik Terminal</string>
-    <string name="terminal_auto_config_desc">Mengesan dan mengkonfigurasi persekitaran terminal secara automatik</string>
-    <string name="terminal_auto_config_detect">Kesan Persekitaran</string>
-    <string name="terminal_auto_config_apply">Gunakan Konfigurasi</string>
-    <string name="terminal_auto_config_reset">Tetapkan Semula Konfigurasi</string>
-    <string name="terminal_auto_config_status">Status Konfigurasi</string>
-    <string name="terminal_auto_config_completed">Konfigurasi Selesai</string>
-    <string name="terminal_auto_config_failed">Konfigurasi Gagal</string>
-    <string name="terminal_auto_config_detecting">Mengesan persekitaran...</string>
-    <string name="terminal_auto_config_applying">Menggunakan konfigurasi...</string>
     <string name="ffmpeg_toolbox_title">Kotak Alat FFmpeg</string>
     <string name="ffmpeg_input_file">Fail Input</string>
     <string name="ffmpeg_output_file">Fail Output</string>
@@ -2548,10 +2313,6 @@
     <string name="simulate_tap_test_desc">Ketik pada (1,1), dijangka gagal</string>
     <string name="simulate_swipe_test_desc">Leret jarak pendek di tengah skrin</string>
     <string name="cleanup_test_dir_desc">Padam semua fail dan direktori ujian.</string>
-    <string name="termux_auth_failed">Pengesahan Termux gagal</string>
-    <string name="tsinghua_source_error">Ralat konfigurasi sumber Tsinghua</string>
-    <string name="tsinghua_source_failed">Konfigurasi sumber Tsinghua gagal</string>
-    <string name="tsinghua_source_success">Konfigurasi sumber Tsinghua berjaya</string>
     <string name="ffmpeg_video_info">Maklumat video</string>
     <string name="ffmpeg_video_info_desc">Dapatkan maklumat terperinci fail video</string>
     <string name="ffmpeg_video_output_placeholder">Laluan fail output (pilihan)</string>
@@ -2559,15 +2320,12 @@
     <string name="loading_app_state">Memuatkan keadaan aplikasi...</string>
     <string name="setup_wizard">Panduan persediaan</string>
     <string name="setup_wizard_icon_desc">Ikon panduan persediaan</string>
-    <string name="cannot_start_shizuku_app">Tidak dapat memulakan aplikasi Shizuku</string>
     <string name="cannot_open_doc_link">Tidak dapat membuka pautan dokumen</string>
-    <string name="welcome_termux_config">Selamat datang ke alat konfigurasi Termux\nKlik butang yang sepadan untuk mula mengkonfigurasi</string>
     <string name="executing_task">Sedang melaksanakan: %1$s...</string>
     <string name="feature_overlay_window">Tetingkap terapung</string>
     <string name="feature_file_operations">Operasi fail</string>
     <string name="feature_screen_auto_click">Klik automatik skrin</string>
     <string name="feature_system_permission_modification">Pengubahsuaian kebenaran sistem</string>
-    <string name="feature_termux_support">Sokongan terminal</string>
     <string name="feature_run_js">Skrin maya</string>
     <string name="feature_plugin_market_mcp">Pasaran plugin MCP</string>
     <string name="supported">Disokong</string>
@@ -2686,18 +2444,7 @@
     <string name="perm_desc_read_sms">Benarkan aplikasi membaca SMS</string>
     <string name="perm_desc_receive_wap_push">Benarkan aplikasi menerima mesej tolakan WAP</string>
     <string name="perm_desc_receive_mms">Benarkan aplikasi menerima MMS</string>
-    <string name="operit_terminal_wizard_title">Panduan Persediaan OperitTerminal</string>
-    <string name="operit_terminal_not_installed">OperitTerminal tidak dipasang</string>
-    <string name="operit_terminal_update_available">Kemas kini OperitTerminal tersedia</string>
-    <string name="operit_terminal_up_to_date">OperitTerminal sudah versi terkini</string>
-    <string name="operit_terminal_install_description">OperitTerminal ialah aplikasi terminal yang berkuasa, menawarkan persekitaran Linux lengkap dan fungsi pengurusan pakej. Kami perlu memasang aplikasi ini terlebih dahulu.</string>
-    <string name="operit_terminal_install_button">Pasang OperitTerminal</string>
 
-    <string name="operit_terminal_update_description">Versi baharu OperitTerminal ditemui, disyorkan untuk dikemas kini bagi mendapatkan fungsi dan keserasian yang lebih baik.</string>
-    <string name="operit_terminal_release_notes">Nota kemas kini: %1$s</string>
-    <string name="operit_terminal_update_button">Kemas kini OperitTerminal</string>
-    <string name="operit_terminal_latest_description">Tahniah! Anda telah memasang versi terkini OperitTerminal, anda boleh mula menggunakan fungsi terminal yang berkuasa.</string>
-    <string name="operit_terminal_open_button">Buka OperitTerminal</string>
     <string name="functional_model_config_title">Tetapan Konfigurasi Model Fungsian</string>
     <string name="functional_model_config_desc">Tetapkan konfigurasi model berasingan untuk fungsi yang berbeza, membolehkan setiap fungsi menggunakan tetapan API yang paling sesuai.</string>
     <string name="manage_all_model_configs">Urus semua konfigurasi model</string>
@@ -2760,17 +2507,7 @@
     <string name="workspace_opening_hint">Memulakan perkhidmatan pratonton tempatan, sila tunggu</string>
     <string name="chat_update_workspace_server_failed">Gagal mengemas kini ruang kerja web: %1$s</string>
     <string name="chat_stop_workspace_server_failed">Gagal menghentikan ruang kerja web: %1$s</string>
-    <string name="chat_terminal_requires_android_8">Fungsi terminal memerlukan Android 8.0 atau lebih tinggi</string>
-    <string name="chat_create_dedicated_terminal_session_failed">Tidak dapat mencipta sesi terminal berdedikasi</string>
-    <string name="chat_create_workspace_terminal_session_failed">Tidak dapat mencipta sesi terminal ruang kerja</string>
     <string name="chat_execute_command_failed">Gagal melaksanakan arahan: %1$s</string>
-    <string name="workspace_command_already_running">Sudah ada arahan ruang kerja sedang berjalan</string>
-    <string name="workspace_command_running">Arahan sedang berjalan</string>
-    <string name="workspace_command_cancelling">Membatalkan arahan...</string>
-    <string name="workspace_command_finished">Pelaksanaan selesai</string>
-    <string name="workspace_command_waiting_output">Menunggu output arahan...</string>
-    <string name="workspace_command_no_output">Arahan tiada output</string>
-    <string name="workspace_command_hide">Sembunyi</string>
     <string name="chat_start_ai_computer_failed">Gagal memulakan komputer AI: %1$s</string>
     <string name="chat_ai_computer_closed_due_to_workspace">Komputer AI telah ditutup (kerana membuka ruang kerja)</string>
     <string name="thinking_mode">Mod berfikir</string>
@@ -3671,8 +3408,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="screen_title_chat_backup_settings">Sandaran &amp; Pemulihan Data</string>
     <string name="screen_title_language_settings">Tetapan Bahasa</string>
     <string name="screen_title_file_manager">Pengurus Fail</string>
-    <string name="screen_title_terminal">Terminal Perintah</string>
-    <string name="screen_title_terminal_auto_config">Konfigurasi Automatik Terminal</string>
     <string name="screen_title_app_permissions">Pengurusan Kebenaran Aplikasi</string>
     <string name="screen_title_ui_debugger">Alat Nyahpepijat UI</string>
     <string name="screen_title_shell_executor">Pelaksana Perintah</string>
@@ -3854,15 +3589,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="title_label">Tajuk</string>
     <string name="url_label">URL</string>
     <string name="settings_config">Tetapan</string>
-    <string name="configure_terminal_environment">Konfigurasi Persekitaran Terminal</string>
-    <string name="nodejs_pip_environment_ready">Persekitaran NodeJS dan pip sudah sedia</string>
-    <string name="pnpm_installed_need_pip">pnpm telah dipasang, perlu mengkonfigurasi pip</string>
-    <string name="pip_installed_need_pnpm">pip telah dipasang, perlu mengkonfigurasi pnpm</string>
-    <string name="need_configure_nodejs_pip">Perlu mengkonfigurasi persekitaran NodeJS dan pip</string>
-    <string name="terminal_environment_setup_description">Perlu mengkonfigurasi persekitaran NodeJS (pnpm) dan pip dalam terminal untuk menyokong pelaksanaan pemalam MCP. Klik butang di bawah untuk memasuki antara muka konfigurasi terminal dan melengkapkan tetapan.</string>
-    <string name="go_to_terminal_config">Pergi ke Konfigurasi Terminal</string>
-    <string name="nodejs_pip_environment_configured">Persekitaran NodeJS dan pip telah dikonfigurasi, fungsi pemalam MCP boleh digunakan dengan normal.</string>
-    <string name="open_terminal">Buka Terminal</string>
     <string name="login_github_to_manage_mcp_plugins">Log masuk ke GitHub untuk menerbitkan dan mengurus pemalam MCP anda</string>
     <string name="login_github_for_skill_market">Log masuk ke GitHub untuk pengalaman Pasaran Skill yang lebih baik</string>
     <string name="login_github_to_manage_scripts">Log masuk ke GitHub untuk menerbitkan dan mengurus skrip anda</string>
@@ -4791,6 +4517,11 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="ui_accessibility_mode_description">Mengoptimumkan tingkah laku automasi UI untuk pengguna aksesibiliti seperti TalkBack, mengutamakan langkah-langkah operasi yang boleh dibaca, dan melaksanakan klik automatik dengan berhati-hati.</string>
     <string name="experimental_virtual_display">Skrin Maya Eksperimen</string>
     <string name="experimental_virtual_display_description">Menggunakan automasi ADB+Shizuku berasaskan skrin maya, fungsi masih dalam fasa eksperimen dan mungkin tidak stabil.</string>
+    <string name="live_service_notification_title">Operit Live</string>
+    <string name="live_capture_unavailable">Saluran pemerhatian skrin utama tidak tersedia (memerlukan persekitaran ROM istimewa)</string>
+    <string name="live_service_notification_text">Saluran pemerhatian dan automasi Live sedang berjalan</string>
+    <string name="live_secure_capture">Tangkapan halaman selamat</string>
+    <string name="live_secure_capture_description">Menambahkan flag SECURE pada cermin skrin Live supaya kandungan dilindungi DRM boleh ditangkap; dihadkan dasar DRM pada sesetengah peranti, dilumpuhkan secara lalai</string>
     <string name="hide_runtime_task_view">Sembunyikan Paparan Tugas Semasa Runtime</string>
     <string name="hide_runtime_task_view_description">Semasa AI memproses mesej atau melaksanakan alat, sembunyikan kad tugas aplikasi dari tugas terkini sistem untuk mengelakkan ditutup secara tidak sengaja dalam tugas terkini.</string>
     <string name="default_profile_name">Profil Lalai</string>
@@ -5059,12 +4790,9 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="toolreg_execute_shell_desc">Laksanakan ADB Shell: %1$s</string>
     <string name="toolreg_close_all_virtual_displays_desc">Tutup semua paparan maya</string>
     <string name="toolreg_unnamed">Tanpa nama</string>
-    <string name="toolreg_create_terminal_session_desc">Cipta atau dapatkan sesi terminal: %1$s</string>
     <string name="toolreg_execute_in_terminal_session_desc">Laksanakan dalam sesi terminal "%1$s": %2$s</string>
     <string name="toolreg_execute_hidden_terminal_command_desc">Laksanakan dalam pelaksana terminal tersembunyi "%1$s": %2$s</string>
-    <string name="toolreg_close_terminal_session_desc">Tutup sesi terminal: %1$s</string>
     <string name="toolreg_input_in_terminal_session_desc">Tulis input ke sesi terminal "%1$s" (kawalan=%2$s)</string>
-    <string name="toolreg_get_terminal_session_screen_desc">Dapatkan kandungan skrin semasa sesi terminal "%1$s" (skrin tunggal)</string>
     <string name="toolreg_query_memory_desc">Siasat pangkalan ingatan: %1$s</string>
     <string name="toolreg_get_memory_by_title_desc">Dapatkan ingatan mengikut tajuk: %1$s</string>
     <string name="toolreg_user_pref_birth_date">Tarikh lahir</string>
@@ -5522,7 +5250,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="theme_font_cursive">Fon tulisan tangan (Cursive)</string>
 
     <string name="mcp_command_hint">Satu arahan setiap baris, pastikan arahan betul. Arahan permulaan akan dilangkau secara automatik.</string>
-    <string name="mcp_deploy_commands">Arahan penyebaran</string>
     <string name="mcp_loading_commands">Memuatkan arahan...</string>
     <string name="mcp_lines_suffix">%1$d baris</string>
     <string name="mcp_confirm_and_deploy">Sahkan dan sebarkan</string>
@@ -5585,19 +5312,12 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="stream_markdown_reset">Tetapkan semula</string>
     <string name="stream_markdown_speed">Kelajuan (x%1$s)</string>
     <string name="stream_markdown_static_render">Render statik</string>
-    <string name="mcp_deploy_success">Penempatan berjaya</string>
-    <string name="mcp_deploy_failed">Penempatan gagal</string>
-    <string name="mcp_deploy_in_progress">Sedang ditempatkan</string>
     <string name="mcp_env_variables">Pembolehubah persekitaran</string>
     <string name="mcp_close">Tutup</string>
     <string name="mcp_preparing_deploy">Menyediakan penempatan...</string>
-    <string name="mcp_deploy_completed">Penempatan selesai</string>
-    <string name="mcp_deploy_log">Log penempatan</string>
     <string name="mcp_lines_count">%1$d baris</string>
     <string name="mcp_retry">Cuba semula</string>
-    <string name="mcp_deploy_confirm_title">Pengesahan Penempatan</string>
     <string name="mcp_deploying_plugin">Akan tempatkan pemalam: %1$s</string>
-    <string name="mcp_deploy_choice_hint">Anda boleh pilih penempatan langsung atau perintah penempatan tersuai</string>
     <string name="mcp_cancel">Batal</string>
     <string name="mcp_custom_command">Perintah tersuai</string>
     <string name="mcp_direct_deploy">Penempatan langsung</string>
@@ -5636,8 +5356,7 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="stream_tag_required">Tag mesti ditetapkan</string>
     <string name="stream_data_required">Aliran data mesti ditetapkan</string>
     <string name="deepseek_request_body">Badan permintaan mod penaakulan DeepSeek akhir: </string>
-    <string name="admin_shell_permission">Memerlukan keizinan pentadbir peranti untuk melaksanakan operasi sistem</string>
-    <string name="virtual_display_not_ready">Skrin maya Shower belum sedia</string>
+    <string name="virtual_display_not_ready">Paparan maya belum sedia</string>
     <string name="xml_content">Kandungan XML</string>
     <string name="browser_preview">Pratonton pelayar</string>
     <string name="edittext_empty">EditText tidak boleh kosong</string>
@@ -5903,28 +5622,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="attachment_memory_folders_added">%1$d folder ingatan telah ditambah</string>
     <string name="attachment_memory_folder_failed">Gagal menambah folder ingatan: %1$s</string>
     <string name="attachment_unknown_file">Fail tidak diketahui</string>
-    <string name="mcp_deployment_start">Mula penyebaran pemalam: %1$s</string>
-    <string name="mcp_deployment_output_prefix">Output: </string>
-    <string name="mcp_deployment_virtual_plugin_detected">Pemalam jenis %1$s dikesan, laksanakan penyebaran minimum</string>
-    <string name="mcp_deployment_cannot_create_terminal">Tidak dapat membuat sesi terminal</string>
-    <string name="mcp_deployment_creating_directory">Membuat direktori pemalam: %1$s</string>
-    <string name="mcp_deployment_create_directory_failed">Gagal membuat direktori pemalam</string>
-    <string name="mcp_deployment_minimal_complete">Penyebaran minimum pemalam jenis %1$s selesai, boleh digunakan terus</string>
-    <string name="mcp_deployment_plugin_not_exist">Direktori pemalam tidak wujud: %1$s</string>
-    <string name="mcp_deployment_using_market_config">Menggunakan konfigurasi pasaran untuk menyebarkan pemalam...</string>
-    <string name="mcp_deployment_analyzing_structure">Menganalisis struktur projek...</string>
-    <string name="mcp_deployment_saving_config">Menyimpan konfigurasi MCP...</string>
-    <string name="mcp_deployment_save_config_failed">Gagal menyimpan konfigurasi MCP</string>
-    <string name="mcp_deployment_error">Ralat penyebaran: %1$s</string>
-    <string name="mcp_deployment_cannot_determine">Tidak dapat menentukan cara menyebarkan pemalam ini: %1$s</string>
-    <string name="mcp_deployment_copying_files">Menyalin fail pemalam ke direktori sasaran...</string>
-    <string name="mcp_deployment_copy_failed">Gagal menyalin fail ke direktori sasaran: %1$s</string>
-    <string name="mcp_deployment_switching_directory">Beralih ke direktori pemalam</string>
-    <string name="mcp_deployment_switch_failed">Gagal beralih ke direktori pemalam</string>
-    <string name="mcp_deployment_executing_command">Melaksanakan arahan (%1$d/%2$d): %3$s</string>
-    <string name="mcp_deployment_non_critical_failed">Arahan tidak kritikal gagal, teruskan langkah seterusnya: %1$s</string>
-    <string name="mcp_deployment_command_failed">Arahan gagal dilaksanakan: %1$s</string>
-    <string name="mcp_deployment_success">Penyebaran pemalam berjaya: %1$s\nLaluan penyebaran: %2$s\nNama pelayan: %3$s\nMasa penyebaran: %4$s</string>
     <string name="mcp_repository_server_not_found">Maklumat pelayan sepadan tidak ditemui</string>
     <string name="mcp_repository_install_error">Ralat semasa pemasangan: %1$s</string>
     <string name="mcp_repository_invalid_github_url">URL repositori GitHub tidak sah</string>
@@ -6053,7 +5750,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="openai_connection_test_failed">Ujian sambungan gagal: %1$s</string>
     <string name="phone_agent_need_debug_permission">Memerlukan kebenaran nyahpepijat/pentadbir/Root dan skrin maya eksperimen diaktifkan untuk menggunakan automasi skrin maya.</string>
     <string name="phone_agent_shizuku_unavailable">Shizuku tidak tersedia, tidak dapat memulakan skrin maya.</string>
-    <string name="phone_agent_virtual_screen_service_start_failed">Gagal memulakan perkhidmatan skrin maya.</string>
     <string name="phone_agent_virtual_screen_create_failed">Gagal mencipta skrin maya.</string>
     <string name="phone_agent_virtual_screen_prewarm_failed">Gagal pra-mula skrin maya: %1$s</string>
 
@@ -6081,11 +5777,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="context_unit_lines">baris</string>
     <string name="context_unit_times">kali</string>
     <string name="context_reset_all_settings">Tetapkan semula semua tetapan</string>
-    <string name="mcp_deploy_error_cannot_get_path">Tidak dapat mendapatkan laluan pemalam: %1$s</string>
-    <string name="mcp_deploy_error_cannot_determine">Tidak dapat menentukan cara untuk menyebarkan pemalam ini, sila rujuk README untuk penyebaran manual</string>
-    <string name="mcp_deploy_error_analysis_failed">Ralat semasa menganalisis pemalam: %1$s</string>
-    <string name="mcp_deploy_status_preparing">Menyediakan penyebaran pemalam</string>
-    <string name="mcp_deploy_output_prefix">Output:</string>
     <string name="model_config_error_valid_context_length">Sila masukkan panjang konteks yang sah</string>
     <string name="model_config_error_valid_max_context_length">Sila masukkan panjang konteks maksimum yang sah</string>
     <string name="model_config_error_save_failed">Gagal menyimpan</string>
@@ -6205,7 +5896,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="apk_zip_align_failed">Penyelarasan ZIP gagal: %1$s</string>
     <string name="apk_zip_align_path">Laluan penyelarasan ZIP: %1$s</string>
     <string name="apk_zipalign_not_found">zipalign tidak ditemui, pastikan Android SDK build-tools dikonfigurasi dengan betul</string>
-    <string name="admin_shell_requires_permission">Memerlukan keizinan root atau keizinan adb</string>
     <string name="default_option">Lalai</string>
     <string name="character_card_single_char">Aksara tunggal</string>
     <string name="character_group_single_char">Kumpulan</string>
@@ -6309,7 +5999,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="root_execution_mode_force_exec">KernelSU Manual</string>
     <string name="root_custom_su_command">Perintah su tersuai (Mod KernelSU)</string>
     <string name="root_custom_su_command_description">Hanya berkesan dalam mod KernelSU, boleh isi perintah seperti su atau su --mount-master.</string>
-    <string name="global_display_virtual_screen_bitrate">Kadar bit skrin maya</string>
     <string name="global_display_status_indicator_style">Gaya penunjuk status automasi</string>
     <string name="global_display_screenshot_settings">Tetapan tangkapan skrin automasi</string>
     <string name="global_display_image_format">Format imej</string>
@@ -6407,11 +6096,7 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="sys_op_stop_app_requested">Permintaan untuk menghentikan proses latar belakang aplikasi telah dibuat.</string>
     <string name="sys_op_location_permission_not_granted">Kebenaran lokasi tidak diberikan, sila hidupkan kebenaran lokasi dalam tetapan aplikasi</string>
     <string name="sys_op_cannot_get_location">Tidak dapat mendapatkan maklumat lokasi, pastikan perkhidmatan lokasi diaktifkan</string>
-    <string name="admin_device_admin_component_name_not_set">Nama komponen pentadbir peranti tidak ditetapkan</string>
-    <string name="admin_device_admin_permission_not_activated">Kebenaran pentadbir peranti aplikasi tidak diaktifkan</string>
-    <string name="admin_need_device_admin_permission">Memerlukan kebenaran pentadbir peranti untuk mendengar operasi UI sistem</string>
     <string name="admin_already_listening">Sudah mendengar</string>
-    <string name="admin_ui_listener_started">Pendengaran operasi UI pentadbir peranti telah dimulakan</string>
     <string name="admin_start_failed">Gagal memulakan: %1$s</string>
     <string name="markdown_parse_failed">Gagal menghuraikan format Markdown: %1$s</string>
     <string name="markdown_import_from">Import dari Markdown</string>
@@ -6424,10 +6109,7 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="pathfinder_found_path">Menggunakan algoritma %1$s untuk mencari laluan</string>
     <string name="pathfinder_cannot_find_path">Tidak dapat mencari laluan keadaan yang sah dari \'%1$s\' ke \'%2$s\'</string>
     <string name="shizuku_start_service_intro">Untuk memulakan perkhidmatan Shizuku:\n</string>
-    <string name="shizuku_step1_ensure_installed">1. Pastikan aplikasi Shizuku telah dipasang\n</string>
-    <string name="shizuku_step2_adb_command">2. Gunakan arahan ADB untuk memulakan Shizuku:\n</string>
     <string name="shizuku_or">atau\n\n</string>
-    <string name="shizuku_step2_follow_instructions">2. Buka aplikasi Shizuku dan ikuti arahan di skrin</string>
     <string name="shizuku_install_update">Kemas kini</string>
     <string name="shizuku_install_install">Pasang</string>
     <string name="shizuku_install_unknown">Tidak diketahui</string>
@@ -6494,22 +6176,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="openai_image_omitted">Kandungan imej telah ditinggalkan, model semasa tidak menyokong pemprosesan imej</string>
     <string name="workflow_non_execute_node">Nod bukan pelaksanaan</string>
     <string name="workflow_node_no_action">Nod tidak mempunyai konfigurasi actionType</string>
-    <string name="terminal_error_missing_session_name">Parameter hilang: session_name</string>
-    <string name="terminal_error_create_session">Ralat semasa mencipta atau mendapatkan sesi terminal: %1$s</string>
-    <string name="terminal_error_missing_command">Parameter hilang: command</string>
-    <string name="terminal_error_missing_session_id">Parameter hilang: session_id</string>
-    <string name="terminal_error_session_not_exist">Sesi terminal \'%1$s\' tidak wujud atau telah ditutup</string>
-    <string name="terminal_error_command_failed">Perintah terminal gagal dilaksanakan</string>
-    <string name="terminal_error_command_non_zero_exit">Perintah terminal keluar dengan status bukan sifar (exitCode=%1$d)</string>
-    <string name="terminal_error_execute_command">Ralat semasa melaksanakan perintah terminal: %1$s</string>
-    <string name="terminal_error_hidden_command_non_zero_exit">Perintah terminal tersembunyi keluar dengan status bukan sifar (exitCode=%1$d)</string>
-    <string name="terminal_error_execute_hidden_command">Ralat semasa melaksanakan perintah terminal tersembunyi: %1$s</string>
-    <string name="terminal_session_closed">Sesi terminal \'%1$s\' telah berjaya ditutup.</string>
-    <string name="terminal_error_close_session">Ralat semasa menutup sesi terminal \'%1$s\': %2$s</string>
-    <string name="terminal_error_missing_input_or_control">Parameter hilang: input atau control (sekurang-kurangnya satu diperlukan)</string>
-    <string name="terminal_error_control_requires_input">Parameter %1$s perlu digunakan bersama input</string>
-    <string name="terminal_error_ctrl_input_single_char">Apabila control=ctrl, input mestilah aksara tunggal</string>
-    <string name="terminal_error_ctrl_input_unsupported">input tidak disokong untuk control=ctrl: %1$s</string>
 
     <string name="conversation_media_video_link">&lt;link type="video" id="%1$s"&gt;Video&lt;/link&gt;</string>
     <string name="conversation_analyze_image_prompt">Sila analisis imej ini.</string>
@@ -6552,11 +6218,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="graph_from_node_not_exist">Nod permulaan \'%1$s\' tidak wujud</string>
     <string name="graph_to_node_not_exist">Nod sasaran \'%1$s\' tidak wujud</string>
 
-    <string name="terminal_error_unsupported_control">Kawalan tidak disokong: %1$s</string>
-    <string name="terminal_error_input">Ralat semasa menulis input ke sesi terminal</string>
-    <string name="terminal_error_input_with_reason">Ralat semasa menulis input ke sesi terminal: %1$s</string>
-    <string name="terminal_error_get_screen">Ralat semasa mendapatkan kandungan skrin semasa sesi terminal: %1$s</string>
-    <string name="terminal_input_sent">Input telah ditulis ke sesi terminal \'%1$s\' (acceptedChars=%2$d)</string>
     <string name="openai_stt_error_url_not_set">URL OpenAI STT tidak ditetapkan, sila isi alamat antara muka lengkap (cth. https://api.openai.com/v1/audio/transcriptions).</string>
     <string name="openai_stt_error_url_invalid_scheme">URL OpenAI STT mesti bermula dengan http:// atau https://.</string>
     <string name="openai_stt_error_url_invalid_path">URL OpenAI STT mesti mengandungi /v1/audio/transcriptions (sila isi lengkap sehingga audio/transcriptions).</string>

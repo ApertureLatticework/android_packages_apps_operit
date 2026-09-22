@@ -1,22 +1,28 @@
 package com.ai.assistance.operit.data.model
 
-import io.objectbox.annotation.Backlink
-import io.objectbox.annotation.Convert
-import io.objectbox.annotation.Entity
-import io.objectbox.annotation.Id
-import io.objectbox.annotation.Index
-import io.objectbox.relation.ToMany
-import io.objectbox.relation.ToOne
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Ignore
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import java.util.Date
 import java.util.UUID
 
 /**
  * 核心记忆单元 (Memory Unit)
  * 代表一个独立的知识片段、事件、概念或任何AI需要记住的东西。
+ *
+ * Room 实体。原 ObjectBox ToMany/ToOne/Backlink 关系改为显式外键列
+ * （MemoryLink.sourceId/targetId、DocumentChunk.memoryId、MemoryTagJunction 关联表）；
+ * 下列 @Ignore 集合字段仅作为仓储层读取时填充的只读快照，不参与持久化，
+ * 写操作必须走 MemoryRepository 提供的专用方法。
  */
-@Entity
+@Entity(
+    tableName = "memory",
+    indices = [Index("uuid"), Index("folderPath")]
+)
 data class Memory(
-    @Id var id: Long = 0,
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
     var uuid: String = UUID.randomUUID().toString(),
 
     // --- 核心内容 (Core Content) ---
@@ -29,20 +35,18 @@ data class Memory(
     var credibility: Float = 0.5f, // 可信度 (0.0 to 1.0)
     var importance: Float = 0.5f,  // 重要性 (0.0 to 1.0)
 
-    // 新增：如果这是一个文档节点，则存储文档的路径/URI
+    // 如果这是一个文档节点，则存储文档的路径/URI
     var documentPath: String? = null,
-    // 新增：标记此记忆是否代表一个外部文档
+    // 标记此记忆是否代表一个外部文档
     var isDocumentNode: Boolean = false,
-    // 新增：如果这是一个文档节点，则存储其区块索引文件的路径
+    // 如果这是一个文档节点，则存储其区块索引文件的路径
     var chunkIndexFilePath: String? = null,
 
-    // 新增：文件夹路径，用于分类组织记忆（如 "工作/项目A" 或 "生活/健康"）
-    // 使用可空类型以兼容旧数据，null 视为"未分类"
-    @Index
+    // 文件夹路径，用于分类组织记忆（如 "工作/项目A" 或 "生活/健康"）
+    // null 视为"未分类"
     var folderPath: String? = null,
 
-    // 文本内容的向量嵌入
-    @Convert(converter = EmbeddingConverter::class, dbType = ByteArray::class)
+    // 文本内容的向量嵌入（MemoryDbConverters 编码为 BLOB）
     var embedding: Embedding? = null,
 
     // --- 时间戳 (Timestamps) ---
@@ -50,64 +54,99 @@ data class Memory(
     var updatedAt: Date = Date(),
     var lastAccessedAt: Date = Date()
 ) {
-    // 使用 ToMany 关联多个标签
-    lateinit var tags: ToMany<MemoryTag>
+    /** 该记忆的标签快照（读取时由仓储层填充） */
+    @Ignore
+    var tags: List<MemoryTag> = emptyList()
 
-    // 存储与该记忆相关的任意键值对属性
-    lateinit var properties: ToMany<MemoryProperty>
+    /** 从该记忆出发的关联快照（读取时由仓储层填充，两端对象已水合） */
+    @Ignore
+    var links: List<MemoryLink> = emptyList()
 
-    // 从这个记忆出发的关联
-    lateinit var links: ToMany<MemoryLink>
+    /** 指向该记忆的入边快照（读取时由仓储层填充，两端对象已水合） */
+    @Ignore
+    var backlinks: List<MemoryLink> = emptyList()
 
-    // 这个记忆作为目标被哪些关联指向 (反向链接)
-    @Backlink(to = "target")
-    lateinit var backlinks: ToMany<MemoryLink>
-
-    // 新增：如果这是一个文档节点，则包含其所有内容区块
-    @Backlink(to = "memory")
-    lateinit var documentChunks: ToMany<DocumentChunk>
+    /** 文档节点的区块快照（仅 getChunksForMemory 等专用读取路径填充） */
+    @Ignore
+    var documentChunks: List<DocumentChunk> = emptyList()
 }
 
 /**
  * 记忆标签 (Memory Tag)
- * 用于对记忆进行分类和组织，支持层级结构。
+ * 用于对记忆进行分类和组织。
+ * 原 ObjectBox parent 自引用与 memories 反向关系在代码库中无任何消费方，随迁移裁除。
  */
-@Entity
+@Entity(
+    tableName = "memory_tag",
+    indices = [Index("name")]
+)
 data class MemoryTag(
-    @Id var id: Long = 0,
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
     var name: String = "" // 标签名称
-) {
-    // 父标签，用于构建层级关系
-    lateinit var parent: ToOne<MemoryTag>
+)
 
-    // 该标签下的所有记忆
-    @Backlink(to = "tags")
-    lateinit var memories: ToMany<Memory>
-}
+/**
+ * 记忆-标签多对多关联表（替代 ObjectBox ToMany 隐式关联）。
+ */
+@Entity(
+    tableName = "memory_tag_junction",
+    primaryKeys = ["memoryId", "tagId"],
+    indices = [Index("tagId")],
+    foreignKeys = [
+        ForeignKey(
+            entity = Memory::class,
+            parentColumns = ["id"],
+            childColumns = ["memoryId"],
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = MemoryTag::class,
+            parentColumns = ["id"],
+            childColumns = ["tagId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
+data class MemoryTagJunction(
+    val memoryId: Long,
+    val tagId: Long
+)
 
 /**
  * 记忆关联 (Memory Link)
- * 定义记忆之间的关系。
+ * 定义记忆之间的关系。sourceId/targetId 为显式外键（替代 ObjectBox ToOne）。
  */
-@Entity
+@Entity(
+    tableName = "memory_link",
+    indices = [Index("sourceId"), Index("targetId")],
+    foreignKeys = [
+        ForeignKey(
+            entity = Memory::class,
+            parentColumns = ["id"],
+            childColumns = ["sourceId"],
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = Memory::class,
+            parentColumns = ["id"],
+            childColumns = ["targetId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
 data class MemoryLink(
-    @Id var id: Long = 0,
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
     var type: String = "related", // 关联类型 (e.g., "causes", "explains", "part_of")
     var weight: Float = 1.0f, // 关联强度 (0.0 to 1.0)
-    var description: String = "" // 关联的详细描述
+    var description: String = "", // 关联的详细描述
+    var sourceId: Long = 0,
+    var targetId: Long = 0
 ) {
-    // 关联的源头和目标
-    lateinit var source: ToOne<Memory>
-    lateinit var target: ToOne<Memory>
-}
+    /** 源记忆对象快照（读取时由仓储层水合，可为 null 表示悬空引用） */
+    @Ignore
+    var sourceMemory: Memory? = null
 
-/**
- * 记忆属性 (Memory Property)
- * 灵活的键值对存储，用于扩展记忆的元数据。
- */
-@Entity
-data class MemoryProperty(
-    @Id var id: Long = 0,
-    var key: String = "",
-    var value: String = ""
-) 
+    /** 目标记忆对象快照（读取时由仓储层水合，可为 null 表示悬空引用） */
+    @Ignore
+    var targetMemory: Memory? = null
+}

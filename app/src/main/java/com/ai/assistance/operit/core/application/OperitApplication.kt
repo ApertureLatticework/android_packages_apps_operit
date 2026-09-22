@@ -25,12 +25,12 @@ import com.ai.assistance.operit.api.chat.AIForegroundService
 import com.ai.assistance.operit.api.chat.library.MemoryAutoSaveScheduler
 import com.ai.assistance.operit.plugins.PluginRegistry
 import com.ai.assistance.operit.plugins.lifecycle.AppLifecycleEvent
+import com.ai.assistance.operit.services.live.LiveService
 import com.ai.assistance.operit.plugins.lifecycle.AppLifecycleHookParams
 import com.ai.assistance.operit.plugins.lifecycle.AppLifecycleHookPluginRegistry
 import com.ai.assistance.operit.core.config.SystemPromptConfig
 import com.ai.assistance.operit.core.tools.AIToolHandler
 import com.ai.assistance.operit.core.tools.system.AndroidShellExecutor
-import com.ai.assistance.operit.core.tools.system.Terminal
 import com.ai.assistance.operit.core.workflow.WorkflowSchedulerInitializer
 import com.ai.assistance.operit.data.backup.RoomDatabaseBackupPreferences
 import com.ai.assistance.operit.data.backup.RoomDatabaseBackupScheduler
@@ -55,12 +55,9 @@ import com.ai.assistance.operit.util.SkillRepoZipPoolManager
 import com.ai.assistance.operit.util.SerializationSetup
 import com.ai.assistance.operit.util.TextSegmenter
 import com.ai.assistance.operit.util.WaifuMessageProcessor
-import com.ai.assistance.operit.core.tools.agent.ShowerController
+import com.ai.assistance.operit.core.tools.agent.NativeVirtualDisplay
 import com.ai.assistance.operit.ui.common.displays.VirtualDisplayOverlay
 import com.tom_roush.pdfbox.android.PDFBoxResourceLoader
-import com.ai.assistance.operit.core.tools.system.shower.OperitShowerShellRunner
-import com.ai.assistance.showerclient.ShowerEnvironment
-import com.ai.assistance.showerclient.ShowerLogSink
 import java.io.File
 import java.util.Locale
 import kotlinx.coroutines.CoroutineScope
@@ -124,6 +121,11 @@ class OperitApplication : Application(), ImageLoaderFactory, WorkConfiguration.P
         // Workers and receivers can cold-start the process without creating an Activity.
         // Initialize process-wide preference dependencies before those entry points can run.
         initAndroidPermissionPreferences(applicationContext)
+
+        // Live 常驻服务（步骤 6）：特权档下随应用启动拉起，开机自启由 LiveBootReceiver 覆盖
+        applicationScope.launch {
+            LiveService.ensureStarted(this@OperitApplication)
+        }
 
         configureOpenMpEnvironment()
         Thread.setDefaultUncaughtExceptionHandler(GlobalExceptionHandler(this))
@@ -235,36 +237,6 @@ class OperitApplication : Application(), ImageLoaderFactory, WorkConfiguration.P
         // 初始化AndroidShellExecutor上下文
         AndroidShellExecutor.setContext(applicationContext)
         AppLogger.d(TAG, "【启动计时】AndroidShellExecutor初始化完成 - ${System.currentTimeMillis() - startTime}ms")
-
-        // 初始化 Shower 虚拟屏客户端的 ShellRunner 环境
-        ShowerEnvironment.shellRunner = OperitShowerShellRunner
-        ShowerEnvironment.logSink =
-            ShowerLogSink { priority, tag, message, throwable ->
-                when (priority) {
-                    AppLogger.VERBOSE ->
-                        if (throwable != null) AppLogger.v(tag, message, throwable) else AppLogger.v(tag, message)
-                    AppLogger.DEBUG ->
-                        if (throwable != null) AppLogger.d(tag, message, throwable) else AppLogger.d(tag, message)
-                    AppLogger.INFO ->
-                        if (throwable != null) AppLogger.i(tag, message, throwable) else AppLogger.i(tag, message)
-                    AppLogger.WARN ->
-                        if (throwable != null) AppLogger.w(tag, message, throwable) else AppLogger.w(tag, message)
-                    AppLogger.ERROR ->
-                        if (throwable != null) AppLogger.e(tag, message, throwable) else AppLogger.e(tag, message)
-                    AppLogger.ASSERT ->
-                        if (throwable != null) AppLogger.wtf(tag, message, throwable) else AppLogger.wtf(tag, message)
-                    else ->
-                        if (throwable != null) {
-                            AppLogger.println(priority, tag, "$message\n${AppLogger.getStackTraceString(throwable)}")
-                        } else {
-                            AppLogger.println(priority, tag, message)
-                        }
-                }
-            }
-        // Shower logs are already mirrored to AppLogger; avoid duplicate system log entries.
-        ShowerEnvironment.emitToSystemLog = false
-        AppLogger.d(TAG, "【启动计时】ShowerEnvironment.shellRunner 已配置 - ${System.currentTimeMillis() - startTime}ms")
-        AppLogger.d(TAG, "【启动计时】ShowerEnvironment.logSink 已配置 - ${System.currentTimeMillis() - startTime}ms")
 
         // 初始化PDFBox资源加载器
         PDFBoxResourceLoader.init(getApplicationContext());
@@ -613,16 +585,7 @@ class OperitApplication : Application(), ImageLoaderFactory, WorkConfiguration.P
             AppLogger.e(TAG, "终止时停止 AIForegroundService 失败: ${e.message}", e)
         }
 
-        // 清理终端管理器和SSH连接
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                Terminal.getInstance(applicationContext).destroy()
-                AppLogger.d(TAG, "应用终止，已清理所有终端会话和SSH连接")
-            }
-        } catch (e: Exception) {
-            AppLogger.e(TAG, "清理终端管理器失败: ${e.message}", e)
-        }
-        
+
         // 在应用终止时关闭LocalWebServer服务器
         try {
             val webServer = LocalWebServer.getInstance(applicationContext, LocalWebServer.ServerType.WORKSPACE)
@@ -634,16 +597,16 @@ class OperitApplication : Application(), ImageLoaderFactory, WorkConfiguration.P
             AppLogger.e(TAG, "关闭本地Web服务器失败: ${e.message}", e)
         }
 
-        // 在应用终止时，关闭虚拟屏幕 Overlay 并断开 Shower WebSocket 连接
+        // 在应用终止时，关闭虚拟屏幕 Overlay 与原生副屏会话
         try {
             VirtualDisplayOverlay.hideAll()
         } catch (e: Exception) {
             AppLogger.e(TAG, "终止时隐藏 VirtualDisplayOverlay 失败: ${e.message}", e)
         }
         try {
-            ShowerController.shutdown()
+            NativeVirtualDisplay.shutdownAll()
         } catch (e: Exception) {
-            AppLogger.e(TAG, "终止时关闭 ShowerController 失败: ${e.message}", e)
+            AppLogger.e(TAG, "终止时关闭原生副屏会话失败: ${e.message}", e)
         }
     }
 

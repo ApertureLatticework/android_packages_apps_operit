@@ -22,7 +22,6 @@ import androidx.compose.material.icons.filled.Extension
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Speed
-import androidx.compose.material.icons.filled.Terminal
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -161,15 +160,13 @@ private fun CpuPage(history: List<PerformanceSnapshot>, latest: PerformanceSnaps
     val deviceColor = MaterialTheme.colorScheme.outline
     val appColor = MaterialTheme.colorScheme.primary
     val pluginColor = MaterialTheme.colorScheme.tertiary
-    val terminalColor = MaterialTheme.colorScheme.secondary
 
     val appLabel = stringResource(R.string.perf_kind_app)
     val pluginLabel = stringResource(R.string.perf_kind_plugin)
-    val terminalLabel = stringResource(R.string.perf_kind_terminal)
     val deviceLabel = stringResource(R.string.perf_kind_device)
 
     val series =
-        remember(appLabel, pluginLabel, terminalLabel, deviceLabel) {
+        remember(appLabel, pluginLabel, deviceLabel) {
             listOf(
                 PerformanceChartSeries(deviceLabel, deviceColor) { it.deviceCpuPercent },
                 PerformanceChartSeries(appLabel, appColor) { snapshot ->
@@ -178,12 +175,6 @@ private fun CpuPage(history: List<PerformanceSnapshot>, latest: PerformanceSnaps
                 PerformanceChartSeries(pluginLabel, pluginColor) { snapshot ->
                     snapshot.entities
                         .filter { entity -> entity.kind == PerformanceEntityKind.PLUGIN }
-                        .takeIf { it.isNotEmpty() }
-                        ?.sumOf { entity -> entity.cpuPercent }
-                },
-                PerformanceChartSeries(terminalLabel, terminalColor) { snapshot ->
-                    snapshot.entities
-                        .filter { entity -> entity.kind == PerformanceEntityKind.TERMINAL }
                         .takeIf { it.isNotEmpty() }
                         ?.sumOf { entity -> entity.cpuPercent }
                 }
@@ -226,14 +217,12 @@ private fun CpuPage(history: List<PerformanceSnapshot>, latest: PerformanceSnaps
 private fun MemoryPage(history: List<PerformanceSnapshot>, latest: PerformanceSnapshot) {
     val appColor = MaterialTheme.colorScheme.primary
     val pluginColor = MaterialTheme.colorScheme.tertiary
-    val terminalColor = MaterialTheme.colorScheme.secondary
 
     val appLabel = stringResource(R.string.perf_kind_app)
     val pluginLabel = stringResource(R.string.perf_kind_plugin)
-    val terminalLabel = stringResource(R.string.perf_kind_terminal)
 
     val series =
-        remember(appLabel, pluginLabel, terminalLabel) {
+        remember(appLabel, pluginLabel) {
             listOf(
                 PerformanceChartSeries(appLabel, appColor) { snapshot ->
                     snapshot.entity(PerformanceEntityKind.APP)?.memoryKb?.toDouble()
@@ -241,12 +230,6 @@ private fun MemoryPage(history: List<PerformanceSnapshot>, latest: PerformanceSn
                 PerformanceChartSeries(pluginLabel, pluginColor) { snapshot ->
                     snapshot.entities
                         .filter { entity -> entity.kind == PerformanceEntityKind.PLUGIN }
-                        .takeIf { it.isNotEmpty() }
-                        ?.sumOf { entity -> entity.memoryKb }?.toDouble()
-                },
-                PerformanceChartSeries(terminalLabel, terminalColor) { snapshot ->
-                    snapshot.entities
-                        .filter { entity -> entity.kind == PerformanceEntityKind.TERMINAL }
                         .takeIf { it.isNotEmpty() }
                         ?.sumOf { entity -> entity.memoryKb }?.toDouble()
                 }
@@ -397,7 +380,6 @@ private fun EntityRow(entity: PerformanceEntitySample, tab: PerformanceTab) {
         when (entity.kind) {
             PerformanceEntityKind.APP -> R.string.perf_kind_app
             PerformanceEntityKind.PLUGIN -> R.string.perf_kind_plugin
-            PerformanceEntityKind.TERMINAL -> R.string.perf_kind_terminal
         }
 
     Row(
@@ -604,7 +586,6 @@ private fun PerformanceEntityKind.icon(): ImageVector =
     when (this) {
         PerformanceEntityKind.APP -> Icons.Default.Speed
         PerformanceEntityKind.PLUGIN -> Icons.Default.Extension
-        PerformanceEntityKind.TERMINAL -> Icons.Default.Terminal
     }
 
 /** KB → 自适应 MB/GB 文本（输入单位 KB）。 */

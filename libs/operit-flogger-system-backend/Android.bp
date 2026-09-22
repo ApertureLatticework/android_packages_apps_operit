@@ -1,0 +1,7 @@
+// com.google.flogger:flogger-system-backend:0.6 · central prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+java_import {
+    name: "operit-flogger-system-backend",
+    jars: ["flogger-system-backend-0.6.jar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

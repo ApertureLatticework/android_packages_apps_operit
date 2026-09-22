@@ -11,7 +11,6 @@ import com.ai.assistance.operit.data.model.ToolParameter
 import com.ai.assistance.operit.data.model.ToolResult
 import com.ai.assistance.operit.data.preferences.CharacterCardToolAccessResolver
 import com.ai.assistance.operit.data.preferences.ResolvedCharacterCardToolAccess
-import com.ai.assistance.operit.integrations.tasker.triggerAIAgentAction
 import com.ai.assistance.operit.services.FloatingChatService
 import com.ai.assistance.operit.ui.common.displays.VirtualDisplayOverlay
 import com.ai.assistance.operit.util.LocaleUtils
@@ -297,107 +296,6 @@ fun registerAllTools(handler: AIToolHandler, context: Context) {
                             error = e.message
                     )
                 }
-            }
-    )
-
-    // 终端命令执行工具 - 一次性收集输出
-    handler.registerTool(
-            name = "create_terminal_session",
-            descriptionGenerator = { tool ->
-                val sessionName = tool.parameters.find { it.name == "session_name" }?.value
-                val displayName = sessionName ?: s(R.string.toolreg_unnamed)
-                s(R.string.toolreg_create_terminal_session_desc, displayName)
-            },
-            executor = { tool ->
-                val terminalTool = ToolGetter.getTerminalCommandExecutor(context)
-                terminalTool.createOrGetSession(tool)
-            }
-    )
-
-    handler.registerTool(
-            name = "execute_in_terminal_session",
-            descriptionGenerator = { tool ->
-                val command = tool.parameters.find { it.name == "command" }?.value ?: ""
-                val sessionId = tool.parameters.find { it.name == "session_id" }?.value
-                s(R.string.toolreg_execute_in_terminal_session_desc, sessionId ?: "", command)
-            },
-            executor = { tool ->
-                val terminalTool = ToolGetter.getTerminalCommandExecutor(context)
-                terminalTool.executeCommandInSession(tool)
-            }
-    )
-
-    handler.registerTool(
-            name = "execute_in_terminal_session_streaming",
-            descriptionGenerator = { tool ->
-                val command = tool.parameters.find { it.name == "command" }?.value ?: ""
-                val sessionId = tool.parameters.find { it.name == "session_id" }?.value
-                s(R.string.toolreg_execute_in_terminal_session_desc, sessionId ?: "", command)
-            },
-            executor =
-                    object : ToolExecutor {
-                        override fun invoke(tool: AITool): ToolResult {
-                            val terminalTool = ToolGetter.getTerminalCommandExecutor(context)
-                            return terminalTool.executeCommandInSession(tool)
-                        }
-
-                        override fun invokeAndStream(
-                                tool: AITool
-                        ): kotlinx.coroutines.flow.Flow<ToolResult> {
-                            val terminalTool = ToolGetter.getTerminalCommandExecutor(context)
-                            return terminalTool.executeCommandInSessionStream(tool)
-                        }
-                    }
-    )
-
-    handler.registerTool(
-            name = "execute_hidden_terminal_command",
-            descriptionGenerator = { tool ->
-                val command = tool.parameters.find { it.name == "command" }?.value ?: ""
-                val executorKey =
-                        tool.parameters.find { it.name == "executor_key" }?.value ?: "default"
-                s(R.string.toolreg_execute_hidden_terminal_command_desc, executorKey, command)
-            },
-            executor = { tool ->
-                val terminalTool = ToolGetter.getTerminalCommandExecutor(context)
-                terminalTool.executeHiddenCommand(tool)
-            }
-    )
-
-    handler.registerTool(
-            name = "close_terminal_session",
-            descriptionGenerator = { tool ->
-                val sessionId = tool.parameters.find { it.name == "session_id" }?.value
-                s(R.string.toolreg_close_terminal_session_desc, sessionId ?: "")
-            },
-            executor = { tool ->
-                val terminalTool = ToolGetter.getTerminalCommandExecutor(context)
-                terminalTool.closeSession(tool)
-            }
-    )
-
-    handler.registerTool(
-            name = "input_in_terminal_session",
-            descriptionGenerator = { tool ->
-                val sessionId = tool.parameters.find { it.name == "session_id" }?.value
-                val control = tool.parameters.find { it.name == "control" }?.value ?: "-"
-                s(R.string.toolreg_input_in_terminal_session_desc, sessionId ?: "", control)
-            },
-            executor = { tool ->
-                val terminalTool = ToolGetter.getTerminalCommandExecutor(context)
-                terminalTool.inputInSession(tool)
-            }
-    )
-
-    handler.registerTool(
-            name = "get_terminal_session_screen",
-            descriptionGenerator = { tool ->
-                val sessionId = tool.parameters.find { it.name == "session_id" }?.value ?: ""
-                s(R.string.toolreg_get_terminal_session_screen_desc, sessionId)
-            },
-            executor = { tool ->
-                val terminalTool = ToolGetter.getTerminalCommandExecutor(context)
-                terminalTool.getSessionScreen(tool)
             }
     )
 
@@ -1458,57 +1356,6 @@ fun registerAllTools(handler: AIToolHandler, context: Context) {
                 deviceInfoTool.invoke(tool)
             }
     )
-    
-    // Tasker事件触发工具
-    handler.registerTool(
-            name = "trigger_tasker_event",
-            descriptionGenerator = { tool ->
-                val taskType = tool.parameters.find { it.name == "task_type" }?.value ?: ""
-                val args = tool.parameters.filter { it.name.startsWith("arg1") }.joinToString(",")
-                s(R.string.toolreg_trigger_tasker_event_desc, taskType, args)
-            },
-            executor = { tool ->
-                val params = tool.parameters.associate { it.name to it.value }
-                val taskType = params["task_type"]
-                if (taskType.isNullOrBlank()) {
-                    ToolResult(
-                        toolName = tool.name,
-                        success = false,
-                        result = StringResultData(""),
-                        error = s(R.string.toolreg_missing_required_param, "task_type")
-                    )
-                } else {
-                    val args = params.filterKeys { it != "task_type" }
-                    try {
-                        context.triggerAIAgentAction(
-                            taskType,
-                            args
-                        )
-                        ToolResult(
-                            toolName = tool.name,
-                            success = true,
-                            result =
-                                    StringResultData(
-                                            s(R.string.toolreg_tasker_event_triggered_result, taskType)
-                                    )
-                        )
-                    } catch (e: Exception) {
-                        ToolResult(
-                            toolName = tool.name,
-                            success = false,
-                            result = StringResultData(""),
-                            error =
-                                    s(
-                                            R.string.toolreg_failed_trigger_tasker_event,
-                                            e.message ?: ""
-                                    )
-                        )
-                    }
-                }
-            }
-    )
-
-    
     // 工作流工具
     val workflowTools = ToolGetter.getWorkflowTools(context)
 

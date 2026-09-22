@@ -12,12 +12,7 @@ private object MarkdownCodeTypefaceCache {
         cachedTypeface?.let { return it }
 
         return synchronized(this) {
-            cachedTypeface
-                ?: runCatching {
-                    context.resources.getFont(com.ai.assistance.operit.terminal.R.font.jetbrains_mono_nerd_font_regular)
-                }.getOrElse {
-                    Typeface.MONOSPACE
-                }.also { cachedTypeface = it }
+            Typeface.MONOSPACE.also { cachedTypeface = it }
         }
     }
 }

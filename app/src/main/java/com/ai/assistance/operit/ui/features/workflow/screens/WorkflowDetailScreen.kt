@@ -999,7 +999,6 @@ fun NodeDialog(
     val triggerTypes = mapOf(
         "manual" to stringResource(R.string.workflow_trigger_type_manual),
         "schedule" to stringResource(R.string.workflow_trigger_type_schedule),
-        "tasker" to stringResource(R.string.workflow_trigger_type_tasker),
         "intent" to stringResource(R.string.workflow_trigger_type_intent),
         "speech" to stringResource(R.string.workflow_trigger_type_speech),
         "app_open" to stringResource(R.string.workflow_trigger_type_app_open)
@@ -1940,7 +1939,6 @@ fun NodeDialog(
                                             // 设置默认配置示例
                                             triggerConfig = when (key) {
                                                 "schedule" -> """{"schedule_type":"interval","interval_ms":"900000","repeat":"true","enabled":"true"}"""
-                                                "tasker" -> """{"variable_name": "%evtprm()"}"""
                                                 "intent" -> """{"action": "com.example.MY_ACTION"}"""
                                                 "speech" -> """{"pattern": "(?i)\\bhello\\b", "ignore_case": "true", "require_final": "true", "cooldown_ms": "3000"}"""
                                                 else -> "{}"
@@ -2008,7 +2006,6 @@ fun NodeDialog(
                                 when (triggerType) {
                                     "manual" -> triggerTypes["manual"].orEmpty()
                                     "schedule" -> triggerTypes["schedule"].orEmpty()
-                                    "tasker" -> triggerTypes["tasker"].orEmpty()
                                     "intent" -> triggerTypes["intent"].orEmpty()
                                     "speech" -> triggerTypes["speech"].orEmpty()
                                     "app_open" -> triggerTypes["app_open"].orEmpty()

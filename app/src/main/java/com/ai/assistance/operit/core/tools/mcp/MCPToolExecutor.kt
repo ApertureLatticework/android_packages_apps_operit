@@ -543,8 +543,6 @@ class MCPManager(private val context: Context) {
                 }
 
         val session = when (descriptor) {
-            is McpRuntimeDescriptor.Local ->
-                com.ai.assistance.operit.data.mcp.plugins.BridgeMcpRuntimeSession(context, descriptor.serviceName)
             is McpRuntimeDescriptor.Remote ->
                 com.ai.assistance.operit.data.mcp.plugins.RemoteMcpRuntimeSession(pluginId, descriptor)
         }

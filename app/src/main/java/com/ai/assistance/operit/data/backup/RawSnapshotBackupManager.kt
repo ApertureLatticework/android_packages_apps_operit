@@ -6,7 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.AtomicFile
 import com.ai.assistance.operit.data.db.AppDatabase
-import com.ai.assistance.operit.data.db.ObjectBoxManager
+import com.ai.assistance.operit.data.db.MemoryDatabaseManager
 import com.ai.assistance.operit.data.stats.TokenUsageRepository
 import com.ai.assistance.operit.util.AppLogger
 import com.ai.assistance.operit.util.OperitPaths
@@ -285,9 +285,9 @@ object RawSnapshotBackupManager {
                 AppLogger.i(TAG, "restore cached zip: ${cacheZip.absolutePath} (${cacheZip.length()} bytes)")
 
                 AppDatabase.closeDatabase()
-                ObjectBoxManager.closeAll()
+                MemoryDatabaseManager.closeAll()
 
-                AppLogger.i(TAG, "restore closed databases (room + objectbox)")
+                AppLogger.i(TAG, "restore closed databases (room + memory)")
 
                 withContext(Dispatchers.Main) { onProgress?.invoke(RestoreProgress.EXTRACTING) }
                 val manifest = extractZipToWorkDir(cacheZip, workDir)
@@ -440,9 +440,6 @@ object RawSnapshotBackupManager {
 
             val canonical = f.canonicalFile
             if (shouldSkipForZip(canonical, baseCanonical, entryPrefix, excludedTopLevelDirNames)) {
-                if (canonical.name == "lock.mdb" && canonical.parentFile?.name?.startsWith("objectbox") == true) {
-                    AppLogger.w(TAG, "export skip objectbox lock file: ${canonical.absolutePath}")
-                }
                 return@forEach
             }
 
@@ -502,10 +499,6 @@ object RawSnapshotBackupManager {
         excludedTopLevelDirNames: Set<String>
     ): Boolean {
         if (!canonical.path.startsWith(baseCanonical.path + File.separator)) return true
-
-        if (canonical.name == "lock.mdb" && canonical.parentFile?.name?.startsWith("objectbox") == true) {
-            return true
-        }
 
         val rel = canonical.path.substring(baseCanonical.path.length + 1)
         val relNormalized = rel.replace(File.separatorChar, '/')

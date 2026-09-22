@@ -1,0 +1,43 @@
+// 流处理原生库两件（源一直在包内，Soong 接线即收源完成）
+// Gradle 对应物：app/src/main/cpp/CMakeLists.txt 的 streamnative / toolpkgwasm 目标
+//
+// libstreamnative —— XML/Markdown/JSON 流式切分内核
+cc_library_shared {
+    name: "libstreamnative",
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+
+    srcs: [
+        "streamnative/native_xml_splitter.cpp",
+        "streamnative/native_markdown_splitter.cpp",
+        "streamnative/StreamOperators.cpp",
+        "streamnative/plugins/StreamXmlPlugin.cpp",
+        "streamnative/plugins/BaseJsonPlugin.cpp",
+        "streamnative/plugins/StreamJsonPlugin.cpp",
+        "streamnative/plugins/StreamPureJsonPlugin.cpp",
+        "streamnative/plugins/StreamMarkdownPlugin.cpp",
+        "streamnative/StreamBuilders.cpp",
+        "streamnative/HotStream.cpp",
+        "streamnative/StringExtensions.cpp",
+    ],
+    local_include_dirs: ["."],
+    shared_libs: ["liblog"],
+    header_libs: ["jni_headers"],
+    stl: "libc++_static",
+
+    ldflags: ["-Wl,-z,max-page-size=16384"],
+}
+
+// libtoolpkgwasm —— 工具包 wasm 执行桥（链 wamr 解释器静态核）
+cc_library_shared {
+    name: "libtoolpkgwasm",
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+
+    srcs: ["streamnative/native_toolpkg_wasm.cpp"],
+    local_include_dirs: ["."],
+    static_libs: ["libtoolpkgwasm-vm"],
+    shared_libs: ["liblog", "libm", "libdl"],
+    header_libs: ["jni_headers"],
+    stl: "libc++_static",
+
+    ldflags: ["-Wl,-z,max-page-size=16384"],
+}

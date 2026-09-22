@@ -81,17 +81,13 @@ Operit-follow-up/
 
 当前 README 明确说明该模块尚未接入 `app`。
 
-### [`showerclient`](showerclient/)
-
-这是 Shower 客户端 Android 库，负责连接 Shower server、建立虚拟显示、发送触控和按键事件、请求截图，并提供可选的视频解码渲染组件。宿主应用需要注入 `ShellRunner` 并处理 Binder 广播。
-
 ### [`terminal`](terminal/)
 
 这是 [OperitTerminalCore](https://github.com/AAswordman/OperitTerminalCore) Git 子模块，对应 Gradle 中的 `:terminal` 
 
 ### [`tools`](tools/)
 
-这是开发、调试、构建和运行辅助工具集合，包含 JavaScript/ADB 执行脚本、ToolPkg 调试与 Hook、Shower 服务工具、Compose DSL 生成器、MCP Bridge、原生 ripgrep、字符串处理、内存分析以及桌面和 Android 辅助工程。（其中构建与测试内容会逐渐迁移到ci：python脚本会迁移到/ci/script下的命名文件夹，工具迁移到/ci/tools; 而app内置工具将使用tools_built-in目录）
+这是开发、调试、构建和运行辅助工具集合，包含 JavaScript/ADB 执行脚本、ToolPkg 调试与 Hook、Compose DSL 生成器、MCP Bridge、原生 ripgrep、字符串处理、内存分析以及桌面和 Android 辅助工程。（其中构建与测试内容会逐渐迁移到ci：python脚本会迁移到/ci/script下的命名文件夹，工具迁移到/ci/tools; 而app内置工具将使用tools_built-in目录）
 
 ### [`web-chat`](web-chat/)
 

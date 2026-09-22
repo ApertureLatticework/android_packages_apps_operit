@@ -74,7 +74,6 @@ import com.ai.assistance.operit.ui.features.chat.components.WindowsExportDialog
 import com.ai.assistance.operit.ui.features.chat.webview.MentionSuggestionPanelStyle
 import com.ai.assistance.operit.ui.features.chat.webview.workspace.WorkspaceScreen
 import com.ai.assistance.operit.ui.features.chat.webview.MentionSuggestionPanel
-import com.ai.assistance.operit.ui.features.chat.webview.computer.ComputerScreen
 import com.ai.assistance.operit.ui.features.chat.viewmodel.ChatViewModel
 import com.ai.assistance.operit.ui.main.LocalTopBarActions
 import com.ai.assistance.operit.ui.main.PendingChatDraftHandler
@@ -731,14 +730,11 @@ val actualViewModel: ChatViewModel = viewModel ?: viewModel { ChatViewModel(cont
 
     // 收集WebView显示状态
     val showWebView by actualViewModel.showWebView.collectAsState()
-    // 收集AI电脑显示状态
-    val showAiComputer by actualViewModel.showAiComputer.collectAsState()
     // AppContent owns the primary chat IME layout; embedded chat retains its local translation.
     val shouldUseChatLocalImeHandling =
         embedded &&
             inputStyle == UserPreferencesManager.INPUT_STYLE_AGENT &&
-            !showWebView &&
-            !showAiComputer
+            !showWebView
     var hasEverShownWebView by remember { mutableStateOf(false) }
     LaunchedEffect(showWebView, isWorkspacePreparing) {
         if (showWebView || isWorkspacePreparing) {
@@ -792,27 +788,11 @@ val actualViewModel: ChatViewModel = viewModel ?: viewModel { ChatViewModel(cont
     }
 
 
-    // 当showWebView或showAiComputer状态改变时，更新TopAppBar的actions
+    // 当showWebView状态改变时，更新TopAppBar的actions
     // 使用DisposableEffect确保当AIChatScreen离开组合时，actions被清空
-    LaunchedEffect(isCurrentScreen, embedded, showWebView, showAiComputer, isWorkspacePreparing, appBarContentColor, hasBoundWorkspace) {
+    LaunchedEffect(isCurrentScreen, embedded, showWebView, isWorkspacePreparing, appBarContentColor, hasBoundWorkspace) {
         if (isCurrentScreen && !embedded) {
             setTopBarActions {
-                // AI电脑模式切换按钮
-                IconButton(
-                        enabled = !isWorkspacePreparing,
-                        onClick = {
-                            actualViewModel.onAiComputerButtonClick()
-                        }
-                ) {
-                    Icon(
-                            imageVector = Icons.Default.Terminal,
-                            contentDescription = stringResource(R.string.ai_computer),
-                            tint =
-                            if (showAiComputer) MaterialTheme.colorScheme.primaryContainer
-                            else appBarContentColor
-                    )
-                }
-
                 // Web开发模式切换按钮
                 IconButton(
                         enabled = !isWorkspacePreparing,
@@ -1258,17 +1238,6 @@ val actualViewModel: ChatViewModel = viewModel ?: viewModel { ChatViewModel(cont
                     // 同时由于它仍在组合中，因此可以保持其状态。
                     layout(0, 0) {}
                 }
-            }
-        }
-
-        // AI电脑模式作为浮层：关闭时完全移出组合，确保 SurfaceView 被释放，避免机型相关残影
-        if (!embedded && showAiComputer) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clipToBounds()
-            ) {
-                ComputerScreen()
             }
         }
 

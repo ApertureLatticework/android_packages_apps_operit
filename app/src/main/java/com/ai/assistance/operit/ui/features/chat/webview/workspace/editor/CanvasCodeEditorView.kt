@@ -1723,11 +1723,8 @@ class CanvasCodeEditorView @JvmOverloads constructor(
     }
 
     private fun loadEditorTypeface(): Typeface {
-        return try {
-            resources.getFont(com.ai.assistance.operit.terminal.R.font.jetbrains_mono_nerd_font_regular)
-        } catch (_: Exception) {
-            Typeface.MONOSPACE
-        }
+        // JetBrains Mono 字体资源随 terminal 模块裁撤，使用系统等宽字体
+        return Typeface.MONOSPACE
     }
 
     private fun shouldRenderWithSystemGlyphs(codePoint: Int): Boolean {

@@ -27,7 +27,6 @@ import androidx.compose.ui.layout.BeyondBoundsLayout.LayoutDirection.Companion.B
 import androidx.compose.ui.layout.BeyondBoundsLayout.LayoutDirection.Companion.Below
 import androidx.compose.ui.layout.BeyondBoundsLayout.LayoutDirection.Companion.Left
 import androidx.compose.ui.layout.BeyondBoundsLayout.LayoutDirection.Companion.Right
-import androidx.compose.ui.layout.BeyondBoundsLayoutProviderModifierNode
 import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
@@ -108,12 +107,10 @@ internal class LazyLayoutBeyondBoundsProviderModifierNode(
     private var orientation: Orientation,
 ) :
     Modifier.Node(),
+    // ui 1.10-alpha 移除 BeyondBoundsLayoutProviderModifierNode（并入 ModifierLocal 机制），
+    // 本类直实现 BeyondBoundsLayout；provider 死面已剪（树内实编适配 2026-09-22）
     LayoutModifierNode,
-    BeyondBoundsLayoutProviderModifierNode,
     BeyondBoundsLayout {
-
-    override val beyondBoundsLayout: BeyondBoundsLayout
-        get() = this
 
     override fun MeasureScope.measure(
         measurable: Measurable,

@@ -68,8 +68,9 @@ class DisplayPreferencesManager private constructor(private val context: Context
         private val KEY_VISIT_WEB_WAIT_SECONDS = intPreferencesKey("visit_web_wait_seconds")
         private val KEY_TOOLPKG_HOOK_TIMEOUT_SECONDS = intPreferencesKey("toolpkg_hook_timeout_seconds")
 
-        // 虚拟屏幕相关设置的 Key
-        private val KEY_VIRTUAL_DISPLAY_BITRATE_KBPS = intPreferencesKey("virtual_display_bitrate_kbps")
+        // Live 主屏观察通道：安全页面采集（CAPTURE_SECURE_VIDEO_OUTPUT）开关，默认关闭
+        private val KEY_ENABLE_LIVE_SECURE_CAPTURE =
+            booleanPreferencesKey("enable_live_secure_capture")
 
         // 工具折叠设置（多个只读工具 / 多个任意工具 / 全部工具）
         private val KEY_TOOL_COLLAPSE_MODE = stringPreferencesKey("tool_collapse_mode")
@@ -194,9 +195,13 @@ class DisplayPreferencesManager private constructor(private val context: Context
             preferences[KEY_TOOLPKG_HOOK_TIMEOUT_SECONDS] ?: 10
         }
 
-    val virtualDisplayBitrateKbps: Flow<Int> =
+    /**
+     * Live 主屏观察：是否叠加 VIRTUAL_DISPLAY_FLAG_SECURE 采集安全页面。
+     * 依赖 privapp 白名单中的 CAPTURE_SECURE_VIDEO_OUTPUT，默认关闭（步骤 6 决策）。
+     */
+    val enableLiveSecureCapture: Flow<Boolean> =
         context.displayPreferencesDataStore.data.map { preferences ->
-            preferences[KEY_VIRTUAL_DISPLAY_BITRATE_KBPS] ?: 3000
+            preferences[KEY_ENABLE_LIVE_SECURE_CAPTURE] ?: false
         }
 
     val toolCollapseMode: Flow<ToolCollapseMode> =
@@ -225,7 +230,7 @@ class DisplayPreferencesManager private constructor(private val context: Context
         screenshotScalePercent: Int? = null,
         visitWebWaitSeconds: Int? = null,
         toolPkgHookTimeoutSeconds: Int? = null,
-        virtualDisplayBitrateKbps: Int? = null,
+        enableLiveSecureCapture: Boolean? = null,
         toolCollapseMode: ToolCollapseMode? = null
     ) {
         context.displayPreferencesDataStore.edit { preferences ->
@@ -262,7 +267,7 @@ class DisplayPreferencesManager private constructor(private val context: Context
             toolPkgHookTimeoutSeconds?.let {
                 preferences[KEY_TOOLPKG_HOOK_TIMEOUT_SECONDS] = it.coerceIn(1, 60)
             }
-            virtualDisplayBitrateKbps?.let { preferences[KEY_VIRTUAL_DISPLAY_BITRATE_KBPS] = it }
+            enableLiveSecureCapture?.let { preferences[KEY_ENABLE_LIVE_SECURE_CAPTURE] = it }
             toolCollapseMode?.let { preferences[KEY_TOOL_COLLAPSE_MODE] = it.value }
         }
     }
@@ -303,9 +308,9 @@ class DisplayPreferencesManager private constructor(private val context: Context
         }
     }
 
-    fun getVirtualDisplayBitrateKbps(): Int {
+    fun isLiveSecureCaptureEnabled(): Boolean {
         return runBlocking {
-            virtualDisplayBitrateKbps.first()
+            enableLiveSecureCapture.first()
         }
     }
 
@@ -325,13 +330,13 @@ class DisplayPreferencesManager private constructor(private val context: Context
             preferences.remove(KEY_GLOBAL_USER_NAME)
             preferences[KEY_ENABLE_BACKGROUND_KEEP_ALIVE] = false
             preferences[KEY_ENABLE_EXPERIMENTAL_VIRTUAL_DISPLAY] = true
+            preferences[KEY_ENABLE_LIVE_SECURE_CAPTURE] = false
             preferences[KEY_HIDE_RUNTIME_TASK_VIEW] = false
             preferences.remove(KEY_SCREENSHOT_FORMAT)
             preferences.remove(KEY_SCREENSHOT_QUALITY)
             preferences.remove(KEY_SCREENSHOT_SCALE_PERCENT)
             preferences.remove(KEY_VISIT_WEB_WAIT_SECONDS)
             preferences.remove(KEY_TOOLPKG_HOOK_TIMEOUT_SECONDS)
-            preferences.remove(KEY_VIRTUAL_DISPLAY_BITRATE_KBPS)
             preferences.remove(KEY_TOOL_COLLAPSE_MODE)
         }
     }

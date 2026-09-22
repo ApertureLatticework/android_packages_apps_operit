@@ -1,0 +1,7 @@
+// org.apache.commons:commons-lang3:3.3.1 · central prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+java_import {
+    name: "operit-commons-lang3",
+    jars: ["commons-lang3-3.3.1.jar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

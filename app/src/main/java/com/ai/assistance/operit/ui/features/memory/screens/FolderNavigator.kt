@@ -38,7 +38,7 @@ data class FolderExpandedState(
 )
 
 /**
- * Memory-space selector and metadata controls. Memory contents stay in the existing ObjectBox
+ * Memory-space selector and metadata controls. Memory contents stay in the existing Room memory
  * database keyed by the stable space id.
  */
 @Composable

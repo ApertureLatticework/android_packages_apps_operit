@@ -80,7 +80,7 @@ import kotlinx.coroutines.launch
 
 /**
  * User-facing profile manager. Profile ids stay identical to memory-space ids because existing
- * ObjectBox databases and character-card bindings already use those stable ids.
+ * Memory databases and character-card bindings already use those stable ids.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

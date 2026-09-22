@@ -1,0 +1,7 @@
+// com.typesafe:config:1.4.3 · central prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+java_import {
+    name: "operit-config",
+    jars: ["config-1.4.3.jar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

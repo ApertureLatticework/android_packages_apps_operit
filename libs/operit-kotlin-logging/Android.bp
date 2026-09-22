@@ -1,0 +1,7 @@
+// io.github.oshai:kotlin-logging-android:7.0.14 · central prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+android_library_import {
+    name: "operit-kotlin-logging",
+    aars: ["kotlin-logging-android-7.0.14.aar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

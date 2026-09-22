@@ -126,7 +126,6 @@
     <string name="menu">Meniu</string>
     <string name="token_config">Obțineți cheia</string>
     <string name="package_category_plugin">Plugin</string>
-    <string name="desktop_pet_start">Pornește animalul de companie de pe birou</string>
 
     <!-- 工作流相关 -->
     <string name="workflow_list_title">Lista fluxurilor de lucru</string>
@@ -365,9 +364,6 @@
     <string name="importing_model">Se importă modelul...</string>
     <string name="processing">În curs de procesare...</string>
     <string name="error_occurred">A apărut o eroare: %1$s</string>
-    <string name="avatar_config">Configurarea personajului virtual</string>
-    <string name="avatar_voice_call_enable_title">Este activată imaginea virtuală?</string>
-    <string name="avatar_voice_call_enable_summary">După activare, interfața apelurilor vocale va utiliza o imagine virtuală și, în funcție de răspunsul primit, &lt;mood&gt; Etichete: redare, emoție, acțiune.</string>
     <string name="select_model">Alegerea modelului</string>
     <string name="current_model">Modelul actual</string>
     <string name="scale">Mărire/micșorare: %1$s</string>
@@ -377,76 +373,12 @@
     <string name="confirm_delete_model_message">Odată șters, modelul nu poate fi recuperat. Sunteți sigur că doriți să ștergeți acest model?</string>
     <string name="rename_avatar_model_title">Redenumirea modelului</string>
     <string name="rename_avatar_model_message">Introduceți un nou nume pentru afișarea modelului</string>
-    <string name="avatar_model_name_label">Denumirea modelului</string>
     <string name="no_models_available">Nu există modele disponibile</string>
     <string name="please_select_model">Vă rugăm să alegeți un model</string>
     <string name="unsupported_model_type">Tipuri de modele neacceptate: %1$s</string>
-    <string name="avatar_preview_error_log">Eroare la previzualizarea imaginii de profil: %1$s</string>
     <string name="how_to_import">Cum se creează și se importă modele?</string>
     <string name="how_to_import_tap_to_expand">Cum se creează și se importă modele?(Faceți clic pentru a afișa)</string>
     <string name="how_to_import_tap_to_collapse">Cum se creează și se importă modele?(Faceți clic pentru a ascunde)</string>
-    <string name="avatar_config_supported_formats">Suport:DragonBones(.json + _tex.json + _tex.png),WebP(.webp),MP4(.mp4),MMD(.pmx/.pmd + Opțional .vmd),glTF(.glb/.gltf),FBX(.fbx).</string>
-    <string name="avatar_config_import_methods">Suport pentru importul direct al fișierelor .glb/.gltf/.mp4/.fbx;DragonBones,WebP,MP4,MMD, mai multe fișiere glTF, sau cu texturi externe/Resursele FBX Vă rugăm să importați .zip.</string>
-    <string name="avatar_mood_trigger_mapping_title">Mood Mapare de declanșare</string>
-    <string name="avatar_mood_trigger_mapping_desc">Rezultatele pentru „maskotele de birou” și „avatarele vocale” &lt;mood&gt; Se vor afișa în primul rând rezultatele de aici trigger. Numai tipurile personalizate la care a fost asociată o animație vor fi incluse în textul de îndrumare.</string>
-    <string name="avatar_no_model_actions">În prezent, avatarul nu dispune de mișcări disponibile</string>
-    <string name="avatar_custom_types_title">Tipuri personalizate</string>
-    <string name="avatar_custom_type_add">Adăugarea unui tip personalizat</string>
-    <string name="avatar_custom_type_none">Nu există încă tipuri personalizate</string>
-    <string name="avatar_trigger_key_label">Taste de activare:%1$s</string>
-    <string name="avatar_fallback_emotion_label">Emoji de revenire:%1$s</string>
-    <string name="avatar_edit_custom_mood_type">Editare tipuri personalizate</string>
-    <string name="avatar_delete_custom_mood_type">Ștergerea tipurilor personalizate</string>
-    <string name="avatar_mapped_action">Acțiuni de asociere</string>
-    <string name="avatar_preview_action">Previzualizare</string>
-    <string name="avatar_unmapped">Nu este asociat</string>
-    <string name="avatar_custom_type_add_title">Adăugarea unui tip personalizat</string>
-    <string name="avatar_custom_type_edit_title">Editare tipuri personalizate</string>
-    <string name="avatar_custom_type_key">Tasta de tip</string>
-    <string name="avatar_custom_type_key_hint">Sunt permise doar litere mici, cifre,_ și -. După normalizare, key:%1$s</string>
-    <string name="avatar_empty_value_placeholder">&lt;Gol&gt;</string>
-    <string name="avatar_custom_type_prompt_hint_label">Explicații privind cuvintele-cheie</string>
-    <string name="avatar_custom_type_prompt_hint_help">Acest mesaj va fi inserat în masa de lucru/Avatarul vocal mood În reguli, se precizează în ce situații trebuie utilizat acest tip de model de ghidare.</string>
-    <string name="avatar_emotion_mapping_title">Corelarea expresiilor faciale</string>
-    <string name="avatar_emotion_mapping_chip">%1$s:%2$s</string>
-    <string name="avatar_emotion_label">Emoticoane</string>
-    <string name="avatar_clear_selected_mapping">Șterge maparea curentă</string>
-    <string name="avatar_emotion_idle">Modul de așteptare</string>
-    <string name="avatar_emotion_listening">Monitorizare</string>
-    <string name="avatar_emotion_thinking">Reflecție</string>
-    <string name="avatar_emotion_happy">Fericit</string>
-    <string name="avatar_emotion_sad">Trist</string>
-    <string name="avatar_emotion_confused">Confuzie</string>
-    <string name="avatar_emotion_surprised">Surprindere</string>
-    <string name="avatar_mood_angry_name">Supărat</string>
-    <string name="avatar_mood_happy_name">Fericit</string>
-    <string name="avatar_mood_shy_name">Timiditate</string>
-    <string name="avatar_mood_aojiao_name">Tăcut și mândru</string>
-    <string name="avatar_mood_cry_name">Trist</string>
-    <string name="avatar_mood_angry_hint">Se folosește atunci când utilizatorul își exprimă jignirea, sentimentul de nedreptate, reproșul, supărarea sau nemulțumirea puternică.</string>
-    <string name="avatar_mood_happy_hint">Se folosește atunci când utilizatorul își exprimă aprecierea în mod clar, își atinge obiectivul, primește un cadou sau este vizibil încântat.</string>
-    <string name="avatar_mood_shy_hint">Laude din partea utilizatorilor, aluzii, accentuarea aspectelor drăguțe; se folosește atunci când personajul se comportă timid.</string>
-    <string name="avatar_mood_aojiao_hint">Se folosește în cazul glumelor între utilizatori, al disputelor minore sau al momentelor în care personajele se arată inițial încăpățânate, dar apoi cedează.</string>
-    <string name="avatar_mood_cry_hint">Se folosește atunci când utilizatorul se simte dezamăgit, trist, frustrat, plânge sau este abătut după ce și-a cerut scuze.</string>
-    <string name="avatar_custom_type_prompt_hint_required">Descrierea cuvântului-cheie nu poate fi lăsată necompletată</string>
-    <string name="avatar_custom_type_invalid_key">Tipuri personalizate key Se pot folosi doar litere mici, cifre,_ sau -, și nu poate fi utilizat împreună cu cel încorporat key Conflict</string>
-    <string name="avatar_custom_type_duplicate_key">Tipuri personalizate key Există deja</string>
-    <string name="avatar_mmd_camera_pitch">MMD Înclinarea camerei (%1$s)</string>
-    <string name="avatar_mmd_camera_yaw">MMD Deviația camerei (%1$s)</string>
-    <string name="avatar_mmd_camera_distance">MMD Distanța până la cameră (%1$s)</string>
-    <string name="avatar_mmd_orbit_pivot_height">MMD Înălțimea în jurul centrului (%1$s)</string>
-    <string name="avatar_gltf_camera_pitch">glTF Înclinarea camerei (%1$s)</string>
-    <string name="avatar_gltf_camera_yaw">glTF Deviația camerei (%1$s)</string>
-    <string name="avatar_gltf_camera_distance">glTF Distanța până la cameră (%1$s)</string>
-    <string name="avatar_gltf_orbit_pivot_height">glTF Înălțimea în jurul centrului (%1$s)</string>
-    <string name="avatar_fbx_camera_pitch">FBX Înclinarea camerei (%1$s)</string>
-    <string name="avatar_fbx_camera_yaw">FBX Deviația camerei (%1$s)</string>
-    <string name="avatar_fbx_camera_distance">FBX Distanța până la cameră (%1$s)</string>
-    <string name="avatar_fbx_orbit_pivot_height">FBX Înălțimea în jurul centrului (%1$s)</string>
-    <string name="avatar_supported_formats_title">Formate acceptate</string>
-    <string name="avatar_supported_formats_desc">- DragonBones: Scheletul .json + *_tex.json + *_tex.png\n- WebP: unul sau mai multe .webp Document\n- MP4: unul sau mai multe .mp4 Document\n- MMD:.pmx sau .pmd Model, opțional .vmd Acțiune\n- glTF:.glb sau .gltf(În cazul în care se face referire, este necesar să se .bin/(resurse precum texturi etc.)\n- FBX:.fbx(Transferul direct este limitat la resursele autonome)</string>
-    <string name="avatar_import_methods_title">Modalități de import</string>
-    <string name="avatar_import_methods_desc">- Selectați direct fișierul:.glb / .gltf / .mp4 / .fbx\n- ZIP Introducere:DragonBones,WebP,MP4,MMD, mai multe fișiere glTF, sau cu texturi externe/Resursele FBX Geantă</string>
     <string name="import_structure_guide_tap_to_expand">Ghid privind structura de import (faceți clic pentru a extinde)</string>
     <string name="import_structure_guide_tap_to_collapse">Ghid privind structura de import (faceți clic pentru a ascunde)</string>
     <string name="import_structure_guide_content">Aceasta este structura de directoare a „pachetului de import” (ZIP sau în interiorul fișierului selectat), nu în memoria internă a aplicației.\n\nDragonBones(.zip)\n  my_dragonbones.zip\n    any_folder_name/\n      hero_ske.json\n      hero_tex.json\n      hero_tex.png\n  Cerințe:ske/tex json/png Prefixele numelor fișierelor sunt identice.\n\nWebP(.zip)\n  my_webp.zip\n    any_folder_name/\n      idle.webp\n      talking.webp\n      happy.webp\n  Cerințe: să conțină cel puțin unul .webp Fișier.\n\nMP4\n  Modalitate A(fișier direct):\n    avatar.mp4\n  Modalitate B(.zip):\n    my_mp4.zip\n      any_folder_name/\n        idle.mp4\n        talking.mp4\n        happy.mp4\n  Cerințe: să conțină cel puțin unul .mp4 Fișier.\n\nMMD(.zip)\n  my_mmd.zip\n    any_folder_name/\n      character.pmx(sau .pmd)\n      motions/idle.vmd(opțional)\n      textures/...\n  Cerință: menținerea PMX/PMD Căile relative citate rămân neschimbate.\n\nglTF\n  Modalitate A(fișier direct):\n    avatar.glb\n  Modalitate B(Mai multe fișiere glTF Utilizare .zip):\n    my_gltf.zip\n      any_folder_name/\n        avatar.gltf\n        avatar.bin\n        textures/...\n  Cerință: menținerea .gltf Căile relative citate rămân neschimbate.\n\nFBX\n  Modalitate A(Fișiere directe, numai resurse autonome):\n    avatar.fbx\n  Modalitate B(Textură externă/Vă rugăm să utilizați resursele .zip):\n    my_fbx.zip\n      any_folder_name/\n        avatar.fbx\n        textures/...\n  Cerințe: încărcare directă .fbx Se acceptă doar resursele încorporate; dacă modelul face referire la texturi externe sau la alte resurse, vă rugăm să păstrați căile relative și să le plasați în ZIP.</string>
@@ -465,7 +397,6 @@
     <string name="packaging_and_importing">4. Pachetizare și import:</string>
     <string name="packaging_and_importing_desc">    · Combinați cele trei fișiere exportate într-un singur fișier .zip Importați după fișier.</string>
     <string name="important_tip">Notă importantă: Pe pagina de descărcare a versiunii anterioare a editorului,WindowsșiMacLinkul de descărcare a fost plasat invers; vă rugăm să aveți grijă să selectați linkul corect pentru descărcare.</string>
-    <string name="dragonbones_important_tip">Notă importantă: Pe pagina de descărcare a versiunii anterioare a editorului,WindowsșiMacLinkul de descărcare a fost plasat invers; vă rugăm să aveți grijă să selectați linkul corect pentru descărcare.</string>
     <string name="download_old_editor">Descărcați versiunea anterioară a editorului</string>
     <string name="visit_online_editor">Accesați editorul online</string>
 
@@ -529,7 +460,6 @@
     <string name="shizuku_commands">Acordarea drepturilor</string>
     <string name="tool_permissions">Setări privind permisiunile instrumentelor</string>
     <string name="about">Despre</string>
-    <string name="terminal">Terminal</string>
     <string name="toolbox">Trusa de scule</string>
     <string name="mcp">MCP</string>
     <string name="token_config_title">DeepSeek TokenConfigurație</string>
@@ -568,11 +498,7 @@
     <string name="history_auto_switch_chat_desc">La schimbarea cărții de personaj sau a grupului, se accesează automat cea mai recentă conversație corespunzătoare; dacă aceasta nu există, se creează una</string>
 
     <!-- Terminal Screen -->
-    <string name="termux_not_installed">Termux Nu este instalat</string>
-    <string name="termux_not_running">Termux Nu rulează</string>
-    <string name="termux_command">Termux Comandă</string>
     <string name="execute_termux_command">Executare comandă</string>
-    <string name="termux_result">Rezultatul comenzii</string>
 
     <!-- Termux Installation -->
     <string name="install_termux_title">Instalare Termux</string>
@@ -581,7 +507,6 @@
     <string name="installing_bundled_termux">Se instalează funcția integratăTermux, vă rugăm să acordați permisiunea de instalare</string>
     <string name="install_termux_failed">Instalare Termux Eșec</string>
     <string name="open_termux">Deschide Termux</string>
-    <string name="termux_setup_guide">Termux Ghidul de configurare</string>
 
     <!-- About Screen -->
     <string name="about_title">Despre Operit AI</string>
@@ -709,9 +634,6 @@
     <string name="plugin_deploy_complete">Instalarea pluginului s-a finalizat, continuați cu pornirea: %1$s</string>
     <string name="plugin_runtime_error">Eroare de execuție: %1$s</string>
     <string name="plugin_runtime_output">Ieșire în timpul rulării:\n%1$s</string>
-    <string name="plugin_auto_deploy">Pluginul nu a fost implementat; se începe implementarea automată</string>
-    <string name="plugin_auto_deploy_complete">Implementarea automată s-a finalizat</string>
-    <string name="plugin_terminal_service_unavailable">Serviciul terminal nu este disponibil; vă rugăm să îl porniți mai întâi</string>
     <string name="plugin_pnpm_missing">Nu este instalat pe terminalpnpm, vă rugăm să instalați mai întâi</string>
 
     <!-- Theme Settings Screen -->
@@ -950,8 +872,6 @@
     <string name="no">Nu</string>
     <string name="authorized">Autorizat</string>
     <string name="unauthorized">Neautorizat</string>
-    <string name="install_shizuku">Instalare Shizuku</string>
-    <string name="open_shizuku">Deschide Shizuku Aplicații</string>
     <string name="show_help">Afișează ajutorul</string>
     <string name="hide_help">Ascunde ajutorul</string>
     <string name="request_permission">SolicitareShizukuDrepturi</string>
@@ -966,7 +886,6 @@
     <string name="executing">În curs de execuție...</string>
     <string name="command_success">Comanda a fost executată cu succes:\n%1$s</string>
     <string name="command_failure">Executarea comenzii a eșuat (Cod de ieșire: %1$d):\n%2$s</string>
-    <string name="start_shizuku_first">Vă rugăm să porniți mai întâiShizukuServicii</string>
     <string name="grant_permission_first">Vă rugăm să acordațiShizukuDrepturi</string>
     <string name="feature_unavailable">Nu poate fi utilizatADBFuncții de comandă</string>
     <string name="thinking_process">Procesul de gândire</string>
@@ -1231,8 +1150,6 @@
 
     <!-- RootWizardCard -->
     <string name="root_wizard_title">RootGhidul de configurare a permisiunilor</string>
-    <string name="root_wizard_step1">Pași1:RootEchipamente</string>
-    <string name="root_wizard_step2">Pași2: AcordareaRootDrepturi</string>
     <string name="root_wizard_completed">RootDrepturile au fost configurate</string>
     <string name="root_wizard_success_message">Felicitări!RootS-au obținut drepturile de acces; acum puteți efectua operațiunile care necesită privilegii.</string>
     <string name="root_wizard_test_command">TestareRootComandă</string>
@@ -1248,17 +1165,10 @@
     <!-- ShizukuWizardCard -->
     <string name="shizuku_wizard_title">Shizuku Ghidul de configurare</string>
     <string name="shizuku_wizard_update_title">Shizuku Ghidul de actualizare</string>
-    <string name="shizuku_wizard_step1">Pași1: Instalare Shizuku Aplicații</string>
-    <string name="shizuku_wizard_step2">Pași2: Pornire Shizuku Servicii</string>
-    <string name="shizuku_wizard_step3">Pași3: Acordarea Shizuku Drepturi</string>
     <string name="shizuku_wizard_completed">Shizuku Configurarea este finalizată</string>
     <string name="shizuku_wizard_install_message">ShizukuEste un instrument care acordă permisiuni avansate aplicațiilor, fără a fi necesarroot. Mai întâi trebuie să instalăm această aplicație.</string>
     <string name="shizuku_wizard_install_bundled">Instalarea versiunii integrate</string>
     <string name="shizuku_wizard_start_message">ShizukuEste instalat, acum trebuie pornitShizukuServicii. Vă rugăm să urmați una dintre metodele de mai jos:</string>
-    <string name="shizuku_wizard_method1_title">Metodă1: Utilizați lansarea din aplicație (recomandat)</string>
-    <string name="shizuku_wizard_method1_steps">1. Faceți clic mai jos\"DeschideShizuku\"Buton\n2. înShizukuSelectați în aplicație\"Pornire prin depanare wireless\"\n3. Porniți conform instrucțiunilor\"Opțiuni pentru dezvoltatori\"și\"Depanare fără fir\"\n4. PermisShizukuObținerea permisiunilor de depanare wireless</string>
-    <string name="shizuku_wizard_method2_title">Metodă2: UtilizareUSBPornire</string>
-    <string name="shizuku_wizard_method2_steps">1. Instalare pe computerADBInstrumente\n2. PrinUSBConectarea telefonului la computer\n3. Executați următoarea comandă în linia de comandă a computerului:\n   adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh</string>
     <string name="shizuku_wizard_open_shizuku">DeschideShizuku</string>
     <string name="shizuku_wizard_permission_message">ShizukuServiciul a fost pornit; acum trebuie să acordați permisiuni acestei aplicații. Apăsați butonul de mai jos și selectați opțiunea dorită din fereastra de dialog care apare\"Permis\".</string>
     <string name="shizuku_wizard_permission_notice">Atenție: Dacă nu apare fereastra pop-up de autorizare, vă rugăm să verificați:</string>
@@ -1272,48 +1182,6 @@
     <string name="shizuku_wizard_update">ActualizareShizuku</string>
 
     <!-- TermuxWizardCard -->
-    <string name="termux_wizard_title">Termux Ghidul de configurare</string>
-    <string name="termux_wizard_step1">Pași1: InstalareTermux</string>
-    <string name="termux_wizard_step2">Pași2: AutorizareTermux</string>
-    <string name="termux_wizard_step3">Pași3: PornireTermux</string>
-    <string name="termux_wizard_step4">Pași4: Configurarea excepțiilor pentru optimizarea bateriei</string>
-    <string name="termux_wizard_step5">Pași5: Configurarea Tsinghua Yuan</string>
-    <string name="termux_wizard_step6">Pași6: InstalarePythonMediul</string>
-    <string name="termux_wizard_step7">Pași7: InstalareUVManager de pachete</string>
-    <string name="termux_wizard_step8">Pași8: InstalareNode.jsMediul</string>
-    <string name="termux_wizard_completed">TermuxConfigurarea s-a finalizat</string>
-    <string name="termux_wizard_reinstall_auth">Reautorizare</string>
-    <string name="termux_wizard_install_message">TermuxEste un simulator de terminal foarte performant, prin intermediul căruia puteți utiliza diverse instrumente de linie de comandă. Mai întâi trebuie să instalăm această aplicație.</string>
-    <string name="termux_wizard_install_note">După finalizarea instalării, vă rugăm să deschideți aplicația pentru prima datăTermuxAșteptați finalizarea inițializării, apoi reveniți la această aplicație pentru a finaliza pașii de autorizare.</string>
-    <string name="termux_wizard_install">InstalareTermux</string>
-    <string name="termux_wizard_auth_message">TermuxEste instalat, acum trebuie să îi acordați permisiuneaTermuxDrepturile necesare, pentru a putea executa comanda.</string>
-    <string name="termux_wizard_auth_note">Înainte de a acorda autorizația, vă rugăm să vă asigurați că:</string>
-    <string name="termux_wizard_auth_note_details">1. TermuxA fost instalat și deschis cel puțin o dată\n2. Faceți clic\"AutorizareTermux\"Butonul „Finalizează autorizarea”</string>
-    <string name="termux_wizard_start">Pornire</string>
-    <string name="termux_wizard_check_auth">Verificare și autorizare</string>
-    <string name="termux_wizard_start_message">TermuxEste instalat și autorizat, dar nu rulează în prezent. Operațiunile de configurare necesităTermuxSe execută în fundal.</string>
-    <string name="termux_wizard_start_note">Atenție:</string>
-    <string name="termux_wizard_start_note_details">TermuxAutorizarea a fost finalizată, dar programul nu rulează. Vă rugăm să îl porniți.TermuxPentru a continua cu pașii următori de configurare.</string>
-    <string name="termux_wizard_start_termux">PornireTermux</string>
-    <string name="termux_wizard_battery_title">Configurarea excepțiilor pentru optimizarea bateriei</string>
-    <string name="termux_wizard_battery_message">TermuxA fost lansat, iar acum este necesar să se realizezeTermuxConfigurați o excepție pentru optimizarea bateriei, astfel încât aplicația să poată funcționa stabil în fundal pe o perioadă îndelungată.AndroidFuncția de optimizare a bateriei a sistemului se poate dezactiva în fundalTermux, afectând funcționarea normală a scripturilor și a serviciilor.</string>
-    <string name="termux_wizard_battery_optimize">Configurarea excepțiilor pentru optimizarea bateriei</string>
-    <string name="termux_wizard_tuna_title">Configurarea Tsinghua Yuan</string>
-    <string name="termux_wizard_tuna_message">TermuxS-a configurat o excepție pentru optimizarea bateriei; acum este necesar să se configureze sursa Tsinghua pentru a accelera descărcarea pachetelor software. Sursa Tsinghua este o sursă de oglindă din China, care poate îmbunătăți semnificativTermuxViteza de descărcare a pachetelor software.</string>
-    <string name="termux_wizard_tuna_config">Configurarea Tsinghua Yuan</string>
-    <string name="termux_wizard_tuna_skip">Sari peste acest pas</string>
-    <string name="termux_wizard_python_title">InstalarePythonMediul</string>
-    <string name="termux_wizard_python_message">Tsinghua Yuan a fost configurat, acum trebuie instalatPythonMediul.PythonEste un limbaj de programare popular, pe care mulțiAIInstrumentele și scripturile de automatizare au nevoie de acesta.</string>
-    <string name="termux_wizard_python_install">InstalarePython</string>
-    <string name="termux_wizard_uv_title">InstalareUVManager de pachete</string>
-    <string name="termux_wizard_uv_message">PythonEste deja instalat, acum trebuie instalatUVManagerul de pachete.UVEste un proces rapidPythonManagerul de pachete și analizatorul, care pot fi utilizate ca alternativepip, oferind o gestionare mai bună a dependențelor.</string>
-    <string name="termux_wizard_uv_install">InstalareUV</string>
-    <string name="termux_wizard_node_title">InstalareNode.jsMediul</string>
-    <string name="termux_wizard_node_message">UVEste deja instalat, acum trebuie instalatNode.jsMediul.Node.jseste unJavaScriptMediul de execuție, utilizat pentru rulareJavaScriptCodul șiWebAplicații.</string>
-    <string name="termux_wizard_node_install">InstalareNode.js</string>
-    <string name="termux_wizard_success_title">Felicitări!TermuxMediul a fost configurat complet</string>
-    <string name="termux_wizard_success_message">Acum puteți utilizaTermuxEfectuarea diverselor operațiuni din linia de comandă</string>
-    <string name="termux_wizard_open">DeschideTermux</string>
 
     <!-- ShizukuDemoScreen -->
     <string name="shizuku_demo_loading">Se încarcă starea aplicației...</string>
@@ -1351,7 +1219,6 @@
     <string name="status_not_granted">Neautorizat</string>
     <string name="accessibility_permission">Permisiuni de accesibilitate</string>
     <string name="accessibility_service">Servicii pentru persoane cu dizabilități</string>
-    <string name="admin_permission">Drepturi de administrator</string>
     <string name="debug_permission">Drepturi de depanare</string>
     <string name="shizuku_service">ShizukuServicii</string>
     <string name="root_permission">RootDrepturi</string>
@@ -1363,37 +1230,22 @@
     <string name="overlay_permission">Permisiuni pentru ferestrele plutitoare</string>
     <string name="battery_optimization">Derogare privind optimizarea bateriilor</string>
     <string name="location_permission">Permisiuni de localizare</string>
-    <string name="operit_terminal">OperitTerminal</string>
 
     <!-- 权限级别描述 -->
     <string name="permission_level_standard">Drepturi standard</string>
     <string name="permission_level_accessibility">Permisiuni de accesibilitate</string>
-    <string name="permission_level_admin">Drepturi de administrator</string>
-    <string name="permission_level_debugger">Drepturi de depanare</string>
-    <string name="permission_level_root">RootDrepturi</string>
     <string name="permission_level_standard_desc">Drepturi de execuție de bază pentru aplicație, fără a fi necesară o autorizare specială din partea sistemului</string>
     <string name="permission_level_accessibility_desc">S-au adăugat servicii de accesibilitate, care permit simularea operațiunilor de pe ecran</string>
-    <string name="permission_level_admin_desc">Adăugarea drepturilor de administrator de dispozitiv vă permite accesul la mai multe funcții ale sistemului</string>
-    <string name="permission_level_debugger_desc">PrinShizukuOferăADBAcces la sistem la nivel de</string>
-    <string name="permission_level_root_desc">Privilegii de superutilizator, care permit efectuarea oricărei operațiuni de sistem</string>
     <string name="permission_level_standard_full_desc">Autorizații standard: autorizații de bază pentru rularea aplicației, fără a fi necesare autorizații speciale</string>
     <string name="permission_level_accessibility_full_desc">Permisiuni pentru accesibilitate: permit aplicației să simuleze acțiunile utilizatorului; este necesar să activați serviciul de accesibilitate</string>
-    <string name="permission_level_admin_full_desc">Drepturi de administrator: permit aplicației să acceseze mai multe funcții ale sistemului, cum ar fi serviciile de localizare etc.</string>
-    <string name="permission_level_debugger_full_desc">Drepturi de depanare: Permite accesulADBPentru a efectua operațiuni avansate folosind funcția de depanare, este necesarShizukuServicii</string>
-    <string name="permission_level_root_full_desc">RootPermisiuni: permite aplicației să ruleze cu drepturi de superutilizator; este necesar ca dispozitivul să fieRoot</string>
 
     <!-- Root 状态信息 -->
     <string name="root_access_granted">Aplicația a fost descărcatăRootDrepturi, posibilitatea de a executa comenzi privilegiate</string>
-    <string name="device_rooted_request_permission">Echipamentul a fostRoot, faceți clic pentru a solicita permisiunile aplicației</string>
-    <string name="device_not_rooted">Echipamentul nu esteRoot, nu se poate accesaRootDrepturi</string>
 
     <!-- Toast 消息 -->
     <string name="toast_download_link_failed">Nu se poate deschide linkul de descărcare</string>
     <string name="toast_apk_extract_failed">ExtragereAPKEroare. Vă rugăm să încercați din nou mai târziu.</string>
-    <string name="toast_open_termux_first">Vă rugăm să porniți mai întâiTermux</string>
     <string name="toast_operation_failed">Operațiunea a eșuat: %1$s</string>
-    <string name="toast_skip_tuna_source">Configurarea Tsinghua Yuan a fost omisă; o puteți efectua mai târziu înTermuxConfigurarea surselor în mod independent</string>
-    <string name="toast_skip_tuna_source_dialog">Ați ales să omiteți configurarea Tsinghua Yuan. Dacă doriți să efectuați configurarea manuală ulterior, vă rugăm să accesațiTermuxExecutați următoarele comenzi:\n\ntermux-change-repo\n\nApoi selectați sursa Tsinghua sau o altă sursă din listă.</string>
 
     <!-- 聊天历史选择器 -->
     <string name="chat_history">Istoric conversații</string>
@@ -1425,15 +1277,6 @@
     <string name="disabled">Este închis</string>
 
     <!-- Termux 相关 -->
-    <string name="termux_not_installed_message">Vă rugăm să instalați mai întâiTermuxAplicații</string>
-    <string name="termux_manual_auth_title">Este necesară autorizarea manuală</string>
-    <string name="termux_manual_auth_message">Nu se poate acorda automatTermuxDrepturi de execuție a comenzilor: vă rugăm să efectuați operațiunea manual:\n\n1. DeschideTermux\n2. Țineți apăsat pe ecran, apoi selectați\'Mai multe\'\n3. Alegere\'Setări\'\n4. Activare\'Permite accesul aplicațiilor externe\'</string>
-    <string name="termux_storage_permission_message">Nu se poate acorda automatTermuxPermisiuni de stocare – vă rugăm să verificați următoarele setări:\n\n1. ShellMediu: Asigurați-vă că dispuneți de unShell(de exemplu,ADBsauRoot). Notă: Dacă se utilizeazăShizuku, vă rugăm să nu folosițiRootModul a fost pornit.\n2. TermuxVersiune: Asigurați-vă că ați instalatTermuxPentru versiunea integrată în aplicație sau de pe site-ul oficial al acesteiaGitHubObținute din depozitDebugVersiune.</string>
-    <string name="termux_all_permissions_granted">TermuxAutorizarea cu drepturi complete a fost efectuată cu succes</string>
-    <string name="termux_some_permissions_failed">Autorizarea unor permisiuni a eșuat; vă rugăm să verificați jurnalul sau să efectuați configurarea manuală</string>
-    <string name="termux_app_association_granted">Aplicații autorizate șiTermuxLegături</string>
-    <string name="termux_manual_setting_hint">Vă rugăm săTermuxDeschidere în China\'Permite accesul aplicațiilor externe\'Opțiuni</string>
-    <string name="termux_manual_setting_failed">Nu se poate deschideTermux, vă rugăm să configurați manual</string>
     <string name="open_settings">Deschideți setările</string>
     <string name="cannot_open_settings">Nu se pot deschide setările</string>
     <string name="text_to_speech_engine_initialized">Text-to-speech engine initialized</string>
@@ -1496,12 +1339,8 @@
     <string name="chat_function_desc">Funcțiile principale de dialog, configurarea cuvintelor-cheie personalizate pentru chatbot</string>
     <string name="voice_function">Funcții vocale</string>
     <string name="voice_function_desc">Funcția de interacțiune vocală, configurarea cuvintelor-cheie personalizate pentru asistentul vocal</string>
-    <string name="desktop_pet_function">Funcția „maskotă de birou”</string>
-    <string name="desktop_pet_function_desc">Funcția „Animal de companie pe desktop”, personalizarea personalității și a modului de interacțiune al animalului de companie de pe desktop</string>
 
     <!-- 桌宠服务通知 -->
-    <string name="pet_service_notification_title">Servicii pentru animale de companie de birou</string>
-    <string name="pet_service_notification_text">Animalul de companie virtual este în funcțiune</string>
 
     <!-- 设置屏幕新增字符串 -->
     <string name="settings_prompt_section">Configurarea cuvintelor-cheie</string>
@@ -1738,8 +1577,6 @@
     <string name="theme_background_blur_radius">Raza de estompare</string>
 
     <!-- Toast Messages -->
-    <string name="pip_package_install_success">PIP Pachetul a fost instalat cu succes</string>
-    <string name="pip_package_install_failed">PIP Eroare la instalarea pachetului</string>
     <string name="please_press_back_to_return">Vă rugăm să apăsați tasta „Înapoi” pentru a reveni la pagina anterioară</string>
     <string name="please_input_command">Vă rugăm să introduceți comanda</string>
     <string name="background_image_migrated">Imaginea de fundal a fost mutată în memoria internă</string>
@@ -1767,7 +1604,6 @@
     <string name="message_info_token_hit_rate_short">Rată de hit</string>
     <string name="message_info_unavailable">Nu a fost înregistrat</string>
     <string name="selected_content_copied">Conținutul selectat a fost copiat</string>
-    <string name="requesting_root_permission">Se solicităRootDrepturi...</string>
     <string name="root_permission_granted">RootDrepturile au fost acordate</string>
     <string name="root_permission_denied">RootSolicitarea de permisiuni a fost respinsă</string>
     <string name="command_execution_success">Comanda a fost executată cu succes</string>
@@ -1790,23 +1626,6 @@
     <string name="download_success">Descărcarea s-a realizat cu succes: %1$s</string>
     <string name="download_start">Începe descărcarea: %1$s</string>
     <string name="deploy_date">Durata implementării: %1$s</string>
-    <string name="termux_start_command_sent">Trimis și pornitTermuxComandă</string>
-    <string name="termux_start_failed">PornireTermuxEșec</string>
-    <string name="termux_already_running">TermuxEste deja în funcțiune</string>
-    <string name="termux_authorized_success">Autorizare reușităTermux</string>
-    <string name="termux_authorization_failed">AutorizareTermuxEșec, vă rugăm să verificațiTermuxSetări</string>
-    <string name="tuna_source_setup_success">Configurarea Tsinghua Yuan a reușit</string>
-    <string name="tuna_source_setup_failed">Eșec la configurarea Tsinghua Yuan</string>
-    <string name="tuna_source_setup_error">Eroare la configurarea Tsinghua Yuan</string>
-    <string name="python_install_success">PythonInstalarea s-a realizat cu succes</string>
-    <string name="python_install_failed">PythonInstalarea a eșuat</string>
-    <string name="python_install_error">InstalarePythonEroare de mediu</string>
-    <string name="uv_install_success">UVInstalarea s-a realizat cu succes</string>
-    <string name="uv_install_failed">UVInstalarea a eșuat</string>
-    <string name="uv_install_error">InstalareUVEroare la nivelul managerului de pachete</string>
-    <string name="nodejs_install_success">Node.jsInstalarea s-a realizat cu succes</string>
-    <string name="nodejs_install_failed">Node.jsInstalarea a eșuat</string>
-    <string name="nodejs_install_error">InstalareNode.jsEroare de mediu</string>
     <string name="battery_optimization_reminder">Vă rugăm să activați această opțiune în setările sistemuluiTermuxDerogarea privind optimizarea bateriilor</string>
     <string name="cannot_open_termux_battery_settings">Nu se poate deschideTermuxSetări de optimizare a bateriei</string>
     <string name="copied_to_clipboard">A fost copiat în clipboard</string>
@@ -1816,8 +1635,6 @@
     <string name="cannot_open_accessibility_settings">Nu se pot deschide setările serviciilor de accesibilitate</string>
     <string name="accessibility_provider_installed">Furnizorul de servicii a fost instalat</string>
     <string name="cannot_open_root_tutorial">Nu se poate deschideRootLink către tutorial</string>
-    <string name="cannot_find_shizuku_app">Nu se găseșteShizukuAplicații</string>
-    <string name="cannot_launch_shizuku_app">Nu se poate porniShizukuAplicații</string>
     <string name="cannot_open_docs_link">Nu se poate deschide linkul către document</string>
     <string name="plugin_loading_skipped">S-a sărit peste încărcarea pluginului</string>
     <string name="press_back_again_to_exit">Apăsați încă o dată pentru a ieși din aplicație</string>
@@ -1837,9 +1654,6 @@
     <string name="floating_window_attachment_note">Atenție: În fereastra flotantă sunt acceptate doar atașamentele speciale\nPentru a adăuga un fișier sau o imagine, deschide fereastra completă a conversației</string>
     <string name="ai_assistant">AIasistent</string>
     <string name="send_message">Trimite mesaj</string>
-    <string name="chat_with_pet">Conversația cu animalul de companie</string>
-    <string name="dragonbones_mode">DragonBonesModul</string>
-    <string name="avatar_mode">Modelul personajului virtual</string>
     <string name="loading_failed">Încărcarea a eșuat: %1$s</string>
     <string name="loading">Se încarcă...</string>
     <string name="floating_service_description">AfișareAIServiciul de ferestre plutitoare al asistentului</string>
@@ -1983,12 +1797,8 @@
     <string name="start_comprehensive_test">Începerea testării complet automatizate</string>
 
     <!-- Terminal Components -->
-    <string name="terminal_yes_y">Da (Y)</string>
-    <string name="terminal_no_n">Nu (N)</string>
-    <string name="terminal_send_custom_input">Trimitere date de intrare personalizate</string>
 
     <!-- Status and Error Messages -->
-    <string name="check_video_size_error">A apărut o eroare la verificarea dimensiunii fișierului video</string>
     <string name="cannot_read_image_file">Nu se poate citi fișierul imagine: %1$s</string>
     <string name="cannot_decode_bitmap_from_uri">Nu se poate de laURIDecodareBitmap</string>
     <string name="cannot_open_uri_input_stream">Nu se poate deschideURIfluxul de intrare</string>
@@ -2103,11 +1913,6 @@
     <string name="tool_user_agreement_desc">Consultați Termenii și condițiile de utilizare și Politica de confidențialitate ale aplicației</string>
     <string name="tool_default_assistant_guide">Setările implicite ale Asistentului</string>
     <string name="tool_default_assistant_guide_desc">SetăriOperitAsistența vocală este setată ca asistență implicită a sistemului</string>
-    <string name="tool_terminal">Terminalul de comenzi</string>
-    <string name="tool_terminal_desc">Un terminal de linie de comandă puternic, care execută comenzi de sistem</string>
-    <string name="tool_terminal_auto_config">Configurarea automată a terminalelor</string>
-    <string name="tool_terminal_auto_config_desc">Configurare și instalare automatăPython,PIPinstrumente de dezvoltare etc.</string>
-    <string name="tool_terminal_auto_config_under_construction">Funcția de configurare automată a terminalelor este în curs de refacere...</string>
     <string name="tool_ui_debugger">UIInstrumente de depanare</string>
     <string name="tool_ui_debugger_desc">Debugarea și analiza elementelor interfeței, cu suport pentru căutarea elementelor și interacțiunea cu acestea</string>
     <string name="ui_debugger_title">UIInstrumente de depanare</string>
@@ -2299,14 +2104,10 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="confirmation_code_copied">Codul de returnare a fost copiat!</string>
     <string name="message_copied">Mesajul a fost copiat în clipboard</string>
 
-    <string name="requesting_root">Se solicităRootDrepturi...</string>
     <string name="root_granted">RootDrepturile au fost acordate</string>
     <string name="root_denied">RootSolicitarea de permisiuni a fost respinsă</string>
     <string name="command_failed">Executarea comenzii a eșuat</string>
     <string name="start_termux_first">Vă rugăm să porniți mai întâiTermux</string>
-    <string name="termux_not_found">Nu se găseșteTermuxAplicații</string>
-    <string name="termux_battery_optimization">Vă rugăm să activați această opțiune în setările sistemuluiTermuxDerogarea privind optimizarea bateriilor</string>
-    <string name="termux_battery_settings_failed">Nu se poate deschideTermuxSetări de optimizare a bateriei</string>
     <string name="permission_settings_failed">Nu se pot deschide setările de permisiuni</string>
     <string name="overlay_settings_failed">Nu se pot deschide setările ferestrei flotante</string>
     <string name="battery_settings_failed">Nu se pot deschide setările de optimizare a bateriei</string>
@@ -2496,44 +2297,8 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="file_op_confirm_overwrite_message">La locația țintă există deja un fișier cu același nume. Doriți să îl suprascrieți?</string>
 
     <!-- Terminal -->
-    <string name="terminal_title">Simulator de terminal</string>
-    <string name="terminal_new_session">Creează o sesiune nouă</string>
-    <string name="terminal_close_session">Închide sesiunea</string>
-    <string name="terminal_clear_screen">Ștergere ecran</string>
-    <string name="terminal_font_size">Dimensiunea fontului</string>
-    <string name="terminal_zoom_in">Mărirea fontului</string>
-    <string name="terminal_zoom_out">Reducere dimensiune font</string>
-    <string name="terminal_copy">Copiere</string>
-    <string name="terminal_paste">Lipiți</string>
-    <string name="terminal_select_all">Selectează tot</string>
-    <string name="terminal_search">Căutare</string>
-    <string name="terminal_settings">Setări</string>
-    <string name="terminal_session">Sesiune %d</string>
-    <string name="terminal_working_dir">Directorul de lucru: %s</string>
-    <string name="terminal_command_history">Istoric comenzi</string>
-    <string name="terminal_no_history">Nu există istoric al comenzilor</string>
-    <string name="terminal_interactive_input">Introducere interactivă</string>
-    <string name="terminal_input_prompt">Vă rugăm să introduceți: %s</string>
-    <string name="terminal_input_confirm">Confirmare</string>
-    <string name="terminal_input_cancel">Anulare</string>
-    <string name="terminal_execution_error">Eroare la executarea comenzii</string>
-    <string name="terminal_permission_required">Sunt necesare permisiuni</string>
-    <string name="terminal_root_access">Este necesarRootAveți nevoie de permisiuni pentru a executa această comandă</string>
-    <string name="terminal_command_not_found">Comanda nu a fost găsită</string>
-    <string name="terminal_process_running">Procesul este în curs de execuție...</string>
-    <string name="terminal_process_completed">Procesul s-a finalizat</string>
 
     <!-- Terminal Auto Config -->
-    <string name="terminal_auto_config_title">Configurarea automată a terminalelor</string>
-    <string name="terminal_auto_config_desc">Detectarea și configurarea automată a mediului terminalului</string>
-    <string name="terminal_auto_config_detect">Mediul de testare</string>
-    <string name="terminal_auto_config_apply">Configurarea aplicației</string>
-    <string name="terminal_auto_config_reset">Resetare configurație</string>
-    <string name="terminal_auto_config_status">Starea configurării</string>
-    <string name="terminal_auto_config_completed">Configurarea s-a finalizat</string>
-    <string name="terminal_auto_config_failed">Eșecul configurării</string>
-    <string name="terminal_auto_config_detecting">Se efectuează verificarea mediului...</string>
-    <string name="terminal_auto_config_applying">Se aplică configurația...</string>
 
     <!-- FFmpeg Toolbox -->
     <string name="ffmpeg_toolbox_title">FFmpegTrusa de scule</string>
@@ -2902,17 +2667,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="perm_desc_receive_mms">Permite aplicației să primească mesaje MMS</string>
 
     <!-- OperitTerminal Wizard Card -->
-    <string name="operit_terminal_wizard_title">OperitTerminal Ghidul de configurare</string>
-    <string name="operit_terminal_not_installed">OperitTerminal Nu este instalat</string>
-    <string name="operit_terminal_update_available">OperitTerminal Este disponibilă o actualizare</string>
-    <string name="operit_terminal_up_to_date">OperitTerminal Este deja cea mai recentă versiune</string>
-    <string name="operit_terminal_install_description">OperitTerminal Este o aplicație terminală puternică, care oferă o gamă completă de Linux Funcții de gestionare a mediului și a pachetelor. Trebuie să instalăm mai întâi această aplicație.</string>
-    <string name="operit_terminal_install_button">Instalare OperitTerminal</string>
-    <string name="operit_terminal_update_description">Descoperire OperitTerminal Noua versiune; vă recomandăm să efectuați actualizarea pentru a beneficia de funcționalități îmbunătățite și de o compatibilitate mai bună.</string>
-    <string name="operit_terminal_release_notes">Note de actualizare:%1$s</string>
-    <string name="operit_terminal_update_button">Actualizare OperitTerminal</string>
-    <string name="operit_terminal_latest_description">Felicitări! Ați instalat cea mai recentă versiune a OperitTerminal, puteți începe să utilizați funcțiile sale puternice de terminal.</string>
-    <string name="operit_terminal_open_button">Deschide OperitTerminal</string>
 
     <!-- Functional Config Screen -->
     <string name="functional_model_config_title">Setări de configurare a modelului funcțional</string>
@@ -3072,10 +2826,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="cleanup_test_dir_desc">Ștergeți toate fișierele și directoarele de testare.</string>
 
     <!-- Additional missing strings -->
-    <string name="termux_auth_failed">TermuxAutentificare eșuată</string>
-    <string name="tsinghua_source_error">Eroare de configurare Tsinghua Yuan</string>
-    <string name="tsinghua_source_failed">Eroare la configurarea Tsinghua Yuan</string>
-    <string name="tsinghua_source_success">Configurarea Tsinghua Yuan a reușit</string>
     <string name="ffmpeg_video_info">Informații despre videoclip</string>
     <string name="ffmpeg_video_info_desc">Obțineți informații detaliate despre fișierul video</string>
     <string name="ffmpeg_video_output_placeholder">Calea către fișierul de ieșire(Opțional)</string>
@@ -3085,9 +2835,7 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="loading_app_state">Se încarcă starea aplicației...</string>
     <string name="setup_wizard">Ghidul de configurare</string>
     <string name="setup_wizard_icon_desc">Pictograma ghidului de configurare</string>
-    <string name="cannot_start_shizuku_app">Nu se poate porniShizukuAplicații</string>
     <string name="cannot_open_doc_link">Nu se poate deschide linkul către document</string>
-    <string name="welcome_termux_config">Bine ați venit!TermuxInstrument de configurare\nFaceți clic pe butonul corespunzător pentru a începe configurarea</string>
     <string name="executing_task">Se execută: %1$s...</string>
 
     <!-- Permission Level Features -->
@@ -3095,7 +2843,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="feature_file_operations">Operațiuni cu fișiere</string>
     <string name="feature_screen_auto_click">Apăsarea automată a ecranului</string>
     <string name="feature_system_permission_modification">Modificarea permisiunilor de sistem</string>
-    <string name="feature_termux_support">Suport pentru terminale</string>
     <string name="feature_run_js">Ecran virtual</string>
     <string name="feature_plugin_market_mcp">Magazinul de pluginuriMCP</string>
     <string name="supported">Susținere</string>
@@ -3343,17 +3090,7 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="workspace_opening_hint">Se inițializează serviciul de previzualizare locală. Vă rugăm să așteptați puțin.</string>
     <string name="chat_update_workspace_server_failed">ActualizareWebEroare în spațiul de lucru: %1$s</string>
     <string name="chat_stop_workspace_server_failed">OprireWebEroare în spațiul de lucru: %1$s</string>
-    <string name="chat_terminal_requires_android_8">Cerințe privind funcționalitatea terminalului Android 8.0 sau o versiune ulterioară</string>
-    <string name="chat_create_dedicated_terminal_session_failed">Nu se poate crea o sesiune de terminal independentă</string>
-    <string name="chat_create_workspace_terminal_session_failed">Nu se poate crea o sesiune de terminal în spațiul de lucru</string>
     <string name="chat_execute_command_failed">Executarea comenzii a eșuat: %1$s</string>
-    <string name="workspace_command_already_running">O comandă din spațiul de lucru existent este în curs de execuție</string>
-    <string name="workspace_command_running">Comanda este în curs de execuție</string>
-    <string name="workspace_command_cancelling">Se anulează comanda...</string>
-    <string name="workspace_command_finished">Execuție finalizată</string>
-    <string name="workspace_command_waiting_output">Se așteaptă afișarea comenzii...</string>
-    <string name="workspace_command_no_output">Comanda nu a generat nicio ieșire</string>
-    <string name="workspace_command_hide">Ascunde</string>
     <string name="chat_start_ai_computer_failed">PornireAIEroare la computer: %1$s</string>
     <string name="chat_ai_computer_closed_due_to_workspace">AIComputerul a fost oprit (din cauza deschiderii spațiului de lucru)</string>
     <string name="thinking_mode">Modul de gândire</string>
@@ -4051,8 +3788,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="screen_title_chat_backup_settings">Backup și recuperare date</string>
     <string name="screen_title_language_settings">Setări de limbă</string>
     <string name="screen_title_file_manager">Manager de fișiere</string>
-    <string name="screen_title_terminal">Terminalul de comenzi</string>
-    <string name="screen_title_terminal_auto_config">Configurarea automată a terminalelor</string>
     <string name="screen_title_app_permissions">Gestionarea permisiunilor aplicațiilor</string>
     <string name="screen_title_ui_debugger">UIInstrumente de depanare</string>
     <string name="screen_title_shell_executor">Executor de comenzi</string>
@@ -4294,15 +4029,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="settings_config">Setări</string>
 
     <!-- Terminal Environment Wizard -->
-    <string name="configure_terminal_environment">Configurarea mediului terminalului</string>
-    <string name="nodejs_pip_environment_ready">NodeJSșipipMediul este pregătit</string>
-    <string name="pnpm_installed_need_pip">Instalatpnpm, trebuie configuratpip</string>
-    <string name="pip_installed_need_pnpm">Instalatpip, trebuie configuratpnpm</string>
-    <string name="need_configure_nodejs_pip">Este necesară configurareaNodeJSșipipMediul</string>
-    <string name="terminal_environment_setup_description">Trebuie configurat în terminalNodeJS(pnpm) șipipUn mediu propiceMCPPluginul rulează. Faceți clic pe butonul de mai jos pentru a accesa interfața de configurare a terminalului și a finaliza setările.</string>
-    <string name="go_to_terminal_config">Accesați configurarea terminalului</string>
-    <string name="nodejs_pip_environment_configured">NodeJSșipipMediul a fost configurat și poate fi utilizat în mod normalMCPFuncțiile pluginului.</string>
-    <string name="open_terminal">Deschideți terminalul</string>
 
     <!-- MCP市场界面 -->
     <string name="login_github_to_manage_mcp_plugins">Autentificare GitHub Pentru a publica și a gestiona MCP Plugin</string>
@@ -5548,6 +5274,11 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="ui_accessibility_mode_description">Pentru TalkBack Optimizări pentru utilizatorii cu dizabilități etc. UI În cazul operațiunilor automate, se vor prezenta în primul rând pașii de operare care pot fi citiți cu voce tare, iar clicurile automate se vor efectua cu prudență.</string>
     <string name="experimental_virtual_display">Ecran virtual experimental</string>
     <string name="experimental_virtual_display_description">Utilizarea pe baza ecranului virtual ADB+Shizuku Automatizare: funcția se află încă în faza experimentală și poate fi instabilă.</string>
+    <string name="live_service_notification_title">Operit Live</string>
+    <string name="live_capture_unavailable">Canalul de observare a ecranului principal nu este disponibil (necesită mediul ROM privilegiat)</string>
+    <string name="live_service_notification_text">Canalul de observare și automatizare Live rulează</string>
+    <string name="live_secure_capture">Capturare pagini securizate</string>
+    <string name="live_secure_capture_description">Adaugă fanionul SECURE la oglinda de ecran Live pentru a captura conținut protejat DRM; limitat de politica DRM pe unele dispozitive, dezactivat implicit</string>
     <string name="hide_runtime_task_view">Vizualizarea sarcinilor în timpul rulării este ascunsă</string>
     <string name="hide_runtime_task_view_description">AI Atunci când procesezi mesaje sau utilizezi instrumente, ascunde fișa aplicației din lista de activități recente a sistemului, pentru a evita închiderea accidentală a acesteia prin glisare.</string>
 
@@ -5938,12 +5669,9 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="toolreg_execute_shell_desc">ExecutareADB Shell: %1$s</string>
     <string name="toolreg_close_all_virtual_displays_desc">Închide toate ecranele virtuale</string>
     <string name="toolreg_unnamed">Fără titlu</string>
-    <string name="toolreg_create_terminal_session_desc">Crearea sau obținerea unei sesiuni de terminal: %1$s</string>
     <string name="toolreg_execute_in_terminal_session_desc">În sesiunea terminalului „%1$s» se execută în: %2$s</string>
     <string name="toolreg_execute_hidden_terminal_command_desc">În executorul terminalului ascuns „%1$s» se execută în: %2$s</string>
-    <string name="toolreg_close_terminal_session_desc">Închiderea sesiunii de terminal: %1$s</string>
     <string name="toolreg_input_in_terminal_session_desc">Către sesiunea terminalului „%1$s» Introducere (control=%2$s)</string>
-    <string name="toolreg_get_terminal_session_screen_desc">Obținerea sesiunii terminalului „%1$s» Conținutul actual al ecranului (un singur ecran)</string>
     <string name="toolreg_query_memory_desc">Consultarea bazei de date: %1$s</string>
     <string name="toolreg_get_memory_by_title_desc">Obținerea amintirilor pe baza titlului: %1$s</string>
 
@@ -6442,21 +6170,14 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="stream_markdown_static_render">Renderizare statică</string>
 
     <!-- MCP Deploy Progress Dialog -->
-    <string name="mcp_deploy_success">Implementare reușită</string>
-    <string name="mcp_deploy_failed">Eșecul implementării</string>
-    <string name="mcp_deploy_in_progress">Se află în curs de implementare</string>
     <string name="mcp_env_variables">Variabile de mediu</string>
     <string name="mcp_close">Închide</string>
     <string name="mcp_preparing_deploy">Pregătirea pentru implementare...</string>
-    <string name="mcp_deploy_completed">Implementarea s-a încheiat</string>
-    <string name="mcp_deploy_log">Jurnal de implementare</string>
     <string name="mcp_lines_count">%1$d Bine</string>
     <string name="mcp_retry">Reîncercare</string>
 
     <!-- MCP Deploy Confirm Dialog -->
-    <string name="mcp_deploy_confirm_title">Confirmarea implementării</string>
     <string name="mcp_deploying_plugin">Pluginul urmează să fie implementat: %1$s</string>
-    <string name="mcp_deploy_choice_hint">Puteți alege între implementarea directă și personalizarea comenzii de implementare</string>
     <string name="mcp_cancel">Anulare</string>
     <string name="mcp_custom_command">Comenzi personalizate</string>
     <string name="mcp_direct_deploy">Implementare directă</string>
@@ -6464,7 +6185,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <!-- MCP Commands Edit Dialog -->
     <string name="mcp_edit_deploy_commands">Comanda de editare și implementare</string>
     <string name="mcp_command_hint">O singură comandă pe rând; asigurați-vă că comenzile sunt corecte. Comanda de pornire va fi omisă automat.</string>
-    <string name="mcp_deploy_commands">Comanda de implementare</string>
     <string name="mcp_loading_commands">Se încarcă comanda...</string>
     <string name="mcp_lines_suffix">%1$dBine</string>
     <string name="mcp_confirm_and_deploy">Confirmare și implementare</string>
@@ -6625,8 +6345,7 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="stream_tag_required">Etichetele trebuie setate</string>
     <string name="stream_data_required">Fluxul de date trebuie configurat</string>
     <string name="deepseek_request_body">În finalDeepSeekCorpul cererii pentru modelul de deducție: </string>
-    <string name="admin_shell_permission">Sunt necesare drepturi de administrator de echipamente pentru a efectua operațiuni de sistem</string>
-    <string name="virtual_display_not_ready">Shower Ecranul virtual nu este încă pregătit</string>
+    <string name="virtual_display_not_ready">Ecranul virtual nu este încă pregătit</string>
     <string name="xml_content">XMLConținut</string>
     <string name="browser_preview">Previzualizare în browser</string>
     <string name="edittext_empty">EditTextNu poate fi gol</string>
@@ -6910,28 +6629,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="attachment_unknown_file">Fișier necunoscut</string>
 
     <!-- MCP Deployment Messages -->
-    <string name="mcp_deployment_start">Începeți implementarea pluginului: %1$s</string>
-    <string name="mcp_deployment_output_prefix">Ieșire: </string>
-    <string name="mcp_deployment_virtual_plugin_detected">A fost detectat %1$s Plugin de tip, care realizează o implementare minimă</string>
-    <string name="mcp_deployment_cannot_create_terminal">Nu se poate crea o sesiune de terminal</string>
-    <string name="mcp_deployment_creating_directory">Crearea directorului pentru pluginuri: %1$s</string>
-    <string name="mcp_deployment_create_directory_failed">Eroare la crearea directorului pentru pluginuri</string>
-    <string name="mcp_deployment_minimal_complete">%1$s Implementarea minimă a pluginului de tip a fost finalizată; acesta poate fi utilizat direct</string>
-    <string name="mcp_deployment_plugin_not_exist">Directorul de pluginuri nu există: %1$s</string>
-    <string name="mcp_deployment_using_market_config">Utilizarea pluginului de implementare a configurației de piață...</string>
-    <string name="mcp_deployment_analyzing_structure">Analiza structurii proiectului...</string>
-    <string name="mcp_deployment_saving_config">SalvareMCPConfigurație...</string>
-    <string name="mcp_deployment_save_config_failed">SalvareMCPEșecul configurării</string>
-    <string name="mcp_deployment_error">Eroare la implementare: %1$s</string>
-    <string name="mcp_deployment_cannot_determine">Nu se poate stabili cum se instalează acest plugin: %1$s</string>
-    <string name="mcp_deployment_copying_files">Copiați fișierele pluginului în directorul de destinație...</string>
-    <string name="mcp_deployment_copy_failed">Copierea fișierului în directorul de destinație a eșuat: %1$s</string>
-    <string name="mcp_deployment_switching_directory">Treci la directorul pluginurilor</string>
-    <string name="mcp_deployment_switch_failed">Eșec la trecerea la directorul pluginurilor</string>
-    <string name="mcp_deployment_executing_command">Executare comandă (%1$d/%2$d): %3$s</string>
-    <string name="mcp_deployment_non_critical_failed">Execuția unei comenzi necritice a eșuat; continuați cu pașii următori: %1$s</string>
-    <string name="mcp_deployment_command_failed">Executarea comenzii a eșuat: %1$s</string>
-    <string name="mcp_deployment_success">Pluginul a fost instalat cu succes: %1$s\nCalea de implementare: %2$s\nNumele serverului: %3$s\nDurata implementării: %4$s</string>
 
     <!-- MCP Repository -->
     <string name="mcp_repository_server_not_found">Nu s-au găsit informații corespunzătoare despre server</string>
@@ -7031,7 +6728,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <!-- Phone Agent -->
     <string name="phone_agent_need_debug_permission">Este necesară depanarea/Administrator/Root Trebuie să aveți permisiunile necesare și să activați ecranul virtual experimental pentru a putea utiliza automatizarea ecranului virtual.</string>
     <string name="phone_agent_shizuku_unavailable">Shizuku Indisponibil, ecranul virtual nu poate fi pornit.</string>
-    <string name="phone_agent_virtual_screen_service_start_failed">Pornirea serviciului de ecran virtual a eșuat.</string>
     <string name="phone_agent_virtual_screen_create_failed">Crearea ecranului virtual a eșuat.</string>
     <string name="phone_agent_virtual_screen_prewarm_failed">Eroare la preîncărcarea ecranului virtual:%1$s</string>
     <string name="phone_agent_virtual_screen_not_started">Ecranul virtual nu a putut fi pornit; procesul a fost întrerupt pentru a evita efectuarea unor operațiuni pe ecranul principal.</string>
@@ -7109,11 +6805,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="context_reset_all_settings">Resetează toate setările</string>
 
     <!-- MCP Deploy -->
-    <string name="mcp_deploy_error_cannot_get_path">Nu se poate obține calea către plugin: %1$s</string>
-    <string name="mcp_deploy_error_cannot_determine">Nu știu cum să instalez acest plugin; vă rugăm să consultațiREADMEImplementare manuală</string>
-    <string name="mcp_deploy_error_analysis_failed">A apărut o eroare la analizarea pluginului: %1$s</string>
-    <string name="mcp_deploy_status_preparing">Se pregătește implementarea pluginului</string>
-    <string name="mcp_deploy_output_prefix">Ieșire:</string>
 
     <!-- Model Config Screen -->
     <string name="model_config_error_valid_context_length">Vă rugăm să introduceți o lungime validă a contextului</string>
@@ -7134,7 +6825,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="root_execution_mode_force_exec">Manual KernelSU</string>
     <string name="root_custom_su_command">Personalizare su Comandă (KernelSU (modul)</string>
     <string name="root_custom_su_command_description">Numai în KernelSU Modelul a intrat în vigoare, se poate completa su sau su --mount-master comenzi precum acestea.</string>
-    <string name="global_display_virtual_screen_bitrate">Rata de transfer a ecranului virtual</string>
     <string name="global_display_status_indicator_style">Stiluri de afișare a stării automatizării</string>
     <string name="global_display_screenshot_settings">Setări automate pentru capturi de ecran</string>
     <string name="global_display_image_format">Formate de imagine</string>
@@ -7344,7 +7034,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="apk_zip_align_failed">ZIPEșecul alinierii: %1$s</string>
     <string name="apk_zip_align_path">ZIPAlinierea traseului: %1$s</string>
     <string name="apk_zipalign_not_found">Nu s-a găsit nimiczipalign, vă rugăm să vă asigurați căAndroid SDK build-toolsConfigurat corect</string>
-    <string name="admin_shell_requires_permission">Este necesarrootDrepturi sauadbDrepturi</string>
     <string name="default_option">Implicit</string>
     <string name="character_card_single_char">Un singur caracter</string>
     <string name="character_group_single_char">Grup</string>
@@ -7488,27 +7177,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="workflow_node_no_action">Nodul nu este configurat actionType</string>
 
     <!-- StandardTerminalCommandExecutor -->
-    <string name="terminal_error_missing_session_name">Lipsesc parametrii: session_name</string>
-    <string name="terminal_error_create_session">A apărut o eroare la crearea sau obținerea unei sesiuni de terminal: %1$s</string>
-    <string name="terminal_error_missing_command">Lipsesc parametrii: command</string>
-    <string name="terminal_error_missing_session_id">Lipsesc parametrii: session_id</string>
-    <string name="terminal_error_session_not_exist">Sesiune terminal \'%1$s\' Nu există sau a fost închis</string>
-    <string name="terminal_error_command_failed">Eșecul executării comenzii la terminal</string>
-    <string name="terminal_error_command_non_zero_exit">Comanda din terminal se închide cu un cod de ieșire diferit de zero (exitCode=%1$d)</string>
-    <string name="terminal_error_execute_command">A apărut o eroare la executarea comenzii în terminal: %1$s</string>
-    <string name="terminal_error_hidden_command_non_zero_exit">Comanda „hide terminal” se încheie cu un cod de ieșire diferit de zero (exitCode=%1$d)</string>
-    <string name="terminal_error_execute_hidden_command">A apărut o eroare la executarea comenzii „hide terminal”: %1$s</string>
-    <string name="terminal_session_closed">Sesiune terminal \'%1$s\' S-a închis cu succes.</string>
-    <string name="terminal_error_close_session">Închiderea sesiunii de terminal \'%1$s\' Eroare temporară: %2$s</string>
-    <string name="terminal_error_missing_input_or_control">Lipsesc parametrii: input sau control(Este necesar cel puțin unul)</string>
-    <string name="terminal_error_control_requires_input">Parametri %1$s Este necesar să se colaboreze cu input A se folosi împreună</string>
-    <string name="terminal_error_ctrl_input_single_char">Când control=ctrl Atunci,input Trebuie să fie un singur caracter</string>
-    <string name="terminal_error_ctrl_input_unsupported">control=ctrl Nu este acceptat input: %1$s</string>
-    <string name="terminal_error_unsupported_control">Nu este acceptat control: %1$s</string>
-    <string name="terminal_error_input">A apărut o eroare la scrierea datelor introduse în sesiunea terminalului</string>
-    <string name="terminal_error_input_with_reason">A apărut o eroare la scrierea datelor introduse în sesiunea terminalului: %1$s</string>
-    <string name="terminal_error_get_screen">A apărut o eroare la preluarea conținutului curent al ecranului sesiunii terminalului: %1$s</string>
-    <string name="terminal_input_sent">A fost transmis către sesiunea terminalului \'%1$s\' Introducere date (acceptedChars=%2$d)</string>
 
     <!-- OpenAISttProvider -->
     <string name="openai_stt_error_url_not_set">OpenAI STT URL Nu este configurat; vă rugăm să introduceți adresa completă a interfeței (de exemplu https://api.openai.com/v1/audio/transcriptions）。</string>
@@ -7697,11 +7365,7 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="sys_op_cannot_get_location">Nu se pot obține informații despre locație. Asigurați-vă că serviciile de localizare sunt activate.</string>
 
     <!-- AdminActionListener -->
-    <string name="admin_device_admin_component_name_not_set">Numele componentei „Administrator echipamente” nu a fost configurat</string>
-    <string name="admin_device_admin_permission_not_activated">Drepturile de administrator de dispozitiv ale aplicației nu sunt activate</string>
-    <string name="admin_need_device_admin_permission">Sunt necesare drepturi de administrator de echipamente pentru a monitoriza sistemulUIOperațiuni</string>
     <string name="admin_already_listening">Se află deja în monitorizare</string>
-    <string name="admin_ui_listener_started">Administrator de echipamenteUIMonitorizarea operațiunilor a fost activată</string>
     <string name="admin_start_failed">Eșec la pornire: %1$s</string>
 
     <!-- MarkdownConverter -->
@@ -7722,10 +7386,7 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
 
     <!-- ShizukuAuthorizer -->
     <string name="shizuku_start_service_intro">Pentru a porniShizukuServicii:\n</string>
-    <string name="shizuku_step1_ensure_installed">1. Asigurați-vă că este instalatShizukuAplicații\n</string>
-    <string name="shizuku_step2_adb_command">2. UtilizareADBPornire prin comandăShizuku:\n</string>
     <string name="shizuku_or">sau\n\n</string>
-    <string name="shizuku_step2_follow_instructions">2. DeschideShizukuAplicați și urmați instrucțiunile afișate pe ecran</string>
 
     <!-- ShizukuInstaller -->
     <string name="shizuku_install_update">Actualizare</string>

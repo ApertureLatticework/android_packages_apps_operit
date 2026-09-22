@@ -55,123 +55,6 @@ object SystemToolPromptsInternal {
 """
                         ),
                         ToolPrompt(
-                            name = "create_terminal_session",
-                            description = "Create or get a terminal session.",
-                            parametersStructured =
-                                listOf(
-                                    ToolParameterSchema(
-                                        name = "session_name",
-                                        type = "string",
-                                        description = "terminal session name",
-                                        required = true
-                                    )
-                                )
-                        ),
-                        ToolPrompt(
-                            name = "execute_in_terminal_session",
-                            description = "Execute a command in a terminal session and collect full output.",
-                            parametersStructured =
-                                listOf(
-                                    ToolParameterSchema(
-                                        name = "session_id",
-                                        type = "string",
-                                        description = "terminal session id",
-                                        required = true
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "command",
-                                        type = "string",
-                                        description = "command to execute",
-                                        required = true
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "timeout_ms",
-                                        type = "integer",
-                                        description = "optional, command timeout in milliseconds",
-                                        required = false,
-                                        default = "1800000"
-                                    )
-                                )
-                        ),
-                        ToolPrompt(
-                            name = "execute_hidden_terminal_command",
-                            description = "Execute a command in a hidden non-PTY terminal executor. Commands using the same executor_key reuse the same hidden login context and are not shown in the visible terminal UI.",
-                            parametersStructured =
-                                listOf(
-                                    ToolParameterSchema(
-                                        name = "command",
-                                        type = "string",
-                                        description = "command to execute",
-                                        required = true
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "executor_key",
-                                        type = "string",
-                                        description = "optional, hidden executor key used to reuse the same background shell context",
-                                        required = false,
-                                        default = "default"
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "timeout_ms",
-                                        type = "integer",
-                                        description = "optional, command timeout in milliseconds",
-                                        required = false,
-                                        default = "120000"
-                                    )
-                                )
-                        ),
-                        ToolPrompt(
-                            name = "input_in_terminal_session",
-                            description = "Write input to a terminal session. At least one of input or control is required. Typical usage is sending input first, then control=enter to submit.",
-                            parametersStructured =
-                                listOf(
-                                    ToolParameterSchema(
-                                        name = "session_id",
-                                        type = "string",
-                                        description = "terminal session id",
-                                        required = true
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "input",
-                                        type = "string",
-                                        description = "text to write to the terminal (can include newlines)",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "control",
-                                        type = "string",
-                                        description = "control key or modifier (e.g. enter/tab/esc/up/down/left/right/home/end/pageup/pagedown, or ctrl with input=c for Ctrl+C)",
-                                        required = false
-                                    )
-                                )
-                        ),
-                        ToolPrompt(
-                            name = "close_terminal_session",
-                            description = "Close a terminal session.",
-                            parametersStructured =
-                                listOf(
-                                    ToolParameterSchema(
-                                        name = "session_id",
-                                        type = "string",
-                                        description = "terminal session id",
-                                        required = true
-                                    )
-                                )
-                        ),
-                        ToolPrompt(
-                            name = "get_terminal_session_screen",
-                            description = "Get only the current visible PTY screen content for a terminal session (single screen, no scrollback/history).",
-                            parametersStructured =
-                                listOf(
-                                    ToolParameterSchema(
-                                        name = "session_id",
-                                        type = "string",
-                                        description = "terminal session id",
-                                        required = true
-                                    )
-                                )
-                        ),
-                        ToolPrompt(
                             name = "music_play",
                             description = "Play audio inside the app using the built-in music player.",
                             parametersStructured =
@@ -760,13 +643,13 @@ object SystemToolPromptsInternal {
                         ),
                         ToolPrompt(
                             name = "copy_file",
-                            description = "Copy a file or directory. Supports cross-environment copying between Android and Linux.",
+                            description = "Copy a file or directory. Supports copying across environments (Android or an attached storage repository).",
                             parametersStructured = listOf(
                                 ToolParameterSchema(name = "source", type = "string", description = "source path", required = true),
                                 ToolParameterSchema(name = "destination", type = "string", description = "destination path", required = true),
                                 ToolParameterSchema(name = "recursive", type = "boolean", description = "boolean", required = false, default = "false"),
-                                ToolParameterSchema(name = "source_environment", type = "string", description = "optional, \"android\" or \"linux\"", required = false, default = "\"android\""),
-                                ToolParameterSchema(name = "dest_environment", type = "string", description = "optional, \"android\" or \"linux\". For cross-environment copy (e.g., Android → Linux or Linux → Android), specify both source_environment and dest_environment", required = false, default = "\"android\"")
+                                ToolParameterSchema(name = "source_environment", type = "string", description = "optional, \"android\" or \"repo:<repositoryName>\"", required = false, default = "\"android\""),
+                                ToolParameterSchema(name = "dest_environment", type = "string", description = "optional, \"android\" or \"repo:<repositoryName>\". For cross-environment copy (e.g., Android → repo), specify both source_environment and dest_environment", required = false, default = "\"android\"")
                             )
                         ),
                         ToolPrompt(
@@ -806,61 +689,6 @@ object SystemToolPromptsInternal {
                                 ToolParameterSchema(name = "path", type = "string", description = "file path", required = true),
                                 ToolParameterSchema(name = "title", type = "string", description = "optional share title", required = false, default = "\"Share File\"")
                             )
-                        )
-                    )
-            ),
-            SystemToolPromptCategory(
-                categoryName = "Tasker Tools",
-                tools =
-                    listOf(
-                        ToolPrompt(
-                            name = "trigger_tasker_event",
-                            description = "Trigger a Tasker event.",
-                            parametersStructured =
-                                listOf(
-                                    ToolParameterSchema(
-                                        name = "task_type",
-                                        type = "string",
-                                        description = "Tasker event type",
-                                        required = true
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg1",
-                                        type = "string",
-                                        description = "optional",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg2",
-                                        type = "string",
-                                        description = "optional",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg3",
-                                        type = "string",
-                                        description = "optional",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg4",
-                                        type = "string",
-                                        description = "optional",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg5",
-                                        type = "string",
-                                        description = "optional",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "args_json",
-                                        type = "string",
-                                        description = "optional, JSON object string",
-                                        required = false
-                                    )
-                                )
                         )
                     )
             ),
@@ -1405,7 +1233,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "environment",
                                         type = "string",
-                                        description = "optional, \"android\" (default) or \"linux\"",
+                                        description = "optional, \"android\" (default) or \"repo:<repositoryName>\"",
                                         required = false
                                     ),
                                     ToolParameterSchema(
@@ -1431,7 +1259,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "environment",
                                         type = "string",
-                                        description = "optional, \"android\" (default) or \"linux\"",
+                                        description = "optional, \"android\" (default) or \"repo:<repositoryName>\"",
                                         required = false
                                     )
                                 )
@@ -1463,7 +1291,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "environment",
                                         type = "string",
-                                        description = "optional, \"android\" (default) or \"linux\"",
+                                        description = "optional, \"android\" (default) or \"repo:<repositoryName>\"",
                                         required = false
                                     )
                                 )
@@ -1488,7 +1316,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "environment",
                                         type = "string",
-                                        description = "optional, \"android\" (default) or \"linux\"",
+                                        description = "optional, \"android\" (default) or \"repo:<repositoryName>\"",
                                         required = false
                                     )
                                 )
@@ -2011,7 +1839,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "api_provider_type",
                                         type = "string",
-                                        description = "optional, provider enum name (e.g. OPENAI_GENERIC/OPENAI_LOCAL/OPENAI_RESPONSES_GENERIC/DEEPSEEK/MIMO/GEMINI_GENERIC/LMSTUDIO/OLLAMA/MNN/LLAMA_CPP)",
+                                        description = "optional, provider enum name (e.g. OPENAI_GENERIC/OPENAI_LOCAL/OPENAI_RESPONSES_GENERIC/DEEPSEEK/MIMO/GEMINI_GENERIC/LMSTUDIO/OLLAMA)",
                                         required = false
                                     ),
                                     ToolParameterSchema(
@@ -2387,37 +2215,7 @@ object SystemToolPromptsInternal {
                                         description = "optional, enable provider-native tool call",
                                         required = false
                                     ),
-                                    ToolParameterSchema(
-                                        name = "mnn_forward_type",
-                                        type = "integer",
-                                        description = "optional, MNN forward type",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "mnn_thread_count",
-                                        type = "integer",
-                                        description = "optional, MNN thread count",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "llama_thread_count",
-                                        type = "integer",
-                                        description = "optional, llama.cpp thread count",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "llama_context_size",
-                                        type = "integer",
-                                        description = "optional, llama.cpp context size",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "llama_gpu_layers",
-                                        type = "integer",
-                                        description = "optional, llama.cpp GPU layer count",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
+                                                                                                                                                                                                                        ToolParameterSchema(
                                         name = "request_limit_per_minute",
                                         type = "integer",
                                         description = "optional, requests-per-minute limit (0 = unlimited)",
@@ -3047,123 +2845,6 @@ object SystemToolPromptsInternal {
 """
                         ),
                         ToolPrompt(
-                            name = "create_terminal_session",
-                            description = "创建或获取终端会话。",
-                            parametersStructured =
-                                listOf(
-                                    ToolParameterSchema(
-                                        name = "session_name",
-                                        type = "string",
-                                        description = "终端会话名称",
-                                        required = true
-                                    )
-                                )
-                        ),
-                        ToolPrompt(
-                            name = "execute_in_terminal_session",
-                            description = "在终端会话中执行命令，并一次性返回完整输出。",
-                            parametersStructured =
-                                listOf(
-                                    ToolParameterSchema(
-                                        name = "session_id",
-                                        type = "string",
-                                        description = "终端会话 ID",
-                                        required = true
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "command",
-                                        type = "string",
-                                        description = "要执行的命令",
-                                        required = true
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "timeout_ms",
-                                        type = "integer",
-                                        description = "可选，超时时间（毫秒）",
-                                        required = false,
-                                        default = "1800000"
-                                    )
-                                )
-                        ),
-                        ToolPrompt(
-                            name = "execute_hidden_terminal_command",
-                            description = "在隐藏的非 PTY 终端执行器中执行命令。使用相同 executor_key 的命令会复用同一个后台登录上下文，且不会显示在可见终端 UI 中。",
-                            parametersStructured =
-                                listOf(
-                                    ToolParameterSchema(
-                                        name = "command",
-                                        type = "string",
-                                        description = "要执行的命令",
-                                        required = true
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "executor_key",
-                                        type = "string",
-                                        description = "可选，用于复用同一个后台 shell 上下文的隐藏执行器 key",
-                                        required = false,
-                                        default = "default"
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "timeout_ms",
-                                        type = "integer",
-                                        description = "可选，超时时间（毫秒）",
-                                        required = false,
-                                        default = "120000"
-                                    )
-                                )
-                        ),
-                        ToolPrompt(
-                            name = "input_in_terminal_session",
-                            description = "向终端会话写入输入。input 与 control 至少传一个。通常先发送 input，再发送 control=enter 提交内容。",
-                            parametersStructured =
-                                listOf(
-                                    ToolParameterSchema(
-                                        name = "session_id",
-                                        type = "string",
-                                        description = "终端会话 ID",
-                                        required = true
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "input",
-                                        type = "string",
-                                        description = "要写入终端的文本（可包含换行）",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "control",
-                                        type = "string",
-                                        description = "控制键或修饰键（如 enter/tab/esc/up/down/left/right/home/end/pageup/pagedown，或 control=ctrl 且 input=c 表示 Ctrl+C）",
-                                        required = false
-                                    )
-                                )
-                        ),
-                        ToolPrompt(
-                            name = "close_terminal_session",
-                            description = "关闭终端会话。",
-                            parametersStructured =
-                                listOf(
-                                    ToolParameterSchema(
-                                        name = "session_id",
-                                        type = "string",
-                                        description = "终端会话 ID",
-                                        required = true
-                                    )
-                                )
-                        ),
-                        ToolPrompt(
-                            name = "get_terminal_session_screen",
-                            description = "获取终端会话当前可见 PTY 屏幕内容（仅一屏，不包含历史滚动缓冲）。",
-                            parametersStructured =
-                                listOf(
-                                    ToolParameterSchema(
-                                        name = "session_id",
-                                        type = "string",
-                                        description = "终端会话 ID",
-                                        required = true
-                                    )
-                                )
-                        ),
-                        ToolPrompt(
                             name = "music_play",
                             description = "使用应用内置音乐播放器播放音频。",
                             parametersStructured =
@@ -3752,13 +3433,13 @@ object SystemToolPromptsInternal {
                         ),
                         ToolPrompt(
                             name = "copy_file",
-                            description = "复制文件或目录。支持Android和Linux之间的跨环境复制。",
+                            description = "复制文件或目录。支持Android与附加本地储存仓库之间的跨环境复制。",
                             parametersStructured = listOf(
                                 ToolParameterSchema(name = "source", type = "string", description = "源路径", required = true),
                                 ToolParameterSchema(name = "destination", type = "string", description = "目标路径", required = true),
                                 ToolParameterSchema(name = "recursive", type = "boolean", description = "布尔值", required = false, default = "false"),
-                                ToolParameterSchema(name = "source_environment", type = "string", description = "可选，\"android\"或\"linux\"", required = false, default = "\"android\""),
-                                ToolParameterSchema(name = "dest_environment", type = "string", description = "可选，\"android\"或\"linux\"。跨环境复制（如Android → Linux或Linux → Android）时，需指定source_environment和dest_environment", required = false, default = "\"android\"")
+                                ToolParameterSchema(name = "source_environment", type = "string", description = "可选，\"android\"或\"repo:<仓库名>\"", required = false, default = "\"android\""),
+                                ToolParameterSchema(name = "dest_environment", type = "string", description = "可选，\"android\"或\"repo:<仓库名>\"。跨环境复制（如Android → 仓库）时，需指定source_environment和dest_environment", required = false, default = "\"android\"")
                             )
                         ),
                         ToolPrompt(
@@ -3798,61 +3479,6 @@ object SystemToolPromptsInternal {
                                 ToolParameterSchema(name = "path", type = "string", description = "文件路径", required = true),
                                 ToolParameterSchema(name = "title", type = "string", description = "可选的共享标题", required = false, default = "\"Share File\"")
                             )
-                        )
-                    )
-            ),
-            SystemToolPromptCategory(
-                categoryName = "Tasker 工具",
-                tools =
-                    listOf(
-                        ToolPrompt(
-                            name = "trigger_tasker_event",
-                            description = "触发 Tasker 事件。",
-                            parametersStructured =
-                                listOf(
-                                    ToolParameterSchema(
-                                        name = "task_type",
-                                        type = "string",
-                                        description = "Tasker 事件类型",
-                                        required = true
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg1",
-                                        type = "string",
-                                        description = "可选",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg2",
-                                        type = "string",
-                                        description = "可选",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg3",
-                                        type = "string",
-                                        description = "可选",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg4",
-                                        type = "string",
-                                        description = "可选",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "arg5",
-                                        type = "string",
-                                        description = "可选",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "args_json",
-                                        type = "string",
-                                        description = "可选，JSON 对象字符串",
-                                        required = false
-                                    )
-                                )
                         )
                     )
             ),
@@ -4397,7 +4023,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "environment",
                                         type = "string",
-                                        description = "可选，\"android\"（默认）或 \"linux\"",
+                                        description = "可选，\"android\"（默认）或 \"repo:<仓库名>\"",
                                         required = false
                                     ),
                                     ToolParameterSchema(
@@ -4423,7 +4049,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "environment",
                                         type = "string",
-                                        description = "可选，\"android\"（默认）或 \"linux\"",
+                                        description = "可选，\"android\"（默认）或 \"repo:<仓库名>\"",
                                         required = false
                                     )
                                 )
@@ -4455,7 +4081,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "environment",
                                         type = "string",
-                                        description = "可选，\"android\"（默认）或 \"linux\"",
+                                        description = "可选，\"android\"（默认）或 \"repo:<仓库名>\"",
                                         required = false
                                     )
                                 )
@@ -4480,7 +4106,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "environment",
                                         type = "string",
-                                        description = "可选，\"android\"（默认）或 \"linux\"",
+                                        description = "可选，\"android\"（默认）或 \"repo:<仓库名>\"",
                                         required = false
                                     )
                                 )
@@ -5003,7 +4629,7 @@ object SystemToolPromptsInternal {
                                     ToolParameterSchema(
                                         name = "api_provider_type",
                                         type = "string",
-                                        description = "可选，提供商枚举名（如 OPENAI_GENERIC/OPENAI_LOCAL/OPENAI_RESPONSES_GENERIC/DEEPSEEK/MIMO/GEMINI_GENERIC/LMSTUDIO/OLLAMA/MNN/LLAMA_CPP）",
+                                        description = "可选，提供商枚举名（如 OPENAI_GENERIC/OPENAI_LOCAL/OPENAI_RESPONSES_GENERIC/DEEPSEEK/MIMO/GEMINI_GENERIC/LMSTUDIO/OLLAMA）",
                                         required = false
                                     ),
                                     ToolParameterSchema(
@@ -5379,37 +5005,7 @@ object SystemToolPromptsInternal {
                                         description = "可选，是否开启模型原生 Tool Call",
                                         required = false
                                     ),
-                                    ToolParameterSchema(
-                                        name = "mnn_forward_type",
-                                        type = "integer",
-                                        description = "可选，MNN 前向类型",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "mnn_thread_count",
-                                        type = "integer",
-                                        description = "可选，MNN 线程数",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "llama_thread_count",
-                                        type = "integer",
-                                        description = "可选，llama.cpp 线程数",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "llama_context_size",
-                                        type = "integer",
-                                        description = "可选，llama.cpp 上下文大小",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
-                                        name = "llama_gpu_layers",
-                                        type = "integer",
-                                        description = "可选，llama.cpp GPU 层数",
-                                        required = false
-                                    ),
-                                    ToolParameterSchema(
+                                                                                                                                                                                                                        ToolParameterSchema(
                                         name = "request_limit_per_minute",
                                         type = "integer",
                                         description = "可选，每分钟请求限制（0 为不限）",

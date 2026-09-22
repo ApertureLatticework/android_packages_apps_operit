@@ -11,7 +11,7 @@ import com.ai.assistance.operit.core.tools.PackageToolExecutor
 import com.ai.assistance.operit.core.tools.PackageTool
 import com.ai.assistance.operit.core.tools.ToolPackage
 import com.ai.assistance.operit.core.tools.ToolPackageState
-import com.ai.assistance.operit.core.tools.agent.ShowerController
+import com.ai.assistance.operit.core.tools.agent.NativeVirtualDisplay
 import com.ai.assistance.operit.core.tools.condition.ConditionEvaluator
 import com.ai.assistance.operit.core.tools.javascript.JsEngine
 import com.ai.assistance.operit.core.tools.mcp.MCPManager
@@ -22,7 +22,6 @@ import com.ai.assistance.operit.core.tools.skill.SkillManager
 import com.ai.assistance.operit.data.security.PluginDenylistRepository
 import com.ai.assistance.operit.data.preferences.SkillVisibilityPreferences
 import com.ai.assistance.operit.core.tools.system.AndroidPermissionLevel
-import com.ai.assistance.operit.core.tools.system.ShizukuAuthorizer
 import com.ai.assistance.operit.data.preferences.DisplayPreferencesManager
 import com.ai.assistance.operit.data.preferences.ApiPreferences
 import com.ai.assistance.operit.data.model.Workflow
@@ -3505,26 +3504,13 @@ private constructor(private val context: Context, private val aiToolHandler: AIT
             AndroidPermissionLevel.STANDARD
         }
 
-        val shizukuAvailable = try {
-            ShizukuAuthorizer.isShizukuServiceRunning() && ShizukuAuthorizer.hasShizukuPermission()
-        } catch (_: Exception) {
-            false
-        }
-
         val experimentalEnabled = try {
             DisplayPreferencesManager.getInstance(context).isExperimentalVirtualDisplayEnabled()
         } catch (_: Exception) {
             true
         }
 
-        val adbOrHigher = when (level) {
-            AndroidPermissionLevel.DEBUGGER,
-            AndroidPermissionLevel.ADMIN,
-            AndroidPermissionLevel.ROOT -> true
-            else -> false
-        }
-
-        val virtualDisplayCapable = adbOrHigher && experimentalEnabled && (level != AndroidPermissionLevel.DEBUGGER || shizukuAvailable)
+        val virtualDisplayCapable = level == AndroidPermissionLevel.PRIVILEGED && experimentalEnabled
 
         return mapOf(
             "platform.name" to "android",
@@ -3534,8 +3520,7 @@ private constructor(private val context: Context, private val aiToolHandler: AIT
             "platform.macos" to false,
             "ui.virtual_display" to virtualDisplayCapable,
             "android.permission_level" to level,
-            "android.shizuku_available" to shizukuAvailable,
-            "ui.shower_display" to (try { ShowerController.getDisplayId("default") != null } catch (_: Exception) { false })
+            "ui.virtual_display" to (try { NativeVirtualDisplay.getDisplayId("default") != null } catch (_: Exception) { false })
         )
     }
 

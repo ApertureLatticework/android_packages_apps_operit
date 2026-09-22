@@ -1,0 +1,70 @@
+---
+Repository: https://github.com/ApertureLatticework/android_packages_apps_operit
+Branch: feat/native-rom-integration
+Status: app-side done（步骤 1-8 全部落地且 CI 编译全绿；依赖侧 122 prebuilt + 五 native 模块全部真 bp 就位，ffmpeg fork 组织仓接位。剩余：步骤 9 树侧集成（用户树环境）与四场景实测；Live 三缺件另行排期；MCP 本地表单专项遗留）
+---
+
+# 原生集成特权版：LineageOS 源码进树改造
+
+## 原有状况
+
+Operit 以 Gradle 构建产出通用 APK，系统能力通过五档权限阶梯借取：
+
+- `ROOT` 档依赖 libsu 以 uid 0 执行 shell 命令
+- `DEBUGGER` 档依赖 Shizuku 桥接 shell 身份
+- `ADMIN`、`ACCESSIBILITY`、`STANDARD` 档各走对应通道
+- 全库 120 条 Maven 依赖，其中 ObjectBox（3 实体）与 Room（约 7 实体）双轨并存，均依赖 kapt
+
+代码证据：root 档实际执行的命令为 `input text/tap/swipe`、`pm install`、`run-as`、`settings put`、`am force-stop`，全部为 shell 级操作；iptables、remount /system、跨应用私有数据读取在功能代码中零使用（唯一 remount 字样出现在 DemoStateManager 的展示字符串）。
+
+## 意图
+
+改造为 LineageOS 系 ROM 独占的原生集成特权应用，只随 ROM 分发：
+
+- 源码整体进树为 `packages/apps/Operit` 自包含包，全部依赖源码收入包内 `libs/`，以 Soong 模块直接引用
+- platform 签名 + priv-app，ROOT 与 Shizuku 系执行器整档删除，新增 `PRIVILEGED` 档直调 SystemApi
+- 解锁 Live 能力：免同意弹窗的持续屏幕采集（CAPTURE_VIDEO_OUTPUT）与 INJECT_EVENTS 直注入自动化
+- ML Kit 为全树唯一 prebuilt 例外，其余依赖零二进制
+
+## 作用域
+
+- `app/src/main/java` 权限阶梯与数据层改造
+- 包内 `libs/`、`native/` 的 Soong 模块化
+- LOS fork 侧的 device.mk 接入与 privapp 白名单
+
+## 非目标
+
+- 不保留普通渠道（GitHub Release）双发形态
+- 不做任何回退或降级路径，删即删净
+- 不使用 LSPosed、Zygisk、KernelSU 及一切 hook 注入方案，ref/ 中仅取机制参考
+- 不改动上游 Gradle 构建的存续，迁移期间 Gradle 构建必须全程保持可用，作为开发主循环直至 Soong 全通
+
+## 决策记录
+
+| 决策点 | 结论 |
+| --- | --- |
+| ROM 基础 | LineageOS 23.2（Android 16，树内 Kotlin 2.x，Compose 编译器已与运行时解耦） |
+| 分发 | 仅随 ROM |
+| ML Kit | 保留为全树唯一 prebuilt 例外 |
+| Java 依赖迁移 | 先裁剪功能面再迁，非核心依赖不入树 |
+| ObjectBox | 迁 Room 后整线删除 |
+| Room APT | 生成类 check-in，Soong 零注解处理器 |
+| 依赖组织 | 全部收进 packages/apps/Operit 包内，模块名 operit- 前缀避撞，visibility 限私有 |
+| 前台抢占规避 | 参考 ref/ 副屏底座，禁用 LSPosed，控制服务可用 system rc 启动；LOS 23.2 源码验证 TRUSTED+OWN_FOCUS 原生旗标即可，无需 framework 补丁 |
+| Linux 终端环境 | proot、chroot、lxc 全部裁掉，不写 root helper，与 phone use 零耦合 |
+| 依赖组织（2026-09-20 修订） | 非 androidx 全走包内 prebuilt（AAR/jar import，sha256 钉扎，脚本化接线）；唯一源码线例外为 ffmpeg（external/ffmpeg 树内源码 + 包内薄壳）；原“零 prebuilt、ML Kit 唯一例外”决策作废 |
+| androidx 直引实核（2026-09-22） | 29 个引用对 android-16.0.0_r4 prebuilts 模块名级审计：仅 media3 三件与 security-crypto 树内缺失，转包内 prebuilt（+14 模块）；其余 25 件直引成立 |
+| native 线拆分（2026-09-22） | sherpa-ncnn 与 ripgrep 走 prebuilt .so（android-build 的 commit_native_prebuilts 开关抽取回写，arm64-v8a 单 ABI 对齐 abiFilters）；wamr/quickjs/streamnative 源码收包已完成 Soong 化 |
+| 收源节奏（2026-09-20） | prebuilt 接线先行打通 m Operit，native（sherpa/wamr/quickjs/ripgrep）收源独立推进 |
+
+## 步骤
+
+1. [功能面裁剪与依赖清单定稿](1_ScopeCutAndDependencyManifest.md)（已完成，commit 3d2ac61 / 4b3d7cf / 7733184 / f44c9d4）
+2. [ObjectBox 迁移 Room 并删除整线](2_ObjectBoxToRoom.md)（已完成，CI 编译验证通过）
+3. [Room 生成代码 check-in 机制](3_RoomGeneratedCodeCheckin.md)（已完成：生成类 11 文件入库，CI --check 硬门禁生效）
+4. [权限阶梯改造与 PRIVILEGED 档](4_PrivilegedExecutorAndTierRemoval.md)
+5. [包内 Soong 模块化与 Android.bp](5_InTreePackageAndSoongModules.md)（骨架落地，收源增量推进中）
+6. [LOS 接入、特权白名单与 Live 服务](6_LOSIntegrationAndLiveService.md)（应用侧完成，树内接入件就绪）
+7. [副屏底座原生化与前台抢占规避](7_VirtualDisplayBackend.md)（应用侧完成，待设备实测）
+8. [提示词精简](8_PromptCleanup.md)（完成）
+9. [树侧集成 RUNBOOK](9_TreeIntegrationRunbook.md)（应用侧就绪，树侧动作手册化）

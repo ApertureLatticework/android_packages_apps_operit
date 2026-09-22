@@ -17,7 +17,6 @@ import androidx.compose.material.icons.filled.RecordVoiceOver
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.SmartToy
 import androidx.compose.material.icons.filled.TableView
-import androidx.compose.material.icons.filled.Terminal
 import androidx.compose.material.icons.filled.Token
 import androidx.compose.material.icons.filled.VideoSettings
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -118,14 +117,6 @@ object ScreenRouteRegistry {
                 order = 10
             ),
             hostEntryDefinition(
-                entryId = "main.assistant_config",
-                screen = Screen.AssistantConfig,
-                surface = NavigationSurface.MAIN_SIDEBAR_AI,
-                launchNavItem = NavItem.AssistantConfig,
-                icon = NavItem.AssistantConfig.icon,
-                order = 20
-            ),
-            hostEntryDefinition(
                 entryId = "main.memory_base",
                 screen = Screen.MemoryBase,
                 surface = NavigationSurface.MAIN_SIDEBAR_AI,
@@ -140,14 +131,6 @@ object ScreenRouteRegistry {
                 launchNavItem = NavItem.Packages,
                 icon = NavItem.Packages.icon,
                 order = 10
-            ),
-            hostEntryDefinition(
-                entryId = "main.shizuku_commands",
-                screen = Screen.ShizukuCommands,
-                surface = NavigationSurface.MAIN_SIDEBAR_TOOLS,
-                launchNavItem = NavItem.ShizukuCommands,
-                icon = NavItem.ShizukuCommands.icon,
-                order = 20
             ),
             hostEntryDefinition(
                 entryId = "main.workflow",
@@ -244,16 +227,6 @@ object ScreenRouteRegistry {
                 descriptionResId = R.string.tool_default_assistant_guide_desc,
                 icon = Icons.Default.SmartToy,
                 order = 70
-            ),
-            hostEntryDefinition(
-                entryId = "toolbox.terminal",
-                screen = Screen.Terminal,
-                surface = NavigationSurface.TOOLBOX,
-                launchNavItem = NavItem.Terminal,
-                titleResId = R.string.tool_terminal,
-                descriptionResId = R.string.tool_terminal_desc,
-                icon = Icons.Default.Terminal,
-                order = 80
             ),
             hostEntryDefinition(
                 entryId = "toolbox.ui_debugger",

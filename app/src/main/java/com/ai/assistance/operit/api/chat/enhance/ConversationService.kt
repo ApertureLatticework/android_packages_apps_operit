@@ -25,15 +25,12 @@ import com.ai.assistance.operit.core.tools.SimplifiedUINode
 import com.ai.assistance.operit.core.config.FunctionalPrompts
 import com.ai.assistance.operit.data.preferences.ApiPreferences
 import com.ai.assistance.operit.data.preferences.DisplayPreferencesManager
-import com.ai.assistance.operit.data.preferences.WaifuPreferences
 import com.ai.assistance.operit.data.preferences.CharacterCardManager
 import com.ai.assistance.operit.data.preferences.ActivePromptManager
 import com.ai.assistance.operit.data.preferences.CharacterCardToolAccessResolver
 import com.ai.assistance.operit.data.model.PromptFunctionType
 import com.ai.assistance.operit.data.preferences.MemorySpaceProfileDocumentRepository
 import com.ai.assistance.operit.data.preferences.UserPreferencesManager
-import com.ai.assistance.operit.core.avatar.impl.factory.AvatarModelFactoryImpl
-import com.ai.assistance.operit.data.repository.AvatarRepository
 import com.ai.assistance.operit.util.ChatMarkupRegex
 import com.ai.assistance.operit.util.ChatUtils
 import com.ai.assistance.operit.core.tools.ToolProgressBus
@@ -53,8 +50,6 @@ import com.ai.assistance.operit.util.LocaleUtils
 import com.ai.assistance.operit.api.chat.enhance.MultiServiceManager
 import com.ai.assistance.operit.data.repository.CustomEmojiRepository
 import com.ai.assistance.operit.api.chat.llmprovider.MediaLinkBuilder
-import com.ai.assistance.operit.data.repository.getCustomMoodDefinitions
-import com.ai.assistance.operit.data.repository.getMoodAnimationMapping
 
 /** 处理会话相关功能的服务类，包括会话总结、偏好处理和对话切割准备 */
 class ConversationService(
@@ -73,16 +68,12 @@ class ConversationService(
 
     private val apiPreferences = ApiPreferences.getInstance(context)
     private val displayPreferencesManager = DisplayPreferencesManager.getInstance(context)
-    private val waifuPreferences = WaifuPreferences.getInstance(context)
     private val characterCardManager = CharacterCardManager.getInstance(context)
     private val characterCardToolAccessResolver = CharacterCardToolAccessResolver.getInstance(context)
     private val activePromptManager = ActivePromptManager.getInstance(context)
     private val memorySpaceProfileDocumentRepository =
         MemorySpaceProfileDocumentRepository.getInstance(context)
     private val userPreferencesManager = UserPreferencesManager.getInstance(context)
-    private val avatarRepository by lazy {
-        AvatarRepository.getInstance(context, AvatarModelFactoryImpl())
-    }
     private val conversationMutex = Mutex()
 
     /**
@@ -589,27 +580,14 @@ class ConversationService(
                     dispatchToolPromptComposeHooks = dispatchToolPromptComposeHooks
                 )
 
-                // 构建waifu特殊规则
-                val waifuRulesText = if(waifuPreferences.enableWaifuModeFlow.first()) buildWaifuRulesText() else ""
-                // 语音头像模式：添加 <mood> 标签协议
-                val avatarMoodRulesText =
-                    if (shouldInjectMoodRules(promptFunctionType)) {
-                        buildAvatarMoodRulesText(useEnglish)
-                    } else {
-                        ""
-                    }
-                AppLogger.d("petRules", avatarMoodRulesText)
-
                 // 构建最终的系统提示词
                 val finalSystemPrompt = buildString {
-                    append(avatarMoodRulesText)
                     append(systemPrompt)
                     if (proxyRolePrompt.isNotEmpty()) {
                         append("\n\n<assistant_role source=\"proxy_character_card\">\n")
                         append(proxyRolePrompt)
                         append("\n</assistant_role>")
                     }
-                    append(waifuRulesText)
                     if (!disableUserPreferenceDescription && userProfileMarkdown.isNotEmpty()) {
                         append("\n\n<user_profile source=\"memory-space/$effectiveMemorySpaceId/user.md\">\n")
                         append(userProfileMarkdown)
@@ -836,74 +814,6 @@ class ConversationService(
     /** Data class for search-replace operations, used for JSON deserialization. */
     private data class SearchReplaceOperation(val search: String, val replace: String)
 
-    /**
-     * Flattens the hierarchical UI node structure into a simple, flat list of key elements.
-     * This provides a much cleaner context for the AI to make decisions.
-     */
-    private fun flattenUiInfo(pageInfo: UIPageResultData): String {
-        val clickableElements = mutableListOf<String>()
-        val screenTexts = mutableListOf<String>()
-
-        fun traverse(node: SimplifiedUINode) {
-            // If the node is clickable, treat it as an atomic unit. We'll gather all text from
-            // its entire subtree to form a comprehensive description for the AI.
-            if (node.isClickable) {
-                val parts = mutableListOf<String>()
-                
-                // Start by collecting standard properties like resource ID, class, and bounds.
-                node.resourceId?.takeIf { it.isNotBlank() }?.let { parts.add("id: $it") }
-
-                // --- NEW: Recursively find all text and content descriptions in the subtree ---
-                val descriptiveTexts = mutableListOf<String>()
-                fun findTextsRecursively(n: SimplifiedUINode) {
-                    n.text?.takeIf { it.isNotBlank() }?.let { descriptiveTexts.add(it) }
-                    n.contentDesc?.takeIf { it.isNotBlank() }?.let { descriptiveTexts.add(it) }
-                    n.children.forEach(::findTextsRecursively)
-                }
-                findTextsRecursively(node)
-
-                // Combine all found texts into a single descriptive string. This is crucial for
-                // elements where the text label is in a child node of the clickable area.
-                val combinedText = descriptiveTexts.distinct().joinToString(" | ")
-                if (combinedText.isNotBlank()) {
-                    // Using "desc" to signify this is a constructed description. Increased length.
-                    parts.add("desc: \"${combinedText.replace("\"", "'").take(80)}\"")
-                }
-                // --- END NEW ---
-
-                node.className?.let { parts.add("class: ${it.substringAfterLast('.')}") }
-                node.bounds?.let { parts.add("bounds: ${it.replace(' ', ',')}") }
-
-                // Only add the element if it has some identifiable information.
-                if (parts.isNotEmpty()) {
-                    clickableElements.add("[${parts.joinToString(", ")}]")
-                }
-                // Once an element is identified as clickable, we don't process its children separately.
-            } else {
-                // If the node is not clickable, add its text for general context and continue traversal.
-                node.text?.takeIf { it.isNotBlank() }?.let {
-                    screenTexts.add("\"${it.replace("\"", "'").take(70)}\"")
-                }
-                node.children.forEach(::traverse)
-            }
-        }
-
-        traverse(pageInfo.uiElements)
-
-        // Use distinct to remove duplicate text entries from non-clickable elements.
-        val distinctScreenTexts = screenTexts.distinct()
-
-        return """
-        Package: ${pageInfo.packageName}
-        Activity: ${pageInfo.activityName}
-        Clickable Elements:
-        ${clickableElements.joinToString("\n")}
-        Screen Text (
-        for context):
-        ${distinctScreenTexts.joinToString("\n")}
-        """.trimIndent()
-    }
-
     private fun JSONObject.toMap(): Map<String, Any> {
         val map = mutableMapOf<String, Any>()
         val keysItr = this.keys()
@@ -965,90 +875,6 @@ class ConversationService(
             }
         }
         return AITool(type, parameters)
-    }
-
-    /**
-     * 构建waifu模式的特殊规则文本
-     * @return 格式化的waifu规则文本，如果没有规则则返回空字符串
-     */
-    private suspend fun buildWaifuRulesText(): String {
-        val activePrompt = activePromptManager.getActivePrompt()
-        val waifuEnableEmoticons = waifuPreferences.waifuEnableEmoticonsFlow.first()
-        val waifuEnableSelfie = waifuPreferences.waifuEnableSelfieFlow.first()
-        val waifuCustomPrompt = waifuPreferences.waifuCustomPromptFlow.first()
-        val waifuSelfiePrompt = waifuPreferences.waifuSelfiePromptFlow.first()
-        val waifuRules = mutableListOf<String>()
-
-        if (waifuEnableEmoticons) {
-            // 动态获取当前可用的表情分组
-            val availableCategories = try {
-                customEmojiRepository.initializeBuiltinEmojis(activePrompt)
-                customEmojiRepository.getAllCategories(activePrompt).first()
-            } catch (e: Exception) {
-                com.ai.assistance.operit.util.AppLogger.e("ConversationService", "获取表情分组失败", e)
-                emptyList()
-            }
-            
-            if (availableCategories.isNotEmpty()) {
-                val emotionListText = availableCategories.joinToString(", ")
-                waifuRules.add(FunctionalPrompts.waifuEmotionRule(emotionListText))
-            } else {
-                // 如果没有自定义表情，则不添加情绪规则，或明确告知没有可用表情
-                waifuRules.add(FunctionalPrompts.waifuNoCustomEmojiRule())
-            }
-        }
-        
-        if (waifuEnableSelfie) {
-            waifuRules.add(FunctionalPrompts.waifuSelfieRule(waifuSelfiePrompt))
-        }
-
-        if (waifuCustomPrompt.isNotBlank()) {
-            waifuRules.add(FunctionalPrompts.waifuCustomPromptRule(waifuCustomPrompt))
-        }
-
-        return if (waifuRules.isNotEmpty()) {
-            buildString {
-                append("\n\n[Extra Rules]")
-                waifuRules.forEach { rule ->
-                    append("\n- $rule")
-                }
-            }
-        } else ""
-    }
-
-    /**
-     * 虚拟形象的 <mood> 标签规则，仅在语音头像环境下添加到系统提示中。
-     * 会自动拼接当前头像启用的自定义 mood 类型。
-     */
-    private fun buildAvatarMoodRulesText(useEnglish: Boolean): String {
-        val currentAvatarId = avatarRepository.currentAvatar.value?.id
-        val currentConfig =
-            avatarRepository.configs.value.firstOrNull { config ->
-                config.id == currentAvatarId
-            }
-
-        val moodAnimationMapping = currentConfig?.getMoodAnimationMapping().orEmpty()
-        val customMoodDefinitions =
-            currentConfig?.getCustomMoodDefinitions()
-                .orEmpty()
-                .filter { definition ->
-                    moodAnimationMapping[definition.key]?.isNotBlank() == true
-                }
-
-        return FunctionalPrompts.avatarMoodRulesText(
-            customMoodDefinitions = customMoodDefinitions,
-            useEnglish = useEnglish
-        )
-    }
-
-    private fun shouldInjectMoodRules(promptFunctionType: PromptFunctionType): Boolean {
-        if (promptFunctionType != PromptFunctionType.VOICE) {
-            return false
-        }
-
-        val settings = avatarRepository.settings.value
-        val currentAvatar = avatarRepository.currentAvatar.value
-        return settings.isVoiceCallAvatarEnabled && currentAvatar != null
     }
 
     /**

@@ -106,7 +106,7 @@ class ScopeClassificationTest(unittest.TestCase):
         plan = classify_paths([".npmrc", "npm-shrinkwrap.json"])
 
         self.assertTrue(plan.web)
-        self.assertTrue(plan.toolpkg)
+        # toolpkg 车道随 examples 整裁撤除（243de9b），根 npm 配置只归 web 车道
 
     def test_android_test_source_uses_instrumentation_compile(self) -> None:
         plan = classify_paths(["app/src/androidTest/java/com/example/ExampleTest.kt"])

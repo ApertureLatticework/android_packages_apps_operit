@@ -1,13 +1,3 @@
-buildscript {
-    val objectboxVersion by extra("5.3.0")
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("io.objectbox:objectbox-gradle-plugin:$objectboxVersion")
-    }
-}
-
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     alias(libs.plugins.android.application) apply false

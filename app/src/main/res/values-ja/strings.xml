@@ -185,7 +185,6 @@
     <string name="import_chat_history">チャット履歴を読み込む</string>
     <string name="clear_chat_history">チャット履歴をすべて消去</string>
     <string name="tool_permissions">ツール権限の設定</string>
-    <string name="terminal">ターミナル</string>
     <string name="toolbox">ツールボックス</string>
 
     <!-- Model setup -->

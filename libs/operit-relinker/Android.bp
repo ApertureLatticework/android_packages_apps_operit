@@ -1,0 +1,7 @@
+// com.getkeepsafe.relinker:relinker:1.4.5 · central prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+android_library_import {
+    name: "operit-relinker",
+    aars: ["relinker-1.4.5.aar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

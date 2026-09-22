@@ -1,0 +1,7 @@
+// androidx.security:security-crypto:1.1.0-alpha06 · google prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+android_library_import {
+    name: "operit-security-crypto",
+    aars: ["security-crypto-1.1.0-alpha06.aar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

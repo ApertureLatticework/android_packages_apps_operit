@@ -1,0 +1,24 @@
+// liboperit_ffmpeg——ffmpeg 薄壳 JNI（2026-09-22 随主模块正式翻牌）。
+// 依赖 external/ffmpeg fork 的 libav* + libffmpeg_cli（fork 定制 4 已树内编通，
+// 清单见 ../local_manifests/upstream-ports.xml 注释）。
+cc_library_shared {
+    name: "liboperit_ffmpeg",
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+    srcs: ["operit_ffmpeg_jni.cpp"],
+    cflags: [
+        "-std=c++17",
+        "-Wno-unused-parameter",
+    ],
+    header_libs: ["jni_headers"],
+    shared_libs: [
+        "libavcodec",
+        "libavformat",
+        "libavutil",
+        "libswresample",
+        "libswscale",
+        "libavfilter",
+        "libavdevice",
+        // fork 侧 fftools CLI 库（-Dmain=ffmpeg_cli_main 改名入口）
+        "libffmpeg_cli",
+    ],
+}

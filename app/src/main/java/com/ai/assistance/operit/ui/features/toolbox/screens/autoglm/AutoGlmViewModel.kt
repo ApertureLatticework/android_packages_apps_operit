@@ -10,8 +10,7 @@ import com.ai.assistance.operit.core.tools.agent.AgentConfig
 import com.ai.assistance.operit.core.tools.agent.PhoneAgent
 import com.ai.assistance.operit.core.tools.agent.ToolImplementations
 import com.ai.assistance.operit.core.tools.agent.StepResult
-import com.ai.assistance.operit.core.tools.agent.ShowerController
-import com.ai.assistance.operit.core.tools.agent.ShowerServerManager
+import com.ai.assistance.operit.core.tools.agent.NativeVirtualDisplay
 import com.ai.assistance.operit.core.tools.StringResultData
 import com.ai.assistance.operit.core.tools.defaultTool.ToolGetter
 import com.ai.assistance.operit.core.tools.defaultTool.standard.StandardUITools
@@ -55,43 +54,26 @@ class AutoGlmViewModel(private val context: Context) : ViewModel() {
             try {
                 val agentIdForRun = if (useVirtualScreen) sessionAgentId else "default"
                 if (useVirtualScreen) {
-                    appendWithTimestamp(logBuilder, "[VirtualScreen] Ensuring Shower virtual display...")
+                    appendWithTimestamp(logBuilder, "[VirtualScreen] Ensuring native virtual display...")
                     _uiState.value = AutoGlmUiState(isLoading = true, log = logBuilder.toString().trimEnd())
 
-                    val okServer = try {
-                        ShowerServerManager.ensureServerStarted(context)
-                    } catch (e: Exception) {
-                        false
-                    }
-
-                    if (!okServer) {
-                        appendWithTimestamp(logBuilder, "[VirtualScreen] Failed to start Shower server.")
-                        _uiState.value = AutoGlmUiState(
-                            isLoading = false,
-                            log = logBuilder.toString().trimEnd()
-                        )
-                        return@launch
-                    }
-
                     val metrics = context.resources.displayMetrics
-                    val width = metrics.widthPixels
-                    val height = metrics.heightPixels
-                    val dpi = metrics.densityDpi
-
-                    val okDisplay = try {
-                        ShowerController.ensureDisplay(agentIdForRun, context, width, height, dpi)
-                    } catch (e: Exception) {
-                        false
-                    }
-
-                    val displayId = try {
-                        ShowerController.getDisplayId(agentIdForRun)
+                    val session = try {
+                        NativeVirtualDisplay.ensureDisplay(
+                            context,
+                            agentIdForRun,
+                            metrics.widthPixels,
+                            metrics.heightPixels,
+                            metrics.densityDpi
+                        )
                     } catch (_: Exception) {
                         null
                     }
 
-                    if (!okDisplay || displayId == null) {
-                        appendWithTimestamp(logBuilder, "[VirtualScreen] Failed to create virtual display for agentId=$agentIdForRun.")
+                    val displayId = session?.displayId
+
+                    if (displayId == null) {
+                        appendWithTimestamp(logBuilder, "[VirtualScreen] Failed to create native virtual display for agentId=$agentIdForRun.")
                         _uiState.value = AutoGlmUiState(
                             isLoading = false,
                             log = logBuilder.toString().trimEnd()
@@ -99,7 +81,7 @@ class AutoGlmViewModel(private val context: Context) : ViewModel() {
                         return@launch
                     }
 
-                    appendWithTimestamp(logBuilder, "[VirtualScreen] Virtual display ready. displayId=$displayId")
+                    appendWithTimestamp(logBuilder, "[VirtualScreen] Native virtual display ready. displayId=$displayId")
                     _uiState.value = AutoGlmUiState(isLoading = true, log = logBuilder.toString().trimEnd())
                 }
 

@@ -27,17 +27,6 @@ WEB_PATTERNS = (
     "package.json",
     "web-chat/**",
 )
-TOOLPKG_PATTERNS = (
-    ".npmrc",
-    "app/src/main/assets/packages/**",
-    "examples/**",
-    "package.json",
-    "package-lock.json",
-    "npm-shrinkwrap.json",
-    "pnpm-workspace.yaml",
-    "tools/packages_whitelist.txt",
-    "tools/example_packages/sync_example_packages.py",
-)
 ANDROID_FULL_PATTERNS = (
     ".github/workflows/android-build.yml",
     ".github/workflows/android-tests.yml",
@@ -83,7 +72,6 @@ class ScopePlan:
     android_instrumentation: bool
     android_full: bool
     web: bool
-    toolpkg: bool
     docs: bool
     yaml: bool
     ci: bool
@@ -97,7 +85,6 @@ class ScopePlan:
             "android_instrumentation": boolean(self.android_instrumentation),
             "android_full": boolean(self.android_full),
             "web": boolean(self.web),
-            "toolpkg": boolean(self.toolpkg),
             "docs": boolean(self.docs),
             "yaml": boolean(self.yaml),
             "ci": boolean(self.ci),
@@ -130,7 +117,6 @@ def classify_paths(paths: list[str] | tuple[str, ...]) -> ScopePlan:
     normalized_paths = tuple(sorted(set(paths)))
     localization = any(path_matches(path, LOCALIZATION_PATTERNS) for path in normalized_paths)
     web = any(path_matches(path, WEB_PATTERNS) for path in normalized_paths)
-    toolpkg = any(path_matches(path, TOOLPKG_PATTERNS) for path in normalized_paths)
     docs = any(path.endswith((".md", ".mdx")) for path in normalized_paths)
     yaml = any(path.endswith((".yml", ".yaml")) for path in normalized_paths)
     ci = any(path_matches(path, CI_PATTERNS) for path in normalized_paths)
@@ -165,7 +151,6 @@ def classify_paths(paths: list[str] | tuple[str, ...]) -> ScopePlan:
         android_instrumentation=android_instrumentation,
         android_full=android_full,
         web=web,
-        toolpkg=toolpkg,
         docs=docs,
         yaml=yaml,
         ci=ci,
@@ -247,7 +232,6 @@ def append_step_summary(path: Path, context: CandidateContext, plan: ScopePlan) 
             "android_instrumentation",
             "android_full",
             "web",
-            "toolpkg",
             "docs",
             "yaml",
             "ci",

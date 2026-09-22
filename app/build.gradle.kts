@@ -17,7 +17,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.parcelize)
-    id("io.objectbox")
     id("kotlin-kapt")
 }
 
@@ -393,6 +392,11 @@ android {
         }
     }
 
+    // ROM-only 分发：仅保留中文（默认）与英文资源，八语出包（体积精简第一梯队）
+    androidResources {
+        localeFilters.addAll(listOf("zh", "en"))
+    }
+
     defaultConfig {
         applicationId = "com.ai.assistance.operit"
         minSdk = 26
@@ -422,8 +426,9 @@ android {
         val releaseSigningConfig = signingConfigs.findByName("release")
 
         release {
-            isMinifyEnabled = false
-            isShrinkResources = false
+            // ROM-only 分发：R8 全量压缩与资源收缩（体积精简第一梯队）
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -447,8 +452,8 @@ android {
             resValue("string", "app_name", "Operit Clone")
         }
         create("nightly") {
-            isMinifyEnabled = false
-            isShrinkResources = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -577,19 +582,8 @@ kotlin {
 
 dependencies {
     implementation("com.github.jelmerk:hnswlib-core:1.2.1")
-    implementation(project(":dragonbones"))
-    implementation(project(":terminal"))
-    implementation(project(":mnn"))
-    implementation(project(":llama"))
-    implementation(project(":mmd"))
-    implementation(project(":fbx"))
-    implementation(project(":showerclient"))
     implementation(project(":quickjs"))
 
-    // glTF runtime rendering (Filament)
-    implementation("com.google.android.filament:filament-android:1.69.2")
-    implementation("com.google.android.filament:gltfio-android:1.69.2")
-    implementation("com.google.android.filament:filament-utils-android:1.69.2")
     implementation(libs.androidx.ui.graphics.android)
     // The only vendored artifact is the custom FFmpegKit AAR.
     implementation(files("libs/ffmpeg-kit-local.aar"))
@@ -627,16 +621,9 @@ dependencies {
     implementation(libs.commons.compress)
     implementation(libs.commons.io) // 添加Apache Commons IO
     
-    // 图片处理库
-    implementation(libs.glide) // 用于处理图像
-    
     // XML处理
     implementation(libs.androidx.core.ktx)
     
-    // libsu - root access library
-    implementation("com.github.topjohnwu.libsu:core:6.0.0")
-    implementation("com.github.topjohnwu.libsu:service:6.0.0")
-    implementation("com.github.topjohnwu.libsu:nio:6.0.0")
     
     // Add missing SVG support
     implementation(libs.androidsvg)
@@ -647,10 +634,10 @@ dependencies {
     // Image Cropper for background image cropping
     implementation(libs.image.cropper)
     
-    // ExoPlayer for video background
-    implementation(libs.exoplayer)
-    implementation(libs.exoplayer.core)
-    implementation(libs.exoplayer.ui)
+    // media3（exoplayer 2.19 后继，包名迁移已完成）for video/audio playback
+    implementation(libs.media3.common)
+    implementation(libs.media3.exoplayer)
+    implementation(libs.media3.ui)
     
     // Material 3 Window Size Class
     implementation(libs.material3.window)
@@ -709,11 +696,15 @@ dependencies {
     // Room 数据库
     implementation(libs.room.runtime)
     implementation(libs.room.ktx) // Kotlin扩展和协程支持
-    kapt(libs.room.compiler) // 使用kapt代替ksp
+    // 步骤3机制：Room 生成类已 check-in 进 src/main/room-generated，默认构建零注解处理器；
+    // 再生成时（-ProomRegen）注入 compiler 并把该目录移出编译源集，
+    // 避免 kapt 输出与 check-in 副本在 stub 编译期撞 duplicate class
+    if (project.hasProperty("roomRegen")) {
+        kapt(libs.room.compiler)
+    } else {
+        android.sourceSets.getByName("main").java.srcDir("src/main/room-generated")
+    }
 
-    // ObjectBox
-    implementation(libs.objectbox.kotlin)
-    kapt(libs.objectbox.processor)
     implementation(libs.commons.compress.v2)
     implementation(libs.junrar)
 
@@ -732,12 +723,7 @@ dependencies {
     // Navigation Compose
     implementation(libs.navigation.compose)
 
-    // Shizuku dependencies
-    implementation(libs.shizuku.api)
-    implementation(libs.shizuku.provider)
 
-    // Tasker Plugin Library
-    implementation("com.joaomgcd:taskerpluginlibrary:0.4.10")
     
     // WorkManager for scheduled workflows
     implementation(libs.work.runtime.ktx)
@@ -829,10 +815,6 @@ dependencies {
     // BouncyCastle - explicitly include jdk18on version to avoid conflicts
     implementation("org.bouncycastle:bcprov-jdk18on:1.78")
 
-    // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
     implementation(libs.okhttp.logging.interceptor)
 
 

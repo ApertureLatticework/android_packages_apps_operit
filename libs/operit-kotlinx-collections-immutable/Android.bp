@@ -1,0 +1,7 @@
+// org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:0.4.0 · central prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+java_import {
+    name: "operit-kotlinx-collections-immutable",
+    jars: ["kotlinx-collections-immutable-jvm-0.4.0.jar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

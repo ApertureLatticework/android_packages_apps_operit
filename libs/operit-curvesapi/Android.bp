@@ -1,0 +1,7 @@
+// com.github.virtuald:curvesapi:1.07 · central prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+java_import {
+    name: "operit-curvesapi",
+    jars: ["curvesapi-1.07.jar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

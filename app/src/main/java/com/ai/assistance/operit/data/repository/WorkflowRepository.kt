@@ -832,39 +832,6 @@ class WorkflowRepository(private val context: Context) {
 
 
     /**
-     * Finds and triggers workflows based on a Tasker event.
-     * It checks all enabled workflows for a Tasker trigger node whose configuration matches the event data.
-     *
-     * @param params The list of parameters received from Tasker.
-     */
-    suspend fun triggerWorkflowsByTaskerEvent(params: List<String>?) = withContext(Dispatchers.IO) {
-        if (params.isNullOrEmpty()) return@withContext
-
-        AppLogger.d(TAG, "Checking for Tasker-triggered workflows with params: $params")
-        val workflows = getAllWorkflows().getOrNull() ?: return@withContext
-
-        coroutineScope {
-            workflows.filter { it.enabled }.forEach { workflow ->
-                workflow.nodes.forEach { node ->
-                    if (node is TriggerNode && node.triggerType == "tasker") {
-                        // Matching logic: The node's config expects a "command".
-                        // It checks if any of the parameters from Tasker exactly matches this command.
-                        // Example config: `{"command": "start_meeting"}`.
-                        // This will match if any of the params from Tasker is "start_meeting" (case-insensitive).
-                        val command = node.triggerConfig["command"]
-                        if (command != null && params.any { it.equals(command, ignoreCase = true) }) {
-                            AppLogger.d(TAG, "Tasker trigger matched for workflow '${workflow.name}' on node '${node.name}'. Triggering.")
-                            launch {
-                                triggerWorkflow(workflow.id, node.id)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
      * Finds and triggers workflows based on a received Intent.
      * It checks all enabled workflows for an Intent trigger node whose configuration matches the Intent's action.
      *

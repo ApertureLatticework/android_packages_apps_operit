@@ -1,0 +1,7 @@
+// sh.calvin.reorderable:reorderable-android:2.5.1 · central prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+android_library_import {
+    name: "operit-reorderable",
+    aars: ["reorderable-android-2.5.1.aar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

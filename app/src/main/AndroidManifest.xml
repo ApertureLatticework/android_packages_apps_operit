@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- package 属性为 Soong manifest 处理器硬需求（spike1 实锤）；
+     与 AGP namespace 同值时 Gradle 仅警告，双构建共存 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.ai.assistance.operit"
+    android:versionCode="51"
+    android:versionName="1.12.2">
 
-    <!-- Shizuku permissions -->
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
@@ -20,11 +24,20 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
-    <uses-permission android:name="moe.shizuku.manager.permission.API_V23" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
+
+    <!-- ROM 特权面（privapp 白名单：etc/privapp-permissions-operit.xml，步骤 6） -->
+    <uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.CAPTURE_SECURE_VIDEO_OUTPUT" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.INJECT_EVENTS" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.INSTALL_PACKAGES" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.ADD_TRUSTED_DISPLAY" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     
     <!-- 麦克风前台服务权限 -->
@@ -144,14 +157,6 @@
             android:name="firebase_ml_collection_enabled"
             android:value="false" />
         
-        <provider
-            android:name="rikka.shizuku.ShizukuProvider"
-            android:authorities="${applicationId}.shizuku"
-            android:enabled="true"
-            android:exported="true"
-            android:multiprocess="false"
-            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
-            
         <!-- FileProvider for APK installation -->
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -294,15 +299,7 @@
             </intent-filter>
         </activity>
         
-        <activity
-            android:name=".integrations.tasker.ActivityConfigAIAgentAction"
-            android:exported="true"
-            android:icon="@mipmap/ic_launcher_simple"
-            android:label="AI Agent Action">
-            <intent-filter>
-                <action android:name="net.dinglisch.android.tasker.ACTION_EDIT_EVENT" />
-            </intent-filter>
-        </activity>
+    <!-- Tasker 集成线随 ROM 版裁撤 -->
 
         <activity
             android:name=".core.tools.system.ScreenCaptureActivity"
@@ -435,41 +432,32 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-
-        <!-- Receive Shower Binder handoff broadcast from the Shower server (Shizuku-style) -->
-        <receiver
-            android:name=".core.tools.agent.ShowerBinderReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.ai.assistance.operit.action.SHOWER_BINDER_READY" />
-            </intent-filter>
-        </receiver>
         
-        <!-- Workflow Tasker Plugin Activity -->
-        <activity
-            android:name=".integrations.tasker.WorkflowTaskerActivityConfig"
-            android:exported="true"
-            android:label="Operit Workflow"
-            android:icon="@mipmap/ic_launcher_simple">
-            <intent-filter>
-                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
-            </intent-filter>
-        </activity>
-        
-        <!-- Workflow Tasker Receiver -->
-        <receiver
-            android:name=".integrations.tasker.WorkflowTaskerReceiver"
-            android:exported="true"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="com.ai.assistance.operit.TRIGGER_WORKFLOW" />
-                <action android:name="com.twofortyfouram.locale.intent.action.FIRE_SETTING" />
-            </intent-filter>
-        </receiver>
+        <!-- Workflow Tasker 插件随 Tasker 集成线裁撤 -->
         
         <!-- Boot Completed Receiver for rescheduling workflows -->
         <receiver
-            android:name=".integrations.tasker.WorkflowBootReceiver"
+            android:name=".integrations.intent.WorkflowBootReceiver"
+            android:exported="true"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Live 常驻服务与开机自启（步骤 6）：主屏观察通道宿主，特权档生效 -->
+        <service
+            android:name=".services.live.LiveService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Keeps the privileged Live observation and automation channel alive so screen mirroring and injection consumers can attach at any time without a user-visible prompt." />
+        </service>
+
+        <receiver
+            android:name=".services.live.LiveBootReceiver"
             android:exported="true"
             android:enabled="true">
             <intent-filter>

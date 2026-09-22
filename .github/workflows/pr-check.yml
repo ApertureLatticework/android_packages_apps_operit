@@ -37,7 +37,6 @@ jobs:
       android_instrumentation: ${{ steps.plan.outputs.android_instrumentation }}
       android_full: ${{ steps.plan.outputs.android_full }}
       web: ${{ steps.plan.outputs.web }}
-      toolpkg: ${{ steps.plan.outputs.toolpkg }}
 
     steps:
       - name: Checkout merge candidate
@@ -193,28 +192,19 @@ jobs:
           fi
 
       - name: Set up Node.js
-        if: >-
-          steps.plan.outputs.web == 'true' ||
-          steps.plan.outputs.toolpkg == 'true'
+        if: steps.plan.outputs.web == 'true'
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Install JavaScript dependencies
-        if: >-
-          steps.plan.outputs.web == 'true' ||
-          steps.plan.outputs.toolpkg == 'true'
+        if: steps.plan.outputs.web == 'true'
         env:
           WEB_REQUIRED: ${{ steps.plan.outputs.web }}
-          TOOLPKG_REQUIRED: ${{ steps.plan.outputs.toolpkg }}
         shell: bash
         run: |
           set -euo pipefail
           npm install -g pnpm@10.34.5
-          if [[ "$TOOLPKG_REQUIRED" == "true" ]]; then
-            npm ci --no-audit --no-fund
-            npm --prefix examples/toolpkg_wasm_demo ci --no-audit --no-fund
-          fi
           if [[ "$WEB_REQUIRED" == "true" ]]; then
             npm --prefix web-chat ci --no-audit --no-fund
           fi
@@ -226,20 +216,6 @@ jobs:
           set -euo pipefail
           npm --prefix web-chat run typecheck
           npm run build:webchat
-
-      - name: Check bundled ToolPkg packages
-        if: steps.plan.outputs.toolpkg == 'true'
-        shell: bash
-        run: |
-          set -euo pipefail
-          npm run build:examples:github
-          git diff --exit-code -- examples/github.js
-          npm --prefix examples/toolpkg_wasm_demo run pack:toolpkg
-          test -s examples/toolpkg_wasm_demo/main.js
-          test -s examples/toolpkg_wasm_demo/modules/core.wasm
-          test -s examples/toolpkg_wasm_demo/dist/toolpkg_wasm_demo.toolpkg
-          python3 tools/example_packages/sync_example_packages.py --mode test --no-hot-reload
-          python3 tools/example_packages/sync_example_packages.py --no-hot-reload
 
       - name: Set up Android SDK
         if: steps.plan.outputs.android_resources == 'true'
@@ -391,12 +367,6 @@ jobs:
 
       - name: Build WebChat assets
         run: npm run build:webchat
-
-      - name: Sync bundled ToolPkg packages
-        run: |
-          set -euo pipefail
-          npm run build:examples:github
-          python3 tools/example_packages/sync_example_packages.py --no-hot-reload
 
       - name: Configure secret-free Android build
         shell: bash

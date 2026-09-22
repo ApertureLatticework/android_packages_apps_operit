@@ -915,12 +915,6 @@ class PluginLoadingState {
             ) {
                 // 根据初始化状态显示不同的消息
                 when (status) {
-                    MCPStarter.PluginInitStatus.NODEJS_MISSING -> {
-                        updateMessage(context.getString(R.string.plugin_nodejs_missing))
-                    }
-                    MCPStarter.PluginInitStatus.BRIDGE_FAILED -> {
-                        updateMessage(context.getString(R.string.plugin_bridge_failed))
-                    }
                     MCPStarter.PluginInitStatus.OTHER_ERROR -> {
                         updateMessage(context.getString(R.string.plugin_other_error))
                     }

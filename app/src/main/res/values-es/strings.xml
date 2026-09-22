@@ -30,7 +30,6 @@
     <string name="shizuku_commands">Concesión de permisos</string>
     <string name="tool_permissions">Configuración de permisos de herramientas</string>
     <string name="about">Acerca de</string>
-    <string name="terminal">Terminal</string>
     <string name="toolbox">Caja de herramientas</string>
     <string name="mcp">MCP</string>
     <string name="token_config_title">Configuración de token DeepSeek</string>
@@ -66,11 +65,7 @@
     <string name="unlock_chat">Desbloquear chat</string>
 
     <!-- Terminal Screen -->
-    <string name="termux_not_installed">Termux no instalado</string>
-    <string name="termux_not_running">Termux no se está ejecutando</string>
-    <string name="termux_command">Comando Termux</string>
     <string name="execute_termux_command">Ejecutar comando</string>
-    <string name="termux_result">Resultado del comando</string>
 
     <!-- Termux Installation -->
     <string name="install_termux_title">Instalar Termux</string>
@@ -79,8 +74,6 @@
     <string name="installing_bundled_termux">Instalando Termux integrado, por favor conceda permiso de instalación</string>
     <string name="install_termux_failed">Error al instalar Termux</string>
     <string name="open_termux">Abrir Termux</string>
-    <string name="termux_setup_guide">Guía de configuración de Termux</string>
-    <string name="termux_wizard_title">Asistente de configuración de Termux</string>
 
     <!-- About Screen -->
     <string name="about_title">Acerca de Operit AI</string>
@@ -152,8 +145,6 @@
     <string name="no">No</string>
     <string name="authorized">Autorizado</string>
     <string name="unauthorized">No autorizado</string>
-    <string name="install_shizuku">Instalar Shizuku</string>
-    <string name="open_shizuku">Abrir aplicación Shizuku</string>
     <string name="show_help">Mostrar ayuda</string>
     <string name="hide_help">Ocultar ayuda</string>
     <string name="request_permission">Solicitar permiso de Shizuku</string>
@@ -167,7 +158,6 @@
     <string name="executing">Ejecutando...</string>
     <string name="command_success">Comando ejecutado con éxito:\n%1$s</string>
     <string name="command_failure">Error al ejecutar el comando (código de salida: %1$d):\n%2$s</string>
-    <string name="start_shizuku_first">Por favor, inicie primero el servicio Shizuku</string>
     <string name="grant_permission_first">Por favor, conceda primero el permiso de Shizuku</string>
     <string name="feature_unavailable">No se puede usar la función de comandos ADB</string>
     <string name="thinking_process">Proceso de pensamiento</string>
@@ -324,9 +314,6 @@
     <string name="function_model">Modelo de función</string>
     <string name="importing_model">Importando modelo...</string>
     <string name="processing">Procesando...</string>
-    <string name="avatar_config">Configuración del avatar</string>
-    <string name="avatar_voice_call_enable_title">Activar avatar virtual</string>
-    <string name="avatar_voice_call_enable_summary">Al activarlo, la interfaz de llamada de voz usará el avatar virtual y reproducirá emociones según las etiquetas &lt;mood&gt; devueltas.</string>
     <string name="dragon_bones_config">Configuración de DragonBones</string>
     <string name="collapse">Colapsar</string>
     <string name="expand">Expandir</string>
@@ -359,8 +346,6 @@
     <string name="plugin_copyright">© 2023 AI Assistance</string>
 
     <!-- Toast Messages -->
-    <string name="pip_package_install_success">Instalación de paquete PIP exitosa</string>
-    <string name="pip_package_install_failed">Error en la instalación del paquete PIP</string>
     <string name="please_press_back_to_return">Por favor presione el botón atrás para regresar</string>
     <string name="please_input_command">Por favor ingrese comando</string>
     <string name="background_image_migrated">Imagen de fondo migrada al almacenamiento interno</string>
@@ -371,7 +356,6 @@
     <string name="message_copied_to_clipboard">Mensaje copiado al portapapeles</string>
     <string name="message_workspace_backing_up">Respaldando el espacio de trabajo...</string>
     <string name="selected_content_copied">Contenido seleccionado copiado</string>
-    <string name="requesting_root_permission">Solicitando permiso Root...</string>
     <string name="root_permission_granted">Permiso Root concedido</string>
     <string name="root_permission_denied">Solicitud de permiso Root denegada</string>
     <string name="command_execution_success">Ejecución de comando exitosa</string>
@@ -396,8 +380,6 @@
     <string name="floating_window_attachment_note">Nota: Solo se admiten archivos adjuntos especiales en la ventana flotante\nPara agregar archivos o imágenes, abra la interfaz de chat completa</string>
     <string name="ai_assistant">Asistente IA</string>
     <string name="send_message">Enviar Mensaje</string>
-    <string name="chat_with_pet">Charlar con Mascota</string>
-    <string name="dragonbones_mode">Modo DragonBones</string>
     <string name="loading_failed">Error de carga: %1$s</string>
     <string name="loading">Cargando...</string>
     <string name="floating_service_description">Mostrar servicio de ventana flotante del asistente IA</string>
@@ -616,10 +598,6 @@
     <string name="tool_permission_manager_desc">Gestionar permisos para todas las aplicaciones del dispositivo para proteger la privacidad</string>
     <string name="tool_user_agreement">Acuerdo de usuario</string>
     <string name="tool_user_agreement_desc">Ver el acuerdo de usuario y política de privacidad de la aplicación</string>
-    <string name="tool_terminal">Terminal de comandos</string>
-    <string name="tool_terminal_desc">Terminal de línea de comandos potente para ejecutar comandos del sistema</string>
-    <string name="tool_terminal_auto_config">Configuración automática de terminal</string>
-    <string name="tool_terminal_auto_config_desc">Instalar y configurar automáticamente Python, PIP y otras herramientas de desarrollo</string>
     <string name="tool_ui_debugger">Herramienta de depuración de UI</string>
     <string name="tool_ui_debugger_desc">Depurar y analizar elementos de interfaz con búsqueda de elementos y soporte de interacción</string>
     <string name="tool_ffmpeg_toolbox">Caja de herramientas FFmpeg</string>
@@ -1510,7 +1488,6 @@
     <string name="nav_group_tools">Herramientas</string>
     <string name="nav_group_system">Sistema</string>
     <string name="package_category_plugin">Complemento</string>
-    <string name="desktop_pet_start">Iniciar mascota de escritorio</string>
     <string name="workflow_list_title">Lista de flujos de trabajo</string>
     <string name="workflow_create">Crear flujo de trabajo</string>
     <string name="workflow_name">Nombre del flujo de trabajo</string>
@@ -1661,7 +1638,6 @@
     <string name="colorpicker_apply_rgb">Aplicar RGB</string>
     <string name="colorpicker_apply_hsv">Aplicar HSV</string>
 
-    <string name="pet_service_notification_text">La mascota de escritorio está en ejecución</string>
     <string name="settings_prompt_section">Configuración de indicaciones</string>
     <string name="settings_prompt_title">Edición de tarjeta de personaje</string>
     <string name="settings_prompt_desc">Indicaciones para personalizar el comportamiento y la personalidad del asistente de IA</string>
@@ -1784,44 +1760,9 @@
     <string name="ignore">Ignorar</string>
     <string name="rename_avatar_model_title">Renombrar modelo</string>
     <string name="rename_avatar_model_message">Ingrese un nuevo nombre para mostrar del modelo</string>
-    <string name="avatar_model_name_label">Nombre del modelo</string>
     <string name="unsupported_model_type">Tipo de modelo no compatible: %1$s</string>
-    <string name="avatar_preview_error_log">Error de vista previa del avatar: %1$s</string>
     <string name="how_to_import_tap_to_expand">¿Cómo crear e importar modelos? (tocar para expandir)</string>
     <string name="how_to_import_tap_to_collapse">¿Cómo crear e importar modelos? (tocar para colapsar)</string>
-    <string name="avatar_config_supported_formats">Soporta: DragonBones (.json + _tex.json + _tex.png), WebP (.webp), MP4 (.mp4), MMD (.pmx/.pmd + .vmd opcional), glTF (.glb/.gltf), FBX (.fbx).</string>
-    <string name="avatar_config_import_methods">Importación directa de archivos soporta .glb/.gltf/.mp4/.fbx; DragonBones, WebP, MP4, MMD, glTF de múltiples archivos, o FBX con texturas/recursos externos, importe .zip.</string>
-    <string name="avatar_mood_trigger_mapping_title">Mapeo de disparo de Mood</string>
-    <string name="avatar_mood_trigger_mapping_desc">El &lt;mood&gt; devuelto por la mascota de escritorio y el avatar de voz coincidirá primero con el disparador aquí. Solo los tipos personalizados con animación vinculada se agregarán al prompt.</string>
-    <string name="avatar_no_model_actions">El avatar actual no tiene acciones disponibles</string>
-    <string name="avatar_custom_types_title">Tipos personalizados</string>
-    <string name="avatar_custom_type_add">Agregar tipo personalizado</string>
-    <string name="avatar_custom_type_none">Aún no hay tipos personalizados</string>
-    <string name="avatar_trigger_key_label">Clave de disparo: %1$s</string>
-    <string name="avatar_fallback_emotion_label">Emoción de respaldo: %1$s</string>
-    <string name="avatar_edit_custom_mood_type">Editar tipo personalizado</string>
-    <string name="avatar_delete_custom_mood_type">Eliminar tipo personalizado</string>
-    <string name="avatar_mapped_action">Acción vinculada</string>
-    <string name="avatar_preview_action">Vista previa</string>
-    <string name="avatar_unmapped">Sin vincular</string>
-    <string name="avatar_custom_type_add_title">Agregar tipo personalizado</string>
-    <string name="avatar_custom_type_edit_title">Editar tipo personalizado</string>
-    <string name="avatar_custom_type_key">Clave de tipo</string>
-    <string name="avatar_custom_type_key_hint">Solo se permiten letras minúsculas, números, _ y -. Clave normalizada: %1$s</string>
-    <string name="avatar_empty_value_placeholder">&lt;空&gt;</string>
-    <string name="avatar_custom_type_prompt_hint_label">Descripción del prompt</string>
-    <string name="avatar_custom_type_prompt_hint_help">Este prompt se agregará a la regla de mood de la mascota/avatar de voz, guiando al modelo sobre en qué escenario usar este tipo.</string>
-    <string name="avatar_emotion_mapping_title">Mapeo de emociones</string>
-    <string name="avatar_emotion_mapping_chip">%1$s: %2$s</string>
-    <string name="avatar_emotion_label">Emoción</string>
-    <string name="avatar_clear_selected_mapping">Limpiar mapeo actual</string>
-    <string name="avatar_emotion_idle">Inactivo</string>
-    <string name="avatar_emotion_listening">Escuchando</string>
-    <string name="avatar_emotion_thinking">Pensando</string>
-    <string name="avatar_emotion_happy">Feliz</string>
-    <string name="avatar_emotion_sad">Triste</string>
-    <string name="avatar_emotion_confused">Confundido</string>
-    <string name="avatar_emotion_surprised">Sorprendido</string>
 
     <string name="voice_keyword_attachments_time_title">Hora</string>
     <string name="voice_keyword_attachments_time_desc">Adjuntar hora actual</string>
@@ -1914,23 +1855,6 @@
     <string name="plugin_server_success">Servidor MCP iniciado correctamente</string>
     <string name="plugin_server_initializing">Inicializando servidor MCP...</string>
 
-    <string name="termux_wizard_battery_optimize">Configurar exención de optimización de batería</string>
-    <string name="termux_wizard_tuna_title">Configurar espejo de Tsinghua</string>
-    <string name="termux_wizard_tuna_message">Termux ha configurado la exención de optimización de batería. Ahora necesita configurar el espejo de Tsinghua para acelerar la descarga de paquetes. El espejo de Tsinghua es un espejo nacional que puede mejorar significativamente la velocidad de descarga de paquetes de Termux.</string>
-    <string name="termux_wizard_tuna_config">Configurar espejo de Tsinghua</string>
-    <string name="termux_wizard_tuna_skip">Saltar este paso</string>
-    <string name="termux_wizard_python_title">Instalar entorno Python</string>
-    <string name="termux_wizard_python_message">El espejo de Tsinghua está configurado. Ahora necesita instalar el entorno Python. Python es un lenguaje de programación popular, necesario para muchas herramientas de IA y scripts de automatización.</string>
-    <string name="termux_wizard_python_install">Instalar Python</string>
-    <string name="termux_wizard_uv_title">Instalar gestor de paquetes UV</string>
-    <string name="termux_wizard_uv_message">Python está instalado. Ahora necesita instalar el gestor de paquetes UV. UV es un gestor y analizador de paquetes Python rápido que puede reemplazar a pip, proporcionando una mejor gestión de dependencias.</string>
-    <string name="termux_wizard_uv_install">Instalar UV</string>
-    <string name="termux_wizard_node_title">Instalar entorno Node.js</string>
-    <string name="termux_wizard_node_message">UV está instalado. Ahora necesita instalar el entorno Node.js. Node.js es un entorno de ejecución de JavaScript para ejecutar código JavaScript y aplicaciones web.</string>
-    <string name="termux_wizard_node_install">Instalar Node.js</string>
-    <string name="termux_wizard_success_title">¡Felicidades! El entorno Termux está completamente configurado</string>
-    <string name="termux_wizard_success_message">Ahora puede usar Termux para diversas operaciones de línea de comandos</string>
-    <string name="termux_wizard_open">Abrir Termux</string>
     <string name="shizuku_demo_loading">Cargando estado de la aplicación...</string>
     <string name="shizuku_demo_permission_failed">No se puede abrir la configuración de permisos</string>
     <string name="shizuku_demo_overlay_failed">No se puede abrir la configuración de superposición</string>
@@ -1964,7 +1888,6 @@
     <string name="status_not_granted">No concedido</string>
     <string name="accessibility_permission">Permiso de accesibilidad</string>
     <string name="accessibility_service">Servicio de accesibilidad</string>
-    <string name="admin_permission">Permiso de administrador</string>
     <string name="debug_permission">Permiso de depuración</string>
     <string name="shizuku_service">Servicio Shizuku</string>
     <string name="root_permission">Permiso Root</string>
@@ -1976,24 +1899,13 @@
     <string name="overlay_permission">Permiso de superposición</string>
     <string name="battery_optimization">Exención de optimización de batería</string>
     <string name="location_permission">Permiso de ubicación</string>
-    <string name="operit_terminal">Terminal Operit</string>
     <string name="permission_level_standard">Permiso estándar</string>
     <string name="permission_level_accessibility">Permiso de accesibilidad</string>
-    <string name="permission_level_admin">Permiso de administrador</string>
-    <string name="permission_level_debugger">Permiso de depuración</string>
-    <string name="permission_level_root">Permiso Root</string>
     <string name="permission_level_standard_desc">Permiso básico de ejecución de la aplicación, sin autorización especial del sistema</string>
     <string name="permission_level_accessibility_desc">Añade soporte de servicio de accesibilidad, puede simular operaciones en pantalla</string>
-    <string name="permission_level_admin_desc">Agrega permiso de administrador de dispositivo, puede acceder a más funciones del sistema</string>
-    <string name="permission_level_debugger_desc">Proporciona acceso a nivel de sistema ADB a través de Shizuku</string>
-    <string name="permission_level_root_desc">Permiso de superusuario, puede ejecutar cualquier operación del sistema</string>
     <string name="permission_level_standard_full_desc">Permiso estándar: permiso básico de ejecución de la aplicación, sin permisos especiales</string>
     <string name="permission_level_accessibility_full_desc">Permiso de accesibilidad: permite a la aplicación simular operaciones del usuario, requiere activar el servicio de accesibilidad</string>
-    <string name="permission_level_admin_full_desc">Permiso de administrador: permite a la aplicación acceder a más funciones del sistema, como servicios de ubicación, etc.</string>
-    <string name="permission_level_debugger_full_desc">Permiso de depuración: permite operaciones avanzadas mediante la función de depuración ADB, requiere el servicio Shizuku</string>
-    <string name="permission_level_root_full_desc">Permiso Root: permite a la aplicación ejecutarse como superusuario, requiere que el dispositivo esté rooteado</string>
     <string name="root_access_granted">La aplicación ha obtenido permisos Root, puede ejecutar comandos privilegiados</string>
-    <string name="device_rooted_request_permission">El dispositivo está rooteado, haga clic para solicitar permisos de la aplicación</string>
 
     <string name="patch_update_label_meta_step">Metadatos del parche %1$d/%2$d</string>
     <string name="patch_update_stage_downloading_patch_step">Descargando paquete de parche (%1$d/%2$d)</string>
@@ -2075,13 +1987,9 @@
     <string name="webview_ssl_error_date_invalid">La fecha del certificado no es válida</string>
     <string name="webview_ssl_error_unknown">Error SSL desconocido</string>
 
-    <string name="device_not_rooted">El dispositivo no está rooteado, no se puede obtener acceso root</string>
     <string name="toast_download_link_failed">No se puede abrir el enlace de descarga</string>
     <string name="toast_apk_extract_failed">Error al extraer el APK, inténtelo de nuevo más tarde</string>
-    <string name="toast_open_termux_first">Inicie Termux primero</string>
     <string name="toast_operation_failed">Operación fallida: %1$s</string>
-    <string name="toast_skip_tuna_source">Se ha omitido la configuración del repositorio de Tsinghua. Puede configurarlo manualmente en Termux más tarde</string>
-    <string name="toast_skip_tuna_source_dialog">Ha optado por omitir la configuración del repositorio de Tsinghua. Si desea configurarlo manualmente más tarde, ejecute el siguiente comando en Termux:\n\ntermux-change-repo\n\nLuego seleccione el repositorio de Tsinghua u otro de la lista.</string>
     <string name="chat_history">Historial de conversaciones</string>
     <string name="search_chat_history_hint">Buscar</string>
     <string name="new_chat">Nueva conversación</string>
@@ -2105,15 +2013,6 @@
     <string name="ask">Preguntar</string>
     <string name="ai_planning_mode">Búsqueda profunda:</string>
     <string name="disabled">Desactivado</string>
-    <string name="termux_not_installed_message">Instale la aplicación Termux primero</string>
-    <string name="termux_manual_auth_title">Autorización manual requerida</string>
-    <string name="termux_manual_auth_message">No se pudo otorgar automáticamente el permiso para ejecutar comandos en Termux. Realice los siguientes pasos manualmente:\n\n1. Abra Termux\n2. Mantenga presionada la pantalla y seleccione \'Más\'\n3. Seleccione \'Ajustes\'\n4. Active \'Permitir acceso desde aplicaciones externas\'</string>
-    <string name="termux_storage_permission_message">No se pudo otorgar automáticamente el permiso de almacenamiento de Termux. Verifique la siguiente configuración:\n\n1. Entorno Shell: asegúrese de tener un shell disponible (como ADB o Root). Nota: si usa Shizuku, no lo inicie en modo Root.\n2. Versión de Termux: asegúrese de que la versión instalada sea la integrada en la aplicación o la versión Debug obtenida de su repositorio oficial de GitHub.</string>
-    <string name="termux_all_permissions_granted">Todos los permisos de Termux se han otorgado correctamente</string>
-    <string name="termux_some_permissions_failed">Algunos permisos no se pudieron otorgar. Consulte el registro o configúrelos manualmente</string>
-    <string name="termux_app_association_granted">Se ha autorizado la asociación de la aplicación con Termux</string>
-    <string name="termux_manual_setting_hint">Active la opción \'Permitir acceso desde aplicaciones externas\' en Termux</string>
-    <string name="termux_manual_setting_failed">No se puede abrir Termux. Configúrelo manualmente</string>
     <string name="open_settings">Abrir ajustes</string>
     <string name="cannot_open_settings">No se pueden abrir los ajustes</string>
     <string name="model_prompts_title">Configuración de indicaciones</string>
@@ -2152,9 +2051,6 @@
     <string name="chat_function_desc">Función principal de conversación, personaliza la configuración de indicaciones del chatbot</string>
     <string name="voice_function">Función de voz</string>
     <string name="voice_function_desc">Función de interacción por voz, personaliza la configuración de indicaciones del asistente de voz</string>
-    <string name="desktop_pet_function">Función de mascota de escritorio</string>
-    <string name="desktop_pet_function_desc">Función de mascota de escritorio, personaliza la personalidad y la forma de interacción de la mascota</string>
-    <string name="pet_service_notification_title">Servicio de mascota de escritorio</string>
 
     <string name="plugin_loading_list">Cargando lista de plugins...</string>
     <string name="plugin_no_plugins">No se detectaron plugins instalados</string>
@@ -2175,9 +2071,6 @@
     <string name="plugin_deploy_complete">Despliegue del plugin completado, continuando inicio: %1$s</string>
     <string name="plugin_runtime_error">Error en tiempo de ejecución: %1$s</string>
     <string name="plugin_runtime_output">Salida en tiempo de ejecución:\n%1$s</string>
-    <string name="plugin_auto_deploy">Plugin no desplegado, iniciando despliegue automático</string>
-    <string name="plugin_auto_deploy_complete">Despliegue automático completado</string>
-    <string name="plugin_terminal_service_unavailable">Servicio de terminal no disponible, inícielo primero</string>
     <string name="plugin_pnpm_missing">pnpm no está instalado en la terminal, instálelo primero</string>
     <string name="theme_use_custom_bg">Usar fondo personalizado</string>
     <string name="theme_custom_bg_desc">Al activarlo, puede seleccionar una imagen o video de fondo personalizado</string>
@@ -2257,8 +2150,6 @@
     <string name="wizard_expand">Expandir</string>
     <string name="wizard_open_docs">Documentación oficial</string>
     <string name="root_wizard_title">Asistente de configuración de permisos root</string>
-    <string name="root_wizard_step1">Paso 1: Rootear el dispositivo</string>
-    <string name="root_wizard_step2">Paso 2: Conceder permisos root</string>
     <string name="root_wizard_completed">Permisos root configurados</string>
     <string name="root_wizard_success_message">¡Felicidades! Se han obtenido los permisos root. Ahora puede ejecutar operaciones que requieren privilegios.</string>
     <string name="root_wizard_test_command">Probar comando root</string>
@@ -2272,17 +2163,10 @@
     <string name="root_wizard_risk_details">1. Rootear conlleva ciertos riesgos y puede anular la garantía del dispositivo\n2. Algunas aplicaciones pueden negarse a ejecutarse en dispositivos rooteados\n3. Un rooteo inadecuado puede causar inestabilidad del sistema</string>
     <string name="shizuku_wizard_title">Asistente de configuración de Shizuku</string>
     <string name="shizuku_wizard_update_title">Asistente de actualización de Shizuku</string>
-    <string name="shizuku_wizard_step1">Paso 1: Instalar la aplicación Shizuku</string>
-    <string name="shizuku_wizard_step2">Paso 2: Iniciar el servicio Shizuku</string>
-    <string name="shizuku_wizard_step3">Paso 3: Conceder permisos a Shizuku</string>
     <string name="shizuku_wizard_completed">Shizuku completamente configurado</string>
     <string name="shizuku_wizard_install_message">Shizuku es una herramienta que otorga permisos avanzados a las aplicaciones sin necesidad de root. Primero debemos instalar esta aplicación.</string>
     <string name="shizuku_wizard_install_bundled">Instalar versión integrada</string>
     <string name="shizuku_wizard_start_message">Shizuku está instalado, ahora debe iniciar el servicio Shizuku. Siga uno de los siguientes métodos:</string>
-    <string name="shizuku_wizard_method1_title">Método 1: Iniciar desde la aplicación (recomendado)</string>
-    <string name="shizuku_wizard_method1_steps">1. Haga clic en el botón \"Abrir Shizuku\" a continuación\n2. En la aplicación Shizuku, seleccione \"Iniciar mediante depuración inalámbrica\"\n3. Active \"Opciones de desarrollador\" y \"Depuración inalámbrica\" según las indicaciones\n4. Permita que Shizuku obtenga permisos de depuración inalámbrica</string>
-    <string name="shizuku_wizard_method2_title">Método 2: Iniciar mediante USB</string>
-    <string name="shizuku_wizard_method2_steps">1. Instale las herramientas ADB en su computadora\n2. Conecte el teléfono y la computadora mediante USB\n3. En la línea de comandos de la computadora, ejecute:\n   adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/files/start.sh</string>
     <string name="shizuku_wizard_open_shizuku">Abrir Shizuku</string>
     <string name="shizuku_wizard_permission_message">El servicio Shizuku se ha iniciado, ahora debe conceder permisos a esta aplicación. Haga clic en el botón a continuación y seleccione \"Permitir\" en el cuadro de diálogo que aparece.</string>
     <string name="shizuku_wizard_permission_notice">Nota: Si no ve la ventana de autorización, verifique:</string>
@@ -2294,67 +2178,13 @@
     <string name="shizuku_wizard_current_version">Versión actual: %1$s</string>
     <string name="shizuku_wizard_latest_version">Última versión: %1$s</string>
     <string name="shizuku_wizard_update">Actualizar Shizuku</string>
-    <string name="termux_wizard_step1">Paso 1: Instalar Termux</string>
-    <string name="termux_wizard_step2">Paso 2: Autorizar Termux</string>
-    <string name="termux_wizard_step3">Paso 3: Iniciar Termux</string>
-    <string name="termux_wizard_step4">Paso 4: Configurar exención de optimización de batería</string>
-    <string name="termux_wizard_step5">Paso 5: Configurar el repositorio de Tsinghua</string>
-    <string name="termux_wizard_step6">Paso 6: Instalar el entorno Python</string>
-    <string name="termux_wizard_step7">Paso 7: Instalar el administrador de paquetes UV</string>
-    <string name="termux_wizard_step8">Paso 8: Instalar el entorno Node.js</string>
-    <string name="termux_wizard_completed">Configuración de Termux completada</string>
-    <string name="termux_wizard_reinstall_auth">Reautorizar</string>
-    <string name="termux_wizard_install_message">Termux es un potente emulador de terminal que le permite usar varias herramientas de línea de comandos. Primero debemos instalar esta aplicación.</string>
-    <string name="termux_wizard_install_note">Después de la instalación, abra Termux por primera vez y espere a que se complete la inicialización, luego regrese a esta aplicación para completar el paso de autorización.</string>
-    <string name="termux_wizard_install">Instalar Termux</string>
-    <string name="termux_wizard_auth_message">Termux está instalado, ahora debe conceder los permisos necesarios a Termux para que podamos ejecutar comandos.</string>
-    <string name="termux_wizard_auth_note">Antes de autorizar, asegúrese de:</string>
-    <string name="termux_wizard_auth_note_details">1. Termux esté instalado y se haya abierto al menos una vez\n2. Haga clic en el botón \"Autorizar Termux\" para completar la autorización</string>
-    <string name="termux_wizard_start">Iniciar</string>
-    <string name="termux_wizard_check_auth">Verificar y autorizar</string>
-    <string name="termux_wizard_start_message">Termux está instalado y autorizado, pero actualmente no está en ejecución. Las operaciones de configuración requieren que Termux se ejecute en segundo plano.</string>
-    <string name="termux_wizard_start_note">Nota:</string>
-    <string name="termux_wizard_start_note_details">Termux ha sido autorizado pero no está en ejecución. Inicie Termux para continuar con los pasos de configuración posteriores.</string>
-    <string name="termux_wizard_start_termux">Iniciar Termux</string>
-    <string name="termux_wizard_battery_title">Configurar exención de optimización de batería</string>
-    <string name="termux_wizard_battery_message">Termux se ha iniciado, ahora debe configurar la exención de optimización de batería para Termux, para que pueda funcionar de manera estable en segundo plano durante mucho tiempo. La función de optimización de batería de Android puede cerrar Termux en segundo plano, afectando la ejecución normal de scripts y servicios.</string>
 
-    <string name="avatar_mood_angry_name">Enojado</string>
-    <string name="avatar_mood_happy_name">Feliz</string>
-    <string name="avatar_mood_shy_name">Tímido</string>
-    <string name="avatar_mood_aojiao_name">Tsundere</string>
-    <string name="avatar_mood_cry_name">Triste</string>
-    <string name="avatar_mood_angry_hint">Usar cuando el usuario expresa insulto, injusticia, culpa, enojo o fuerte descontento.</string>
-    <string name="avatar_mood_happy_hint">Usar cuando el usuario expresa elogio claro, logro de objetivos, recepción de regalos o felicidad evidente.</string>
-    <string name="avatar_mood_shy_hint">Usar cuando el usuario halaga, coquetea, toca un punto adorable, y el personaje se muestra tímido.</string>
-    <string name="avatar_mood_aojiao_hint">Usar cuando el usuario bromea, hay una leve discusión, el personaje se pone terco pero luego se ablanda.</string>
-    <string name="avatar_mood_cry_hint">Usar cuando el usuario está desanimado, triste, frustrado, llora o está decaído después de disculparse.</string>
-    <string name="avatar_custom_type_prompt_hint_required">La descripción del prompt no puede estar vacía</string>
-    <string name="avatar_custom_type_invalid_key">La clave de tipo personalizado solo puede usar letras minúsculas, números, _ o -, y no puede entrar en conflicto con claves integradas</string>
-    <string name="avatar_custom_type_duplicate_key">La clave de tipo personalizado ya existe</string>
-    <string name="avatar_mmd_camera_pitch">Inclinación de cámara MMD (%1$s)</string>
-    <string name="avatar_mmd_camera_yaw">Giro de cámara MMD (%1$s)</string>
-    <string name="avatar_mmd_camera_distance">Distancia de cámara MMD (%1$s)</string>
-    <string name="avatar_mmd_orbit_pivot_height">Altura del pivote de órbita MMD (%1$s)</string>
-    <string name="avatar_gltf_camera_pitch">Inclinación de cámara glTF (%1$s)</string>
-    <string name="avatar_gltf_camera_yaw">Giro de cámara glTF (%1$s)</string>
-    <string name="avatar_gltf_camera_distance">Distancia de cámara glTF (%1$s)</string>
-    <string name="avatar_gltf_orbit_pivot_height">Altura del pivote de órbita glTF (%1$s)</string>
-    <string name="avatar_fbx_camera_pitch">Inclinación de cámara FBX (%1$s)</string>
-    <string name="avatar_fbx_camera_yaw">Giro de cámara FBX (%1$s)</string>
-    <string name="avatar_fbx_camera_distance">Distancia de cámara FBX (%1$s)</string>
-    <string name="avatar_fbx_orbit_pivot_height">Altura del pivote de órbita FBX (%1$s)</string>
-    <string name="avatar_supported_formats_title">Formatos compatibles</string>
-    <string name="avatar_supported_formats_desc">- DragonBones: esqueleto .json + *_tex.json + *_tex.png\n- WebP: uno o más archivos .webp\n- MP4: uno o más archivos .mp4\n- MMD: modelo .pmx o .pmd, opcionalmente animación .vmd\n- glTF: .glb o .gltf (si hay referencias, también se necesitan recursos .bin/texturas)\n- FBX: .fbx (carga directa solo para recursos autocontenidos)</string>
-    <string name="avatar_import_methods_title">Métodos de importación</string>
-    <string name="avatar_import_methods_desc">- Seleccionar archivo directamente: .glb / .gltf / .mp4 / .fbx\n- Importación ZIP: DragonBones, WebP, MP4, MMD, glTF de múltiples archivos, o paquete FBX con texturas/recursos externos</string>
     <string name="import_structure_guide_tap_to_expand">Guía de estructura de importación (tocar para expandir)</string>
     <string name="import_structure_guide_tap_to_collapse">Guía de estructura de importación (tocar para colapsar)</string>
     <string name="import_structure_guide_content">Esta es la estructura de directorios del "paquete de importación" (ZIP o archivo seleccionado internamente), no el almacenamiento interno de la aplicación.\n\nDragonBones (.zip)\n  my_dragonbones.zip\n    any_folder_name/\n      hero_ske.json\n      hero_tex.json\n      hero_tex.png\n  Requisito: los nombres de archivo ske/tex json/png deben tener el mismo prefijo.\n\nWebP (.zip)\n  my_webp.zip\n    any_folder_name/\n      idle.webp\n      talking.webp\n      happy.webp\n  Requisito: al menos un archivo .webp.\n\nMP4\n  Método A (archivo directo):\n    avatar.mp4\n  Método B (.zip):\n    my_mp4.zip\n      any_folder_name/\n        idle.mp4\n        talking.mp4\n        happy.mp4\n  Requisito: al menos un archivo .mp4.\n\nMMD (.zip)\n  my_mmd.zip\n    any_folder_name/\n      character.pmx (o .pmd)\n      motions/idle.vmd (opcional)\n      textures/...\n  Requisito: mantener las rutas relativas referenciadas por PMX/PMD.\n\nglTF\n  Método A (archivo directo):\n    avatar.glb\n  Método B (glTF de múltiples archivos usando .zip):\n    my_gltf.zip\n      any_folder_name/\n        avatar.gltf\n        avatar.bin\n        textures/...\n  Requisito: mantener las rutas relativas referenciadas por .gltf.\n\nFBX\n  Método A (archivo directo, solo recursos autocontenidos):\n    avatar.fbx\n  Método B (texturas/recursos externos usar .zip):\n    my_fbx.zip\n      any_folder_name/\n        avatar.fbx\n        textures/...\n  Requisito: la carga directa de .fbx solo admite recursos incrustados; si el modelo referencia texturas externas u otros recursos, mantenga las rutas relativas y colóquelos en un ZIP.</string>
     <string name="about_avatar_formats">Esta aplicación admite múltiples formatos de avatar virtual, incluido DragonBones. A continuación se presentan instrucciones para crear e importar modelos.</string>
     <string name="making_models_desc_general">    · Puede utilizar varias herramientas para crear su modelo de avatar virtual.\n    · Para DragonBones, se recomienda usar el nuevo editor en línea, o el editor fuera de línea v5.6.3 anterior.</string>
     <string name="exporting_files_desc_general">    · Siga la guía de exportación para el formato que haya elegido.\n    · Para DragonBones, al exportar datos, seleccione JSON como tipo y versión 5.5 (actualmente no se admite el runtime 6.0).\n    · Los archivos principales exportados son: *_ske.json, *_tex.json, *_tex.png.</string>
-    <string name="dragonbones_important_tip">Consejo importante: en la página de descarga del editor antiguo, los enlaces de descarga para Windows y Mac están intercambiados, asegúrese de seleccionar el enlace correcto.</string>
     <string name="voice_wakeup_section_title">Activación por voz</string>
     <string name="voice_wakeup_always_listen_title">Escuchar siempre</string>
     <string name="voice_wakeup_always_listen_desc">Escucha continua en segundo plano la palabra de activación (requiere permiso de micrófono)</string>
@@ -2459,10 +2289,6 @@
     <string name="test_input_field">Campo de entrada de prueba (para pruebas de UI)</string>
     <string name="batch_testing_in_progress">Ejecutando pruebas por lotes...</string>
     <string name="start_comprehensive_test">Iniciar prueba automatizada completa</string>
-    <string name="terminal_yes_y">Sí (Y)</string>
-    <string name="terminal_no_n">No (N)</string>
-    <string name="terminal_send_custom_input">Enviar entrada personalizada</string>
-    <string name="check_video_size_error">Error al verificar el tamaño del video</string>
     <string name="cannot_read_image_file">No se puede leer el archivo de imagen: %1$s</string>
     <string name="cannot_decode_bitmap_from_uri">No se puede decodificar el mapa de bits desde la URI</string>
     <string name="cannot_open_uri_input_stream">No se puede abrir el flujo de entrada de la URI</string>
@@ -2482,14 +2308,10 @@
     <string name="path_found_with_backtrack">Ruta encontrada con el algoritmo %1$s</string>
 
     <string name="message_copied">Mensaje copiado al portapapeles</string>
-    <string name="requesting_root">Solicitando permisos root...</string>
     <string name="root_granted">Permisos root concedidos</string>
     <string name="root_denied">Solicitud de permisos root denegada</string>
     <string name="command_failed">Error al ejecutar el comando</string>
     <string name="start_termux_first">Inicie Termux primero</string>
-    <string name="termux_not_found">No se encuentra la aplicación Termux</string>
-    <string name="termux_battery_optimization">Permita la exención de optimización de batería para Termux en la configuración del sistema</string>
-    <string name="termux_battery_settings_failed">No se pudo abrir la configuración de optimización de batería de Termux</string>
     <string name="permission_settings_failed">No se pudo abrir la configuración de permisos</string>
     <string name="overlay_settings_failed">No se pudo abrir la configuración de superposición</string>
     <string name="battery_settings_failed">No se pudo abrir la configuración de optimización de batería</string>
@@ -2565,23 +2387,6 @@
     <string name="web_ssl_error_badge">Error SSL</string>
     <string name="webview_security_warning_title">Advertencia de seguridad</string>
     <string name="webview_choose_file">Seleccionar archivo</string>
-    <string name="termux_start_command_sent">Comando de inicio de Termux enviado</string>
-    <string name="termux_start_failed">Error al iniciar Termux</string>
-    <string name="termux_already_running">Termux ya está en ejecución</string>
-    <string name="termux_authorized_success">Termux autorizado correctamente</string>
-    <string name="termux_authorization_failed">Error al autorizar Termux, verifique la configuración de Termux</string>
-    <string name="tuna_source_setup_success">Fuente TUNA configurada correctamente</string>
-    <string name="tuna_source_setup_failed">Error al configurar la fuente TUNA</string>
-    <string name="tuna_source_setup_error">Error al configurar la fuente TUNA</string>
-    <string name="python_install_success">Python instalado correctamente</string>
-    <string name="python_install_failed">Error al instalar Python</string>
-    <string name="python_install_error">Error al instalar el entorno Python</string>
-    <string name="uv_install_success">UV instalado correctamente</string>
-    <string name="uv_install_failed">Error al instalar UV</string>
-    <string name="uv_install_error">Error al instalar el gestor de paquetes UV</string>
-    <string name="nodejs_install_success">Node.js instalado correctamente</string>
-    <string name="nodejs_install_failed">Error al instalar Node.js</string>
-    <string name="nodejs_install_error">Error al instalar el entorno Node.js</string>
     <string name="battery_optimization_reminder">Permita la exención de optimización de batería para Termux en la configuración del sistema</string>
     <string name="cannot_open_termux_battery_settings">No se puede abrir la configuración de optimización de batería de Termux</string>
     <string name="copied_to_clipboard">Copiado al portapapeles</string>
@@ -2591,8 +2396,6 @@
     <string name="cannot_open_accessibility_settings">No se puede abrir la configuración de accesibilidad</string>
     <string name="accessibility_provider_installed">Proveedor de servicios instalado</string>
     <string name="cannot_open_root_tutorial">No se puede abrir el enlace del tutorial de Root</string>
-    <string name="cannot_find_shizuku_app">No se puede encontrar la aplicación Shizuku</string>
-    <string name="cannot_launch_shizuku_app">No se puede iniciar la aplicación Shizuku</string>
     <string name="cannot_open_docs_link">No se puede abrir el enlace de documentación</string>
     <string name="cannot_find_termux_app">No se puede encontrar la aplicación Termux</string>
     <string name="cannot_launch_termux_app">No se puede iniciar la aplicación Termux</string>
@@ -2600,7 +2403,6 @@
     <string name="permission_request_deny">Denegar</string>
     <string name="permission_request_always_allow">Permitir siempre</string>
     <string name="overlay_permission_grant_hint">Se necesita permiso de superposición, permítalo en la configuración</string>
-    <string name="avatar_mode">Modo avatar</string>
     <string name="setup_workspace">Configurar espacio de trabajo</string>
     <string name="workspace_description">Proporcione un entorno de archivos exclusivo para su proyecto de IA</string>
     <string name="workspace_select_language_type_title">Seleccionar tipo de lenguaje</string>
@@ -2693,7 +2495,6 @@
     <string name="tts_usage_instructions_content">1. Ingrese el texto a convertir en voz en el cuadro de entrada\n2. Ajuste la velocidad y el tono\n3. Haga clic en «Reproducir voz» para iniciar la reproducción\n4. Haga clic en «Detener reproducción» para detener\n5. Si ocurre un error, consulte los detalles del error y la información de depuración\n6. Use el botón «Limpiar mensaje de error» para borrar la visualización de errores</string>
     <string name="tool_default_assistant_guide">Configuración del asistente predeterminado</string>
     <string name="tool_default_assistant_guide_desc">Establecer el flotante de voz de Operit como asistente predeterminado del sistema</string>
-    <string name="tool_terminal_auto_config_under_construction">La función de configuración automática del terminal está siendo reestructurada...</string>
     <string name="ui_debugger_title">Herramienta de depuración de UI</string>
     <string name="ui_debugger_description">Haga clic en el botón en la esquina inferior derecha para iniciar la ventana flotante y depurar la UI</string>
     <string name="ui_debugger_launch_floating">Iniciar ventana flotante</string>
@@ -2724,19 +2525,6 @@
     <string name="shell_executor_re_execute">Re-ejecutar</string>
     <string name="shell_executor_expand">Expandir</string>
 
-    <string name="terminal_command_not_found">Comando no encontrado</string>
-    <string name="terminal_process_running">Proceso en ejecución...</string>
-    <string name="terminal_process_completed">Proceso completado</string>
-    <string name="terminal_auto_config_title">Configuración automática del terminal</string>
-    <string name="terminal_auto_config_desc">Detectar y configurar automáticamente el entorno del terminal</string>
-    <string name="terminal_auto_config_detect">Detectar entorno</string>
-    <string name="terminal_auto_config_apply">Aplicar configuración</string>
-    <string name="terminal_auto_config_reset">Restablecer configuración</string>
-    <string name="terminal_auto_config_status">Estado de la configuración</string>
-    <string name="terminal_auto_config_completed">Configuración completada</string>
-    <string name="terminal_auto_config_failed">Configuración fallida</string>
-    <string name="terminal_auto_config_detecting">Detectando entorno...</string>
-    <string name="terminal_auto_config_applying">Aplicando configuración...</string>
     <string name="ffmpeg_toolbox_title">Caja de herramientas FFmpeg</string>
     <string name="ffmpeg_input_file">Archivo de entrada</string>
     <string name="ffmpeg_output_file">Archivo de salida</string>
@@ -2862,29 +2650,6 @@
     <string name="file_op_confirm_delete_message">¿Está seguro de que desea eliminar los archivos seleccionados? Esta acción no se puede deshacer.</string>
     <string name="file_op_confirm_overwrite">El archivo ya existe</string>
     <string name="file_op_confirm_overwrite_message">Ya existe un archivo con el mismo nombre en la ubicación de destino. ¿Desea sobrescribirlo?</string>
-    <string name="terminal_title">Terminal</string>
-    <string name="terminal_new_session">Nueva sesión</string>
-    <string name="terminal_close_session">Cerrar sesión</string>
-    <string name="terminal_clear_screen">Limpiar pantalla</string>
-    <string name="terminal_font_size">Tamaño de fuente</string>
-    <string name="terminal_zoom_in">Aumentar fuente</string>
-    <string name="terminal_zoom_out">Reducir fuente</string>
-    <string name="terminal_copy">Copiar</string>
-    <string name="terminal_paste">Pegar</string>
-    <string name="terminal_select_all">Seleccionar todo</string>
-    <string name="terminal_search">Buscar</string>
-    <string name="terminal_settings">Ajustes</string>
-    <string name="terminal_session">Sesión %d</string>
-    <string name="terminal_working_dir">Directorio de trabajo: %s</string>
-    <string name="terminal_command_history">Historial de comandos</string>
-    <string name="terminal_no_history">Sin historial de comandos</string>
-    <string name="terminal_interactive_input">Entrada interactiva</string>
-    <string name="terminal_input_prompt">Ingrese: %s</string>
-    <string name="terminal_input_confirm">Confirmar</string>
-    <string name="terminal_input_cancel">Cancelar</string>
-    <string name="terminal_execution_error">Error al ejecutar el comando</string>
-    <string name="terminal_permission_required">Permiso requerido</string>
-    <string name="terminal_root_access">Se requieren permisos de root para ejecutar este comando</string>
 
     <string name="shell_executor_collapse">Contraer</string>
     <string name="shell_executor_execute_failed">Error al ejecutar el comando: %s</string>
@@ -3139,10 +2904,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="simulate_tap_test_desc">Toque en (1,1), se espera fallo</string>
     <string name="simulate_swipe_test_desc">Deslice corto en el centro de la pantalla</string>
     <string name="cleanup_test_dir_desc">Eliminar todos los archivos y directorios de prueba.</string>
-    <string name="termux_auth_failed">Autenticación de Termux fallida</string>
-    <string name="tsinghua_source_error">Error de configuración del repositorio Tsinghua</string>
-    <string name="tsinghua_source_failed">Configuración del repositorio Tsinghua fallida</string>
-    <string name="tsinghua_source_success">Configuración del repositorio Tsinghua exitosa</string>
     <string name="ffmpeg_video_info">Información de video</string>
     <string name="ffmpeg_video_info_desc">Obtener información detallada del archivo de video</string>
     <string name="ffmpeg_video_output_placeholder">Ruta del archivo de salida (opcional)</string>
@@ -3150,15 +2911,12 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="loading_app_state">Cargando estado de la aplicación...</string>
     <string name="setup_wizard">Asistente de configuración</string>
     <string name="setup_wizard_icon_desc">Icono del asistente de configuración</string>
-    <string name="cannot_start_shizuku_app">No se puede iniciar la aplicación Shizuku</string>
     <string name="cannot_open_doc_link">No se puede abrir el enlace del documento</string>
-    <string name="welcome_termux_config">Bienvenido a la herramienta de configuración de Termux\nHaga clic en el botón correspondiente para comenzar la configuración</string>
     <string name="executing_task">Ejecutando: %1$s...</string>
     <string name="feature_overlay_window">Ventana flotante</string>
     <string name="feature_file_operations">Operaciones de archivos</string>
     <string name="feature_screen_auto_click">Clic automático en pantalla</string>
     <string name="feature_system_permission_modification">Modificación de permisos del sistema</string>
-    <string name="feature_termux_support">Soporte de terminal</string>
     <string name="feature_run_js">Pantalla virtual</string>
     <string name="feature_plugin_market_mcp">MCP del mercado de complementos</string>
     <string name="supported">Soportado</string>
@@ -3266,17 +3024,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="speech_services_info_tts_desc">El servicio TTS convierte texto en voz. Puede usar el TTS del sistema integrado o conectarse a una interfaz de voz HTTP/WebSocket remota.</string>
     <string name="speech_services_info_stt_title">Voz a texto (STT)</string>
     <string name="speech_services_info_stt_desc">El servicio STT convierte voz en texto. Admite los motores integrados Sherpa NCNN y Sherpa MNN, ambos ejecutables localmente sin necesidad de conexión a internet. Sherpa MNN integra la función VAD (detección de actividad de voz) para mejorar la precisión del reconocimiento y la eficiencia de recursos.</string>
-    <string name="operit_terminal_wizard_title">Asistente de configuración de OperitTerminal</string>
-    <string name="operit_terminal_not_installed">OperitTerminal no está instalado</string>
-    <string name="operit_terminal_update_available">Hay una actualización disponible para OperitTerminal</string>
-    <string name="operit_terminal_up_to_date">OperitTerminal ya está actualizado</string>
-    <string name="operit_terminal_install_description">OperitTerminal es una potente aplicación de terminal que ofrece un entorno Linux completo y funciones de gestión de paquetes. Necesitamos instalar esta aplicación primero.</string>
-    <string name="operit_terminal_install_button">Instalar OperitTerminal</string>
-    <string name="operit_terminal_update_description">Se ha encontrado una nueva versión de OperitTerminal. Se recomienda actualizar para obtener mejores funciones y compatibilidad.</string>
-    <string name="operit_terminal_release_notes">Notas de la actualización: %1$s</string>
-    <string name="operit_terminal_update_button">Actualizar OperitTerminal</string>
-    <string name="operit_terminal_latest_description">¡Felicidades! Ya tiene instalada la última versión de OperitTerminal. Puede empezar a usar sus potentes funciones de terminal.</string>
-    <string name="operit_terminal_open_button">Abrir OperitTerminal</string>
     <string name="test_item_chat">Chat</string>
     <string name="test_item_toolcall">Tool Call</string>
     <string name="test_item_image">Imagen</string>
@@ -3516,8 +3263,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="screen_title_chat_backup_settings">Copia de seguridad y restauración de datos</string>
     <string name="screen_title_language_settings">Ajustes de idioma</string>
     <string name="screen_title_file_manager">Gestor de archivos</string>
-    <string name="screen_title_terminal">Terminal de comandos</string>
-    <string name="screen_title_terminal_auto_config">Configuración automática del terminal</string>
     <string name="screen_title_app_permissions">Gestión de permisos de la aplicación</string>
     <string name="screen_title_ui_debugger">Herramienta de depuración de UI</string>
     <string name="screen_title_shell_executor">Ejecutor de comandos</string>
@@ -3549,17 +3294,7 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="workspace_opening_hint">Iniciando el servicio de vista previa local, espere por favor</string>
     <string name="chat_update_workspace_server_failed">Error al actualizar el espacio de trabajo web: %1$s</string>
     <string name="chat_stop_workspace_server_failed">Error al detener el espacio de trabajo web: %1$s</string>
-    <string name="chat_terminal_requires_android_8">La función de terminal requiere Android 8.0 o superior</string>
-    <string name="chat_create_dedicated_terminal_session_failed">No se pudo crear la sesión de terminal independiente</string>
-    <string name="chat_create_workspace_terminal_session_failed">No se pudo crear la sesión de terminal del espacio de trabajo</string>
     <string name="chat_execute_command_failed">Error al ejecutar el comando: %1$s</string>
-    <string name="workspace_command_already_running">Ya hay un comando del espacio de trabajo en ejecución</string>
-    <string name="workspace_command_running">Comando en ejecución</string>
-    <string name="workspace_command_cancelling">Cancelando comando...</string>
-    <string name="workspace_command_finished">Ejecución completada</string>
-    <string name="workspace_command_waiting_output">Esperando salida del comando...</string>
-    <string name="workspace_command_no_output">El comando no produjo salida</string>
-    <string name="workspace_command_hide">Ocultar</string>
     <string name="chat_start_ai_computer_failed">Error al iniciar la computadora AI: %1$s</string>
     <string name="chat_ai_computer_closed_due_to_workspace">Computadora AI cerrada (debido a la apertura del espacio de trabajo)</string>
     <string name="thinking_mode">Modo de pensamiento</string>
@@ -4002,15 +3737,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="title_label">Título</string>
     <string name="url_label">URL</string>
     <string name="settings_config">Ajustes</string>
-    <string name="configure_terminal_environment">Configurar entorno de terminal</string>
-    <string name="nodejs_pip_environment_ready">Entorno NodeJS y pip listo</string>
-    <string name="pnpm_installed_need_pip">pnpm instalado, se necesita configurar pip</string>
-    <string name="pip_installed_need_pnpm">pip instalado, se necesita configurar pnpm</string>
-    <string name="need_configure_nodejs_pip">Se necesita configurar el entorno NodeJS y pip</string>
-    <string name="terminal_environment_setup_description">Es necesario configurar NodeJS (pnpm) y pip en la terminal para admitir la ejecución de plugins MCP. Haz clic en el botón de abajo para ir a la interfaz de configuración de terminal y completar la configuración.</string>
-    <string name="go_to_terminal_config">Ir a configuración de terminal</string>
-    <string name="nodejs_pip_environment_configured">El entorno NodeJS y pip ya está configurado, se puede usar la funcionalidad de plugins MCP con normalidad.</string>
-    <string name="open_terminal">Abrir terminal</string>
     <string name="login_github_to_manage_mcp_plugins">Inicia sesión en GitHub para publicar y gestionar tus plugins MCP</string>
     <string name="login_github_for_skill_market">Inicia sesión en GitHub para una mejor experiencia en el mercado de Skills</string>
     <string name="login_github_to_manage_scripts">Inicia sesión en GitHub para publicar y gestionar tus scripts</string>
@@ -4891,6 +4617,11 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="ui_accessibility_mode_description">Optimizar el comportamiento de automatización de la interfaz de usuario para usuarios de accesibilidad como TalkBack, priorizando pasos legibles y evitando clics automáticos.</string>
     <string name="experimental_virtual_display">Pantalla virtual experimental</string>
     <string name="experimental_virtual_display_description">Usar automatización ADB+Shizuku basada en pantalla virtual, aún en fase experimental, puede ser inestable.</string>
+    <string name="live_service_notification_title">Operit Live</string>
+    <string name="live_capture_unavailable">Canal de observación de pantalla principal no disponible (requiere el entorno ROM privilegiado)</string>
+    <string name="live_service_notification_text">Canal de observación y automatización Live en ejecución</string>
+    <string name="live_secure_capture">Captura de páginas seguras</string>
+    <string name="live_secure_capture_description">Añade el indicador SECURE al espejo de pantalla Live para capturar contenido protegido por DRM; limitado por la política DRM en algunos dispositivos, desactivado por defecto</string>
     <string name="hide_runtime_task_view">Ocultar vista de tarea en tiempo de ejecución</string>
     <string name="hide_runtime_task_view_description">Ocultar la tarjeta de tarea de la aplicación de las tareas recientes del sistema mientras la IA procesa mensajes o ejecuta herramientas, para evitar que se cierre accidentalmente.</string>
     <string name="default_profile_name">Perfil predeterminado</string>
@@ -5296,12 +5027,9 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="toolreg_execute_shell_desc">Ejecutar ADB Shell: %1$s</string>
     <string name="toolreg_close_all_virtual_displays_desc">Cerrar todas las pantallas virtuales</string>
     <string name="toolreg_unnamed">Sin nombre</string>
-    <string name="toolreg_create_terminal_session_desc">Crear u obtener sesión de terminal: %1$s</string>
     <string name="toolreg_execute_in_terminal_session_desc">Ejecutar en sesión de terminal «%1$s»: %2$s</string>
     <string name="toolreg_execute_hidden_terminal_command_desc">Ejecutar en ejecutor de terminal oculto «%1$s»: %2$s</string>
-    <string name="toolreg_close_terminal_session_desc">Cerrar sesión de terminal: %1$s</string>
     <string name="toolreg_input_in_terminal_session_desc">Escribir entrada en sesión de terminal «%1$s» (control=%2$s)</string>
-    <string name="toolreg_get_terminal_session_screen_desc">Obtener contenido actual de pantalla de sesión de terminal «%1$s» (una pantalla)</string>
     <string name="toolreg_query_memory_desc">Consultar banco de recuerdos: %1$s</string>
     <string name="toolreg_get_memory_by_title_desc">Obtener recuerdo por título: %1$s</string>
     <string name="toolreg_user_pref_birth_date">Fecha de nacimiento</string>
@@ -5509,7 +5237,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="common_show_code">Mostrar código</string>
     <string name="common_render_mermaid">Renderizar Mermaid</string>
 
-    <string name="mcp_deploy_commands">Comandos de despliegue</string>
     <string name="mcp_loading_commands">Cargando comandos...</string>
     <string name="mcp_lines_suffix">%1$d líneas</string>
     <string name="mcp_confirm_and_deploy">Confirmar y desplegar</string>
@@ -5663,8 +5390,7 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="stream_tag_required">La etiqueta debe estar configurada</string>
     <string name="stream_data_required">El flujo de datos debe estar configurado</string>
     <string name="deepseek_request_body">Cuerpo de la solicitud final del modo de razonamiento DeepSeek: </string>
-    <string name="admin_shell_permission">Se requiere permiso de administrador del dispositivo para ejecutar operaciones del sistema</string>
-    <string name="virtual_display_not_ready">La pantalla virtual de Shower aún no está lista</string>
+    <string name="virtual_display_not_ready">Pantalla virtual no disponible todavía</string>
     <string name="xml_content">Contenido XML</string>
     <string name="browser_preview">Vista previa del navegador</string>
     <string name="edittext_empty">EditText no puede estar vacío</string>
@@ -5734,19 +5460,12 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="stream_markdown_reset">Restablecer</string>
     <string name="stream_markdown_speed">Velocidad (x%1$s)</string>
     <string name="stream_markdown_static_render">Renderizado estático</string>
-    <string name="mcp_deploy_success">Despliegue exitoso</string>
-    <string name="mcp_deploy_failed">Despliegue fallido</string>
-    <string name="mcp_deploy_in_progress">Desplegando</string>
     <string name="mcp_env_variables">Variables de entorno</string>
     <string name="mcp_close">Cerrar</string>
     <string name="mcp_preparing_deploy">Preparando despliegue...</string>
-    <string name="mcp_deploy_completed">Despliegue completado</string>
-    <string name="mcp_deploy_log">Registro de despliegue</string>
     <string name="mcp_lines_count">%1$d líneas</string>
     <string name="mcp_retry">Reintentar</string>
-    <string name="mcp_deploy_confirm_title">Confirmación de despliegue</string>
     <string name="mcp_deploying_plugin">Se desplegará el plugin: %1$s</string>
-    <string name="mcp_deploy_choice_hint">Puedes elegir desplegar directamente o personalizar el comando de despliegue</string>
     <string name="mcp_cancel">Cancelar</string>
     <string name="mcp_custom_command">Comando personalizado</string>
     <string name="mcp_direct_deploy">Despliegue directo</string>
@@ -6090,28 +5809,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="attachment_memory_folders_added">%1$d carpetas de recuerdos añadidas</string>
     <string name="attachment_memory_folder_failed">Error al añadir carpeta de recuerdos: %1$s</string>
     <string name="attachment_unknown_file">Archivo desconocido</string>
-    <string name="mcp_deployment_start">Iniciando despliegue del plugin: %1$s</string>
-    <string name="mcp_deployment_output_prefix">Salida: </string>
-    <string name="mcp_deployment_virtual_plugin_detected">Detectado plugin de tipo %1$s, ejecutando despliegue mínimo</string>
-    <string name="mcp_deployment_cannot_create_terminal">No se puede crear la sesión de terminal</string>
-    <string name="mcp_deployment_creating_directory">Creando directorio del plugin: %1$s</string>
-    <string name="mcp_deployment_create_directory_failed">Error al crear el directorio del plugin</string>
-    <string name="mcp_deployment_minimal_complete">Despliegue mínimo del plugin de tipo %1$s completado, listo para usar</string>
-    <string name="mcp_deployment_plugin_not_exist">El directorio del plugin no existe: %1$s</string>
-    <string name="mcp_deployment_using_market_config">Usando configuración del mercado para desplegar plugin...</string>
-    <string name="mcp_deployment_analyzing_structure">Analizando estructura del proyecto...</string>
-    <string name="mcp_deployment_saving_config">Guardando configuración MCP...</string>
-    <string name="mcp_deployment_save_config_failed">Error al guardar la configuración MCP</string>
-    <string name="mcp_deployment_error">Error en el despliegue: %1$s</string>
-    <string name="mcp_deployment_cannot_determine">No se puede determinar cómo desplegar este plugin: %1$s</string>
-    <string name="mcp_deployment_copying_files">Copiando archivos del plugin al directorio de destino...</string>
-    <string name="mcp_deployment_copy_failed">Error al copiar archivos al directorio de destino: %1$s</string>
-    <string name="mcp_deployment_switching_directory">Cambiando al directorio del plugin</string>
-    <string name="mcp_deployment_switch_failed">Error al cambiar al directorio del plugin</string>
-    <string name="mcp_deployment_executing_command">Ejecutando comando (%1$d/%2$d): %3$s</string>
-    <string name="mcp_deployment_non_critical_failed">El comando no crítico falló, continuando con los siguientes pasos: %1$s</string>
-    <string name="mcp_deployment_command_failed">El comando falló: %1$s</string>
-    <string name="mcp_deployment_success">Plugin desplegado correctamente: %1$s\nRuta de despliegue: %2$s\nNombre del servidor: %3$s\nTiempo de despliegue: %4$s</string>
     <string name="mcp_repository_server_not_found">No se encontró información del servidor correspondiente</string>
     <string name="mcp_repository_install_error">Error durante la instalación: %1$s</string>
     <string name="mcp_repository_invalid_github_url">URL de repositorio de GitHub no válida</string>
@@ -6415,7 +6112,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="apk_zip_align_failed">Error de alineación ZIP: %1$s</string>
     <string name="apk_zip_align_path">Ruta de alineación ZIP: %1$s</string>
     <string name="apk_zipalign_not_found">No se encontró zipalign, asegúrese de que Android SDK build-tools esté configurado correctamente</string>
-    <string name="admin_shell_requires_permission">Se requieren permisos root o adb</string>
     <string name="default_option">Predeterminado</string>
     <string name="character_card_single_char">Un solo carácter</string>
     <string name="character_group_single_char">Grupo</string>
@@ -6466,7 +6162,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="openai_connection_test_failed">Prueba de conexión fallida: %1$s</string>
     <string name="phone_agent_need_debug_permission">Se requieren permisos de depuración/administrador/Root y una pantalla virtual experimental habilitada para usar la automatización de pantalla virtual.</string>
     <string name="phone_agent_shizuku_unavailable">Shizuku no está disponible. No se puede iniciar la pantalla virtual.</string>
-    <string name="phone_agent_virtual_screen_service_start_failed">Error al iniciar el servicio de pantalla virtual.</string>
     <string name="phone_agent_virtual_screen_create_failed">Error al crear la pantalla virtual.</string>
     <string name="phone_agent_virtual_screen_prewarm_failed">Error al precalentar la pantalla virtual: %1$s</string>
     <string name="phone_agent_virtual_screen_not_started">La pantalla virtual no se pudo iniciar. Se ha cancelado para evitar ejecutar acciones en la pantalla principal.</string>
@@ -6618,11 +6313,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="context_unit_lines">líneas</string>
     <string name="context_unit_times">veces</string>
     <string name="context_reset_all_settings">Restablecer todos los ajustes</string>
-    <string name="mcp_deploy_error_cannot_get_path">No se puede obtener la ruta del plugin: %1$s</string>
-    <string name="mcp_deploy_error_cannot_determine">No se puede determinar cómo implementar este plugin. Consulte el README para la implementación manual.</string>
-    <string name="mcp_deploy_error_analysis_failed">Error al analizar el plugin: %1$s</string>
-    <string name="mcp_deploy_status_preparing">Preparando la implementación del plugin</string>
-    <string name="mcp_deploy_output_prefix">Salida:</string>
     <string name="model_config_error_valid_context_length">Introduzca una longitud de contexto válida</string>
     <string name="model_config_error_valid_max_context_length">Introduzca una longitud máxima de contexto válida</string>
     <string name="model_config_error_save_failed">Error al guardar</string>
@@ -6639,7 +6329,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="root_execution_mode_force_exec">KernelSU manual</string>
     <string name="root_custom_su_command">Comando su personalizado (modo KernelSU)</string>
     <string name="root_custom_su_command_description">Solo tiene efecto en modo KernelSU. Puede introducir comandos como su o su --mount-master.</string>
-    <string name="global_display_virtual_screen_bitrate">Tasa de bits de la pantalla virtual</string>
     <string name="global_display_status_indicator_style">Estilo del indicador de estado de automatización</string>
     <string name="global_display_screenshot_settings">Ajustes de captura de pantalla de automatización</string>
     <string name="global_display_image_format">Formato de imagen</string>
@@ -6899,11 +6588,7 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="sys_op_stop_app_requested">Se ha solicitado detener el proceso en segundo plano de la aplicación.</string>
     <string name="sys_op_location_permission_not_granted">No se ha concedido el permiso de ubicación. Active el permiso de ubicación en la configuración de la aplicación.</string>
     <string name="sys_op_cannot_get_location">No se puede obtener la información de ubicación. Asegúrese de que el servicio de ubicación esté habilitado.</string>
-    <string name="admin_device_admin_component_name_not_set">El nombre del componente de administrador de dispositivos no está configurado</string>
-    <string name="admin_device_admin_permission_not_activated">El permiso de administrador de dispositivos de la aplicación no está activado</string>
-    <string name="admin_need_device_admin_permission">Se necesita permiso de administrador de dispositivos para monitorear las operaciones de la UI del sistema</string>
     <string name="admin_already_listening">Ya está en modo de escucha</string>
-    <string name="admin_ui_listener_started">El monitor de operaciones de UI del administrador de dispositivos se ha iniciado</string>
     <string name="admin_start_failed">Error al iniciar: %1$s</string>
     <string name="markdown_parse_failed">Error al analizar el formato Markdown: %1$s</string>
     <string name="markdown_import_from">Importar desde Markdown</string>
@@ -6916,10 +6601,7 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="pathfinder_found_path">Se encontró una ruta usando el algoritmo %1$s</string>
     <string name="pathfinder_cannot_find_path">No se puede encontrar una ruta de estado válida desde \'%1$s\' hasta \'%2$s\'</string>
     <string name="shizuku_start_service_intro">Para iniciar el servicio Shizuku:\n</string>
-    <string name="shizuku_step1_ensure_installed">1. Asegúrese de tener instalada la aplicación Shizuku\n</string>
-    <string name="shizuku_step2_adb_command">2. Use el comando ADB para iniciar Shizuku:\n</string>
     <string name="shizuku_or">o\n\n</string>
-    <string name="shizuku_step2_follow_instructions">2. Abra la aplicación Shizuku y siga las instrucciones en pantalla</string>
     <string name="shizuku_install_update">Actualizar</string>
 
     <string name="mcp_tools_total">Total: %1$d</string>
@@ -6945,27 +6627,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="openai_image_omitted">Contenido de imagen omitido; el modelo actual no admite procesamiento de imágenes</string>
     <string name="workflow_non_execute_node">Nodo no ejecutable</string>
     <string name="workflow_node_no_action">El nodo no tiene configurado actionType</string>
-    <string name="terminal_error_missing_session_name">Falta el parámetro: session_name</string>
-    <string name="terminal_error_create_session">Error al crear u obtener la sesión del terminal: %1$s</string>
-    <string name="terminal_error_missing_command">Falta el parámetro: command</string>
-    <string name="terminal_error_missing_session_id">Falta el parámetro: session_id</string>
-    <string name="terminal_error_session_not_exist">La sesión del terminal \'%1$s\' no existe o está cerrada</string>
-    <string name="terminal_error_command_failed">El comando del terminal falló</string>
-    <string name="terminal_error_command_non_zero_exit">El comando del terminal terminó con un código de salida distinto de cero (exitCode=%1$d)</string>
-    <string name="terminal_error_execute_command">Error al ejecutar el comando del terminal: %1$s</string>
-    <string name="terminal_error_hidden_command_non_zero_exit">El comando oculto del terminal terminó con un código de salida distinto de cero (exitCode=%1$d)</string>
-    <string name="terminal_error_execute_hidden_command">Error al ejecutar el comando oculto del terminal: %1$s</string>
-    <string name="terminal_session_closed">La sesión del terminal \'%1$s\' se ha cerrado correctamente.</string>
-    <string name="terminal_error_close_session">Error al cerrar la sesión del terminal \'%1$s\': %2$s</string>
-    <string name="terminal_error_missing_input_or_control">Falta el parámetro: input o control (se requiere al menos uno)</string>
-    <string name="terminal_error_control_requires_input">El parámetro %1$s debe usarse junto con input</string>
-    <string name="terminal_error_ctrl_input_single_char">Cuando control=ctrl, input debe ser un solo carácter</string>
-    <string name="terminal_error_ctrl_input_unsupported">control=ctrl no admite input: %1$s</string>
-    <string name="terminal_error_unsupported_control">control no admitido: %1$s</string>
-    <string name="terminal_error_input">Error al escribir entrada en la sesión del terminal</string>
-    <string name="terminal_error_input_with_reason">Error al escribir entrada en la sesión del terminal: %1$s</string>
-    <string name="terminal_error_get_screen">Error al obtener el contenido actual de la pantalla de la sesión del terminal: %1$s</string>
-    <string name="terminal_input_sent">Se ha escrito entrada en la sesión del terminal \'%1$s\' (acceptedChars=%2$d)</string>
     <string name="openai_stt_error_url_not_set">La URL de OpenAI STT no está configurada. Proporcione la dirección completa de la API (por ejemplo, https://api.openai.com/v1/audio/transcriptions).</string>
     <string name="openai_stt_error_url_invalid_scheme">La URL de OpenAI STT debe comenzar con http:// o https://.</string>
     <string name="openai_stt_error_url_invalid_path">La URL de OpenAI STT debe contener /v1/audio/transcriptions (proporcione la ruta completa hasta audio/transcriptions).</string>

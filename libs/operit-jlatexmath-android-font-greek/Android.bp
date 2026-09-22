@@ -1,0 +1,7 @@
+// ru.noties:jlatexmath-android-font-greek:0.2.0 · central prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+android_library_import {
+    name: "operit-jlatexmath-android-font-greek",
+    aars: ["jlatexmath-android-font-greek-0.2.0.aar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}
