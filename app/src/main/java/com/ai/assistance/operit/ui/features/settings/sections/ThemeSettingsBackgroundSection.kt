@@ -57,9 +57,9 @@ import com.ai.assistance.operit.R
 import com.ai.assistance.operit.data.preferences.UserPreferencesManager
 import com.ai.assistance.operit.ui.features.settings.components.MediaTypeOption
 import com.ai.assistance.operit.ui.features.settings.screens.theme.ThemeEditorSession
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
-import com.google.android.exoplayer2.ui.StyledPlayerView
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.AspectRatioFrameLayout
+import androidx.media3.ui.StyledPlayerView
 import kotlinx.coroutines.flow.collect
 
 private fun calculateLuminance(color: Color): Float {

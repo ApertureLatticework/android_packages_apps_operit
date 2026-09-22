@@ -1,13 +1,15 @@
 @file:Suppress("unused")
 
-package com.ai.assistance.operit.util.ffmpeg
+package com.arthenica.ffmpegkit
 
 /**
- * ffmpeg-kit 同名门面（树内专用源，app/src/soong/java 不参与 Gradle 构建）。
+ * ffmpeg-kit 同名同包门面（树内专用源，app/src/soong/java 不参与 Gradle 构建）。
  *
- * 类与方法名与 com.arthenica.ffmpegkit 完全对齐：翻牌时消费方仅改 import 行。
+ * 包名刻意与 AAR 完全一致：消费方（FFmpegUtil/StandardFFmpegTool/OpenSourceLicenses）
+ * 的 `import com.arthenica.ffmpegkit.*` 在 Gradle（AAR 供类）与 Soong（本门面供类）
+ * 两个世界零改动通用，不存在翻牌切换步骤。
  * 背后是包内薄壳 liboperit_ffmpeg（JNI 直走 external/ffmpeg 树内源码线），
- * ffmpeg-kit AAR 与 smart-exception 依赖在树内构建中不复存在。
+ * ffmpeg-kit AAR 与 smart-exception 依赖仅在 Gradle 构建中存在。
  */
 object FFmpegKit {
     init {

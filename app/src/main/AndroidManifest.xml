@@ -3,7 +3,9 @@
      与 AGP namespace 同值时 Gradle 仅警告，双构建共存 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.ai.assistance.operit">
+    package="com.ai.assistance.operit"
+    android:versionCode="51"
+    android:versionName="1.12.2">
 
     <uses-feature
         android:name="android.hardware.telephony"

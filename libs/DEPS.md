@@ -44,7 +44,7 @@ okhttp/okio（external/okhttp、external/okio）、gson、bouncycastle、jsoup�
 - 包内侧：`native/operit-ffmpeg/`（Android.bp.tree 暂存，链 libav* + libffmpeg_cli）；
   消费面实测仅 6 函数（execute×4 / getMediaInformation×3 / 版本串×2），
   门面 `app/src/soong/java/.../ffmpeg/FFmpegKit.kt` 与 ffmpeg-kit 同名同形，
-  翻牌时 FFmpegUtil/StandardFFmpegTool/OpenSourceLicenses 仅改 import 行
+  门面包名与 AAR 一致（com.arthenica.ffmpegkit），FFmpegUtil/StandardFFmpegTool/OpenSourceLicenses 的 import 双世界零改动
 - Gradle 过渡期不动：Gradle 继续消费 ffmpeg-kit AAR，薄壳只进树内构建
 
 ## native 线（2026-09-22 定案：sherpa 走 prebuilt，其余源码收包）

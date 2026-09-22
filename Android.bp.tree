@@ -19,7 +19,7 @@
 // - 依赖策略修订（2026-09-20）：非 androidx 依赖一律包内 prebuilt（AAR/jar import，
 //   钉 sha256，由 tools/intree/import_prebuilts.py 生成 Android.bp/NOTICE/lock）；
 //   唯一源码线例外为 ffmpeg（external/ffmpeg 树内源码 + 包内薄壳 liboperit_ffmpeg，
-//   树内门面 app/src/soong/java/.../ffmpeg/，翻牌时消费方仅改 import 行）
+//   同包门面 app/src/soong/java/com/arthenica/ffmpegkit/，消费方 import 双世界零改动）
 
 android_library {
     name: "operit-lib",

@@ -634,10 +634,10 @@ dependencies {
     // Image Cropper for background image cropping
     implementation(libs.image.cropper)
     
-    // ExoPlayer for video background
-    implementation(libs.exoplayer)
-    implementation(libs.exoplayer.core)
-    implementation(libs.exoplayer.ui)
+    // media3（exoplayer 2.19 后继，包名迁移已完成）for video/audio playback
+    implementation(libs.media3.common)
+    implementation(libs.media3.exoplayer)
+    implementation(libs.media3.ui)
     
     // Material 3 Window Size Class
     implementation(libs.material3.window)
