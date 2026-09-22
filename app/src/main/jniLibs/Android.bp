@@ -1,0 +1,16 @@
+// liboperit_ripgrep —— rg 内容搜索 JNI 桥（Rust cdylib）
+// prebuilt 本位：源在 tools/native_ripgrep/，由 android-build workflow 的 cargo
+// 步骤构建后安装到本目录（亦为 Gradle jniLibs 打包路径）；树内侧以
+// cc_prebuilt_library_shared 消费同一文件。ABI 面对齐 abiFilters：仅 arm64-v8a。
+// Cargo 依赖（globset/grep-*/ignore/jni/serde 系）树内 crates 无对应，故不走源码线（2026-09-22 定案）。
+cc_prebuilt_library_shared {
+    name: "liboperit_ripgrep",
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+    compile_multilib: "64",
+
+    arch: {
+        arm64: {
+            srcs: ["arm64-v8a/liboperit_ripgrep.so"],
+        },
+    },
+}
