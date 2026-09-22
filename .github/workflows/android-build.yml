@@ -218,7 +218,9 @@ jobs:
           bash tools/intree/extract_native_prebuilts.sh app/build
           git config user.name "operit-ci"
           git config user.email "ci@users.noreply.github.com"
-          git add native/sherpa-prebuilt app/src/main/jniLibs
+          git add native/sherpa-prebuilt
+          # jniLibs 在 .gitignore（:24）但 ripgrep .so 是刻意入库的 prebuilt 例外，历史上即 -f 强加
+          git add -f app/src/main/jniLibs
           if git diff --cached --quiet; then
             echo "native prebuilts 无变化，跳过提交"
             exit 0
