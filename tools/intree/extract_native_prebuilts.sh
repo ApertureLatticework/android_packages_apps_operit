@@ -5,26 +5,25 @@
 #   （优先 stripped → merged → 任意），按 abiFilters 实况仅 arm64-v8a。
 # 落位后自动翻牌 native/sherpa-prebuilt/Android.bp.tree → Android.bp。
 # ripgrep 的 .so 由 cargo 步骤直接产到 app/src/main/jniLibs/arm64-v8a/（prebuilt 本位），不经本脚本。
+# 注意：本脚本 set -o pipefail，候选挑选一律用 grep -m1（自带停止），禁止 | head 管道
+#（外层收银 head 提前关管会把上游 head 打成 Broken pipe，pipefail 下整步炸）。
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 BUILD="${1:-$ROOT/app/build}"
 SHERPA_DST="$ROOT/native/sherpa-prebuilt"
 
-find_candidates() {
-    find "$BUILD" -name "libsherpa-ncnn-jni.so" -path "*arm64-v8a*" 2>/dev/null
-}
-
-pick_preferred() {
-    local all="$1"
-    grep "stripped_native_libs" <<<"$all" | head -1 || true
-    grep "merged_native_libs" <<<"$all" | head -1 || true
-    head -1 <<<"$all"
-}
-
-all=$(find_candidates)
+all=$(find "$BUILD" -name "libsherpa-ncnn-jni.so" -path "*arm64-v8a*" 2>/dev/null || true)
 [[ -z "$all" ]] && { echo "!! app/build 内未找到 arm64-v8a 的 libsherpa-ncnn-jni.so（先跑 Gradle 构建）" >&2; exit 1; }
-hit=$(pick_preferred "$all" | head -1)
+
+# 优先级：stripped_native_libs > merged_native_libs > 任意首个
+hit=$(grep -m1 "stripped_native_libs" <<<"$all" || true)
+if [[ -z "$hit" ]]; then
+    hit=$(grep -m1 "merged_native_libs" <<<"$all" || true)
+fi
+if [[ -z "$hit" ]]; then
+    hit=$(grep -m1 "." <<<"$all" || true)
+fi
 
 mkdir -p "$SHERPA_DST/lib/arm64-v8a"
 cp "$hit" "$SHERPA_DST/lib/arm64-v8a/"
