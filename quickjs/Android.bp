@@ -33,6 +33,7 @@ cc_library_shared {
         "-DCONFIG_VERSION=\"2026-06-04\"",
     ],
     shared_libs: ["liblog", "libm"],
+    header_libs: ["jni_headers"],
     stl: "libc++_static",
 
     ldflags: ["-Wl,-z,max-page-size=16384"],

@@ -21,6 +21,7 @@ cc_library_shared {
     ],
     local_include_dirs: ["."],
     shared_libs: ["liblog"],
+    header_libs: ["jni_headers"],
     stl: "libc++_static",
 
     ldflags: ["-Wl,-z,max-page-size=16384"],
@@ -35,6 +36,7 @@ cc_library_shared {
     local_include_dirs: ["."],
     static_libs: ["libtoolpkgwasm-vm"],
     shared_libs: ["liblog", "libm", "libdl"],
+    header_libs: ["jni_headers"],
     stl: "libc++_static",
 
     ldflags: ["-Wl,-z,max-page-size=16384"],
