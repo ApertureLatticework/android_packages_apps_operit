@@ -87,7 +87,13 @@ class MediaInformation(
                         width = s.optInt("width"),
                         height = s.optInt("height"),
                         sampleRate = s.optString("sample_rate"),
-                        channels = s.optInt("channels")
+                        channels = s.optInt("channels"),
+                        // 消费面实测只读 r_frame_rate（StandardFFmpegTool 帧率对齐）
+                        allProperties = if (s.has("r_frame_rate")) {
+                            mapOf("r_frame_rate" to s.optString("r_frame_rate"))
+                        } else {
+                            null
+                        }
                     )
                 }
                 MediaInformation(
@@ -113,7 +119,8 @@ class StreamInformation(
     val width: Int,
     val height: Int,
     val sampleRate: String?,
-    val channels: Int
+    val channels: Int,
+    val allProperties: Map<String, String?>?
 )
 
 object FFmpegKitConfig {

@@ -166,11 +166,16 @@ Java_com_ai_assistance_operit_util_ffmpeg_FFprobeKit_nativeProbe(JNIEnv *env, jc
         } else if (cp->codec_type == AVMEDIA_TYPE_AUDIO) {
             type = "audio";
         }
+        const AVRational fr = (cp->codec_type == AVMEDIA_TYPE_VIDEO)
+                ? av_guess_frame_rate(ctx, st, nullptr)
+                : AVRational{0, 0};
+        char fr_buf[32];
+        snprintf(fr_buf, sizeof(fr_buf), "%d/%d", fr.num, fr.den);
         snprintf(buf, sizeof(buf),
                  "%s{\"index\":\"%d\",\"type\":\"%s\",\"codec\":\"%s\",\"width\":%d,\"height\":%d,"
-                 "\"sample_rate\":\"%d\",\"channels\":%d}",
+                 "\"sample_rate\":\"%d\",\"channels\":%d,\"r_frame_rate\":\"%s\"}",
                  i ? "," : "", st->index, type, avcodec_get_name(cp->codec_id),
-                 cp->width, cp->height, cp->sample_rate, cp->ch_layout.nb_channels);
+                 cp->width, cp->height, cp->sample_rate, cp->ch_layout.nb_channels, fr_buf);
         json += buf;
     }
     json += "]}";
