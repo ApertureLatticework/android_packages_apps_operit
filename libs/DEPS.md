@@ -72,3 +72,19 @@ okhttp/okio（external/okhttp、external/okio）、gson、bouncycastle、jsoup�
 - `app/src/soong/java/`：Gradle 不编译、Soong 编译的源（BuildConfig 与 ffmpeg 门面）
 - `Android.bp`：主模块树内定义（2026-09-22 由 .tree 翻牌，前置依赖全部树内验明）
 - `native/operit-ffmpeg/Android.bp`：ffmpeg 薄壳（同批翻牌）
+
+## 机器实证补遗（2026-09-22，m Operit 全绿战报）
+
+- **KMP 空壳 jar 陷阱**：`kotlinx-serialization-json`（根坐标）在 Maven 是 KMP 根产物——
+  jar 仅 64 条目、无 `JsonElement.class`。解析须直钉 `-jvm` 坐标（json/core 均然），
+  且 `.module` 的 `available-at` 重定向变体 `files` 为空数组，须参与 publishable 候选
+  （否则被"有 files"过滤误杀，回退选中根元数据壳）。`import_prebuilts.py` 已固化两处。
+- **hnswlib 版本双轨**：`libs.versions.toml` 记 0.0.46（包名 `com.github.jelmerk.knn.*`），
+  `app/build.gradle.kts` 内联钉 1.2.1（包名 `com.github.jelmerk.hnswlib.core.*`）——
+  Gradle 以内联为准；本管线 ROOTS 已对齐 1.2.1。教训：目录扫不全，须再扫内联坐标。
+- **kotlinx-coroutines-guava 1.10.2**（包内 prebuilt）：`ListenableFuture.await()` 扩展，
+  树内 kotlinx.coroutines 无 guava 变体；传递闭包带入 guava 33.3.1-android。
+  实编注记：树内 work-runtime-ktx 的 `Operation.await` 与其争位，WorkflowScheduler
+  已改 IO 域阻塞 `.get()` 绕开解析歧义。
+- **编译器插件二连**：`-Xplugin=` 序列化插件之外再挂 `parcelize-compiler.jar`
+  （`kotlin-parcelize-runtime` 为树内模块，入 static_libs）。
