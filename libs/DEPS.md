@@ -32,15 +32,18 @@ okhttp/okio（external/okhttp、external/okio）、gson、bouncycastle、jsoup�
 （external/tensorflow，tflite 可用性待树内核）。frameworks/opt/colorpicker 为平台组件，
 与本项目 Compose colorpicker 非同一物。
 
-## ffmpeg 源码线
+## ffmpeg 源码线（fork 已落地，2026-09-22）
 
-- manifest：`../local_manifests/upstream-ports.xml` 钉 dvab-sarma `android-16.0_r3-8.0`
-  分支 commit 5dbfbaa
-- fork 清单（建议 fork 至 ApertureLatticework 后切 manifest）：
-    1. 根 Android.bp `ffmpeg_defaults`：`vendor: true → false`（system priv-app 不可链 vendor 库）
-    2. 补 `libavfilter/Android.bp` 与 `libavdevice/Android.bp`（仿 libavcodec，源在树；现状 404）
-    3. 新增 `libffmpeg_cli` 模块：fftools 全套 .c 以 `-Dmain=ffmpeg_cli_main` 编成库
-    4. 核对 configure 产物（config.h 等）已随仓 check-in
+- manifest：`../local_manifests/upstream-ports.xml` 钉 Operit fork
+  （dabao1955/android_external_ffmpeg，分支 android-16.0_r3-8.0）commit e6285e1；
+  org 侧建 fork 403（dabao1955 非 ApertureLatticework 成员），先落个人名下，
+  转移后改 manifest name 即可
+- fork 定制（四步全部兑现）：根 bp 两处 vendor 翻 false；补 libavfilter/libavdevice
+  Android.bp（root .c + aarch64 源集策对齐 libavcodec，x86/.asm 不收）；
+  libffmpeg_cli 模块（fftools 十四文件 + -Dmain=ffmpeg_cli_main）；
+  config.h/config_components.h 已随仓 check-in
+- 链接性核查：上游无 -fvisibility=hidden（shared 全导出可直链 fftools），
+  fftools 零 avpriv_ 实际调用
 - 包内侧：`native/operit-ffmpeg/`（Android.bp.tree 暂存，链 libav* + libffmpeg_cli）；
   消费面实测仅 6 函数（execute×4 / getMediaInformation×3 / 版本串×2），
   门面 `app/src/soong/java/.../ffmpeg/FFmpegKit.kt` 与 ffmpeg-kit 同名同形，
