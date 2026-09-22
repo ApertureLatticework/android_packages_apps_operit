@@ -219,8 +219,9 @@ jobs:
           git config user.name "operit-ci"
           git config user.email "ci@users.noreply.github.com"
           git add native/sherpa-prebuilt
-          # jniLibs 在 .gitignore（:24）但 ripgrep .so 是刻意入库的 prebuilt 例外，历史上即 -f 强加
-          git add -f app/src/main/jniLibs
+          # 只收 ripgrep prebuilt 本体；jniLibs 在 .gitignore（:24）且构建会往里落
+          # libc++_shared.so 等副产物（多 ABI），整目录 -f 会把私货卷进仓
+          git add -f app/src/main/jniLibs/arm64-v8a/liboperit_ripgrep.so
           if git diff --cached --quiet; then
             echo "native prebuilts 无变化，跳过提交"
             exit 0
