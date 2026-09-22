@@ -37,10 +37,12 @@ okhttp/okio（external/okhttp、external/okio）、gson、bouncycastle、jsoup�
 - manifest：`../local_manifests/upstream-ports.xml` 钉 Operit fork
   （ApertureLatticework/android_external_ffmpeg，承载分支 lineage-23.2）commit e6285e1；
   经由 dabao1955 个人 fork 中转后由用户手动接位组织仓（中转仓保留作重定向）
-- fork 定制（四步全部兑现）：根 bp 两处 vendor 翻 false；补 libavfilter/libavdevice
-  Android.bp（root .c + aarch64 源集策对齐 libavcodec，x86/.asm 不收）；
+- fork 定制（四步 + v4l2request 摘除）：根 bp 两处 vendor 翻 false；补
+  libavfilter/libavdevice Android.bp（root .c + aarch64，x86/.asm 不收）；
   libffmpeg_cli 模块（fftools 十四文件 + -Dmain=ffmpeg_cli_main）；
-  config.h/config_components.h 已随仓 check-in
+  config 已随仓 check-in；另摘 v4l2request 线（CONFIG_V4L2_REQUEST 与六 codec
+  V4L2REQUEST_HWACCEL 归零 + bp 摘源摘 libudev）——Android 无 libudev，
+  树内 libudev-zero 名不符且围栏隔离
 - 链接性核查：上游无 -fvisibility=hidden（shared 全导出可直链 fftools），
   fftools 零 avpriv_ 实际调用
 - 包内侧：`native/operit-ffmpeg/`（Android.bp.tree 暂存，链 libav* + libffmpeg_cli）；
