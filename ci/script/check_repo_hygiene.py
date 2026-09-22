@@ -34,6 +34,14 @@ def changed_files(base_sha: str, candidate_sha: str) -> list[Path]:
     return [Path(os.fsdecode(value)) for value in result.stdout.split(b"\0") if value]
 
 
+# 收源上游目录：第三方源码逐字节保真（便于与上游 diff 核对），豁免空白类规则。
+# 仅白名单这两个路径；将来新增收源目录时同步登记。
+VENDORED_SOURCE_PREFIXES = (
+    "native/wasm-micro-runtime/",
+    "quickjs/src/main/cpp/quickjs-upstream/",
+)
+
+
 def whitespace_errors(base_sha: str, candidate_sha: str) -> list[Diagnostic]:
     result = subprocess.run(
         ["git", "diff", "--check", base_sha, candidate_sha],
@@ -53,10 +61,13 @@ def whitespace_errors(base_sha: str, candidate_sha: str) -> list[Diagnostic]:
     for line in result.stdout.splitlines():
         match = DIFF_CHECK_RE.match(line)
         if match:
+            path = match.group(1)
+            if path.startswith(VENDORED_SOURCE_PREFIXES):
+                continue
             diagnostics.append(
                 Diagnostic(
                     code="whitespace",
-                    path=match.group(1),
+                    path=path,
                     line=int(match.group(2)),
                     message=match.group(3),
                 )
