@@ -1,0 +1,25 @@
+// libsherpa-ncnn-jni —— STT 引擎（sherpa-ncnn + ncnn + openfst 三件套静态合体）
+// 暂存名（Android.bp.tree）：翻牌条件 = 四个 ABI 的 .so 由抽取脚本落位（见
+// tools/intree/extract_sherpa_so.sh）。决策（2026-09-22）：sherpa 线走 prebuilt，
+// 不做源码 Soong 化——ncnn/openfst 的 cmake 深度定制翻译成本远超收益；
+// wamr/quickjs/streamnative/ripgrep 才走源码线。
+//
+// 注意：本 .so 含静态链接的 ncnn（Tencent，BSD-3）与 openfst（Apache-2.0），
+// 再分发合规，NOTICE 随 .so 落位时生成。
+cc_prebuilt_library_shared {
+    name: "libsherpa-ncnn-jni",
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+
+    arm: {
+        srcs: ["lib/arm/libsherpa-ncnn-jni.so"],
+    },
+    arm64: {
+        srcs: ["lib/arm64-v8a/libsherpa-ncnn-jni.so"],
+    },
+    x86: {
+        srcs: ["lib/x86/libsherpa-ncnn-jni.so"],
+    },
+    x86_64: {
+        srcs: ["lib/x86_64/libsherpa-ncnn-jni.so"],
+    },
+}

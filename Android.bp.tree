@@ -158,15 +158,14 @@ android_app {
     asset_dirs: ["app/src/main/assets"],
 
     // native 库经 required 随包安装到 priv-app lib 目录；
-    // ffmpeg 走源码线薄壳（native/operit-ffmpeg/Android.bp.tree，链树内 libav* + libffmpeg_cli）
+    // ffmpeg 走源码线薄壳（native/operit-ffmpeg/Android.bp.tree，链树内 libav* + libffmpeg_cli）。
+    // onnxruntime/tflite 的 .so 在 prebuilt AAR 内随 import 自动打包，不经 required
     required: [
         "libquickjsjni",
         "libstreamnative",
         "libtoolpkgwasm",
         "libsherpa-ncnn-jni",
         "liboperit_ffmpeg",
-        "libonnxruntime",
-        "libtensorflowlite_jni",
         "liboperit_ripgrep",
     ],
 

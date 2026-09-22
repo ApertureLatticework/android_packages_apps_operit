@@ -1,0 +1,39 @@
+// libquickjsjni —— QuickJS 引擎 JNI 桥（步骤 5 收源线）
+// 上游：bellard/quickjs master@04be246001599f5995fa2f2d8c91a0f198d3f34c（VERSION 2026-06-04），
+//       原为 Gradle 构建期 git fetch，现收源于 quickjs-upstream/（同包零路径逃逸）。
+//       master 已移除 libbf/bignum，5 个 .c 即完整引擎。
+// Gradle 对应物：quickjs/src/main/cpp/CMakeLists.txt（编译定义与旗标逐条对齐）
+cc_library_shared {
+    name: "libquickjsjni",
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+
+    srcs: [
+        "src/main/cpp/quickjs_jni.cpp",
+        "src/main/cpp/quickjs-upstream/cutils.c",
+        "src/main/cpp/quickjs-upstream/dtoa.c",
+        "src/main/cpp/quickjs-upstream/libregexp.c",
+        "src/main/cpp/quickjs-upstream/libunicode.c",
+        "src/main/cpp/quickjs-upstream/quickjs.c",
+    ],
+    local_include_dirs: ["src/main/cpp"],
+
+    cflags: [
+        "-std=c11",
+        // 引擎性能路径对齐 Gradle：始终 O3（Soong debug 构建时由下方 force_release 保住）
+        "-O3",
+        "-fwrapv",
+        "-funsigned-char",
+        "-Wwrite-strings",
+        "-Wchar-subscripts",
+        "-Wno-sign-compare",
+        "-Wno-missing-field-initializers",
+        "-Wno-unused-parameter",
+        "-D_GNU_SOURCE",
+        "-DNDEBUG",
+        "-DCONFIG_VERSION=\"2026-06-04\"",
+    ],
+    shared_libs: ["liblog", "libm"],
+    stl: "libc++_static",
+
+    ldflags: ["-Wl,-z,max-page-size=16384"],
+}

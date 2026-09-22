@@ -47,15 +47,15 @@ okhttp/okio（external/okhttp、external/okio）、gson、bouncycastle、jsoup�
   翻牌时 FFmpegUtil/StandardFFmpegTool/OpenSourceLicenses 仅改 import 行
 - Gradle 过渡期不动：Gradle 继续消费 ffmpeg-kit AAR，薄壳只进树内构建
 
-## native 收源（收源时落包内 Android.bp）
+## native 线（2026-09-22 定案：sherpa 走 prebuilt，其余源码收包）
 
 | 模块 | Soong 形态 | 来源 | 状态 |
 | --- | --- | --- | --- |
-| libquickjsjni | cc_library_shared | quickjs/src/main/cpp 在库（C 源现为构建期 git fetch，收源入 native/quickjs） | 待收 |
-| libstreamnative | cc_library_shared | app/src/main/cpp/streamnative 在库 | 待接线 |
-| libtoolpkgwasm + wamr | cc_library_static | wasm-micro-runtime（构建期 fetch） | 待收 |
-| libsherpa-ncnn-jni (+ncnn+openfst) | cc_library_shared | sherpa-ncnn（构建期 fetch） | 待收 |
-| liboperit_ripgrep | rust_ffi_shared | tools/native_ripgrep 在库（rust 源） | 待接线 |
+| libquickjsjni | cc_library_shared（quickjs/Android.bp 已落地） | bellard/quickjs master@04be246（VERSION 2026-06-04）收源入 quickjs/src/main/cpp/quickjs-upstream/；master 已删 libbf，5 个 .c 即全引擎 | ✅ 已接线 |
+| libstreamnative | cc_library_shared（app/src/main/cpp/Android.bp 已落地） | 源一直在包内 | ✅ 已接线 |
+| libtoolpkgwasm(+vm) | cc_library_shared/static（同上 bp + native/wasm-micro-runtime/Android.bp 已落地） | bytecodealliance/wamr main@b70d708（2.4.3）按 cmake 探针导出的精确文件清单收源（fast-interp、仅 libc-builtin、无 JIT/AOT/WASI），2.7MB | ✅ 已接线 |
+| libsherpa-ncnn-jni | cc_prebuilt_library_shared（暂存 Android.bp.tree） | sherpa-ncnn+ncnn+openfst 三件套静态合体 .so，tools/intree/extract_sherpa_so.sh 从 Gradle 产物抽四 ABI 落位后翻牌 | 待 .so 落位 |
+| liboperit_ripgrep | rust_ffi_shared（待定） | 源在库（tools/native_ripgrep），但 Cargo 依赖（globset/grep-*/ignore/jni/serde 系）树内 crates 无对应 | ⚠ 待决策 |
 
 ## 资产
 

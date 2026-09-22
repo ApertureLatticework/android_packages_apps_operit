@@ -1,0 +1,107 @@
+// libtoolpkgwasm-vm —— wasm-micro-runtime 解释器（工具包 wasm 执行内核）
+// 上游：bytecodealliance/wasm-micro-runtime main@b70d708d46be750bfcf008218b42c7b98c49368a（2.4.3），
+//       原为 Gradle 构建期 git fetch，现按 app/src/main/cpp/CMakeLists.txt 的
+//       runtime_lib.cmake 配置（fast-interp、仅 libc-builtin、无 JIT/AOT/WASI/线程）
+//       由 cmake 探针导出的精确文件清单收源。
+// WASM_HAVE_MREMAP=1 对四个 ABI 均成立（bionic 自带 mremap），故不收 mremap.c。
+cc_library_static {
+    name: "libtoolpkgwasm-vm",
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+
+    srcs: [
+        "core/iwasm/common/wasm_application.c",
+        "core/iwasm/common/wasm_blocking_op.c",
+        "core/iwasm/common/wasm_c_api.c",
+        "core/iwasm/common/wasm_exec_env.c",
+        "core/iwasm/common/wasm_loader_common.c",
+        "core/iwasm/common/wasm_memory.c",
+        "core/iwasm/common/wasm_native.c",
+        "core/iwasm/common/wasm_runtime_common.c",
+        "core/iwasm/common/wasm_shared_memory.c",
+        "core/iwasm/interpreter/wasm_interp_fast.c",
+        "core/iwasm/interpreter/wasm_loader.c",
+        "core/iwasm/interpreter/wasm_runtime.c",
+        "core/iwasm/libraries/libc-builtin/libc_builtin_wrapper.c",
+        "core/shared/mem-alloc/mem_alloc.c",
+        "core/shared/mem-alloc/ems/ems_alloc.c",
+        "core/shared/mem-alloc/ems/ems_gc.c",
+        "core/shared/mem-alloc/ems/ems_hmu.c",
+        "core/shared/mem-alloc/ems/ems_kfc.c",
+        "core/shared/platform/android/platform_init.c",
+        "core/shared/platform/common/posix/posix_blocking_op.c",
+        "core/shared/platform/common/posix/posix_malloc.c",
+        "core/shared/platform/common/posix/posix_memmap.c",
+        "core/shared/platform/common/posix/posix_sleep.c",
+        "core/shared/platform/common/posix/posix_thread.c",
+        "core/shared/platform/common/posix/posix_time.c",
+        "core/shared/utils/bh_assert.c",
+        "core/shared/utils/bh_bitmap.c",
+        "core/shared/utils/bh_common.c",
+        "core/shared/utils/bh_hashmap.c",
+        "core/shared/utils/bh_leb128.c",
+        "core/shared/utils/bh_list.c",
+        "core/shared/utils/bh_log.c",
+        "core/shared/utils/bh_queue.c",
+        "core/shared/utils/bh_vector.c",
+        "core/shared/utils/runtime_timer.c",
+    ],
+
+    // 架构专属汇编跳板（与 BUILD_TARGET 宏配套，Soong 按目标 ABI 取用）
+    target: {
+        arm64: {
+            srcs: ["core/iwasm/common/arch/invokeNative_aarch64.s"],
+            cflags: ["-DBUILD_TARGET=\\\"AARCH64\\\"", "-DBUILD_TARGET_AARCH64"],
+        },
+        arm: {
+            srcs: ["core/iwasm/common/arch/invokeNative_arm.s"],
+            cflags: ["-DBUILD_TARGET=\\\"ARM\\\"", "-DBUILD_TARGET_ARM"],
+        },
+        x86_64: {
+            srcs: ["core/iwasm/common/arch/invokeNative_em64.s"],
+            cflags: ["-DBUILD_TARGET=\\\"X86_64\\\"", "-DBUILD_TARGET_X86_64"],
+        },
+        x86: {
+            srcs: ["core/iwasm/common/arch/invokeNative_ia32.s"],
+            cflags: ["-DBUILD_TARGET=\\\"X86_32\\\"", "-DBUILD_TARGET_X86_32"],
+        },
+    },
+
+    local_include_dirs: [
+        "core/iwasm/include",
+        "core/iwasm/interpreter",
+        "core/iwasm/common",
+        "core/iwasm/libraries/libc-builtin",
+        "core/shared/mem-alloc",
+        "core/shared/platform/android",
+        "core/shared/platform/include",
+        "core/shared/utils",
+    ],
+    export_include_dirs: ["core/iwasm/include"],
+
+    cflags: [
+        "-std=gnu99",
+        "-DBH_MALLOC=wasm_runtime_malloc",
+        "-DBH_FREE=wasm_runtime_free",
+        "-DBH_PLATFORM_ANDROID",
+        "-DWASM_DISABLE_HW_BOUND_CHECK=0",
+        "-DWASM_DISABLE_STACK_HW_BOUND_CHECK=0",
+        "-DWASM_DISABLE_WAKEUP_BLOCKING_OP=0",
+        "-DWASM_ENABLE_AOT_INTRINSICS=0",
+        "-DWASM_ENABLE_BULK_MEMORY=1",
+        "-DWASM_ENABLE_BULK_MEMORY_OPT=1",
+        "-DWASM_ENABLE_CALL_INDIRECT_OVERLONG=0",
+        "-DWASM_ENABLE_EXTENDED_CONST_EXPR=0",
+        "-DWASM_ENABLE_FAST_INTERP=1",
+        "-DWASM_ENABLE_INTERP=1",
+        "-DWASM_ENABLE_LIBC_BUILTIN=1",
+        "-DWASM_ENABLE_MINI_LOADER=0",
+        "-DWASM_ENABLE_MULTI_MODULE=0",
+        "-DWASM_ENABLE_QUICK_AOT_ENTRY=0",
+        "-DWASM_ENABLE_SHARED_MEMORY=0",
+        "-DWASM_ENABLE_SHRUNK_MEMORY=1",
+        "-DWASM_GLOBAL_HEAP_SIZE=10485760",
+        "-DWASM_HAVE_MREMAP=1",
+        "-D_GNU_SOURCE",
+        "-Wno-unused-parameter",
+    ],
+}

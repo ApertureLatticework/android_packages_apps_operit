@@ -53,6 +53,7 @@ Operit 以 Gradle 构建产出通用 APK，系统能力通过五档权限阶梯�
 | 前台抢占规避 | 参考 ref/ 副屏底座，禁用 LSPosed，控制服务可用 system rc 启动；LOS 23.2 源码验证 TRUSTED+OWN_FOCUS 原生旗标即可，无需 framework 补丁 |
 | Linux 终端环境 | proot、chroot、lxc 全部裁掉，不写 root helper，与 phone use 零耦合 |
 | 依赖组织（2026-09-20 修订） | 非 androidx 全走包内 prebuilt（AAR/jar import，sha256 钉扎，脚本化接线）；唯一源码线例外为 ffmpeg（external/ffmpeg 树内源码 + 包内薄壳）；原“零 prebuilt、ML Kit 唯一例外”决策作废 |
+| native 线拆分（2026-09-22） | sherpa-ncnn 三件套走 prebuilt .so（抽取脚本落位）；wamr/quickjs/streamnative 源码收包已完成 Soong 化；ripgrep 的 rust crate 依赖树内缺失，策略待定 |
 | 收源节奏（2026-09-20） | prebuilt 接线先行打通 m Operit，native（sherpa/wamr/quickjs/ripgrep）收源独立推进 |
 
 ## 步骤
