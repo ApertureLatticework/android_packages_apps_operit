@@ -228,6 +228,15 @@ android_library {
 
 android_app {
     name: "Operit",
+    // Gradle 侧由 jniLibs 目录自动打包；Soong 必须显式声明（否则 APK lib/ 为空，运行时 UnsatisfiedLink）
+    jni_libs: [
+        "libstreamnative",
+        "libtoolpkgwasm",
+        "liboperit_ripgrep",
+        "libsherpa-ncnn-jni",
+        "liboperit_ffmpeg",
+        "libquickjsjni",
+    ],
     defaults: ["platform_app_defaults"],
     privileged: true,
     certificate: "platform",
