@@ -46,8 +46,9 @@ cc_library_static {
         "core/shared/utils/runtime_timer.c",
     ],
 
-    // 架构专属汇编跳板（与 BUILD_TARGET 宏配套，Soong 按目标 ABI 取用）
-    target: {
+    // 架构专属汇编跳板（与 BUILD_TARGET 宏配套，Soong 按目标 ABI 取用）。
+    // 注意用 arch: 而非 target:——cc 模块按架构选源/旗标只有 arch 生效（树内实测定案）
+    arch: {
         arm64: {
             srcs: ["core/iwasm/common/arch/invokeNative_aarch64.s"],
             cflags: ["-DBUILD_TARGET=\\\"AARCH64\\\"", "-DBUILD_TARGET_AARCH64"],
