@@ -46,8 +46,8 @@ android_library {
         // ---- 树内 androidx / Kotlin（零 vendoring，直接引模块名） ----
         "kotlin-stdlib",
         "kotlin-reflect",
-        "kotlinx-coroutines-android",
-        "kotlinx-serialization-json",
+        "kotlinx_coroutines_android",  // 树内命名（external/kotlinx.coroutines）
+        "kotlinx_serialization_json",  // 树内命名（external/kotlinx.serialization）
         "androidx.core_core-ktx",
         "androidx.activity_activity-compose",
         "androidx.activity_activity-ktx",
