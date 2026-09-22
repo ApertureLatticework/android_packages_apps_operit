@@ -9,6 +9,7 @@ cc_library_shared {
         "-std=c++17",
         "-Wno-unused-parameter",
     ],
+    header_libs: ["jni_headers"],
     shared_libs: [
         "libavcodec",
         "libavformat",

@@ -30,6 +30,8 @@ cc_library_shared {
         "-Wno-unused-parameter",
         "-D_GNU_SOURCE",
         "-DNDEBUG",
+        // Soong 全局 _FORTIFY_SOURCE=3 与 malloc_usable_size 硬冲突（bionic 明令），引擎内存管理豁免
+        "-U_FORTIFY_SOURCE",
         "-DCONFIG_VERSION=\"2026-06-04\"",
     ],
     shared_libs: ["liblog", "libm"],
