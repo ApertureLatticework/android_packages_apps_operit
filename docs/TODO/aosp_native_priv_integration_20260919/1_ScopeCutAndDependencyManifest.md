@@ -97,7 +97,7 @@ UI 面同步裁剪（设置页、向导、导航）：
 | 簇 | 结论 |
 | --- | --- |
 | avatar 线（四模块 + filament + 相关资产） | 裁 |
-| exoplayer | 保留，迁移 androidx.media3（树内自带）；实测 11 文件含聊天附件播放、markdown 音视频与音乐工具，先前“装饰性”判断有误 |
+| exoplayer | ✅ 已迁移 androidx.media3 1.8.0（2026-09-22：9 Kotlin + 1 XML + Gradle 三条依赖；树内走 androidx prebuilts） |
 | glance 小部件 | 保留 |
 
 ### 统计

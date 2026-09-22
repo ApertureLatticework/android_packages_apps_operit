@@ -89,6 +89,20 @@ Soong 的 manifest 处理器要求 `manifest:package` 显式声明；AGP 8 项�
 - exoplayer→androidx.media3 迁移、STT 模型入 assets、约 40 坐标收源为后续增量批次，
   推进节奏待用户定案（收源量数据已呈交）
 
+## 执行情况补充（2026-09-22，翻牌机械活清零）
+
+- prebuilt 首批入库：122 模块 / 125.2MB / sha256 lock（tools/intree/import_prebuilts.py，
+  Gradle Module Metadata 变体语义闭包解析）
+- native 线定案落地：quickjs（收源 04be246）/ wamr（探针清单收源 b70d708）/
+  streamnative 三模块真 bp 就位；sherpa 与 ripgrep 走 prebuilt（android-build 的
+  commit_native_prebuilts 开关抽取回写 + 自动翻牌），ABI 面对齐 abiFilters 仅 arm64-v8a
+- exoplayer → media3 1.8.0 迁移完成（9 Kotlin + 1 XML + Gradle）
+- BuildConfig 树内版落地（app/src/soong/java，版本 bump 三处同步）+ manifest 版本属性补齐
+- ffmpeg 门面改同包（com.arthenica.ffmpegkit）：消费方 import 双世界零改动
+- ffmpeg fork 落地：dabao1955/android_external_ffmpeg@e6285e1（vendor 翻转 +
+  libavfilter/libavdevice bp + libffmpeg_cli 四步全兑现，local_manifests 已切）
+- 主模块翻牌条件收敛为：CI 落 sherpa .so + 用户树侧集成（repo sync + device.mk）
+
 ## 依赖策略修订（2026-09-20，用户拍板）
 
 推翻“ML Kit 唯一 prebuilt 例外、其余零二进制”的原决策：
