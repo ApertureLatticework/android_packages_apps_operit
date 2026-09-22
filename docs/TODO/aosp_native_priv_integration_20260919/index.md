@@ -1,7 +1,7 @@
 ---
 Repository: https://github.com/ApertureLatticework/android_packages_apps_operit
 Branch: feat/native-rom-integration
-Status: executing（步骤 1-8 应用侧全部落地：PRIVILEGED 档、Live 镜像免弹窗采集与常驻服务、原生副屏 TRUSTED+OWN_FOCUS、提示词收敛；待办：依赖收源增量批次（libs/DEPS.md 工单）、树内 m Operit 翻牌与四场景实测、MCP 本地表单专项）
+Status: app-side done（步骤 1-8 全部落地且 CI 编译全绿；依赖侧 122 prebuilt + 五 native 模块全部真 bp 就位，ffmpeg fork 组织仓接位。剩余：步骤 9 树侧集成（用户树环境）与四场景实测；Live 三缺件另行排期；MCP 本地表单专项遗留）
 ---
 
 # 原生集成特权版：LineageOS 源码进树改造
@@ -66,3 +66,4 @@ Operit 以 Gradle 构建产出通用 APK，系统能力通过五档权限阶梯�
 6. [LOS 接入、特权白名单与 Live 服务](6_LOSIntegrationAndLiveService.md)（应用侧完成，树内接入件就绪）
 7. [副屏底座原生化与前台抢占规避](7_VirtualDisplayBackend.md)（应用侧完成，待设备实测）
 8. [提示词精简](8_PromptCleanup.md)（完成）
+9. [树侧集成 RUNBOOK](9_TreeIntegrationRunbook.md)（应用侧就绪，树侧动作手册化）
