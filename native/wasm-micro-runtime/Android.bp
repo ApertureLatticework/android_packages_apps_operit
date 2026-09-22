@@ -51,19 +51,19 @@ cc_library_static {
     arch: {
         arm64: {
             srcs: ["core/iwasm/common/arch/invokeNative_aarch64.s"],
-            cflags: ["-DBUILD_TARGET=\\\"AARCH64\\\"", "-DBUILD_TARGET_AARCH64"],
+            cflags: ["-DBUILD_TARGET=\"AARCH64\"", "-DBUILD_TARGET_AARCH64"],
         },
         arm: {
             srcs: ["core/iwasm/common/arch/invokeNative_arm.s"],
-            cflags: ["-DBUILD_TARGET=\\\"ARM\\\"", "-DBUILD_TARGET_ARM"],
+            cflags: ["-DBUILD_TARGET=\"ARM\"", "-DBUILD_TARGET_ARM"],
         },
         x86_64: {
             srcs: ["core/iwasm/common/arch/invokeNative_em64.s"],
-            cflags: ["-DBUILD_TARGET=\\\"X86_64\\\"", "-DBUILD_TARGET_X86_64"],
+            cflags: ["-DBUILD_TARGET=\"X86_64\"", "-DBUILD_TARGET_X86_64"],
         },
         x86: {
             srcs: ["core/iwasm/common/arch/invokeNative_ia32.s"],
-            cflags: ["-DBUILD_TARGET=\\\"X86_32\\\"", "-DBUILD_TARGET_X86_32"],
+            cflags: ["-DBUILD_TARGET=\"X86_32\"", "-DBUILD_TARGET_X86_32"],
         },
     },
 
