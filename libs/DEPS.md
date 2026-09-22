@@ -70,5 +70,5 @@ okhttp/okio（external/okhttp、external/okio）、gson、bouncycastle、jsoup�
 ## 树内专用文件
 
 - `app/src/soong/java/`：Gradle 不编译、Soong 编译的源（BuildConfig 与 ffmpeg 门面）
-- `Android.bp.tree`：主模块暂存名，翻牌规则见文件头
-- `native/operit-ffmpeg/Android.bp.tree`：薄壳模块暂存名（随 ffmpeg fork 落地翻牌）
+- `Android.bp`：主模块树内定义（2026-09-22 由 .tree 翻牌，前置依赖全部树内验明）
+- `native/operit-ffmpeg/Android.bp`：ffmpeg 薄壳（同批翻牌）

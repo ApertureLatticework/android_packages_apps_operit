@@ -1,8 +1,6 @@
-// liboperit_ffmpeg 暂存定义——文件名刻意避开 Android.bp：
-// libav* 与 libffmpeg_cli 依赖在 external/ffmpeg fork（vendor 翻转 + avfilter/avdevice
-// 补齐 + fftools 模块，清单见 ../local_manifests/upstream-ports.xml 注释）落地前不存在，
-// 现在就叫 Android.bp 会让 Soong 依赖解析失败、拖垮全树 m。
-// fork 就绪后本文件改名 Android.bp 即接线。
+// liboperit_ffmpeg——ffmpeg 薄壳 JNI（2026-09-22 随主模块正式翻牌）。
+// 依赖 external/ffmpeg fork 的 libav* + libffmpeg_cli（fork 定制 4 已树内编通，
+// 清单见 ../local_manifests/upstream-ports.xml 注释）。
 cc_library_shared {
     name: "liboperit_ffmpeg",
     visibility: ["//packages/apps/Operit:__subpackages__"],

@@ -1,26 +1,12 @@
-// Operit 主模块的暂存 Soong 定义 —— 文件名刻意避开 "Android.bp"，
-// 因为 repo sync 会把本仓库整体克隆为 packages/apps/Operit，
-// Soong 只解析 Android.bp 文件名；翻牌前本文件对树零影响。
+// Operit 主模块树内定义（2026-09-22 正式翻牌，commit b37498b）。
+// 翻牌前置条件已全部在这棵 LOS 23.2 树上验明：
+//   - external/ffmpeg fork（ApertureLatticework/android_external_ffmpeg，
+//     定制 4 后 libavfilter/libavdevice/libffmpeg_cli 全部编通）
+//   - 136 个包内 prebuilt（android_library_import/java_import）+ native 五件
+//   - 树内 androidx（25 件直引）与 Kotlin 系模块（下划线命名）逐一实名核验
+// 注意：本 bp 生效即要求树内有 external/ffmpeg（local_manifests/upstream-ports.xml）；
+//       只装 aperture.xml 不装 upstream-ports.xml 的树会解析失败，两份清单成对安装。
 //
-// 翻牌规则（步骤 5 执行序，docs/TODO/.../5_InTreePackageAndSoongModules.md）：
-// 1. libs/ 下各依赖以独立 Soong 模块增量落地（自带 Android.bp，树内可独立编译，
-//    未被引用时对全树构建零破坏）
-// 2. 全部 operit-* 模块齐备后，本文件更名为 Android.bp，static_libs 已可全量解析
-// 3. app 模块翻牌是最后一步：此前树内 m 全量构建不受本包影响
-//
-// 形态依据（2026-09-19 spike1 树内实测 + LOS 23.2 范本）：
-// - 无 compose 属性；Compose 编译器由 kotlinc_incremental 内嵌，模块只需
-//   static_libs 引树内 androidx Compose 模块 + 可选 -P 插件参数
-// - platform_apis: true 为特权应用路线（SystemApi/@hide 直调前提），与 sdk_version 二选一
-// - manifest 必须带 package 属性（已在 app/src/main/AndroidManifest.xml 注入）
-// - androidx 预编译位于 prebuilts/sdk/current/androidx/，模块名按 pom2bp 约定
-// - okhttp/gson/jsoup/zxing 等已按 LOS 23.2 manifest 核对为树内项目（见 libs/DEPS.md），
-//   翻牌时以树内实核模块名替换下方 operit-* 同名占位
-// - 依赖策略修订（2026-09-20）：非 androidx 依赖一律包内 prebuilt（AAR/jar import，
-//   钉 sha256，由 tools/intree/import_prebuilts.py 生成 Android.bp/NOTICE/lock）；
-//   唯一源码线例外为 ffmpeg（external/ffmpeg 树内源码 + 包内薄壳 liboperit_ffmpeg，
-//   同包门面 app/src/soong/java/com/arthenica/ffmpegkit/，消费方 import 双世界零改动）
-
 android_library {
     name: "operit-lib",
     visibility: ["//packages/apps/Operit:__subpackages__"],

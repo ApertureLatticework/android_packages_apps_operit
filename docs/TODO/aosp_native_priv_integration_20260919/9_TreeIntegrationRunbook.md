@@ -39,16 +39,11 @@ m Operit
 - `libavfilter`/`libavdevice`/`libffmpeg_cli` 三模块存在（fork 补齐项）
 - 若报 `libav*` 链接 `vendor` 违规 → fork 的 vendor 翻转未生效，核对 fork commit 是 e6285e1
 
-## 4. 翻牌（两行，顺序固定）
+## 4. 翻牌（已完成，2026-09-22，仓库 commit b37498b）
 
-```bash
-cd packages/apps/Operit
-git mv native/operit-ffmpeg/Android.bp.tree native/operit-ffmpeg/Android.bp   # 先 ffmpeg 薄壳
-git mv Android.bp.tree Android.bp                                              # 后主模块
-git commit -am "intree: 翻牌——Operit 主模块进树"
-```
-
-翻牌后本仓对树构建生效（此前两文件名 Soong 不解析）。
+主模块与 ffmpeg 薄壳的 `.tree` 暂存名已在仓库内正式翻为 `Android.bp`——
+全部前置依赖（external/ffmpeg 定制 4、136 prebuilt、native 五件、树内模块名）
+经 dodge 树实编验明。树侧无需任何翻牌操作，sync 到 ≥ b37498b 即生效。
 
 ## 5. device.mk 接线
 
