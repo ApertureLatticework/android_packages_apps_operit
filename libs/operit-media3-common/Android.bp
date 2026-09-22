@@ -1,0 +1,7 @@
+// androidx.media3:media3-common:1.8.0 · google prebuilt
+// 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
+android_library_import {
+    name: "operit-media3-common",
+    aars: ["media3-common-1.8.0.aar"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
+}

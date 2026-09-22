@@ -1,7 +1,7 @@
-// com.google.guava:guava:33.3.1-android · central prebuilt
+// androidx.media3:media3-ui:1.8.0 · google prebuilt
 // 由 tools/intree/import_prebuilts.py 生成，升级请改脚本根坐标后重跑
-java_import {
-    name: "operit-guava",
-    jars: ["guava-33.3.1-android.jar"],
+android_library_import {
+    name: "operit-media3-ui",
+    aars: ["media3-ui-1.8.0.aar"],
     visibility: ["//packages/apps/Operit:__subpackages__"],
 }

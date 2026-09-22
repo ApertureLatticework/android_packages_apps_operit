@@ -44,6 +44,12 @@ POM_NS = {"m": "http://maven.apache.org/POM/4.0.0"}
 
 # 根坐标：(group, artifact, version, module)——module 与 Android.bp.tree 的 static_libs 对齐
 ROOTS = [
+    # androidx 但树内缺失的例外（2026-09-22 实核 android-16.0.0_r4 prebuilts：
+    # media3 整组与 security 整组不在树内；其余 androidx 均在，继续树内直引）
+    ("androidx.media3", "media3-common", "1.8.0", "operit-media3-common"),
+    ("androidx.media3", "media3-exoplayer", "1.8.0", "operit-media3-exoplayer"),
+    ("androidx.media3", "media3-ui", "1.8.0", "operit-media3-ui"),
+    ("androidx.security", "security-crypto", "1.1.0-alpha06", "operit-security-crypto"),
     # 网络
     ("com.squareup.okhttp3", "okhttp", "4.12.0", "operit-okhttp"),
     ("com.squareup.okhttp3", "okhttp-sse", "4.12.0", "operit-okhttp-sse"),
@@ -235,8 +241,18 @@ def parse_pom(pom: bytes) -> tuple[str, list[tuple[str, str, str]], list[tuple[s
     return packaging, deps, licenses
 
 
+# 树内实核缺失的 androidx 件：白名单优先于一切跳过规则（含 androidx 组前缀）；
+# androidx.media3 整组按组放行（其传递件 database/datasource/decoder… 同在树外）
+ALLOW_TREE_ABSENT_GROUPS = {"androidx.media3"}
+ALLOW_TREE_ABSENT = {
+    "androidx.security:security-crypto",
+}
+
+
 def should_skip(g: str, a: str) -> bool:
     coord = f"{g}:{a}"
+    if g in ALLOW_TREE_ABSENT_GROUPS or coord in ALLOW_TREE_ABSENT:
+        return False
     if coord in SKIP_EXACT:
         return True
     # 点边界匹配：org.jetbrains.kotlin 不得误伤 org.jetbrains.kotlinx

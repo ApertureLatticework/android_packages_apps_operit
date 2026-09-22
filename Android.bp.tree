@@ -74,11 +74,12 @@ android_library {
         "androidx.webkit_webkit",
         "androidx.glance_glance-appwidget",
         "androidx.glance_glance-material3",
-        "androidx.security_security-crypto",
-        // exoplayer 2.x → media3 迁移（步骤 1 改判保留项，收源期执行包名替换）
-        "androidx.media3_media3-common",
-        "androidx.media3_media3-exoplayer",
-        "androidx.media3_media3-ui",
+        "operit-security-crypto",
+        // media3 与 security-crypto 树内（android-16.0.0_r4 prebuilts）实核缺失，
+        // 走包内 prebuilt（2026-09-22 审计：29 个 androidx 引用仅此 4 件不在树，其余树内直引）
+        "operit-media3-common",
+        "operit-media3-exoplayer",
+        "operit-media3-ui",
 
         // ---- 包内收源模块（libs/，逐个落地，模块名 operit- 前缀） ----
         "operit-okio",

@@ -13,6 +13,7 @@ d9b97477b72499bcee02f5a906510810257ff36a94bf69fbca0b1e65e7ffdb6e  operit-bcpkix-
 ea66ea8a450810b2193e8bf9a7ad3e46307c9896224c0f407d1b7d96ba1221cc  operit-bcprov-jdk15to18  org.bouncycastle:bcprov-jdk15to18:1.72  bcprov-jdk15to18-1.72.jar  9342484
 d92184bdeb3105a11ad9e36acbd66b5f8eed091b08b9c8f3e2549e42b7f131f1  operit-bcutil-jdk15to18  org.bouncycastle:bcutil-jdk15to18:1.72  bcutil-jdk15to18-1.72.jar  677620
 d76b9afea61c7c082908023f0cbc1427fab9abd2df915c8b8a3e7a509bccbc6d  operit-checker-compat-qual  org.checkerframework:checker-compat-qual:2.5.3  checker-compat-qual-2.5.3.jar  5816
+3fbc2e98f05854c3df16df9abaa955b91b15b3ecac33623208ed6424640ef0f6  operit-checker-qual  org.checkerframework:checker-qual:3.43.0  checker-qual-3.43.0.jar  231525
 c4a3c65ec1bd54307e56ee2d447f5b6b488c56f1fbfb5a10cec1d0e4330ce133  operit-coil  io.coil-kt:coil:2.5.0  coil-2.5.0.aar  7752
 bb399f8039e8cf7f159102c85b44281be2ff7ebc58214056f8601ca43fbeabc5  operit-coil-base  io.coil-kt:coil-base:2.5.0  coil-base-2.5.0.aar  437229
 917f40475c1b206c61a489355833e111e6fde729ec0b8e3c5ccab923b283642f  operit-coil-compose  io.coil-kt:coil-compose:2.5.0  coil-compose-2.5.0.aar  20609
@@ -27,7 +28,8 @@ d0ec8014ebbb0749f471803122b21796afddf2e98e194e4374622e5fbaf69f49  operit-commons
 c165adae5a49167cba8af557b399d268f0d5099433559eac903c275bd9545fd2  operit-commons-lang3  org.apache.commons:commons-lang3:3.3.1  commons-lang3-3.3.1.jar  412693
 1e56d7b058d28b65abd256b8458e3885b674c1d588fa43cd7d1cbb9c7ef2b308  operit-commons-math3  org.apache.commons:commons-math3:3.6.1  commons-math3-3.6.1.jar  2213560
 b31539cdcf189d9e68a1f6998cba09ea912f99f5f24bcd0650212b1af9d355a2  operit-curvesapi  com.github.virtuald:curvesapi:1.07  curvesapi-1.07.jar  111978
-a171ee4c734dd2da837e4b16be9df4661afab72a41adaf31eb84dfdaf936ca26  operit-failureaccess  com.google.guava:failureaccess:1.0.1  failureaccess-1.0.1.jar  4617
+f3fc8a3a0a4020706a373b00e7f57c2512dd26d1f83d28c7d38768f8682b231e  operit-error-prone-annotations  com.google.errorprone:error_prone_annotations:2.28.0  error_prone_annotations-2.28.0.jar  19370
+8a8f81cf9b359e3f6dfa691a1e776985c061ef2f223c9b2c80753e1b458e8064  operit-failureaccess  com.google.guava:failureaccess:1.0.2  failureaccess-1.0.2.jar  4740
 8830f2e8a5e434cbc5e4bd18133073b6e8518a8ce8ec2ce6f3b273c91d9664c2  operit-firebase-annotations  com.google.firebase:firebase-annotations:16.0.0  firebase-annotations-16.0.0.jar  921
 82e91aa5ed186eedaf1f2210f5d241ba6e4456cf0c32949d5cdbe152b0e2e88b  operit-firebase-components  com.google.firebase:firebase-components:16.1.0  firebase-components-16.1.0.aar  30176
 8f89a74298bbccc2c543385208a2f0c67f603ce67e6ec21cc772e98e688f7cf5  operit-firebase-encoders  com.google.firebase:firebase-encoders:16.1.0  firebase-encoders-16.1.0.jar  17847
@@ -36,13 +38,14 @@ a171ee4c734dd2da837e4b16be9df4661afab72a41adaf31eb84dfdaf936ca26  operit-failure
 3145669db60c7b1d63b4e1f7137ea1a5de6ea91c516a68e8cfdd25794d81b7c4  operit-flogger  com.google.flogger:flogger:0.6  flogger-0.6.jar  172930
 af7f9f049c79f67941e1e47637b20634594788398aa0aabcddbc7af0af3df5b1  operit-flogger-system-backend  com.google.flogger:flogger-system-backend:0.6  flogger-system-backend-0.6.jar  17116
 4241c14a7727c34feea6507ec801318a3d4a90f070e4525681079fb94ee4c593  operit-gson  com.google.code.gson:gson:2.10.1  gson-2.10.1.jar  283367
-caf0955aed29a1e6d149f85cfb625a89161b5cf88e0e246552b7ffa358204e28  operit-guava  com.google.guava:guava:27.0.1-android  guava-27.0.1-android.jar  2603999
+2c3e41d1b380f2044d257947a3aa82dabf3ae4b978622745254aa18b6cf89ab0  operit-guava  com.google.guava:guava:33.3.1-android  guava-33.3.1-android.jar  2918070
 8cfe89290f828ccc3f97809260f913b314d4f909db4f14e8bb3d0b1bc9e5aeee  operit-hjson  org.hjson:hjson:3.0.0  hjson-3.0.0.jar  43053
 62bbeecd72892bef5ad66e2acee43eab8b5908d23d0ad5b1651f3a3258b11f61  operit-hnswlib-core  com.github.jelmerk:hnswlib-core:0.0.46  hnswlib-core-0.0.46.jar  64365
 7c2b2533d29cd9451e22d7f0d1df3021ba6ac9be30146061dcd16190c8e41481  operit-hnswlib-utils  com.github.jelmerk:hnswlib-utils:0.0.46  hnswlib-utils-0.0.46.jar  3123
 2e71aa31f83a9415277f119de67195726f07d1760e9542c111778c320e3aa1f2  operit-image  com.google.android.odml:image:1.0.0-beta1  image-1.0.0-beta1.aar  23893
 a337cb1e3770cf2ae142b47f0348968d24be2c3a8c5bf92c06d1ee21f602adcc  operit-image-cropper  com.vanniktech:android-image-cropper:4.5.0  android-image-cropper-4.5.0.aar  205696
 20eb3af093e3b1a5d2a2f507be2f38791d171f6bcfd4710ab036bbb120a225c5  operit-itextg  com.itextpdf:itextg:5.5.10  itextg-5.5.10.jar  2250078
+88241573467ddca44ffd4d74aa04c2bbfd11bf7c17e0c342c94c9de7a70a7c64  operit-j2objc-annotations  com.google.j2objc:j2objc-annotations:3.0.0  j2objc-annotations-3.0.0.jar  12467
 9990a2039778f6b4cc94790141c2868864eacee0620c6c459451121a901cd5b5  operit-java-diff-utils  io.github.java-diff-utils:java-diff-utils:4.12  java-diff-utils-4.12.jar  72305
 91c77044a50c481636c32d916fd89c9118a72195390452c81065080f957de7ff  operit-javax-inject  javax.inject:javax.inject:1  javax.inject-1.jar  2497
 3f784d6c6af0135a8035d607845e7165bcbcd5ccec69e98239fd779a59ec87ea  operit-jieba  com.huaban:jieba-analysis:1.0.2  jieba-analysis-1.0.2.jar  2189961
@@ -50,6 +53,7 @@ b16824328d45ed86892f7f8aa74a542fc361b8a94004de8ca5ae86113b78a89f  operit-jlatexm
 d76f042f6dc91217dd5e94e28018703747519173b3ea3df46b4379985f502b75  operit-jlatexmath-android-font-cyrillic  ru.noties:jlatexmath-android-font-cyrillic:0.2.0  jlatexmath-android-font-cyrillic-0.2.0.aar  177085
 d4216f88b65e3a6d296f886bf3c43f548d08dca845d8b64801461719d2085d89  operit-jlatexmath-android-font-greek  ru.noties:jlatexmath-android-font-greek:0.2.0  jlatexmath-android-font-greek-0.2.0.aar  180884
 a73a1eb5d02b51490547c46485e30f4f14e68af3624840b57abe8c4580a00b83  operit-jsoup  org.jsoup:jsoup:1.16.2  jsoup-1.16.2.jar  452342
+766ad2a0783f2687962c8ad74ceecc38a28b9f72a2d085ee438b7813e928d0c7  operit-jsr305  com.google.code.findbugs:jsr305:3.0.2  jsr305-3.0.2.jar  19936
 e01b949687e2a5b4c68011c1702aa5d2cc8e6c458656ac2c91658b69cebb1bb3  operit-junrar  com.github.junrar:junrar:7.5.5  junrar-7.5.5.jar  161628
 2951de80ba04d9eba5bbc0913d46bffca9c97c6316c7055796bad78be7c62a0e  operit-kotlin-logging  io.github.oshai:kotlin-logging:7.0.14  kotlin-logging-7.0.14.jar  26146
 295032e55d9914c6a8ac9ca65dc172e5c57877bc87a26922bd89a062c32f411e  operit-kotlin-sdk-core  io.modelcontextprotocol:kotlin-sdk-core:0.10.0  kotlin-sdk-core-0.10.0.jar  67252
@@ -73,6 +77,14 @@ bfd84e101d0458f96ca62ecd50f7d27f5b64441a807b2fc105f34771c3841e0e  operit-ktor-ss
 b372a037d4230aa57fbeffdef30fd6123f9c0c2db85d0aced00c91b974f33f99  operit-listenablefuture  com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava  listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar  2199
 b977057233153b242ac58cc5b7d3121136b9c34c86c1e191c042ba4a828144c5  operit-log4j-api  org.apache.logging.log4j:log4j-api:2.18.0  log4j-api-2.18.0.jar  315115
 dec2cdefb365e32a9bbe661ede9988323894cc657093f3e8b52b0d610abffc4d  operit-mcp-sdk-client  io.modelcontextprotocol:kotlin-sdk-client:0.10.0  kotlin-sdk-client-0.10.0.jar  12250
+001efb6ce0d21965a32c17b9c5be317c07c8722fb680601b19906f64064536b2  operit-media3-common  androidx.media3:media3-common:1.8.0  media3-common-1.8.0.aar  537540
+3860a15aa5b2a2baf2dcde38c3b638a384a84daf4855ac47867714c9dac0368d  operit-media3-container  androidx.media3:media3-container:1.8.0  media3-container-1.8.0.aar  55279
+13bf4ccce6bc9e8ef8e04a62e90fa6c1589b89bee8633f0db9f61ae2c23f6ef6  operit-media3-database  androidx.media3:media3-database:1.8.0  media3-database-1.8.0.aar  7197
+9bb676ab1f259b822b30f00755879c6111d7e88466622f9041d588fc7aeb6915  operit-media3-datasource  androidx.media3:media3-datasource:1.8.0  media3-datasource-1.8.0.aar  165781
+ffa96597c2418de39d6b24975c788d3aa4bdab00fb89e6b5b22aef2a49a919e8  operit-media3-decoder  androidx.media3:media3-decoder:1.8.0  media3-decoder-1.8.0.aar  18231
+606275b20c57e5991834470457a23576ffd0e92db5bfa2a4562ac1782d2166fb  operit-media3-exoplayer  androidx.media3:media3-exoplayer:1.8.0  media3-exoplayer-1.8.0.aar  1581021
+778312cd8a9975debd50c86a20ae4ed7b0770ff43e9b72acfb6664b6ed36d3ae  operit-media3-extractor  androidx.media3:media3-extractor:1.8.0  media3-extractor-1.8.0.aar  777827
+9f39a0ac855625a9e3cd105bcf77c3062ec420b2ac8a476fc34455f553ffe966  operit-media3-ui  androidx.media3:media3-ui:1.8.0  media3-ui-1.8.0.aar  429891
 74a6536f4cc803e6f4ae776a8a62a7cfc9182854b0837c5bc5f3214de7235f2e  operit-mediapipe-tasks-text  com.google.mediapipe:tasks-text:0.10.11  tasks-text-0.10.11.aar  8770094
 d037f5855fa853641e9db4d3523574b296749164b025b9e4b57540a16f249376  operit-mlkit-text-recognition  com.google.mlkit:text-recognition:16.0.0  text-recognition-16.0.0.aar  1277826
 e9677426963fd564dc86d3193e197b25c17a9f963db6fa23791eca69490b0f78  operit-mlkit-text-recognition-chinese  com.google.mlkit:text-recognition-chinese:16.0.0  text-recognition-chinese-16.0.0.aar  1930860
@@ -103,6 +115,7 @@ f0a98ad2a2a8c2863135357224fe8ffb2b4e7bb121d75aff59750eb671451aed  operit-poi-scr
 b03b4d113a9fef79400ae854c17757c2915725e6ffd1d61116eadaeb5613374a  operit-relinker  com.getkeepsafe.relinker:relinker:1.4.5  relinker-1.4.5.aar  27284
 099ca2dee756d844d4bdb765ce878acb18f1314caebc9890acfcf37d22de66fa  operit-renderx  com.github.tech-pw:RenderX:1.0.0  RenderX-1.0.0.aar  1746805
 7c0f7afa28753b0aab103f2e606bb8a8520c319a7294f7ea2922fac071c20530  operit-reorderable  sh.calvin.reorderable:reorderable:2.5.1  reorderable-2.5.1.jar  10419
+976111170b3f13d2f0f9457d9f9f579347143cb65c054265906d33c7618a4c2a  operit-security-crypto  androidx.security:security-crypto:1.1.0-alpha06  security-crypto-1.1.0-alpha06.aar  32306
 364cd59c37c1575caff9683f26fd69394433386bbf753a46bd0fb562562f35bc  operit-shapes  io.github.kyant0:shapes:1.2.0  shapes-1.2.0.jar  10162
 d3ef575e3e4979678dc01bf1dcce51021493b4d11fb7f1be8ad982877c16a1c0  operit-slf4j-api  org.slf4j:slf4j-api:1.7.36  slf4j-api-1.7.36.jar  41125
 91e6b318c901a0f2dd1f6ce781d62474435ae627d22fbac9b21bbc39ffd804b6  operit-sparsebitset  com.zaxxer:SparseBitSet:1.2  SparseBitSet-1.2.jar  24510
@@ -110,6 +123,7 @@ d3ef575e3e4979678dc01bf1dcce51021493b4d11fb7f1be8ad982877c16a1c0  operit-slf4j-a
 d9662b7cea324f3940470ac70fbfe6225ccd905a392da6e6259e14a78259850d  operit-tasks-core  com.google.mediapipe:tasks-core:0.10.11  tasks-core-0.10.11.aar  1157827
 fc945337cff72a261e15013170968a8f321ef30ea7ec50e9043c683e4a719e00  operit-tensorflow-lite  org.tensorflow:tensorflow-lite:2.10.0  tensorflow-lite-2.10.0.aar  6471352
 d55e7582b8fb2911556002dd6addbda07ce7f65446e3928d9e3b68fd96d0404b  operit-text-recognition-bundled-common  com.google.mlkit:text-recognition-bundled-common:16.0.0  text-recognition-bundled-common-16.0.0.aar  16667188
+5efe8f1cb6e75814ae06793d5ff8d9b01e6f88ef97ecc062d14ebc27027dbf78  operit-tink-android  com.google.crypto.tink:tink-android:1.8.0  tink-android-1.8.0.jar  2318211
 4e6983c0703b357df6f1c6ceacb1b5dfc2c5006a789c799fec2298b2b5337466  operit-transport-api  com.google.android.datatransport:transport-api:3.0.0  transport-api-3.0.0.aar  4898
 c9b5f5502415554c1ca85459e4cc8a192e7ab847413e57a8a8414816604b591d  operit-transport-backend-cct  com.google.android.datatransport:transport-backend-cct:3.1.0  transport-backend-cct-3.1.0.aar  35127
 e59241ae50d87adaa0cadef228f336aaa2b0013f08c2416e38a4c3b93e6f398c  operit-transport-runtime  com.google.android.datatransport:transport-runtime:3.1.0  transport-runtime-3.1.0.aar  110709
