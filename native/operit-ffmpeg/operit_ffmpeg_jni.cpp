@@ -21,12 +21,14 @@
 #include <string>
 #include <vector>
 
+// fork 公开头无 extern "C" 守卫（其树内消费者均 C），C++ 消费者自行包裹，
+// 否则链接期找 C++ 修饰名全部 undefined（树内实锤）
+extern "C" {
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
 #include <libavutil/avutil.h>
 #include <libavutil/log.h>
 
-extern "C" {
 // fork 侧 fftools 模块（libffmpeg_cli）经 -Dmain=ffmpeg_cli_main 暴露的 CLI 入口
 int ffmpeg_cli_main(int argc, char **argv);
 }
