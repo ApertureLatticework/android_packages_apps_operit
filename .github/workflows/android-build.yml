@@ -211,7 +211,7 @@ jobs:
       - name: Commit native prebuilts (sherpa / ripgrep)
         # 仅 dispatch 且显式开启：抽取 libsherpa-ncnn-jni.so 落位并翻牌，连同 cargo 步骤
         # 已产出的 liboperit_ripgrep.so 一并回写（ripgrep .so 本就在 jniLibs 本位）
-        if: github.event_name == 'workflow_dispatch' && inputs.commit_native_prebuilts
+        if: github.event_name == 'workflow_dispatch' && inputs.commit_native_prebuilts && success()
         shell: bash
         run: |
           set -euo pipefail
