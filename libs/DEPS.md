@@ -35,9 +35,8 @@ okhttp/okio（external/okhttp、external/okio）、gson、bouncycastle、jsoup�
 ## ffmpeg 源码线（fork 已落地，2026-09-22）
 
 - manifest：`../local_manifests/upstream-ports.xml` 钉 Operit fork
-  （dabao1955/android_external_ffmpeg，分支 android-16.0_r3-8.0）commit e6285e1；
-  org 侧建 fork 403（dabao1955 非 ApertureLatticework 成员），先落个人名下，
-  转移后改 manifest name 即可
+  （ApertureLatticework/android_external_ffmpeg，承载分支 lineage-23.2）commit e6285e1；
+  经由 dabao1955 个人 fork 中转后由用户手动接位组织仓（中转仓保留作重定向）
 - fork 定制（四步全部兑现）：根 bp 两处 vendor 翻 false；补 libavfilter/libavdevice
   Android.bp（root .c + aarch64 源集策对齐 libavcodec，x86/.asm 不收）；
   libffmpeg_cli 模块（fftools 十四文件 + -Dmain=ffmpeg_cli_main）；
