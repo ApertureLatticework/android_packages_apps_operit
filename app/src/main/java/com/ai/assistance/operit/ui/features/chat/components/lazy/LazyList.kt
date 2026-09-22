@@ -33,7 +33,7 @@ import com.ai.assistance.operit.ui.features.chat.components.lazy.StickyItemsPlac
 import com.ai.assistance.operit.ui.features.chat.components.lazy.calculateLazyLayoutPinnedIndices
 import com.ai.assistance.operit.ui.features.chat.components.lazy.lazyLayoutBeyondBoundsModifier
 import com.ai.assistance.operit.ui.features.chat.components.lazy.lazyLayoutSemantics
-import androidx.compose.foundation.scrollableArea
+import androidx.compose.foundation.scrollable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -140,14 +140,15 @@ internal fun LazyList(
                 )
                 .then(beyondBoundsModifier)
                 .then(state.itemAnimator.modifier)
-                .scrollableArea(
-                    state = state,
-                    orientation = orientation,
-                    enabled = userScrollEnabled,
-                    reverseScrolling = reverseLayout,
-                    flingBehavior = flingBehavior,
-                    interactionSource = state.internalInteractionSource,
-                    overscrollEffect = overscrollEffect,
+                // scrollableArea 于 foundation 1.10-alpha 移除；等价换稳定 scrollable()（树内实编适配）
+                .scrollable(
+                    state,
+                    orientation,
+                    userScrollEnabled,
+                    reverseLayout,
+                    flingBehavior,
+                    state.internalInteractionSource,
+                    overscrollEffect,
                 ),
         prefetchState = state.prefetchState,
         measurePolicy = measurePolicy,

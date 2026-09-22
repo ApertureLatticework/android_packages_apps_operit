@@ -221,6 +221,8 @@ android_library {
         "-Xplugin=external/kotlinc/lib/kotlinx-serialization-compiler-plugin.jar",
         // @Parcelize（SerializableColorScheme 等数据模型）；runtime 为树内模块（下行 static_libs）
         "-Xplugin=external/kotlinc/lib/parcelize-compiler.jar",
+        // 树内 material3 1.4-alpha 将 PullToRefreshBox 降回实验位（应用侧新版本为稳定位）
+        "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
     ],
 }
 
