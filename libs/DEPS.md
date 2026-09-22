@@ -54,8 +54,8 @@ okhttp/okio（external/okhttp、external/okio）、gson、bouncycastle、jsoup�
 | libquickjsjni | cc_library_shared（quickjs/Android.bp 已落地） | bellard/quickjs master@04be246（VERSION 2026-06-04）收源入 quickjs/src/main/cpp/quickjs-upstream/；master 已删 libbf，5 个 .c 即全引擎 | ✅ 已接线 |
 | libstreamnative | cc_library_shared（app/src/main/cpp/Android.bp 已落地） | 源一直在包内 | ✅ 已接线 |
 | libtoolpkgwasm(+vm) | cc_library_shared/static（同上 bp + native/wasm-micro-runtime/Android.bp 已落地） | bytecodealliance/wamr main@b70d708（2.4.3）按 cmake 探针导出的精确文件清单收源（fast-interp、仅 libc-builtin、无 JIT/AOT/WASI），2.7MB | ✅ 已接线 |
-| libsherpa-ncnn-jni | cc_prebuilt_library_shared（暂存 Android.bp.tree） | sherpa-ncnn+ncnn+openfst 三件套静态合体 .so，tools/intree/extract_sherpa_so.sh 从 Gradle 产物抽四 ABI 落位后翻牌 | 待 .so 落位 |
-| liboperit_ripgrep | rust_ffi_shared（待定） | 源在库（tools/native_ripgrep），但 Cargo 依赖（globset/grep-*/ignore/jni/serde 系）树内 crates 无对应 | ⚠ 待决策 |
+| libsherpa-ncnn-jni | cc_prebuilt_library_shared（暂存 Android.bp.tree，arm64-v8a 单 ABI 对齐 abiFilters） | sherpa-ncnn+ncnn+openfst 三件套静态合体 .so；android-build workflow 开 commit_native_prebuilts 开关自动抽取回写并翻牌（tools/intree/extract_native_prebuilts.sh） | 待 CI 首跑 |
+| liboperit_ripgrep | cc_prebuilt_library_shared（app/src/main/jniLibs/Android.bp 已落地） | 源在库（tools/native_ripgrep），Cargo 依赖树内 crates 无对应故走 prebuilt（2026-09-22 定案）；.so 本位即 jniLibs（CI cargo 步骤产出），Soong 与 Gradle 消费同一文件 | ✅ 已接线 |
 
 ## 资产
 

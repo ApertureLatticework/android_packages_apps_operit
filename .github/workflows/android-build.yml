@@ -13,6 +13,11 @@ on:
           - ':app:assembleNightly'
           - ':app:assembleClone'
           - ':app:bundleRelease'
+      commit_native_prebuilts:
+        description: 构建后抽取 sherpa/ripgrep native prebuilt 并回写仓库
+        required: false
+        default: false
+        type: boolean
   push:
     branches: [main]
     paths:
@@ -64,6 +69,9 @@ jobs:
     name: Build Android artifacts
     runs-on: ubuntu-24.04
     timeout-minutes: 240
+    # commit_native_prebuilts 回写步骤需要 push 权限；其余步骤只读使用同一 token
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout source
@@ -199,6 +207,24 @@ jobs:
           esac
           chmod +x ./gradlew
           ./gradlew "$gradle_task" --stacktrace --no-daemon
+
+      - name: Commit native prebuilts (sherpa / ripgrep)
+        # 仅 dispatch 且显式开启：抽取 libsherpa-ncnn-jni.so 落位并翻牌，连同 cargo 步骤
+        # 已产出的 liboperit_ripgrep.so 一并回写（ripgrep .so 本就在 jniLibs 本位）
+        if: github.event_name == 'workflow_dispatch' && inputs.commit_native_prebuilts
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash tools/intree/extract_native_prebuilts.sh app/build
+          git config user.name "operit-ci"
+          git config user.email "ci@users.noreply.github.com"
+          git add native/sherpa-prebuilt app/src/main/jniLibs
+          if git diff --cached --quiet; then
+            echo "native prebuilts 无变化，跳过提交"
+            exit 0
+          fi
+          git commit -m "chore(intree): CI 刷新 native prebuilt（sherpa/ripgrep arm64-v8a）[skip ci]"
+          git push "https://x-access-token:${{ github.token }}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:${GITHUB_REF_NAME}"
 
       # 步骤3机制：默认构建零注解处理器（生成类已 check-in）；此处 -ProomRegen 再生后跑 --check 硬门禁，漂移即红
       - name: Room codegen check (-ProomRegen)
