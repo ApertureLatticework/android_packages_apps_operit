@@ -70,3 +70,22 @@ remote-only 语义贯彻到底：本地安装的表单、流程、分析器、�
 - 全仓 rg：installPluginInternal / MCPProjectAnalyzer / PluginMetadata.type 无残留
 - CI 编译绿；孤儿字符串检测器零错（八语同步）
 - 手工面：添加对话框仅远程 tab；旧存量 local 插件升级后不再出现
+
+## 执行情况（2026-09-23，commit c6d05fe，分支 fix/mcp-local-form-removal）
+
+- 删除：plugins/ 四分析器（ProjectAnalyzer/CommandGenerator/ConfigGenerator/ProjectStructure）、
+  MCPInstallProgressDialog、MCPServerConfigContent、MCPServerDetailsTabs、
+  Repository 安装链（GitHub zip 下载/解压/校验/物理安装判定七法）、ViewModel 安装族与
+  InstallProgress/InstallResult 数据类、ConfigScreen repo/ZIP 双 tab 与文件选择器、
+  安装进度对话框
+- 单态化：PluginMetadata 删 type/repoUrl/installedPath 三字段；MCPConfig 删 mcpServers
+  与 ServerConfig（stdio 配置面整亡）；isServerEnabled/setServerEnabled 收敛
+  metadata.disabled 单路；getPluginConfig/savePluginConfig（stdio 编辑面）删除
+- 迁移：loadAllConfigurations 以原始 JSON 过滤——mcpServers 键与 type!="remote" 元数据
+  丢弃后异步重写落盘（迁移即删除，无兼容分支保留）
+- Parser：stdio 条目（含 command 或声明 stdio transport）显式拒绝，错误消息注明
+  "仅支持远程服务"；StdioMcpImportedServer 类型删除
+- 市场：installMcpEntry 收敛为远程配置导入单路，repoUrl-only 条目报
+  mcp_market_remote_only（八语新增）；市场标记根收敛 pluginMetadata
+- 字符串：孤儿键 18 枚八语清除，检Localization 门禁零错
+- 净变化：28 文件，+354/-4082
