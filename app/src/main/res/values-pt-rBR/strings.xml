@@ -1574,9 +1574,7 @@
     <string name="circular">redondo</string>
     <string name="square">Quadrado</string>
     <string name="interface_text">Texto da interface</string>
-    <string name="repo">armazém</string>
     <string name="uninstall">desinstalar</string>
-    <string name="install">Instalar</string>
     <string name="import_from_repo">armazém</string>
     <string name="import_from_zip">CEP</string>
     <string name="import_from_direct">Manual</string>
@@ -1754,7 +1752,6 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="autoglm_status_error">Falha na configuração com um clique: %1$s</string>
     <string name="autoglm_error_empty_api_key">Preencha primeiro a chave da API Zhipu.</string>
     <string name="import_or_connect_mcp_service">Importe ou conecte-se a serviços MCP</string>
-    <string name="select_mcp_plugin_zip">Selecione o pacote compactado do plug-in MCP</string>
     <string name="plugin_zip_package">Pacote compactado de plug-in</string>
     <string name="select_zip_file">Selecione o arquivo .zip</string>
     <string name="select_file">Selecione o arquivo</string>
@@ -1779,15 +1776,9 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="remote_service">serviço remoto</string>
     <string name="import_plugin">Plug-in de importação</string>
     <string name="remote_service_added">O serviço remoto %1$s foi adicionado</string>
-    <string name="enter_repo_link_and_name">Por favor, insira pelo menos o link do repositório e o nome do plugin</string>
-    <string name="select_zip_and_enter_name">Selecione o pacote compactado e insira o nome do plug-in</string>
     <string name="enter_complete_remote_info">Insira completamente as informações e o nome do serviço remoto</string>
     <string name="connect">conectar</string>
     <string name="import_action">importar</string>
-    <string name="select_mcp_plugin_zip_title">Selecione o pacote compactado do plug-in MCP</string>
-    <string name="use_system_file_picker">Use o seletor de arquivos do sistema para selecionar um pacote compactado do plug-in MCP no formato .zip</string>
-    <string name="choose_mcp_plugin_zip">Selecione o pacote compactado do plug-in MCP</string>
-    <string name="open_file_picker">Abra o seletor de arquivos</string>
     <string name="start_plugin">Iniciar plug-in</string>
     <string name="mcp_management">Gerenciamento de MCP</string>
     <string name="running">Correndo</string>
@@ -1799,8 +1790,6 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="local_installation">Instalação local</string>
     <string name="local_version">versão local</string>
     <string name="official">oficial</string>
-    <string name="remote">remoto</string>
-    <string name="deployed">Implantado</string>
     <string name="deployment_date">Implantação: %1$s</string>
     <string name="redeploy">Reimplantar</string>
     <string name="deploy">implantar</string>
@@ -1837,8 +1826,6 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="tools_load_error">Erro ao obter lista de ferramentas: %1$s</string>
     <string name="plugin_deployed_success">Plug-in %1$s implantado com sucesso</string>
     <string name="remote_service_updated">Serviço remoto %1$s atualizado</string>
-    <string name="plugin_zip_file">Pacote compactado de plug-in</string>
-    <string name="mcp_plugin">Plug-in MCP</string>
     <string name="toolbox_permissions_search_hint">Pesquisar aplicativos</string>
     <string name="toolbox_permissions_system_apps">Aplicação do sistema</string>
     <string name="toolbox_permissions_app_count">Total de %d aplicativos</string>
@@ -3555,7 +3542,6 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="refresh_or_try_again_later">Atualize ou tente novamente mais tarde</string>
     <string name="recommended_features">Recursos recomendados</string>
     <string name="after_logging_in_you_can_view_and_manage_your_mcp_plugins">Após fazer login, você poderá visualizar e gerenciar seus plug-ins MCP publicados</string>
-    <string name="get_mcp">Obter MCP</string>
     <string name="plugin_name_description">Somente letras, números e sublinhados em inglês são permitidos. Este nome será usado como ID do plugin</string>
     <string name="choose_mcp_community_to_get_plugins">Escolha as seguintes comunidades MCP de alta qualidade para obter plug-ins:</string>
     <string name="awesome_mcp">IncrívelMCP</string>
@@ -4787,8 +4773,6 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="common_reset_zoom">Redefinir zoom</string>
     <string name="common_render_failed">Falha na renderização</string>
     <string name="mcp_config_import">Importação de configuração</string>
-    <string name="mcp_more_options">Mais opções</string>
-    <string name="mcp_swipe_for_more">Deslize para a esquerda para ver mais opções</string>
     <string name="mcp_paste_config_json">Colar JSON de configuração do MCP</string>
     <string name="mcp_config_content">Conteúdo de configuração</string>
     <string name="mcp_open_config_file">Abra o arquivo de configuração</string>
@@ -5700,7 +5684,6 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="file_manager_new_tab">página nova guia</string>
     <string name="mcp_merge_config">Mesclar configuração</string>
     <string name="mcp_manage_env_variables">Gerenciar variáveis ​​de ambiente</string>
-    <string name="mcp_error_no_zip_selected">Nenhum arquivo ZIP selecionado</string>
     <string name="update_unknown_error">erro desconhecido</string>
     <string name="update_version_title">Versão %1$s</string>
     <string name="avatar_reset">reiniciar</string>
@@ -7170,4 +7153,5 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="token_activity_chart_tap_hint">Toque no gráfico para ver dados detalhados</string>
     <string name="token_activity_total_tokens">Tokens acumulados</string>
     <string name="token_activity_peak_tokens">Pico de tokens</string>
+    <string name="mcp_market_remote_only">Apenas configurações de serviços MCP remotos são suportadas</string>
 </resources>

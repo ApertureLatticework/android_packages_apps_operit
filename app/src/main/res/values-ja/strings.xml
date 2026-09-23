@@ -296,4 +296,5 @@
     <string name="test_media_unverified">接続できましたが、確認できませんでした</string>
     <string name="test_result_expand">展開</string>
     <string name="test_result_collapse">折りたたむ</string>
+    <string name="mcp_market_remote_only">リモートMCPサービスの構成のみサポートされます</string>
 </resources>

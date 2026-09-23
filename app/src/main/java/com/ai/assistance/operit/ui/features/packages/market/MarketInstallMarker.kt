@@ -108,10 +108,7 @@ private fun readInstalledMarketMarkerRoots(
         addAll(skillRoot.listFiles()?.filter { it.isDirectory }.orEmpty())
 
         val localServer = MCPLocalServer.getInstance(context)
-        localServer.getAllPluginMetadata().values.forEach { metadata ->
-            metadata.installedPath?.trim()?.takeIf { it.isNotBlank() }?.let { add(File(it)) }
-        }
-        localServer.getAllMCPServers().keys.forEach { serverId ->
+        localServer.getAllPluginMetadata().keys.forEach { serverId ->
             add(mcpConfigMarketMarkerRoot(context, serverId))
         }
 

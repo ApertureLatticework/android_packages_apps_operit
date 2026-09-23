@@ -42,7 +42,6 @@ import com.ai.assistance.operit.data.mcp.MCPLocalServer
 import com.ai.assistance.operit.data.mcp.MCPRepository
 import com.ai.assistance.operit.ui.features.packages.components.dialogs.MCPServerDetailsDialog
 import com.ai.assistance.operit.ui.features.packages.dialogs.MCPPackageDetailsDialog
-import com.ai.assistance.operit.ui.features.packages.screens.mcp.components.MCPInstallProgressDialog
 import com.ai.assistance.operit.ui.features.packages.screens.mcp.viewmodel.MCPViewModel
 import com.ai.assistance.operit.util.AppLogger
 import android.widget.Toast
@@ -54,8 +53,6 @@ import java.util.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import com.ai.assistance.operit.data.mcp.InstallResult
-import com.ai.assistance.operit.data.mcp.InstallProgress
 import com.ai.assistance.operit.ui.features.startup.screens.LocalPluginLoadingState
 
 /** MCP配置屏幕 - 极简风格界面，专注于插件快速部署 */
@@ -83,22 +80,14 @@ fun MCPConfigScreen(
 
     // 状态收集
     val serverStatusMap = mcpLocalServer.serverStatus.collectAsState().value
-    val installProgress by viewModel.installProgress.collectAsState()
-    val installResult by viewModel.installResult.collectAsState()
-    val currentInstallingPlugin by viewModel.currentServer.collectAsState()
     val mcpConfigSnapshot = mcpLocalServer.mcpConfig.collectAsState().value
     val discoveredInstalledPluginIds = mcpRepository.installedPluginIds.collectAsState().value
-    val configuredPluginIds = remember(mcpConfigSnapshot) {
-        mcpConfigSnapshot.mcpServers.keys.toSet()
-    }
+    // remote-only：已配置插件即远程插件
     val remotePluginIds = remember(mcpConfigSnapshot) {
-        mcpConfigSnapshot.pluginMetadata
-            .filterValues { metadata -> metadata.type == "remote" }
-            .keys
-            .toSet()
+        mcpConfigSnapshot.pluginMetadata.keys.toSet()
     }
-    val visiblePluginIds = remember(configuredPluginIds, remotePluginIds, discoveredInstalledPluginIds) {
-        configuredPluginIds + remotePluginIds + discoveredInstalledPluginIds
+    val visiblePluginIds = remember(remotePluginIds, discoveredInstalledPluginIds) {
+        remotePluginIds + discoveredInstalledPluginIds
     }
 
     // 部署状态
@@ -134,8 +123,7 @@ fun MCPConfigScreen(
                 refreshMcpScreen()
                 withTimeoutOrNull(20_000) {
                     mcpLocalServer.mcpConfig.first { config ->
-                        config.mcpServers.containsKey(pluginId) ||
-                            config.pluginMetadata.containsKey(pluginId)
+                        config.pluginMetadata.containsKey(pluginId)
                     }
                 }
             } finally {
@@ -180,8 +168,6 @@ fun MCPConfigScreen(
     }
 
     // 界面状态
-    var selectedPluginId by remember { mutableStateOf<String?>(null) }
-    var pluginConfigJson by remember { mutableStateOf("") }
     var selectedPluginForDetails by remember {
         mutableStateOf<MCPLocalServer.PluginMetadata?>(
                 null
@@ -190,15 +176,11 @@ fun MCPConfigScreen(
     var selectedPluginForToolDetails by remember {
         mutableStateOf<MCPLocalServer.PluginMetadata?>(null)
     }
-    // 添加导入对话框状态
+    // 添加导入对话框状态（remote-only：远程连接与配置导入双 tab）
     var showImportDialog by remember { mutableStateOf(false) }
-    var repoUrlInput by remember { mutableStateOf("") }
     var pluginNameInput by remember { mutableStateOf("") }
     var isImporting by remember { mutableStateOf(false) }
-    // 新增：导入方式选择和压缩包路径
-    var importTabIndex by remember { mutableStateOf(0) } // 0: 仓库导入, 1: 压缩包导入
-    var zipFilePath by remember { mutableStateOf("") }
-    var showFilePickerDialog by remember { mutableStateOf(false) }
+    var importTabIndex by remember { mutableStateOf(0) } // 0: 远程连接, 1: 配置导入
 
     // 新增：远程服务相关状态
     var remoteEndpointInput by remember { mutableStateOf("") }
@@ -335,17 +317,9 @@ fun MCPConfigScreen(
         }
 
         try {
-            // 本地插件的桥接工具名列表随 terminal 线裁撤，仅远程插件可获取工具名
             for (pluginId in visiblePluginIds) {
                 try {
-                    val metadata = mcpConfigSnapshot.pluginMetadata[pluginId]
-                    val isRemote = metadata?.type == "remote"
-                    val toolNames = if (isRemote) {
-                        mcpRepository.getRemoteToolNames(pluginId)
-                    } else {
-                        AppLogger.d("MCPConfigScreen", "Local plugin $pluginId removed with terminal line, skip tool fetch.")
-                        continue
-                    }
+                    val toolNames = mcpRepository.getRemoteToolNames(pluginId)
 
                     if (toolNames.isNotEmpty()) {
                         toolsMap[pluginId] = toolNames
@@ -377,45 +351,21 @@ fun MCPConfigScreen(
     }
 
 
-    // 获取选中插件的配置
-    LaunchedEffect(selectedPluginId) {
-        selectedPluginId?.let { pluginConfigJson = mcpLocalServer.getPluginConfig(it) }
-    }
-
-    // 插件详情对话框
+    // 插件详情对话框（remote-only：无本地安装路径与 stdio 配置编辑面）
     if (selectedPluginForDetails != null) {
-        val installedPath = viewModel.getInstalledPath(selectedPluginForDetails!!.id)
         MCPServerDetailsDialog(
                 server = selectedPluginForDetails!!,
                 onDismiss = { selectedPluginForDetails = null },
-                onInstall = { /* 不需要安装功能 */},
                 onUninstall = { server ->
-                    viewModel.uninstallServer(server)
+                    viewModel.removeRemoteServer(server)
                     selectedPluginForDetails = null
-                },
-                installedPath = installedPath,
-                pluginConfig = pluginConfigJson,
-                onSaveConfig = {
-                    selectedPluginId?.let { pluginId ->
-                        scope.launch {
-                            val saved = mcpLocalServer.savePluginConfig(pluginId, pluginConfigJson)
-                            Toast.makeText(
-                                context,
-                                if (saved) context.getString(R.string.config_saved) else context.getString(R.string.save_failed),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-                },
-                onUpdateConfig = { newConfig -> pluginConfigJson = newConfig }
+                }
         )
     }
 
     if (selectedPluginForToolDetails != null) {
-        val installedPath = viewModel.getInstalledPath(selectedPluginForToolDetails!!.id)
         MCPPackageDetailsDialog(
                 server = selectedPluginForToolDetails!!,
-                installedPath = installedPath,
                 onDismiss = { selectedPluginForToolDetails = null }
         )
     }
@@ -450,28 +400,6 @@ fun MCPConfigScreen(
 
 
 
-    // 安装进度对话框
-    if (installProgress != null && currentInstallingPlugin != null) {
-        // 将值存储在本地变量中以避免智能转换问题
-        val currentInstallResult = installResult
-        // 判断当前是否是卸载操作
-        val isUninstallOperation = 
-            if (currentInstallResult is InstallResult.Success) {
-                currentInstallResult.pluginPath.isEmpty()
-            } else {
-                false
-            }
-        
-        MCPInstallProgressDialog(
-                installProgress = installProgress,
-                onDismissRequest = { viewModel.resetInstallState() },
-                result = installResult,
-                                        serverName = currentInstallingPlugin?.name ?: stringResource(R.string.mcp_plugin),
-                // 添加操作类型参数：卸载/安装
-                operationType = if (isUninstallOperation) stringResource(R.string.uninstall) else stringResource(R.string.install)
-        )
-    }
-
     // 导入插件对话框
     if (showImportDialog) {
         AlertDialog(
@@ -486,7 +414,7 @@ fun MCPConfigScreen(
                         .padding(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    // 添加顶部导入方式选择
+                    // 添加顶部导入方式选择（remote-only：远程连接与配置导入）
                     Column {
                         ScrollableTabRow(
                             selectedTabIndex = importTabIndex,
@@ -507,7 +435,7 @@ fun MCPConfigScreen(
                             onClick = { importTabIndex = 0 },
                             text = { 
                                 Text(
-                                    stringResource(R.string.import_from_repo),
+                                    stringResource(R.string.connect_remote_service),
                                     style = MaterialTheme.typography.labelMedium,
                                     maxLines = 1
                                 ) 
@@ -516,28 +444,6 @@ fun MCPConfigScreen(
                         Tab(
                             selected = importTabIndex == 1,
                             onClick = { importTabIndex = 1 },
-                            text = { 
-                                Text(
-                                    stringResource(R.string.import_from_zip),
-                                    style = MaterialTheme.typography.labelMedium,
-                                    maxLines = 1
-                                ) 
-                            }
-                        )
-                        Tab(
-                            selected = importTabIndex == 2,
-                            onClick = { importTabIndex = 2 },
-                            text = { 
-                                Text(
-                                    stringResource(R.string.connect_remote_service),
-                                    style = MaterialTheme.typography.labelMedium,
-                                    maxLines = 1
-                                ) 
-                            }
-                        )
-                        Tab(
-                            selected = importTabIndex == 3,
-                            onClick = { importTabIndex = 3 },
                             text = {
                                 Text(
                                     stringResource(R.string.mcp_config_import),
@@ -547,92 +453,12 @@ fun MCPConfigScreen(
                             }
                         )
                     }
-                        
-                        // 滚动提示
-                        if (importTabIndex < 2) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 4.dp),
-                                horizontalArrangement = Arrangement.End,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Icon(
-                                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                                    contentDescription = stringResource(R.string.mcp_more_options),
-                                    modifier = Modifier.size(14.dp),
-                                    tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
-                                )
-                                Spacer(modifier = Modifier.width(4.dp))
-                                Text(
-                                    stringResource(R.string.mcp_swipe_for_more),
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
-                                    fontSize = 11.sp
-                                )
-                            }
-                        }
                     }
                     
                     Spacer(modifier = Modifier.height(8.dp))
                     
                     when (importTabIndex) {
                         0 -> {
-                            // 从仓库导入
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    stringResource(R.string.enter_repo_info), 
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    modifier = Modifier.weight(1f)
-                                )
-                                TextButton(
-                                    onClick = {
-                                        showImportDialog = false
-                                        onNavigateToMCPMarket()
-                                    }
-                                ) {
-                                    Text(stringResource(R.string.get_mcp))
-                                }
-                            }
-                            
-                            OutlinedTextField(
-                                value = repoUrlInput,
-                                onValueChange = { repoUrlInput = it },
-                                label = { Text(stringResource(R.string.repo_link)) },
-                                placeholder = { Text("https://github.com/username/repo") },
-                                modifier = Modifier.fillMaxWidth(),
-                                singleLine = true,
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri)
-                            )
-                        }
-                        1 -> {
-                            // 从压缩包导入
-                            Text(stringResource(R.string.select_mcp_plugin_zip), style = MaterialTheme.typography.bodyMedium)
-                            
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                OutlinedTextField(
-                                    value = zipFilePath,
-                                    onValueChange = { /* 只读 */ },
-                                    label = { Text(stringResource(R.string.plugin_zip_file)) },
-                                    placeholder = { Text(stringResource(R.string.select_zip_file)) },
-                                    modifier = Modifier.weight(1f),
-                                    singleLine = true,
-                                    readOnly = true
-                                )
-                                
-                                IconButton(onClick = { showFilePickerDialog = true }) {
-                                    Icon(Icons.Default.Folder, contentDescription = stringResource(R.string.select_file))
-                                }
-                            }
-                        }
-                        2 -> {
                             // 连接远程服务
                             Text(stringResource(R.string.enter_remote_service_info), style = MaterialTheme.typography.bodyMedium)
 
@@ -698,7 +524,7 @@ fun MCPConfigScreen(
                                 onHeadersChange = { remoteHeaders = it }
                             )
                         }
-                        3 -> {
+                        1 -> {
                             // 配置导入
                             Text(stringResource(R.string.mcp_paste_config_json), style = MaterialTheme.typography.bodyMedium)
 
@@ -740,7 +566,7 @@ fun MCPConfigScreen(
                         }
                     }
                     
-                    if (importTabIndex != 3) {
+                    if (importTabIndex != 1) {
                         HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
                         Text(stringResource(R.string.service_metadata), style = MaterialTheme.typography.titleSmall)
                         
@@ -768,11 +594,8 @@ fun MCPConfigScreen(
             confirmButton = {
                 Button(
                     onClick = {
-                        val isRemote = importTabIndex == 2
-                        val isConfigImport = importTabIndex == 3
-                        val isRepoImport = importTabIndex == 0 && repoUrlInput.isNotBlank() && pluginNameInput.isNotBlank()
-                        val isZipImport = importTabIndex == 1 && zipFilePath.isNotBlank() && pluginNameInput.isNotBlank()
-                        val isRemoteConnect = isRemote && remoteEndpointInput.isNotBlank() && pluginNameInput.isNotBlank()
+                        val isConfigImport = importTabIndex == 1
+                        val isRemoteConnect = !isConfigImport && remoteEndpointInput.isNotBlank() && pluginNameInput.isNotBlank()
 
                         if (isConfigImport) {
                             if (configJsonInput.isNotBlank()) {
@@ -801,7 +624,7 @@ fun MCPConfigScreen(
                             } else {
                                 Toast.makeText(context, context.getString(R.string.mcp_please_enter_config), Toast.LENGTH_SHORT).show()
                             }
-                        } else if (isRepoImport || isZipImport || isRemoteConnect) {
+                        } else if (isRemoteConnect) {
                             // 检查插件ID是否冲突
                             val proposedId = pluginNameInput.replace(" ", "_").lowercase()
                             if (visiblePluginIds.contains(proposedId)) {
@@ -810,9 +633,8 @@ fun MCPConfigScreen(
                             }
 
                             isImporting = true
-                            // 生成一个唯一的ID，移除 "import_" 前缀
                             val importId = proposedId
-                            
+
                             // 创建服务器对象（描述将由自动生成功能填充）
                             val server = MCPLocalServer.PluginMetadata(
                                 id = importId,
@@ -820,35 +642,22 @@ fun MCPConfigScreen(
                                 description = "", // 将由自动生成功能填充
                                 logoUrl = "",
                                 author = "",
-                                isInstalled = isRemote, // 远程服务视为"已安装"
+                                isInstalled = true,
                                 version = "1.0.0",
                                 updatedAt = "",
                                 longDescription = "", // 将由自动生成功能填充
-                                repoUrl = if (importTabIndex == 0) repoUrlInput else "",
-                                type = if(isRemote) "remote" else "local",
-                                endpoint = if(isRemote) remoteEndpointInput else null,
-                                connectionType = if(isRemote) remoteConnectionType else "httpStream",
-                                bearerToken = if(isRemote && remoteBearerToken.isNotBlank()) remoteBearerToken else null,
-                                headers = if(isRemote) remoteHeaders.toHeaderMap() else null
+                                endpoint = remoteEndpointInput,
+                                connectionType = remoteConnectionType,
+                                bearerToken = if (remoteBearerToken.isNotBlank()) remoteBearerToken else null,
+                                headers = remoteHeaders.toHeaderMap()
                             )
-                            
-                            if(isRemote){
-                                // 对于远程服务，直接保存到仓库
-                                viewModel.addRemoteServer(server)
-                                Toast.makeText(context, context.getString(R.string.remote_service_added, server.name), Toast.LENGTH_SHORT).show()
-                            } else {
-                                // 本地插件走安装流程
-                            if (importTabIndex == 0) {
-                                viewModel.installServerWithObject(server)
-                            } else {
-                                viewModel.installServerFromZip(server, zipFilePath)
-                                }
-                            }
-                            
+
+                            // 远程服务直接保存到仓库
+                            viewModel.addRemoteServer(server)
+                            Toast.makeText(context, context.getString(R.string.remote_service_added, server.name), Toast.LENGTH_SHORT).show()
+
                             // 清空输入并关闭对话框
-                            repoUrlInput = ""
                             pluginNameInput = ""
-                            zipFilePath = ""
                             remoteEndpointInput = ""
                             remoteConnectionType = "httpStream"
                             remoteConnectionTypeExpanded = false
@@ -860,19 +669,12 @@ fun MCPConfigScreen(
                                 isImporting = false
                             }
                         } else {
-                            val errorMessage = when (importTabIndex) {
-                                0 -> context.getString(R.string.enter_repo_link_and_name)
-                                1 -> context.getString(R.string.select_zip_and_enter_name)
-                                else -> context.getString(R.string.enter_complete_remote_info)
-                            }
-                            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.enter_complete_remote_info), Toast.LENGTH_SHORT).show()
                         }
                     },
-                    enabled = !isImporting && 
-                             ((importTabIndex == 0 && repoUrlInput.isNotBlank() && pluginNameInput.isNotBlank()) ||
-                              (importTabIndex == 1 && zipFilePath.isNotBlank() && pluginNameInput.isNotBlank()) ||
-                              (importTabIndex == 2 && remoteEndpointInput.isNotBlank() && pluginNameInput.isNotBlank()) ||
-                              (importTabIndex == 3 && configJsonInput.isNotBlank()))
+                    enabled = !isImporting &&
+                             ((importTabIndex == 0 && remoteEndpointInput.isNotBlank() && pluginNameInput.isNotBlank()) ||
+                              (importTabIndex == 1 && configJsonInput.isNotBlank()))
                 ) {
                     if (isImporting) {
                         CircularProgressIndicator(
@@ -882,87 +684,22 @@ fun MCPConfigScreen(
                         Spacer(modifier = Modifier.width(8.dp))
                     }
                     Text(when(importTabIndex) {
-                        2 -> stringResource(R.string.connect)
-                        3 -> stringResource(R.string.mcp_merge_config)
-                        else -> stringResource(R.string.import_action)
+                        1 -> stringResource(R.string.mcp_merge_config)
+                        else -> stringResource(R.string.connect)
                     })
                 }
             },
             dismissButton = {
-                TextButton(onClick = { 
-                    repoUrlInput = ""
+                TextButton(onClick = {
                     pluginNameInput = ""
-                    zipFilePath = ""
                     remoteEndpointInput = ""
                     remoteConnectionType = "httpStream"
                     remoteConnectionTypeExpanded = false
                     remoteBearerToken = ""
                     remoteHeaders = emptyList()
                     configJsonInput = ""
-                    showImportDialog = false 
+                    showImportDialog = false
                 }) {
-                    Text(stringResource(R.string.cancel))
-                }
-            }
-        )
-    }
-    
-    // 文件选择对话框
-    if (showFilePickerDialog) {
-        AlertDialog(
-            onDismissRequest = { showFilePickerDialog = false },
-            title = { Text(stringResource(R.string.select_mcp_plugin_zip_title)) },
-            text = {
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    Text(stringResource(R.string.use_system_file_picker))
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Button(
-                        onClick = {
-                            // 触发系统文件选择器
-                            val intent = android.content.Intent(android.content.Intent.ACTION_GET_CONTENT)
-                            intent.type = "application/zip"
-                            val chooser = android.content.Intent.createChooser(intent, context.getString(R.string.choose_mcp_plugin_zip))
-                            
-                            // 使用Activity启动选择器
-                            val activity = context as? android.app.Activity
-                            activity?.startActivityForResult(chooser, 1001)
-                            
-                            // 设置监听器接收选择结果
-                            val activityResultCallback = object : androidx.activity.result.ActivityResultCallback<androidx.activity.result.ActivityResult> {
-                                override fun onActivityResult(result: androidx.activity.result.ActivityResult) {
-                                    if (result.resultCode == android.app.Activity.RESULT_OK) {
-                                        result.data?.data?.let { uri ->
-                                            // 获取文件路径
-                                            val cursor = context.contentResolver.query(uri, null, null, null, null)
-                                            cursor?.use {
-                                                if (it.moveToFirst()) {
-                                                    val displayName = it.getString(it.getColumnIndexOrThrow(android.provider.OpenableColumns.DISPLAY_NAME))
-                                                    zipFilePath = displayName
-                                                    
-                                                    // 保存URI以便后续处理
-                                                    viewModel.setSelectedZipUri(uri)
-                                                }
-                                            }
-                                        }
-                                    }
-                                    showFilePickerDialog = false
-                                }
-                            }
-                            
-                            // 注册回调
-                            val registry = (context as androidx.activity.ComponentActivity).activityResultRegistry
-                            val launcher = registry.register("zip_picker", androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult(), activityResultCallback)
-                            launcher.launch(chooser)
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(stringResource(R.string.open_file_picker))
-                    }
-                }
-            },
-            confirmButton = {},
-            dismissButton = {
-                TextButton(onClick = { showFilePickerDialog = false }) {
                     Text(stringResource(R.string.cancel))
                 }
             }
@@ -1110,17 +847,6 @@ fun MCPConfigScreen(
                         
                         // 插件列表
                         items(items = displayedPluginIds, key = { it }) { pluginId ->
-                            val pluginInfo = remember(pluginId) {
-                                mcpRepository.getInstalledPluginInfo(pluginId)
-                            }
-                            val isRemote = pluginInfo?.type == "remote"
-                            val invalidConfigReason: String? = null
-
-                            // 获取插件部署状态（通过检查Linux文件系统）
-                            val deploySuccessState = remember(pluginId) {
-                                mutableStateOf(false)
-                            }
-
                             // 获取插件启用状态 - 从配置读取
                             val pluginEnabledState = remember(pluginId) {
                                 mutableStateOf(mcpLocalServer.isServerEnabled(pluginId))
@@ -1130,18 +856,11 @@ fun MCPConfigScreen(
                             val pluginRunningState = remember(pluginId) {
                                 mutableStateOf(mcpLocalServer.isServerLikelyRunning(pluginId))
                             }
-                            
-                            // 检查运行目录就绪状态
-                            LaunchedEffect(pluginId) {
-                                deploySuccessState.value = mcpLocalServer.isPluginRuntimeReady(pluginId)
-                            }
-                            
+
                             // 监听服务器状态变化
                             LaunchedEffect(pluginId) {
                                 mcpLocalServer.serverStatus.collect { _ ->
                                     pluginRunningState.value = mcpLocalServer.isServerLikelyRunning(pluginId)
-                                    // 重新检查运行目录就绪状态
-                                    deploySuccessState.value = mcpLocalServer.isPluginRuntimeReady(pluginId)
                                 }
                             }
                             
@@ -1156,11 +875,8 @@ fun MCPConfigScreen(
                                     pluginId = pluginId,
                                     displayName = getPluginDisplayName(pluginId, mcpRepository),
                                     isOfficial = pluginId.startsWith("official_"),
-                                    isRemote = isRemote, // 传递插件类型
                                     toolNames = pluginToolsMap[pluginId] ?: emptyList(), // 传递工具信息
                                     onClick = {
-                                        selectedPluginId = pluginId
-                                        pluginConfigJson = mcpLocalServer.getPluginConfig(pluginId)
                                         selectedPluginForDetails = getPluginAsServer(
                                             pluginId,
                                             mcpRepository,
@@ -1199,9 +915,9 @@ fun MCPConfigScreen(
                                         }
                                     },
                                     isRunning = pluginRunningState.value,
-                                    isDeployed = deploySuccessState.value,
-                                    isConfigValid = isRemote || deploySuccessState.value,
-                                    invalidConfigReason = invalidConfigReason
+                                    isDeployed = true,
+                                    isConfigValid = true,
+                                    invalidConfigReason = null
                             )
                             HorizontalDivider(modifier = Modifier.padding(horizontal = 4.dp))
                         }
@@ -1292,8 +1008,6 @@ private fun mcpPluginMatchesSearch(
                 add(pluginMetadata.author)
                 add(pluginMetadata.version)
                 add(pluginMetadata.longDescription)
-                add(pluginMetadata.repoUrl)
-                add(pluginMetadata.type)
                 pluginMetadata.endpoint?.let { add(it) }
             }
             toolNames?.forEach { toolName -> add(toolName) }
@@ -1312,14 +1026,9 @@ private fun getPluginAsServer(
 ): MCPLocalServer.PluginMetadata? {
     val metadataFromConfig = mcpConfigSnapshot.pluginMetadata[pluginId]
     val pluginInfo = metadataFromConfig ?: mcpRepository.getInstalledPluginInfo(pluginId)
-    val isRemote = pluginInfo?.type == "remote"
-    val isInstalled =
-        pluginId in discoveredInstalledPluginIds ||
-            isRemote ||
-            (pluginInfo?.isInstalled == true)
 
-    if (metadataFromConfig?.type == "remote") {
-        return metadataFromConfig.copy(isInstalled = isInstalled)
+    if (metadataFromConfig != null) {
+        return metadataFromConfig.copy(isInstalled = true)
     }
 
     // 尝试从内存中的服务器列表查找
@@ -1327,7 +1036,7 @@ private fun getPluginAsServer(
 
     // 如果在列表中找到，直接使用
     if (existingServer != null) {
-        return existingServer.copy(isInstalled = existingServer.isInstalled || isInstalled)
+        return existingServer.copy(isInstalled = true)
     }
 
     val displayName = getPluginDisplayName(pluginId, mcpRepository)
@@ -1338,13 +1047,11 @@ private fun getPluginAsServer(
         description = pluginInfo?.description ?: context.getString(R.string.local_installed_plugin),
         logoUrl = "",
         author = pluginInfo?.author ?: context.getString(R.string.local_installation),
-        isInstalled = isInstalled,
+        isInstalled = true,
         version = pluginInfo?.version ?: context.getString(R.string.local_version),
         updatedAt = "",
         longDescription = pluginInfo?.longDescription
             ?: (pluginInfo?.description ?: context.getString(R.string.local_installed_plugin)),
-        repoUrl = pluginInfo?.repoUrl ?: "",
-        type = pluginInfo?.type ?: "local",
         endpoint = pluginInfo?.endpoint,
         connectionType = pluginInfo?.connectionType,
         bearerToken = pluginInfo?.bearerToken,
@@ -1357,7 +1064,6 @@ private fun PluginListItem(
     pluginId: String,
     displayName: String,
     isOfficial: Boolean,
-    isRemote: Boolean,
     toolNames: List<String>,
     onClick: () -> Unit,
     onToolsClick: () -> Unit,
@@ -1453,38 +1159,6 @@ private fun PluginListItem(
                             }
                         }
                         
-                        if (isRemote) {
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Surface(
-                                shape = RoundedCornerShape(8.dp),
-                                color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f)
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.remote),
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.secondary,
-                                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
-                                    fontSize = 9.sp
-                                )
-                            }
-                        }
-                        
-                        if (isDeployed && !isRemote) {
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Surface(
-                                shape = RoundedCornerShape(8.dp),
-                                color = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.1f)
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.deployed),
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.tertiary,
-                                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
-                                    fontSize = 9.sp
-                                )
-                            }
-                        }
-
                         if (!invalidConfigReason.isNullOrBlank()) {
                             Spacer(modifier = Modifier.width(6.dp))
                             Surface(
@@ -1594,26 +1268,23 @@ private fun PluginListItem(
                 }
             }
 
-            // 操作按钮区域 
-            if (!isRemote || isRemote) {
-                Spacer(modifier = Modifier.height(8.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+            // 操作按钮区域
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                // 编辑按钮
+                OutlinedButton(
+                    onClick = onEdit,
+                    modifier = Modifier.weight(1f).height(32.dp),
+                    contentPadding = PaddingValues(horizontal = 12.dp)
                 ) {
-                    
-                    // 编辑按钮
-                    OutlinedButton(
-                        onClick = onEdit,
-                        modifier = Modifier.weight(1f).height(32.dp),
-                        contentPadding = PaddingValues(horizontal = 12.dp)
-                    ) {
-                        Text(
-                            text = stringResource(R.string.edit),
-                            style = MaterialTheme.typography.labelMedium,
-                            fontSize = 12.sp
-                        )
-                    }
+                    Text(
+                        text = stringResource(R.string.edit),
+                        style = MaterialTheme.typography.labelMedium,
+                        fontSize = 12.sp
+                    )
                 }
             }
         }
@@ -1639,11 +1310,9 @@ fun RemoteServerEditDialog(
     val connectionTypes = listOf("httpStream", "sse")
     var expanded by remember(server.id) { mutableStateOf(false) }
     var isRegeneratingDescription by remember(server.id) { mutableStateOf(false) }
-    val isRemote = server.type == "remote"
-
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if(isRemote) stringResource(R.string.edit_remote_service) else stringResource(R.string.edit_plugin_info)) },
+        title = { Text(stringResource(R.string.edit_remote_service)) },
         text = {
             Column(
                 modifier = Modifier.verticalScroll(rememberScrollState()),
@@ -1719,7 +1388,7 @@ fun RemoteServerEditDialog(
                         )
                     }
                 }
-                if(isRemote) {
+                {
                     OutlinedTextField(
                         value = endpoint,
                         onValueChange = { endpoint = it },
@@ -1783,14 +1452,14 @@ fun RemoteServerEditDialog(
                         name = normalizedName,
                         description = normalizedDescription,
                         longDescription = normalizedDescription,
-                        endpoint = if(isRemote) endpoint else server.endpoint,
-                        connectionType = if(isRemote) connectionType else server.connectionType,
-                        bearerToken = if(isRemote && bearerToken.isNotBlank()) bearerToken else null,
-                        headers = if(isRemote) headers.toHeaderMap() else server.headers
+                        endpoint = endpoint,
+                        connectionType = connectionType,
+                        bearerToken = if (bearerToken.isNotBlank()) bearerToken else null,
+                        headers = headers.toHeaderMap()
                     )
                     onSave(updatedServer)
                 },
-                enabled = !isRegeneratingDescription && name.isNotBlank() && (if (isRemote) endpoint.isNotBlank() else true)
+                enabled = !isRegeneratingDescription && name.isNotBlank() && endpoint.isNotBlank()
             ) {
                 Text(stringResource(R.string.save))
             }

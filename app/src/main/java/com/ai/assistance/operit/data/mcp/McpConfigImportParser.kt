@@ -4,35 +4,21 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
-/** Parsed standard MCP configuration used by both UI and market imports. */
 internal data class McpConfigImport(
-    val servers: List<McpImportedServer>
+    val servers: List<RemoteMcpImportedServer>
 )
 
-internal sealed interface McpImportedServer {
-    val id: String
-    val disabled: Boolean
-}
-
-internal data class StdioMcpImportedServer(
-    override val id: String,
-    val command: String,
-    val args: List<String>,
-    val env: Map<String, String>,
-    val autoApprove: List<String>,
-    override val disabled: Boolean
-) : McpImportedServer
-
 internal data class RemoteMcpImportedServer(
-    override val id: String,
+    val id: String,
     val endpoint: String,
     val connectionType: String,
     val headers: Map<String, String>,
-    override val disabled: Boolean
-) : McpImportedServer
+    val disabled: Boolean
+)
 
 /**
- * Parses the public MCP configuration format without conflating HTTP transports with stdio.
+ * Parses the public MCP configuration format. Remote-only: stdio entries carrying a
+ * "command" field are rejected explicitly instead of being imported as dead plugins.
  */
 internal object McpConfigImportParser {
     private const val STREAMABLE_HTTP_TYPE = "streamable_http"
@@ -57,36 +43,15 @@ internal object McpConfigImportParser {
         )
     }
 
-    private fun parseServer(serverId: String, configElement: JsonElement): McpImportedServer {
+    private fun parseServer(serverId: String, configElement: JsonElement): RemoteMcpImportedServer {
         require(serverId.isNotBlank()) { "mcpServers 中存在空服务器 ID" }
         require(configElement.isJsonObject) { "mcpServers.$serverId 必须是对象" }
 
         val config = configElement.asJsonObject
-        val declaredType = config.optionalString("type")
-        return if (config.has("command")) {
-            parseStdioServer(serverId, config, declaredType)
-        } else {
-            parseRemoteServer(serverId, config, declaredType)
+        require(!config.has("command")) {
+            "mcpServers.$serverId 声明了 command（stdio 本地进程），仅支持远程服务"
         }
-    }
-
-    private fun parseStdioServer(
-        serverId: String,
-        config: JsonObject,
-        declaredType: String?
-    ): StdioMcpImportedServer {
-        require(declaredType == null || declaredType == STDIO_TYPE) {
-            "mcpServers.$serverId 同时声明了 command 和非 stdio transport"
-        }
-
-        return StdioMcpImportedServer(
-            id = serverId,
-            command = config.requiredNonBlankString("command", serverId),
-            args = config.optionalStringList("args", serverId),
-            env = config.optionalStringMap("env", serverId),
-            autoApprove = config.optionalStringList("autoApprove", serverId),
-            disabled = config.optionalBoolean("disabled", serverId)
-        )
+        return parseRemoteServer(serverId, config, config.optionalString("type"))
     }
 
     private fun parseRemoteServer(
@@ -97,8 +62,10 @@ internal object McpConfigImportParser {
         val connectionType = when (declaredType) {
             STREAMABLE_HTTP_TYPE -> "httpStream"
             SSE_TYPE -> SSE_TYPE
-            STDIO_TYPE -> throw IllegalArgumentException("mcpServers.$serverId 缺少 command")
-            null -> throw IllegalArgumentException("mcpServers.$serverId 缺少 command 或 type")
+            STDIO_TYPE -> throw IllegalArgumentException(
+                "mcpServers.$serverId 声明了 stdio transport，仅支持远程服务"
+            )
+            null -> throw IllegalArgumentException("mcpServers.$serverId 缺少 type（仅支持远程服务）")
             else -> throw IllegalArgumentException(
                 "mcpServers.$serverId 使用了不支持的 transport: $declaredType"
             )
@@ -139,17 +106,6 @@ internal object McpConfigImportParser {
             "mcpServers.$serverId 的 $field 必须是布尔值"
         }
         return value.asBoolean
-    }
-
-    private fun JsonObject.optionalStringList(field: String, serverId: String): List<String> {
-        val value = get(field) ?: return emptyList()
-        require(value.isJsonArray) { "mcpServers.$serverId 的 $field 必须是字符串数组" }
-        return value.asJsonArray.mapIndexed { index, item ->
-            require(item.isJsonPrimitive && item.asJsonPrimitive.isString) {
-                "mcpServers.$serverId 的 $field[$index] 必须是字符串"
-            }
-            item.asString
-        }
     }
 
     private fun JsonObject.optionalStringMap(field: String, serverId: String): Map<String, String> {

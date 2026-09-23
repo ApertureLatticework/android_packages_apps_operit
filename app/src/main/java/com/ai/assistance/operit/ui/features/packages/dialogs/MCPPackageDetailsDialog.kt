@@ -77,17 +77,16 @@ import org.json.JSONObject
 @Composable
 fun MCPPackageDetailsDialog(
     server: MCPLocalServer.PluginMetadata,
-    installedPath: String?,
     onDismiss: () -> Unit
 ) {
     val context = LocalContext.current
-    var introText by remember(server.id, installedPath) { mutableStateOf<String?>(null) }
+    var introText by remember(server.id) { mutableStateOf<String?>(null) }
     var tools by remember(server.id) { mutableStateOf<List<PackageTool>>(emptyList()) }
     var isLoading by remember(server.id) { mutableStateOf(true) }
     var loadError by remember(server.id) { mutableStateOf<String?>(null) }
     var selectedTool by remember(server.id) { mutableStateOf<PackageTool?>(null) }
 
-    LaunchedEffect(server.id, installedPath) {
+    LaunchedEffect(server.id) {
         isLoading = true
         loadError = null
         tools = emptyList()

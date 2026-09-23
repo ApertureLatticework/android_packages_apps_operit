@@ -1623,9 +1623,7 @@
     <string name="circular">원형</string>
     <string name="square">사각형</string>
     <string name="interface_text">인터페이스 텍스트</string>
-    <string name="repo">저장소</string>
     <string name="uninstall">제거</string>
-    <string name="install">설치</string>
     <string name="import_from_repo">저장소에서 가져오기</string>
     <string name="import_from_zip">ZIP에서</string>
     <string name="import_from_direct">직접 입력</string>
@@ -1799,7 +1797,6 @@
     <string name="autoglm_status_error">원클릭 구성 실패: %1$s</string>
     <string name="autoglm_error_empty_api_key">먼저 Zhipu API Key를 입력해주세요.</string>
     <string name="import_or_connect_mcp_service">MCP 서비스 가져오기 또는 연결</string>
-    <string name="select_mcp_plugin_zip">MCP 플러그인 ZIP 패키지를 선택하세요.</string>
     <string name="plugin_zip_package">플러그인 ZIP 패키지</string>
     <string name="select_zip_file">.zip 파일 선택</string>
     <string name="select_file">파일 선택</string>
@@ -1824,15 +1821,9 @@
     <string name="remote_service">원격 서비스</string>
     <string name="import_plugin">플러그인 가져오기</string>
     <string name="remote_service_added">원격 서비스 %1$s가 추가되었습니다.</string>
-    <string name="enter_repo_link_and_name">적어도 저장소 링크와 플러그인 이름을 입력하세요.</string>
-    <string name="select_zip_and_enter_name">ZIP 패키지를 선택하고 플러그인 이름을 입력하세요.</string>
     <string name="enter_complete_remote_info">전체 원격 서비스 정보와 이름을 입력하세요.</string>
     <string name="connect">연결</string>
     <string name="import_action">가져오기</string>
-    <string name="select_mcp_plugin_zip_title">MCP 플러그인 ZIP 패키지 선택</string>
-    <string name="use_system_file_picker">시스템 파일 선택기를 사용하여 .zip 형식 MCP 플러그인 패키지를 선택하세요.</string>
-    <string name="choose_mcp_plugin_zip">MCP 플러그인 ZIP 패키지 선택</string>
-    <string name="open_file_picker">파일 선택기 열기</string>
     <string name="start_plugin">플러그인 시작</string>
     <string name="mcp_management">MCP 관리</string>
     <string name="running">실행 중</string>
@@ -1844,8 +1835,6 @@
     <string name="local_installation">로컬 설치</string>
     <string name="local_version">로컬 버전</string>
     <string name="official">공식</string>
-    <string name="remote">원격</string>
-    <string name="deployed">배포됨</string>
     <string name="deployment_date">배포됨: %1$s</string>
     <string name="redeploy">재배포</string>
     <string name="deploy">배포</string>
@@ -1882,8 +1871,6 @@
     <string name="tools_load_error">도구 로드 오류: %1$s</string>
     <string name="plugin_deployed_success">플러그인 %1$s가 성공적으로 배포되었습니다.</string>
     <string name="remote_service_updated">원격 서비스 %1$s 업데이트됨</string>
-    <string name="plugin_zip_file">플러그인 ZIP 파일</string>
-    <string name="mcp_plugin">MCP 플러그인</string>
     <string name="toolbox_permissions_search_hint">앱 검색</string>
     <string name="toolbox_permissions_system_apps">시스템 앱</string>
     <string name="toolbox_permissions_app_count">총 %d개 앱</string>
@@ -3865,7 +3852,6 @@
     <string name="market_detail_preview_approved_message">현재 항목은 심사를 통과했지만 정식 게시 데이터는 아직 적용되지 않았으며, 게시 전 미리보기를 표시합니다.</string>
     <string name="market_detail_preview_changes_requested_message">현재 항목은 수정 요청으로 반려되었으며, 마지막 제출 내용의 미리보기를 표시합니다.</string>
     <string name="market_detail_preview_rejected_message">현재 항목은 거부되었으며, 마지막 제출 내용의 미리보기를 표시합니다.</string>
-    <string name="get_mcp">MCP 받기</string>
     <string name="plugin_name_description">영숫자와 밑줄만 허용됩니다. 이 이름은 플러그인 ID로 사용됩니다.</string>
     <string name="choose_mcp_community_to_get_plugins">플러그인을 받으려면 다음과 같은 우수한 MCP 커뮤니티를 선택하세요:</string>
     <string name="awesome_mcp">Awesome MCP</string>
@@ -5219,8 +5205,6 @@
     <string name="common_reset_zoom">확대/축소 재설정</string>
     <string name="common_render_failed">렌더링 실패</string>
     <string name="mcp_config_import">구성 가져오기</string>
-    <string name="mcp_more_options">추가 옵션</string>
-    <string name="mcp_swipe_for_more">더 많은 옵션을 보려면 왼쪽으로 스와이프하세요.</string>
     <string name="mcp_paste_config_json">MCP 구성 JSON 붙여넣기</string>
     <string name="mcp_config_content">구성 콘텐츠</string>
     <string name="mcp_open_config_file">구성 파일 열기</string>
@@ -6141,7 +6125,6 @@
     <string name="file_manager_new_tab">새 탭</string>
     <string name="mcp_merge_config">구성 병합</string>
     <string name="mcp_manage_env_variables">환경 변수 관리</string>
-    <string name="mcp_error_no_zip_selected">ZIP 파일을 선택하지 않았습니다.</string>
     <string name="update_unknown_error">알 수 없는 오류</string>
     <string name="update_version_title">버전 %1$s</string>
     <string name="avatar_reset">재설정</string>
@@ -7179,4 +7162,5 @@
     <string name="token_activity_chart_tap_hint">차트를 탭하여 자세한 데이터 보기</string>
     <string name="token_activity_total_tokens">누적 토큰</string>
     <string name="token_activity_peak_tokens">최대 토큰</string>
+    <string name="mcp_market_remote_only">원격 MCP 서비스 구성만 지원됩니다</string>
 </resources>

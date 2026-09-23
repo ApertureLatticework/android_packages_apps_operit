@@ -1841,9 +1841,7 @@
     <string name="interface_text">Textul din interfață</string>
 
     <!-- MCP and Plugin Related -->
-    <string name="repo">Depozit</string>
     <string name="uninstall">Dezinstalare</string>
-    <string name="install">Instalare</string>
     <string name="import_from_repo">Depozit</string>
     <string name="import_from_zip">ZIP</string>
     <string name="import_from_direct">Manual</string>
@@ -2037,7 +2035,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
 
     <!-- MCP Config Screen -->
     <string name="import_or_connect_mcp_service">Importare sau conectareMCPServicii</string>
-    <string name="select_mcp_plugin_zip">Vă rugăm să alegețiMCPPachetul de fișiere comprimate pentru plugin</string>
     <string name="plugin_zip_package">Pachetul de fișiere comprimate pentru pluginuri</string>
     <string name="select_zip_file">Alegere.zipDocument</string>
     <string name="select_file">Selectează fișierul</string>
@@ -2062,15 +2059,9 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="remote_service">Servicii la distanță</string>
     <string name="import_plugin">Importare pluginuri</string>
     <string name="remote_service_added">Servicii la distanță %1$s A fost adăugat</string>
-    <string name="enter_repo_link_and_name">Vă rugăm să introduceți cel puțin linkul către magazin și numele pluginului</string>
-    <string name="select_zip_and_enter_name">Vă rugăm să selectați fișierul comprimat și să introduceți numele pluginului</string>
     <string name="enter_complete_remote_info">Vă rugăm să introduceți informațiile complete privind serviciul la distanță și denumirea acestuia</string>
     <string name="connect">Conectare</string>
     <string name="import_action">Import</string>
-    <string name="select_mcp_plugin_zip_title">AlegereMCPPachetul de fișiere comprimate pentru plugin</string>
-    <string name="use_system_file_picker">Vă rugăm să selectați unul folosind selectorul de fișiere al sistemului.zipformatulMCPPachetul de fișiere comprimate pentru plugin</string>
-    <string name="choose_mcp_plugin_zip">AlegereMCPPachetul de fișiere comprimate pentru plugin</string>
-    <string name="open_file_picker">Deschide fereastra de selectare a fișierelor</string>
     <string name="start_plugin">Pornire plugin</string>
     <string name="mcp_management">MCPAdministrare</string>
     <string name="running">În curs de execuție</string>
@@ -2082,8 +2073,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="local_installation">Instalare locală</string>
     <string name="local_version">Versiunea locală</string>
     <string name="official">Oficial</string>
-    <string name="remote">La distanță</string>
-    <string name="deployed">A fost implementat</string>
     <string name="deployment_date">Implementare: %1$s</string>
     <string name="redeploy">Reimplementare</string>
     <string name="deploy">Implementare</string>
@@ -2129,8 +2118,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="remote_service_updated">Servicii la distanță %1$s A fost actualizat</string>
 
     <!-- UI 文本 -->
-    <string name="plugin_zip_file">Pachetul de fișiere comprimate pentru plugin</string>
-    <string name="mcp_plugin">MCP Plugin</string>
 
     <!-- Toolbox Permission Manager -->
     <string name="toolbox_permissions_search_hint">Aplicație de căutare</string>
@@ -4492,7 +4479,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="market_detail_preview_approved_message">Articolul actual a fost aprobat, dar datele oficiale nu au intrat încă în vigoare; pagina afișează o previzualizare înainte de publicare.</string>
     <string name="market_detail_preview_changes_requested_message">Articolul curent a fost trimis înapoi pentru modificări; pagina afișează previzualizarea ultimei versiuni trimise.</string>
     <string name="market_detail_preview_rejected_message">Articolul curent a fost respins; pagina afișează previzualizarea ultimei versiuni trimise.</string>
-    <string name="get_mcp">ObținețiMCP</string>
     <string name="plugin_name_description">Sunt permise doar litere latine, cifre și liniuțe de subliniere; acest nume va fi folosit ca nume al pluginuluiIDUtilizare</string>
     <string name="choose_mcp_community_to_get_plugins">Alegeți dintre următoarele produse de calitateMCPPluginuri pentru acces la comunitate:</string>
     <string name="awesome_mcp">Awesome MCP</string>
@@ -5994,8 +5980,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
 
     <!-- MCP Config Module -->
     <string name="mcp_config_import">Importarea configurației</string>
-    <string name="mcp_more_options">Mai multe opțiuni</string>
-    <string name="mcp_swipe_for_more">Glisați spre stânga pentru a vedea mai multe opțiuni</string>
     <string name="mcp_paste_config_json">Lipiți MCP Configurație JSON</string>
     <string name="mcp_config_content">Conținutul configurației</string>
     <string name="mcp_open_config_file">Deschideți fișierul de configurare</string>
@@ -7044,7 +7028,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="file_manager_new_tab">Pagină nouă</string>
     <string name="mcp_merge_config">Configurare combinată</string>
     <string name="mcp_manage_env_variables">Gestionarea variabilelor de mediu</string>
-    <string name="mcp_error_no_zip_selected">Nu s-a selectat nimicZIPDocument</string>
     <string name="update_unknown_error">Eroare necunoscută</string>
     <string name="update_version_title">Versiune %1$s</string>
     <string name="avatar_reset">Resetare</string>
@@ -8008,4 +7991,5 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="token_stats_trends">Analiza tendințelor</string>
     <string name="token_stats_settings">Setări statistici</string>
     <string name="token_stats_custom_range_confirm">OK</string>
+    <string name="mcp_market_remote_only">Sunt acceptate doar configurații de servicii MCP la distanță</string>
 </resources>
