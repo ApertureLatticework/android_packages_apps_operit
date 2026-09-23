@@ -2,7 +2,6 @@ package com.ai.assistance.operit.core.tools.system
 
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.provider.Settings
 import android.util.Log
 import com.ai.assistance.operit.util.AppLogger
@@ -13,13 +12,16 @@ import com.ai.assistance.operit.util.AppLogger
  * priv-app 持 WRITE_SECURE_SETTINGS 后直写 enabled_accessibility_services，
  * 取代手动开启引导（步骤 4 遗留项，步骤 6 落地）。
  *
- * 无障碍服务本体在伴侣应用 com.ai.assistance.operit.provider（assets/accessibility.apk
- * 安装），此处按 action 解析出真实组件名再登记，不硬编码类名。
+ * 无障碍服务本体在 ROM 内建的 OperitProvider 模块
+ * （com.ai.assistance.operit.provider，platform 签名随 ROM 分发），此处直钉
+ * UIAccessibilityService 组件登记（Binder 交付服务 RemoteBinderService 不进
+ * enabled_accessibility_services，两者组件名不同，action 解析会误中后者故不采用）。
  */
 object AccessibilityAutoEnable {
     private const val TAG = "AccessibilityAutoEnable"
     private const val PROVIDER_PACKAGE_NAME = "com.ai.assistance.operit.provider"
-    private const val PROVIDER_ACTION = "com.ai.assistance.operit.provider.IAccessibilityProvider"
+    private const val PROVIDER_ACCESSIBILITY_COMPONENT =
+        "$PROVIDER_PACKAGE_NAME/.UIAccessibilityService"
 
     /**
      * 确保无障碍 provider 服务已登记进系统启用清单。
@@ -27,9 +29,9 @@ object AccessibilityAutoEnable {
      */
     fun ensureEnabled(context: Context): Boolean {
         val appContext = context.applicationContext
-        val component = resolveProviderComponent(appContext)
-        if (component == null) {
-            AppLogger.w(TAG, "Provider service not resolved; is accessibility.apk installed?")
+        val component = ComponentName.unflattenFromString(PROVIDER_ACCESSIBILITY_COMPONENT)
+        if (!isProviderComponentAvailable(appContext, component)) {
+            AppLogger.w(TAG, "OperitProvider not present on this ROM")
             return false
         }
 
@@ -79,17 +81,12 @@ object AccessibilityAutoEnable {
         }
     }
 
-    private fun resolveProviderComponent(context: Context): ComponentName? {
+    private fun isProviderComponentAvailable(context: Context, component: ComponentName): Boolean {
         return try {
-            val intent = Intent(PROVIDER_ACTION).setPackage(PROVIDER_PACKAGE_NAME)
-            val resolveInfo = context.packageManager.resolveService(intent, 0) ?: return null
-            ComponentName(
-                resolveInfo.serviceInfo.packageName,
-                resolveInfo.serviceInfo.name
-            )
+            context.packageManager.getServiceInfo(component, 0) != null
         } catch (e: Exception) {
-            AppLogger.e(TAG, "resolveProviderComponent failed", e)
-            null
+            AppLogger.e(TAG, "isProviderComponentAvailable failed", e)
+            false
         }
     }
 }

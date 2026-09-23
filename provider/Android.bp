@@ -1,0 +1,33 @@
+// Operit 无障碍 provider 伴随 APK（remote-only 重写版，见
+// docs/TODO/accessibility_provider_sourcing_20260923/）。
+//
+// 取代 assets/accessibility.apk 二进制（上游无源码，v1.5 解包实证仅 4 自有类，
+// 其余为 Compose 模板冗余）：零 androidx 依赖，纯 framework API，platform 签名
+// 随 ROM 分发，主应用直连（无需安装器）。
+//
+// 契约：IAccessibilityProvider 十方法与主仓
+// app/src/main/aidl/com/ai/assistance/operit/provider/IAccessibilityProvider.aidl
+// 逐字面一致；nodeId 为 AccessibilityNodeInfo 身份哈希，findFocusedNodeId 与
+// setTextOnNode 同源闭环。
+android_app {
+    name: "OperitProvider",
+    visibility: ["//visibility:public"],
+    platform_apis: true,
+    certificate: "platform",
+    min_sdk_version: "30",
+
+    srcs: [
+        "src/**/*.kt",
+        "src/**/*.aidl",
+    ],
+    resource_dirs: ["res"],
+    manifest: "AndroidManifest.xml",
+
+    static_libs: [
+        "kotlin-stdlib",
+    ],
+
+    optimize: {
+        enabled: false,
+    },
+}

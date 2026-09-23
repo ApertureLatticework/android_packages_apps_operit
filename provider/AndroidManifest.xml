@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ai.assistance.operit.provider">
+
+    <!-- 无障碍主服务：语义树、手势注入与安全截图通道 -->
+    <service
+        android:name=".UIAccessibilityService"
+        android:label="@string/accessibility_service_label"
+        android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+        android:exported="false">
+        <intent-filter>
+            <action android:name="android.accessibilityservice.AccessibilityService" />
+        </intent-filter>
+        <meta-data
+            android:name="android.accessibilityservice"
+            android:resource="@xml/accessibility_service_config" />
+    </service>
+
+    <!-- Binder 交付服务：主应用经此取得 IAccessibilityProvider 桩 -->
+    <service
+        android:name=".RemoteBinderService"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="com.ai.assistance.operit.provider.IAccessibilityProvider" />
+        </intent-filter>
+    </service>
+</manifest>

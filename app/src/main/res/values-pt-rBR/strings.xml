@@ -1386,7 +1386,6 @@
     <string name="cannot_open_overlay_settings">Não é possível abrir as configurações da janela flutuante</string>
     <string name="cannot_open_battery_settings">Não é possível abrir as configurações de otimização da bateria</string>
     <string name="cannot_open_accessibility_settings">Não é possível abrir as configurações do serviço de acessibilidade</string>
-    <string name="accessibility_provider_installed">O provedor de serviços está instalado</string>
     <string name="cannot_open_root_tutorial">Não é possível abrir o link do tutorial Root</string>
     <string name="cannot_open_docs_link">Não foi possível abrir o link do documento</string>
     <string name="plugin_loading_skipped">Carregamento do plug-in ignorado</string>
@@ -5390,7 +5389,6 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="modellist_error_missing_data">Erro no formato da resposta: campo (dados) ausente</string>
     <string name="modellist_error_missing_data_or_models">Erro no formato de resposta: campos (dados) ou (modelos) ausentes</string>
     <string name="modellist_error_missing_models">Erro no formato da resposta: campo (modelos) não encontrado</string>
-    <string name="accessibility_provider_unknown">desconhecido</string>
     <string name="gemini_error_request_cancelled">A solicitação foi cancelada pelo usuário</string>
     <string name="gemini_error_no_error_details">Nenhum detalhe do erro</string>
     <string name="gemini_error_api_request_failed">Falha na solicitação de API: %1$d, %2$s</string>

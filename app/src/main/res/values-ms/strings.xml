@@ -1414,7 +1414,6 @@
     <string name="cannot_open_overlay_settings">Tidak dapat membuka tetapan tetingkap terapung</string>
     <string name="cannot_open_battery_settings">Tidak dapat membuka tetapan pengoptimuman bateri</string>
     <string name="cannot_open_accessibility_settings">Tidak dapat membuka tetapan perkhidmatan kebolehcapaian</string>
-    <string name="accessibility_provider_installed">Penyedia perkhidmatan telah dipasang</string>
     <string name="cannot_open_root_tutorial">Tidak dapat membuka pautan tutorial Root</string>
     <string name="cannot_open_docs_link">Tidak dapat membuka pautan dokumentasi</string>
     <string name="plugin_loading_skipped">Pemuatan pemalam telah dilangkau</string>
@@ -5719,7 +5718,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="modellist_error_missing_data">Format respons salah: medan (data) tiada</string>
     <string name="modellist_error_missing_data_or_models">Format respons salah: medan (data) atau (models) tiada</string>
     <string name="modellist_error_missing_models">Format respons salah: medan (models) tidak ditemui</string>
-    <string name="accessibility_provider_unknown">Tidak diketahui</string>
     <string name="gemini_error_request_cancelled">Permintaan telah dibatalkan oleh pengguna</string>
     <string name="gemini_error_no_error_details">Tiada butiran ralat</string>
     <string name="gemini_error_api_request_failed">Permintaan API gagal: %1$d, %2$s</string>

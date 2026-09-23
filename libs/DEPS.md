@@ -65,7 +65,9 @@ okhttp/okio（external/okhttp、external/okio）、gson、bouncycastle、jsoup�
 
 - STT 模型群（sherpa-ncnn zipformer 双语 ~140MB、silero-vad onnx）：取消构建期下载，
   收源时经 `app/config/stt-model-assets.properties` 校验后直接落 `app/src/main/assets/models/`
-- accessibility.apk 已在库随 assets 走；desktop.apk 与 showerclient 已随步骤 7 删除
+- accessibility.apk 已废除（2026-09-23）：provider 源码入仓为根目录 provider/ 模块
+  （OperitProvider，Soong android_app），主应用 assets 不再内嵌二进制；
+  desktop.apk 与 showerclient 已随步骤 7 删除
 
 ## 树内专用文件
 
