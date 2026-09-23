@@ -32,6 +32,7 @@ import com.ai.assistance.operit.api.chat.AIForegroundService
 import com.ai.assistance.operit.core.tools.system.AndroidPermissionLevel
 import com.ai.assistance.operit.data.preferences.AndroidPermissionPreferences
 import com.ai.assistance.operit.data.preferences.ApiPreferences
+import com.ai.assistance.operit.core.tools.system.live.LiveScreenMirror
 import com.ai.assistance.operit.data.preferences.DisplayPreferencesManager
 import com.ai.assistance.operit.data.preferences.ToolCollapseMode
 import com.ai.assistance.operit.data.preferences.UserPreferencesManager
@@ -66,6 +67,7 @@ fun GlobalDisplaySettingsScreen(
     val enableBackgroundKeepAlive by displayPreferencesManager.enableBackgroundKeepAlive.collectAsState(initial = false)
     val enableExperimentalVirtualDisplay by displayPreferencesManager.enableExperimentalVirtualDisplay.collectAsState(initial = true)
     val enableLiveSecureCapture by displayPreferencesManager.enableLiveSecureCapture.collectAsState(initial = false)
+    val liveFramePumpIntervalMs by displayPreferencesManager.liveFramePumpIntervalMs.collectAsState(initial = 250)
     val hideRuntimeTaskView by displayPreferencesManager.hideRuntimeTaskView.collectAsState(initial = false)
     val globalUserName by displayPreferencesManager.globalUserName.collectAsState(initial = null)
     val screenshotFormat by displayPreferencesManager.screenshotFormat.collectAsState(initial = "JPG")
@@ -601,6 +603,45 @@ fun GlobalDisplaySettingsScreen(
                 },
                 backgroundColor = componentBackgroundColor
             )
+
+            // Live 帧泵节流间隔：档位选择并即时应用到常驻镜像
+            Column {
+                Text(
+                    text = stringResource(R.string.live_frame_pump_interval),
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Medium
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = stringResource(R.string.live_frame_pump_interval_description),
+                    style = MaterialTheme.typography.bodySmall
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    listOf(0, 250, 500, 1000).forEach { intervalMs ->
+                        FilterChip(
+                            selected = liveFramePumpIntervalMs == intervalMs,
+                            onClick = {
+                                scope.launch {
+                                    displayPreferencesManager.saveDisplaySettings(
+                                        liveFramePumpIntervalMs = intervalMs
+                                    )
+                                }
+                                LiveScreenMirror.applyPumpIntervalMs(intervalMs)
+                            },
+                            label = {
+                                Text(
+                                    if (intervalMs == 0) stringResource(R.string.live_frame_pump_no_throttle)
+                                    else "${intervalMs}ms"
+                                )
+                            }
+                        )
+                    }
+                }
+            }
 
             DisplayToggleItem(
                 title = stringResource(R.string.hide_runtime_task_view),

@@ -300,6 +300,12 @@ class PhoneAgent(
         if (holdLiveMirror && !LiveScreenMirror.acquire(context)) {
             return context.getString(R.string.live_capture_unavailable)
         }
+        if (holdLiveMirror) {
+            // 帧泵会话（live_pipeline_completion 步骤 2）：指示器与进度遮罩常隐藏，
+            // 避免泵内帧被悬浮窗污染；恢复在 finally 统一处理
+            FloatingChatService.getInstance()?.setStatusIndicatorVisible(false)
+            UIAutomationProgressOverlay.getInstance(context).setOverlayVisible(false)
+        }
 
         if (isMainScreenAgent) {
             val mainScreenPrewarmError = prewarmMainScreenLaunchIfNeeded(targetApp)
@@ -495,6 +501,7 @@ class PhoneAgent(
             pauseFlow = null
             if (holdLiveMirror) {
                 LiveScreenMirror.release()
+                actionHandler.resetFrameSession()
             }
             floatingService?.setFloatingWindowVisible(true)
             if (isMainScreenAgent) {
@@ -525,6 +532,7 @@ class PhoneAgent(
     fun reset() {
         _contextHistory.clear()
         _stepCount = 0
+        actionHandler.resetFrameSession()
     }
 
     /** Execute a single step of the agent loop. */
@@ -532,10 +540,14 @@ class PhoneAgent(
         _stepCount++
         AppLogger.d("PhoneAgent", "[$agentId] _executeStep: begin, step=$_stepCount")
 
-        val screenshotLink = actionHandler.captureScreenshotForAgent()
+        val screenshotLink = actionHandler.captureScreenshotForAgent(_contextHistory)
         val screenInfo = buildString {
             if (screenshotLink != null) {
-                appendLine("[SCREENSHOT] Below is the latest screen image:")
+                if (actionHandler.screenUnchangedSinceLastStep) {
+                    appendLine("[SCREENSHOT] Screen unchanged since last step, reusing the same image:")
+                } else {
+                    appendLine("[SCREENSHOT] Below is the latest screen image:")
+                }
                 appendLine(screenshotLink)
             } else {
                 appendLine("No screenshot available for this step.")
@@ -568,7 +580,6 @@ class PhoneAgent(
         _contextHistory.add("assistant" to historyEntry)
 
         val parsedAction = parseAgentAction(answer)
-        actionHandler.removeImagesFromLastUserMessage(_contextHistory)
 
         if (parsedAction.metadata == "finish") {
             val message = parsedAction.fields["message"] ?: "Task finished."
@@ -698,6 +709,60 @@ class ActionHandler(
     private var appPackagesSyncedFromTool = false
     private val aiToolManager: AIToolHandler by lazy { AIToolHandler.getInstance(context) }
 
+    // ==================== 帧泵会话状态（live_pipeline_completion 步骤 2） ====================
+
+    /** 特权档主屏泵序号跟踪；-1 表示尚未取过帧 */
+    private var lastLiveFrameSequence: Long = -1L
+
+    /** 最近两帧的 imageId：模型据此对照画面变化，更早帧从历史与池中逐出 */
+    private val recentFrameImageIds = ArrayDeque<String>(2)
+
+    /** 本步画面是否与上一步相同（泵超时未出新帧） */
+    var screenUnchangedSinceLastStep: Boolean = false
+        private set
+
+    /** 取一帧：首帧走轮询取当前画面，此后等待比自己手中更新的帧（静默画面超时返回 null）。 */
+    private suspend fun awaitLiveFrame(): LiveScreenMirror.Frame? {
+        if (lastLiveFrameSequence < 0) {
+            val bitmap = LiveScreenMirror.captureFrame()
+            lastLiveFrameSequence = LiveScreenMirror.latestSequence()
+            return bitmap?.let { LiveScreenMirror.Frame(it, lastLiveFrameSequence, 0L) }
+        }
+        val frame = LiveScreenMirror.awaitFreshFrame(lastLiveFrameSequence)
+        if (frame != null) {
+            lastLiveFrameSequence = frame.sequence
+        }
+        return frame
+    }
+
+    /** 从 link 标签提取 imageId（saveCompressedScreenshotFromBitmap 的产物格式）。 */
+    private fun linkImageId(link: String): String? =
+        Regex("""<link type="image" id="([^"]+)"></link>""").find(link)?.groupValues?.get(1)
+
+    /** 登记新帧 imageId，保留最近两帧：被逐出者从历史 prompt 与图片池同步清除。 */
+    private fun rememberFrameImage(imageId: String?, history: MutableList<Pair<String, String>>) {
+        if (imageId.isNullOrBlank() || recentFrameImageIds.lastOrNull() == imageId) return
+        recentFrameImageIds.addLast(imageId)
+        while (recentFrameImageIds.size > 2) {
+            val evicted = recentFrameImageIds.removeFirst()
+            val pattern = Regex("""\s*<link type="image" id="$evicted"></link>""")
+            for (i in history.indices) {
+                val (role, content) = history[i]
+                if (content.contains(evicted)) {
+                    history[i] = role to content.replace(pattern, "").trim()
+                }
+            }
+            ImagePoolManager.removeImage(evicted)
+        }
+    }
+
+    /** 会话结束/重置：清空帧状态并释放双帧池。 */
+    fun resetFrameSession() {
+        lastLiveFrameSequence = -1L
+        recentFrameImageIds.clear()
+        screenUnchangedSinceLastStep = false
+    }
+
     fun setAgentId(id: String) {
         agentId = id
     }
@@ -749,60 +814,71 @@ class ActionHandler(
         )
     }
 
-    suspend fun captureScreenshotForAgent(): String? {
+    suspend fun captureScreenshotForAgent(history: MutableList<Pair<String, String>>): String? {
         val displayCtx = resolveDisplayUsageContext()
         val floatingService = FloatingChatService.getInstance()
         val progressOverlay = UIAutomationProgressOverlay.getInstance(context)
 
         var screenshotLink: String? = null
         var dimensions: Pair<Int, Int>? = null
+        screenUnchangedSinceLastStep = false
 
-        try {
-            // Keep screenshot captures clean: hide overlays first, then restore after capture.
-            floatingService?.setStatusIndicatorVisible(false)
-            progressOverlay.setOverlayVisible(false)
-            delay(200)
-
-            // 通道分路：特权档主屏走 Live 镜像免弹窗采集；
-            // 副屏会话走原生副屏帧缓存；非特权档走工具链采集
-            if (displayCtx.isPrivilegedLevel && isMainScreenAgent()) {
-                val bitmap = LiveScreenMirror.captureFrame()
-                if (bitmap != null) {
-                    val (link, dims) = saveCompressedScreenshotFromBitmap(bitmap)
+        if (displayCtx.isPrivilegedLevel && isMainScreenAgent()) {
+            // 帧泵路径（live_pipeline_completion 步骤 2）：等稳定新帧，画面未变时
+            // 复用上帧 imageId 并显式告知模型；指示器已随会话常隐藏，无逐帧遮罩
+            val frame = awaitLiveFrame()
+            if (frame != null) {
+                val (link, dims) = saveCompressedScreenshotFromBitmap(frame.bitmap)
+                frame.bitmap.recycle()
+                if (link != null) {
                     screenshotLink = link
                     dimensions = dims
-                    bitmap.recycle()
-                } else {
-                    AppLogger.e("ActionHandler", "[$agentId] Live mirror returned no frame")
+                    rememberFrameImage(linkImageId(link), history)
                 }
-            } else if (displayCtx.canInjectOnDisplay && !isMainScreenAgent()) {
-                val (link, dims) = captureScreenshotViaNativeDisplay()
-                screenshotLink = link
-                dimensions = dims
-            }
-
-            if (screenshotLink == null && !displayCtx.isPrivilegedLevel) {
-                val screenshotTool = buildScreenshotTool()
-                val (bitmap, fallbackDims) = toolImplementations.captureScreenshotBitmap(screenshotTool)
-
-                if (bitmap != null) {
-                    val (compressedLink, rawDims) = saveCompressedScreenshotFromBitmap(bitmap)
-                    screenshotLink = compressedLink
-                    dimensions = fallbackDims ?: rawDims
-                    bitmap.recycle()
+            } else {
+                AppLogger.i("ActionHandler", "[$agentId] screen unchanged since sequence $lastLiveFrameSequence")
+                val reusedImageId = recentFrameImageIds.lastOrNull()
+                if (reusedImageId != null) {
+                    screenUnchangedSinceLastStep = true
+                    screenshotLink = "<link type=\"image\" id=\"$reusedImageId\"></link>"
                 }
             }
-        } finally {
-            val hasDisplayNow = try {
-                NativeVirtualDisplay.getDisplayId(agentId) != null
-            } catch (e: Exception) {
-                AppLogger.e("ActionHandler", "[$agentId] Error checking native display state in finally", e)
-                false
+        } else {
+            try {
+                // 非泵路径保留逐帧遮罩：截屏瞬间保持画面干净
+                floatingService?.setStatusIndicatorVisible(false)
+                progressOverlay.setOverlayVisible(false)
+                delay(200)
+
+                if (displayCtx.canInjectOnDisplay && !isMainScreenAgent()) {
+                    val (link, dims) = captureScreenshotViaNativeDisplay()
+                    screenshotLink = link
+                    dimensions = dims
+                }
+
+                if (screenshotLink == null) {
+                    val screenshotTool = buildScreenshotTool()
+                    val (bitmap, fallbackDims) = toolImplementations.captureScreenshotBitmap(screenshotTool)
+
+                    if (bitmap != null) {
+                        val (compressedLink, rawDims) = saveCompressedScreenshotFromBitmap(bitmap)
+                        screenshotLink = compressedLink
+                        dimensions = fallbackDims ?: rawDims
+                        bitmap.recycle()
+                    }
+                }
+            } finally {
+                val hasDisplayNow = try {
+                    NativeVirtualDisplay.getDisplayId(agentId) != null
+                } catch (e: Exception) {
+                    AppLogger.e("ActionHandler", "[$agentId] Error checking native display state in finally", e)
+                    false
+                }
+                if (isMainScreenAgent() || !hasDisplayNow) {
+                    floatingService?.setStatusIndicatorVisible(true)
+                }
+                progressOverlay.setOverlayVisible(true)
             }
-            if (isMainScreenAgent() || !hasDisplayNow) {
-                floatingService?.setStatusIndicatorVisible(true)
-            }
-            progressOverlay.setOverlayVisible(true)
         }
 
         if (dimensions != null) {
@@ -874,17 +950,6 @@ class ActionHandler(
             normalizeExif = true,
             maxLongEdge = 0
         )
-    }
-
-    fun removeImagesFromLastUserMessage(history: MutableList<Pair<String, String>>) {
-        val lastUserMessageIndex = history.indexOfLast { it.first == "user" }
-        if (lastUserMessageIndex != -1) {
-            val (role, content) = history[lastUserMessageIndex]
-            if (content.contains("<link type=\"image\"")) {
-                val stripped = content.replace(Regex("""<link type=\"image\".*?</link>"""), "").trim()
-                history[lastUserMessageIndex] = role to stripped
-            }
-        }
     }
 
     suspend fun executeAgentAction(parsed: ParsedAgentAction): ActionExecResult {

@@ -1328,6 +1328,51 @@ object SystemToolPromptsInternal {
                 tools =
                     listOf(
                         ToolPrompt(
+                            name = "query_ui_tree",
+                            description = "Query the accessibility node tree by condition; returns node handles whose nodeId feeds set_text_on_node for precise input.",
+                            parametersStructured =
+                                listOf(
+                                    ToolParameterSchema(
+                                        name = "text_contains",
+                                        type = "string",
+                                        description = "optional, case-insensitive substring of text or content-desc",
+                                        required = false
+                                    ),
+                                    ToolParameterSchema(
+                                        name = "resource_id",
+                                        type = "string",
+                                        description = "optional, exact or suffix of android resource id (com.app:id/xxx -> xxx)",
+                                        required = false
+                                    ),
+                                    ToolParameterSchema(
+                                        name = "class_name",
+                                        type = "string",
+                                        description = "optional, class name suffix such as EditText",
+                                        required = false
+                                    ),
+                                    ToolParameterSchema(
+                                        name = "clickable",
+                                        type = "string",
+                                        description = "optional, true/false filter by clickability",
+                                        required = false
+                                    ),
+                                    ToolParameterSchema(
+                                        name = "max_depth",
+                                        type = "integer",
+                                        description = "optional, 1-50, default 24",
+                                        required = false,
+                                        default = "24"
+                                    ),
+                                    ToolParameterSchema(
+                                        name = "max_results",
+                                        type = "integer",
+                                        description = "optional, 1-100, default 20",
+                                        required = false,
+                                        default = "20"
+                                    )
+                                )
+                        ),
+                        ToolPrompt(
                             name = "get_page_info",
                             description = "Get current page/window UI information.",
                             parametersStructured =
@@ -4117,6 +4162,51 @@ object SystemToolPromptsInternal {
                 categoryName = "内部 UI 工具",
                 tools =
                     listOf(
+                        ToolPrompt(
+                            name = "query_ui_tree",
+                            description = "按条件查询无障碍语义树；返回节点句柄，nodeId 可直接用于 set_text_on_node 精准输入。",
+                            parametersStructured =
+                                listOf(
+                                    ToolParameterSchema(
+                                        name = "text_contains",
+                                        type = "string",
+                                        description = "可选，文本或 content-desc 的不区分大小写子串",
+                                        required = false
+                                    ),
+                                    ToolParameterSchema(
+                                        name = "resource_id",
+                                        type = "string",
+                                        description = "可选，资源 id 精确或后缀匹配（com.app:id/xxx -> xxx）",
+                                        required = false
+                                    ),
+                                    ToolParameterSchema(
+                                        name = "class_name",
+                                        type = "string",
+                                        description = "可选，类名后缀，如 EditText",
+                                        required = false
+                                    ),
+                                    ToolParameterSchema(
+                                        name = "clickable",
+                                        type = "string",
+                                        description = "可选，true/false 按可点击性过滤",
+                                        required = false
+                                    ),
+                                    ToolParameterSchema(
+                                        name = "max_depth",
+                                        type = "integer",
+                                        description = "可选，1-50，默认 24",
+                                        required = false,
+                                        default = "24"
+                                    ),
+                                    ToolParameterSchema(
+                                        name = "max_results",
+                                        type = "integer",
+                                        description = "可选，1-100，默认 20",
+                                        required = false,
+                                        default = "20"
+                                    )
+                                )
+                        ),
                         ToolPrompt(
                             name = "get_page_info",
                             description = "获取当前页面/窗口 UI 信息。",

@@ -5970,6 +5970,7 @@
     <string name="toolreg_get_device_location_high_accuracy_desc">获取设备位置 (高精度)</string>
     <string name="toolreg_get_device_location_desc">获取设备位置</string>
     <string name="toolreg_get_page_info_desc">获取当前页面信息</string>
+    <string name="toolreg_query_ui_tree_desc">按条件查询无障碍语义树，返回可精准操作的节点句柄</string>
     <string name="toolreg_capture_screenshot_desc">截取屏幕截图，返回文件路径</string>
     <string name="toolreg_run_ui_subagent_desc">运行UI子代理以完成任务: %1$s (最多执行 %2$s 步)</string>
     <string name="toolreg_agent_id_suffix"> (agent_id=%1$s)</string>
@@ -7974,4 +7975,7 @@
     <string name="codex_usage_unavailable">额度暂时不可用</string>
     <string name="codex_reset_after_days">%1$d 天后重置</string>
     <string name="codex_reset_after_clock">%1$02d:%2$02d 后重置</string>
+    <string name="live_frame_pump_interval">Live 帧泵频率</string>
+    <string name="live_frame_pump_interval_description">主屏观察通道帧产出的节流间隔；档位越低帧流越密，耗电与流量越高</string>
+    <string name="live_frame_pump_no_throttle">不节流</string>
 </resources>

@@ -7410,4 +7410,7 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="token_stats_trends">Analisis trend</string>
     <string name="token_stats_settings">Tetapan statistik</string>
     <string name="token_stats_custom_range_confirm">OK</string>
+    <string name="live_frame_pump_interval">Kadar pam bingkai Live</string>
+    <string name="live_frame_pump_interval_description">Selang pendamir pelepasan bingkai cermin Live; lebih rendah bermakna bingkai lebih padat dan penggunaan lebih tinggi</string>
+    <string name="live_frame_pump_no_throttle">Tanpa pendamiran</string>
 </resources>
