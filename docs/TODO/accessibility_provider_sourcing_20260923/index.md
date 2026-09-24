@@ -100,3 +100,15 @@ provider 源码入仓并 Soong 化，消灭 2.7MB 二进制与安装器链路，
 待树内验证：`m OperitProvider` 产物 < 100KB；四场景之"无障碍 provider 自动登记"
 由本模块承载；UIHierarchyManager 全量回归（getUIHierarchy/performClick/
 setTextOnNode/takeScreenshot 逐项）。
+
+## 树内验证（2026-09-24，dodge 树 m Operit OperitProvider 全绿）
+
+- 环境：LOS 23.2（cnb.cool 镜像）+ 一加 13（dodge/sm8750），64C128G 云机
+- ffmpeg：实际生效 7b7f4a3（定制 4）——e6285e1 只含定制 1，libavutil 仍依赖
+  libudev 挡 Soong 解析；local_manifests 钉子已同步更新（b21710f）
+- 产物：Operit.apk 87.2MB @ system/priv-app/；OperitProvider.apk 2.04MB
+  @ system/app/（体积实测修正原 <100KB 预期：kotlin-stdlib 打包所致，合理）
+- 途中修复：provider manifest 组件声明补 application 包裹（8a83a97，aapt2
+  manifest_fixer 严格校验）
+- 源码树内依赖教训（非本仓问题，记录备查）：1.sh 依赖列表缺 zip（genrule
+  sbox 调 zip 打 srcjar）；新 shell 必须 breakfast 设目标环境后才能 m
