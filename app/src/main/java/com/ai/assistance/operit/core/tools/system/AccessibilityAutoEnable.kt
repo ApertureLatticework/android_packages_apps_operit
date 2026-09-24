@@ -30,6 +30,7 @@ object AccessibilityAutoEnable {
     fun ensureEnabled(context: Context): Boolean {
         val appContext = context.applicationContext
         val component = ComponentName.unflattenFromString(PROVIDER_ACCESSIBILITY_COMPONENT)
+            ?: return false
         if (!isProviderComponentAvailable(appContext, component)) {
             AppLogger.w(TAG, "OperitProvider not present on this ROM")
             return false
