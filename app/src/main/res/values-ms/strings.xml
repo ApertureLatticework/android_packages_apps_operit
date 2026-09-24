@@ -1381,9 +1381,7 @@
     <string name="circular">Bulat</string>
     <string name="square">Segi empat</string>
     <string name="interface_text">Teks antara muka</string>
-    <string name="repo">Repositori</string>
     <string name="uninstall">Nyahpasang</string>
-    <string name="install">Pasang</string>
     <string name="import_from_repo">Repositori</string>
     <string name="import_from_zip">ZIP</string>
     <string name="import_from_direct">Manual</string>
@@ -1782,15 +1780,9 @@
     <string name="remote_service">Perkhidmatan Jauh</string>
     <string name="import_plugin">Import Plugin</string>
     <string name="remote_service_added">Perkhidmatan jauh %1$s telah ditambah</string>
-    <string name="enter_repo_link_and_name">Sila masukkan sekurang-kurangnya pautan repositori dan nama plugin</string>
-    <string name="select_zip_and_enter_name">Sila pilih fail zip dan masukkan nama plugin</string>
     <string name="enter_complete_remote_info">Sila masukkan maklumat perkhidmatan jauh dan nama dengan lengkap</string>
     <string name="connect">Sambung</string>
     <string name="import_action">Import</string>
-    <string name="select_mcp_plugin_zip_title">Pilih Fail Zip Plugin MCP</string>
-    <string name="use_system_file_picker">Sila gunakan pemilih fail sistem untuk memilih fail zip plugin MCP dalam format .zip</string>
-    <string name="choose_mcp_plugin_zip">Pilih Fail Zip Plugin MCP</string>
-    <string name="open_file_picker">Buka Pemilih Fail</string>
     <string name="start_plugin">Mulakan Plugin</string>
     <string name="mcp_management">Pengurusan MCP</string>
     <string name="running">Sedang Berjalan</string>
@@ -1844,8 +1836,6 @@
     <string name="file_manager_properties">Sifat</string>
     <string name="file_manager_refresh">Segar semula</string>
 
-    <string name="remote">Jauh</string>
-    <string name="deployed">Telah Dideploy</string>
     <string name="deployment_date">Deploy: %1$s</string>
     <string name="redeploy">Deploy Semula</string>
     <string name="deploy">Deploy</string>
@@ -1924,8 +1914,6 @@
 
     <string name="plugin_deployed_success">Plugin %1$s telah berjaya disebarkan</string>
     <string name="remote_service_updated">Perkhidmatan jauh %1$s telah dikemas kini</string>
-    <string name="plugin_zip_file">Fail zip plugin</string>
-    <string name="mcp_plugin">Plugin MCP</string>
     <string name="toolbox_permissions_search_hint">Cari aplikasi</string>
     <string name="toolbox_permissions_system_apps">Aplikasi sistem</string>
     <string name="toolbox_permissions_app_count">Jumlah %d aplikasi</string>
@@ -2682,7 +2670,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="autoglm_status_error">Konfigurasi satu klik gagal: %1$s</string>
     <string name="autoglm_error_empty_api_key">Sila isi Kunci API Zhipu terlebih dahulu.</string>
     <string name="import_or_connect_mcp_service">Import atau Sambung Perkhidmatan MCP</string>
-    <string name="select_mcp_plugin_zip">Sila pilih pakej zip pemalam MCP</string>
     <string name="plugin_zip_package">Pakej Zip Pemalam</string>
     <string name="select_zip_file">Pilih fail .zip</string>
     <string name="select_file">Pilih Fail</string>
@@ -3943,7 +3930,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
 
     <string name="publish_action">Terbitkan</string>
     <string name="invalid_artifact_metadata">Metadata entri pasaran ini tidak sah, butiran tidak dapat dipaparkan.</string>
-    <string name="get_mcp">Dapatkan MCP</string>
     <string name="plugin_name_description">Hanya huruf Inggeris, nombor dan garis bawah dibenarkan. Nama ini akan digunakan sebagai ID pemalam.</string>
     <string name="choose_mcp_community_to_get_plugins">Pilih komuniti MCP berkualiti berikut untuk mendapatkan pemalam:</string>
     <string name="awesome_mcp">Awesome MCP</string>
@@ -5016,8 +5002,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="common_reset_zoom">Set Semula Zum</string>
     <string name="common_render_failed">Gagal Merender</string>
     <string name="mcp_config_import">Import Konfigurasi</string>
-    <string name="mcp_more_options">Lebih Banyak Pilihan</string>
-    <string name="mcp_swipe_for_more">Sapu ke Kiri untuk Lihat Pilihan Lain</string>
     <string name="mcp_paste_config_json">Tampal JSON Konfigurasi MCP</string>
     <string name="mcp_config_content">Kandungan Konfigurasi</string>
     <string name="mcp_open_config_file">Buka Fail Konfigurasi</string>
@@ -5906,7 +5890,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="file_manager_new_tab">Tab baharu</string>
     <string name="mcp_merge_config">Gabungkan konfigurasi</string>
     <string name="mcp_manage_env_variables">Urus pembolehubah persekitaran</string>
-    <string name="mcp_error_no_zip_selected">Tiada fail ZIP dipilih</string>
     <string name="update_unknown_error">Ralat tidak diketahui</string>
     <string name="update_version_title">Versi %1$s</string>
     <string name="avatar_reset">Tetapkan semula</string>
@@ -7410,4 +7393,5 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="token_stats_trends">Analisis trend</string>
     <string name="token_stats_settings">Tetapan statistik</string>
     <string name="token_stats_custom_range_confirm">OK</string>
+    <string name="mcp_market_remote_only">Hanya konfigurasi perkhidmatan MCP jauh disokong</string>
 </resources>

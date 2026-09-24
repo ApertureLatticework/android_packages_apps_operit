@@ -7,7 +7,6 @@ import com.ai.assistance.operit.core.tools.AIToolHandler
 import com.ai.assistance.operit.core.tools.packTool.PackageManager
 import com.ai.assistance.operit.data.api.MarketStatsApiService
 import com.ai.assistance.operit.data.api.MarketV2Entry
-import com.ai.assistance.operit.data.mcp.InstallResult
 import com.ai.assistance.operit.data.mcp.MCPLocalServer
 import com.ai.assistance.operit.data.mcp.McpConfigImportParser
 import com.ai.assistance.operit.data.mcp.MCPRepository
@@ -64,76 +63,43 @@ class MarketEntryInstallController(
         entry: MarketV2Entry,
         onProgress: MarketInstallProgressReporter
     ) {
-        val repoUrl = entry.source?.url.orEmpty().trim()
+        // remote-only：MCP 市场条目仅支持远程配置导入；本地仓库安装线已随 terminal 线裁撤
         val installConfig = entry.latestVersion?.installConfig.orEmpty()
-        if (repoUrl.isBlank() && installConfig.isBlank()) {
-            throw IllegalStateException(context.getString(R.string.mcp_market_parse_install_info_failed))
+        if (installConfig.isBlank()) {
+            throw IllegalStateException(context.getString(R.string.mcp_market_remote_only))
         }
 
-        if (installConfig.isNotBlank() && !mcpRepository.checkConfigNeedsPhysicalInstallation(installConfig)) {
-            val serverIds = parseMcpServerIds(installConfig)
-            if (serverIds.isEmpty()) {
-                throw IllegalStateException(context.getString(R.string.mcp_local_no_mcp_servers_field))
-            }
-            onProgress(MarketInstallStage.IMPORTING_CONFIG, null)
-            deleteInstalledMarkerRoot(entry)
-            val count =
-                MCPLocalServer.getInstance(appContext)
-                    .mergeConfigFromJson(installConfig)
-                    .getOrElse { error ->
-                        AppLogger.e(TAG, "Failed to merge MCP config for entry ${entry.id}", error)
-                        throw IllegalStateException(
-                            context.getString(
-                                R.string.mcp_market_config_import_failed_with_error,
-                                error.message ?: ""
-                            )
-                        )
-                    }
-            saveMcpConfigEntryMetadata(entry)
-            withContext(Dispatchers.IO) {
-                serverIds.forEach { serverId ->
-                    writeMarketInstallMarker(mcpConfigMarketMarkerRoot(appContext, serverId), entry)
-                }
-            }
-            mcpRepository.refreshPluginList()
-            Toast.makeText(
-                context,
-                context.getString(R.string.mcp_market_config_import_success_with_count, entry.title, count),
-                Toast.LENGTH_SHORT
-            ).show()
-            trackEntryAssetDownload(entry, onProgress)
-            return
+        val serverIds = parseMcpServerIds(installConfig)
+        if (serverIds.isEmpty()) {
+            throw IllegalStateException(context.getString(R.string.mcp_local_no_mcp_servers_field))
         }
-
-        onProgress(MarketInstallStage.IMPORTING_REPOSITORY, null)
+        onProgress(MarketInstallStage.IMPORTING_CONFIG, null)
         deleteInstalledMarkerRoot(entry)
-        val server = MCPLocalServer.PluginMetadata(
-            id = entry.id,
-            name = entry.title,
-            description = entry.description,
-            logoUrl = entry.publisher?.avatarUrl ?: entry.publisher?.avatar ?: entry.author?.avatarUrl ?: entry.author?.avatar ?: "",
-            author = entry.publisher?.login.orEmpty().ifBlank { entry.author?.login.orEmpty() }.ifBlank { entry.publisherId.removePrefix("gh_") },
-            isInstalled = false,
-            version = entry.latestVersion?.version ?: "1.0.0",
-            updatedAt = entry.updatedAt.orEmpty(),
-            longDescription = entry.detail.ifBlank { entry.description },
-            repoUrl = repoUrl,
-            type = "local",
-            marketConfig = installConfig.ifBlank { null }
-        )
-        when (val result = mcpRepository.installMCPServerWithObject(server)) {
-            is InstallResult.Success -> {
-                withContext(Dispatchers.IO) {
-                    writeMarketInstallMarker(File(result.pluginPath), entry)
+        val count =
+            MCPLocalServer.getInstance(appContext)
+                .mergeConfigFromJson(installConfig)
+                .getOrElse { error ->
+                    AppLogger.e(TAG, "Failed to merge MCP config for entry ${entry.id}", error)
+                    throw IllegalStateException(
+                        context.getString(
+                            R.string.mcp_market_config_import_failed_with_error,
+                            error.message ?: ""
+                        )
+                    )
                 }
-                Toast.makeText(context, context.getString(R.string.mcp_market_install_success, entry.title), Toast.LENGTH_SHORT).show()
-                trackEntryAssetDownload(entry, onProgress)
-            }
-            is InstallResult.Error -> {
-                AppLogger.e(TAG, "Failed to install MCP ${entry.title}: ${result.message}")
-                throw IllegalStateException(context.getString(R.string.mcp_market_install_failed_with_error, result.message))
+        saveMcpConfigEntryMetadata(entry)
+        withContext(Dispatchers.IO) {
+            serverIds.forEach { serverId ->
+                writeMarketInstallMarker(mcpConfigMarketMarkerRoot(appContext, serverId), entry)
             }
         }
+        mcpRepository.refreshPluginList()
+        Toast.makeText(
+            context,
+            context.getString(R.string.mcp_market_config_import_success_with_count, entry.title, count),
+            Toast.LENGTH_SHORT
+        ).show()
+        trackEntryAssetDownload(entry, onProgress)
     }
 
     private suspend fun saveMcpConfigEntryMetadata(entry: MarketV2Entry) {
@@ -153,14 +119,11 @@ class MarketEntryInstallController(
                     version = entry.latestVersion?.version ?: current?.version.orEmpty(),
                     updatedAt = entry.updatedAt.orEmpty().ifBlank { current?.updatedAt.orEmpty() },
                     longDescription = entry.detail.ifBlank { entry.description },
-                    repoUrl = entry.source?.url.orEmpty(),
-                    type = current?.type ?: "local",
                     endpoint = current?.endpoint,
                     connectionType = current?.connectionType,
                     disabled = current?.disabled ?: false,
                     bearerToken = current?.bearerToken,
                     headers = current?.headers,
-                    installedPath = current?.installedPath,
                     installedTime = current?.installedTime ?: System.currentTimeMillis(),
                     marketConfig = entry.latestVersion?.installConfig
                 )

@@ -630,7 +630,6 @@
     <string name="plugin_deploy_complete">插件部署完成，继续启动: %1$s</string>
     <string name="plugin_runtime_error">运行时错误: %1$s</string>
     <string name="plugin_runtime_output">运行时输出:\n%1$s</string>
-    <string name="plugin_local_removed">本地 MCP 插件已随终端环境裁撤: %1$s</string>
     <string name="plugin_pnpm_missing">终端中未安装pnpm，请先安装</string>
 
     <!-- Theme Settings Screen -->
@@ -1943,9 +1942,7 @@
     <string name="interface_text">界面文本</string>
 
     <!-- MCP and Plugin Related -->
-    <string name="repo">仓库</string>
     <string name="uninstall">卸载</string>
-    <string name="install">安装</string>
     <string name="import_from_repo">仓库</string>
     <string name="import_from_zip">ZIP</string>
     <string name="import_from_direct">手动</string>
@@ -2139,7 +2136,6 @@
 
     <!-- MCP Config Screen -->
     <string name="import_or_connect_mcp_service">导入或连接MCP服务</string>
-    <string name="select_mcp_plugin_zip">请选择MCP插件压缩包</string>
     <string name="plugin_zip_package">插件压缩包</string>
     <string name="select_zip_file">选择.zip文件</string>
     <string name="select_file">选择文件</string>
@@ -2164,15 +2160,9 @@
     <string name="remote_service">远程服务</string>
     <string name="import_plugin">导入插件</string>
     <string name="remote_service_added">远程服务 %1$s 已添加</string>
-    <string name="enter_repo_link_and_name">请至少输入仓库链接和插件名称</string>
-    <string name="select_zip_and_enter_name">请选择压缩包并输入插件名称</string>
     <string name="enter_complete_remote_info">请完整输入远程服务信息和名称</string>
     <string name="connect">连接</string>
     <string name="import_action">导入</string>
-    <string name="select_mcp_plugin_zip_title">选择MCP插件压缩包</string>
-    <string name="use_system_file_picker">请使用系统文件选择器选择一个.zip格式的MCP插件压缩包</string>
-    <string name="choose_mcp_plugin_zip">选择MCP插件压缩包</string>
-    <string name="open_file_picker">打开文件选择器</string>
     <string name="start_plugin">启动插件</string>
     <string name="mcp_management">MCP管理</string>
     <string name="running">运行中</string>
@@ -2184,8 +2174,6 @@
     <string name="local_installation">本地安装</string>
     <string name="local_version">本地版本</string>
     <string name="official">官方</string>
-    <string name="remote">远程</string>
-    <string name="deployed">已部署</string>
     <string name="deployment_date">部署: %1$s</string>
     <string name="redeploy">重新部署</string>
     <string name="deploy">部署</string>
@@ -2226,8 +2214,6 @@
     <string name="remote_service_updated">远程服务 %1$s 已更新</string>
     
     <!-- UI 文本 -->
-    <string name="plugin_zip_file">插件压缩包</string>
-    <string name="mcp_plugin">MCP 插件</string>
     
     <!-- Toolbox Permission Manager -->
     <string name="toolbox_permissions_search_hint">搜索应用</string>
@@ -4723,7 +4709,6 @@
     <string name="market_detail_preview_approved_message">当前条目已审核通过，但正式发布数据尚未生效，页面展示的是发布前预览。</string>
     <string name="market_detail_preview_changes_requested_message">当前条目已被打回修改，页面展示的是最近一次提交的预览内容。</string>
     <string name="market_detail_preview_rejected_message">当前条目已被拒绝，页面展示的是最近一次提交的预览内容。</string>
-    <string name="get_mcp">获取MCP</string>
     <string name="plugin_name_description">只允许英文字母、数字和下划线，此名称将作为插件ID使用</string>
     <string name="choose_mcp_community_to_get_plugins">选择以下优质MCP社区获取插件：</string>
     <string name="awesome_mcp">Awesome MCP</string>
@@ -6180,8 +6165,6 @@
 
     <!-- MCP Config Module -->
     <string name="mcp_config_import">配置导入</string>
-    <string name="mcp_more_options">更多选项</string>
-    <string name="mcp_swipe_for_more">左滑查看更多选项</string>
     <string name="mcp_paste_config_json">粘贴 MCP 配置 JSON</string>
     <string name="mcp_config_content">配置内容</string>
     <string name="mcp_open_config_file">打开配置文件</string>
@@ -7204,7 +7187,6 @@
     <string name="file_manager_new_tab">新标签页</string>
     <string name="mcp_merge_config">合并配置</string>
     <string name="mcp_manage_env_variables">管理环境变量</string>
-    <string name="mcp_error_no_zip_selected">未选择ZIP文件</string>
     <string name="update_unknown_error">未知错误</string>
     <string name="update_version_title">版本 %1$s</string>
     <string name="avatar_reset">重置</string>
@@ -7974,4 +7956,5 @@
     <string name="codex_usage_unavailable">额度暂时不可用</string>
     <string name="codex_reset_after_days">%1$d 天后重置</string>
     <string name="codex_reset_after_clock">%1$02d:%2$02d 后重置</string>
+    <string name="mcp_market_remote_only">仅支持远程 MCP 服务配置</string>
 </resources>

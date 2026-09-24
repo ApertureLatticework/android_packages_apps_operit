@@ -1867,7 +1867,6 @@
     
     <!-- MCP and Plugin Related -->
     <string name="uninstall">Uninstall</string>
-    <string name="install">Install</string>
     <string name="import_from_repo">From Repo</string>
     <string name="import_from_zip">From ZIP</string>
     <string name="import_from_direct">Manual</string>
@@ -2029,7 +2028,6 @@
     
     <!-- MCP Config Screen -->
     <string name="import_or_connect_mcp_service">Import or Connect MCP Service</string>
-    <string name="select_mcp_plugin_zip">Please select MCP plugin zip package</string>
     <string name="plugin_zip_package">Plugin ZIP Package</string>
     <string name="select_zip_file">Select .zip file</string>
     <string name="select_file">Select File</string>
@@ -2048,22 +2046,15 @@
     <string name="service_metadata">Service Metadata</string>
     <string name="plugin_name">Plugin Name</string>
     <string name="my_mcp_plugin">My MCP Plugin</string>
-    <string name="repo">Repository</string>
     <string name="plugin_description">Plugin Description</string>
     <string name="this_is_mcp_plugin">This is an MCP plugin</string>
     <string name="plugin_already_exists">Plugin \'%1$s\' already exists, please use a different name.</string>
     <string name="remote_service">Remote Service</string>
     <string name="import_plugin">Import Plugin</string>
     <string name="remote_service_added">Remote service %1$s has been added</string>
-    <string name="enter_repo_link_and_name">Please enter at least repository link and plugin name</string>
-    <string name="select_zip_and_enter_name">Please select ZIP package and enter plugin name</string>
     <string name="enter_complete_remote_info">Please enter complete remote service information and name</string>
     <string name="connect">Connect</string>
     <string name="import_action">Import</string>
-    <string name="select_mcp_plugin_zip_title">Select MCP Plugin ZIP Package</string>
-    <string name="use_system_file_picker">Please use the system file picker to select a .zip format MCP plugin package</string>
-    <string name="choose_mcp_plugin_zip">Choose MCP Plugin ZIP Package</string>
-    <string name="open_file_picker">Open File Picker</string>
     <string name="start_plugin">Start Plugin</string>
     <string name="mcp_management">MCP Management</string>
     <string name="running">Running</string>
@@ -2075,8 +2066,6 @@
     <string name="local_installation">Local Installation</string>
     <string name="local_version">Local Version</string>
     <string name="official">Official</string>
-    <string name="remote">Remote</string>
-    <string name="deployed">Deployed</string>
     <string name="deployment_date">Deployed: %1$s</string>
     <string name="redeploy">Redeploy</string>
     <string name="deploy">Deploy</string>
@@ -2170,8 +2159,6 @@
     <string name="remote_service_updated">Remote service %1$s updated</string>
     
     <!-- UI Text -->
-    <string name="plugin_zip_file">Plugin ZIP File</string>
-    <string name="mcp_plugin">MCP Plugin</string>
 
     <!-- Toolbox Permission Manager -->
     <string name="toolbox_permissions_search_hint">Search apps</string>
@@ -4405,7 +4392,6 @@
     <string name="recommended_features">Recommended</string>
     <string name="coming_soon_for_mcp_plugins">Premium quality MCP plugins coming soon</string>
     <string name="after_logging_in_you_can_view_and_manage_your_mcp_plugins">Login to view and manage your published MCP plugins</string>
-    <string name="get_mcp">Get MCP</string>
     <string name="plugin_name_description">Only alphanumeric characters and underscores allowed, this name will be used as plugin ID</string>
     <string name="choose_mcp_community_to_get_plugins">Choose the following quality MCP communities to get plugins:</string>
     <string name="awesome_mcp">Awesome MCP</string>
@@ -5831,8 +5817,6 @@
 
     <!-- MCP Config Module -->
     <string name="mcp_config_import">Config Import</string>
-    <string name="mcp_more_options">More Options</string>
-    <string name="mcp_swipe_for_more">Swipe left for more options</string>
     <string name="mcp_paste_config_json">Paste MCP Config JSON</string>
     <string name="mcp_config_content">Config Content</string>
     <string name="mcp_open_config_file">Open Config File</string>
@@ -6683,7 +6667,6 @@
     <string name="file_manager_new_tab">New tab</string>
     <string name="mcp_merge_config">Merge config</string>
     <string name="mcp_manage_env_variables">Manage environment variables</string>
-    <string name="mcp_error_no_zip_selected">No ZIP file selected</string>
     <string name="update_unknown_error">Unknown error</string>
     <string name="update_version_title">Version %1$s</string>
     <string name="avatar_reset">Reset</string>
@@ -7992,4 +7975,5 @@
     <string name="market_version_too_low_message">Current client version %1$s is lower than the minimum required version %2$s for this resource. Please update the client before downloading.</string>
     <string name="market_version_too_high_message">Current client version %1$s is higher than the maximum supported version %2$s for this resource. Please use a supported client version.</string>
     <string name="thinking_config_invalid_json">Invalid Thinking Configuration</string>
+    <string name="mcp_market_remote_only">Only remote MCP service configurations are supported</string>
 </resources>

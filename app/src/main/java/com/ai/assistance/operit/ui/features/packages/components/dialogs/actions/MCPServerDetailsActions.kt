@@ -26,51 +26,25 @@ import com.ai.assistance.operit.R
 import com.ai.assistance.operit.data.mcp.MCPLocalServer
 
 /**
- * Actions component for the MCP server details diaAppLogger.
- * 
+ * Actions component for the MCP server details dialog (remote-only).
+ *
  * @param server The MCP server to display actions for
- * @param isInstalled Whether the server is installed
- * @param onInstall Callback to be invoked when the install button is clicked
- * @param onUninstall Callback to be invoked when the uninstall button is clicked
+ * @param isInstalled Whether the server is configured
+ * @param onUninstall Callback to be invoked when the remove button is clicked
  */
 @Composable
 fun MCPServerDetailsActions(
     server: MCPLocalServer.PluginMetadata,
     isInstalled: Boolean,
-    onInstall: (MCPLocalServer.PluginMetadata) -> Unit,
     onUninstall: (MCPLocalServer.PluginMetadata) -> Unit
 ) {
-    val context = LocalContext.current
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        // Repository link button (if available)
-        if (server.repoUrl.isNotBlank()) {
-            OutlinedButton(
-                onClick = {
-                    try {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(server.repoUrl))
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        context.startActivity(intent)
-                    } catch (e: Exception) {
-                        AppLogger.e("MCPServerDetailsDialog", "打开仓库链接失败", e)
-                    }
-                },
-                modifier = Modifier.weight(1f)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Link,
-                    contentDescription = null
-                )
-                Text(text = stringResource(R.string.repo))
-            }
-        }
-
-        // Install/Uninstall button
+        // Remove button
         if (isInstalled) {
             Button(
                 onClick = { onUninstall(server) },
@@ -85,17 +59,6 @@ fun MCPServerDetailsActions(
                     contentDescription = null
                 )
                 Text(text = stringResource(R.string.uninstall))
-            }
-        } else {
-            Button(
-                onClick = { onInstall(server) },
-                modifier = Modifier.weight(1f)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Download,
-                    contentDescription = null
-                )
-                Text(text = stringResource(R.string.install))
             }
         }
     }

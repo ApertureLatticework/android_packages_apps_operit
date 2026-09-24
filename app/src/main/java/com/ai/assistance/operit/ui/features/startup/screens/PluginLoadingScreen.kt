@@ -790,11 +790,8 @@ class PluginLoadingState {
                         if (!isEnabled) {
                             false
                         } else {
-                            val pluginInfo = mcpRepository.getInstalledPluginInfo(pluginId)
-                            when (pluginInfo?.type) {
-                                "remote" -> true // 远程插件只需启用
-                                else -> true // 本地插件现在会自动部署，所以也包含在内
-                            }
+                            // 远程插件启用即纳入启动
+                            true
                         }
                     }
 

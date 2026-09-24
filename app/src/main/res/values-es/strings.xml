@@ -408,7 +408,6 @@
     
     <!-- MCP and Plugin Related -->
     <string name="uninstall">Desinstalar</string>
-    <string name="install">Instalar</string>
     <string name="import_from_repo">Importar desde Repositorio</string>
     <string name="import_from_zip">Importar desde ZIP</string>
     <string name="connect_remote_service">Conectar Servicio Remoto</string>
@@ -613,7 +612,6 @@
     
     <!-- MCP Config Screen -->
     <string name="import_or_connect_mcp_service">Importar o conectar servicio MCP</string>
-    <string name="select_mcp_plugin_zip">Por favor seleccione el paquete zip del plugin MCP</string>
     <string name="plugin_zip_package">Paquete ZIP del plugin</string>
     <string name="select_zip_file">Seleccionar archivo .zip</string>
     <string name="select_file">Seleccionar archivo</string>
@@ -629,15 +627,9 @@
     <string name="remote_service">Servicio remoto</string>
     <string name="import_plugin">Importar plugin</string>
     <string name="remote_service_added">El servicio remoto %1$s ha sido agregado</string>
-    <string name="enter_repo_link_and_name">Por favor ingrese al menos el enlace del repositorio y el nombre del plugin</string>
-    <string name="select_zip_and_enter_name">Por favor seleccione el paquete ZIP e ingrese el nombre del plugin</string>
     <string name="enter_complete_remote_info">Por favor ingrese la información completa del servicio remoto y el nombre</string>
     <string name="connect">Conectar</string>
     <string name="import_action">Importar</string>
-    <string name="select_mcp_plugin_zip_title">Seleccionar paquete ZIP del plugin MCP</string>
-    <string name="use_system_file_picker">Por favor use el selector de archivos del sistema para seleccionar un paquete de plugin MCP en formato .zip</string>
-    <string name="choose_mcp_plugin_zip">Elegir paquete ZIP del plugin MCP</string>
-    <string name="open_file_picker">Abrir selector de archivos</string>
     <string name="start_plugin">Iniciar plugin</string>
     <string name="mcp_management">Gestión MCP</string>
     <string name="running">Ejecutándose</string>
@@ -649,8 +641,6 @@
     <string name="local_installation">Instalación local</string>
     <string name="local_version">Versión local</string>
     <string name="official">Oficial</string>
-    <string name="remote">Remoto</string>
-    <string name="deployed">Desplegado</string>
     <string name="deployment_date">Desplegado: %1$s</string>
     <string name="redeploy">Redesplegar</string>
     <string name="deploy">Desplegar</string>
@@ -2329,8 +2319,6 @@
     <string name="tools_load_error">Error al obtener la lista de herramientas: %1$s</string>
     <string name="plugin_deployed_success">El complemento %1$s se ha implementado correctamente</string>
     <string name="remote_service_updated">El servicio remoto %1$s se ha actualizado</string>
-    <string name="plugin_zip_file">Archivo comprimido del complemento</string>
-    <string name="mcp_plugin">Complemento MCP</string>
     <string name="target_format">Formato de destino</string>
     <string name="start_conversion">Iniciar conversión</string>
     <string name="conversion_success">Conversión exitosa</string>
@@ -2453,7 +2441,6 @@
     <string name="tag_must_be_set">La etiqueta debe estar configurada</string>
     <string name="stream_must_be_set">El flujo de datos debe estar configurado</string>
     <string name="crop_avatar">Recortar avatar</string>
-    <string name="repo">Repositorio</string>
     <string name="import_from_direct">Manual</string>
     <string name="import_or_install_skill">Importar Skill</string>
     <string name="select_skill_plugin_zip">Seleccione el archivo comprimido de Skill</string>
@@ -4196,7 +4183,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="comment_label">Comentarios</string>
     <string name="publish_action">Publicar</string>
     <string name="invalid_artifact_metadata">Los metadatos de este elemento del mercado no son válidos y no se pueden mostrar los detalles.</string>
-    <string name="get_mcp">Obtener MCP</string>
     <string name="plugin_name_description">Solo se permiten letras inglesas, números y guiones bajos. Este nombre se usará como ID del plugin.</string>
     <string name="choose_mcp_community_to_get_plugins">Selecciona una comunidad MCP de calidad para obtener plugins:</string>
     <string name="awesome_mcp">Awesome MCP</string>
@@ -5087,8 +5073,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="common_reset_zoom">Restablecer zoom</string>
     <string name="common_render_failed">Error al renderizar</string>
     <string name="mcp_config_import">Importar configuración</string>
-    <string name="mcp_more_options">Más opciones</string>
-    <string name="mcp_swipe_for_more">Desliza a la izquierda para ver más opciones</string>
     <string name="mcp_paste_config_json">Pegar JSON de configuración MCP</string>
     <string name="mcp_config_content">Contenido de configuración</string>
     <string name="mcp_open_config_file">Abrir archivo de configuración</string>
@@ -6122,7 +6106,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="file_manager_new_tab">Nueva pestaña</string>
     <string name="mcp_merge_config">Fusionar configuración</string>
     <string name="mcp_manage_env_variables">Gestionar variables de entorno</string>
-    <string name="mcp_error_no_zip_selected">No se seleccionó ningún archivo ZIP</string>
     <string name="update_unknown_error">Error desconocido</string>
     <string name="update_version_title">Versión %1$s</string>
 
@@ -7481,4 +7464,5 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="token_stats_trends">Análisis de tendencias</string>
     <string name="token_stats_settings">Configuración de estadísticas</string>
     <string name="token_stats_custom_range_confirm">Aceptar</string>
+    <string name="mcp_market_remote_only">Solo se admiten configuraciones de servicios MCP remotos</string>
 </resources>

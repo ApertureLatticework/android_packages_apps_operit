@@ -2,7 +2,6 @@ package com.ai.assistance.operit.data.mcp.plugins
 
 import android.content.Context
 import com.ai.assistance.operit.util.AppLogger
-import com.ai.assistance.operit.R
 import com.ai.assistance.operit.core.tools.mcp.MCPManager
 import com.ai.assistance.operit.core.tools.mcp.McpRuntimeDescriptor
 import com.ai.assistance.operit.data.mcp.MCPLocalServer
@@ -85,15 +84,6 @@ class MCPStarter(private val context: Context) {
             }
 
             statusCallback(StartStatus.InProgress("Starting plugin: $pluginId"))
-
-            if (pluginInfo.type != "remote") {
-                statusCallback(
-                    StartStatus.Error(
-                        context.getString(R.string.plugin_local_removed, pluginId)
-                    )
-                )
-                return false
-            }
 
             val mcpManager = MCPManager.getInstance(context)
             val descriptor = McpRuntimeDescriptor.Remote(
@@ -290,29 +280,20 @@ class MCPStarter(private val context: Context) {
                 }
             val mcpManager = MCPManager.getInstance(context)
 
-            when (pluginInfo.type) {
-                "remote" -> {
-                    mcpManager.registerRuntime(
-                        pluginId,
-                        McpRuntimeDescriptor.Remote(
-                            endpoint = requireNotNull(pluginInfo.endpoint) {
-                                "Remote service is missing endpoint: $pluginId"
-                            },
-                            connectionType = requireNotNull(pluginInfo.connectionType) {
-                                "Remote service is missing connection type: $pluginId"
-                            },
-                            bearerToken = pluginInfo.bearerToken,
-                            headers = pluginInfo.headers.orEmpty()
-                        )
-                    )
-                    return serverName
-                }
-
-                else -> {
-                    AppLogger.w(TAG, "Local MCP plugin '$pluginId' is removed with terminal line")
-                    return null
-                }
-            }
+            mcpManager.registerRuntime(
+                pluginId,
+                McpRuntimeDescriptor.Remote(
+                    endpoint = requireNotNull(pluginInfo.endpoint) {
+                        "Remote service is missing endpoint: $pluginId"
+                    },
+                    connectionType = requireNotNull(pluginInfo.connectionType) {
+                        "Remote service is missing connection type: $pluginId"
+                    },
+                    bearerToken = pluginInfo.bearerToken,
+                    headers = pluginInfo.headers.orEmpty()
+                )
+            )
+            return serverName
         } catch (e: Exception) {
             AppLogger.e(TAG, "Failed to register plugin $pluginId", e)
             return null
