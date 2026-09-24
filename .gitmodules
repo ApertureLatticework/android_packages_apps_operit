@@ -1,3 +1,0 @@
-[submodule "tools/hotbuild/OperitNightlyRelease"]
-	path = tools/hotbuild/OperitNightlyRelease
-	url = git@github.com:AAswordman/OperitNightlyRelease.git
