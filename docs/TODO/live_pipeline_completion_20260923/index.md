@@ -1,7 +1,7 @@
 ---
 Repository: https://github.com/ApertureLatticework/android_packages_apps_operit
 Branch: feat/live-pipeline-completion
-Status: 计划中——方案细化完成待用户过目后动工
+Status: 已落地（2026-09-23 执行完毕，三步全落；待 CI 编译与真机回归）
 ---
 
 # Live 三缺件：帧泵实时流、流式多模态通路、AST 查询工具化
@@ -45,9 +45,9 @@ Live 线随 aosp_native_priv_integration 步骤 6/7 落了骨架，但闭环缺�
 
 ## 步骤
 
-1. [帧泵实时流](1_FramePump.md)（方案就绪待过目）
-2. [流式多模态通路](2_StreamingMultimodal.md)（方案就绪待过目）
-3. [AST 查询工具化](3_AstQueryTool.md)（方案就绪待过目）
+1. [帧泵实时流](1_FramePump.md) [DONE]
+2. [流式多模态通路](2_StreamingMultimodal.md) [DONE]
+3. [AST 查询工具化](3_AstQueryTool.md) [DONE]
 
 ## 执行情况（2026-09-23，分支 feat/live-pipeline-completion，基于 lineage-23.2）
 

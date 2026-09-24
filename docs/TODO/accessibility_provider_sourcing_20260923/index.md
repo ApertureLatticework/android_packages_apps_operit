@@ -1,7 +1,7 @@
 ---
 Repository: https://github.com/ApertureLatticework/android_packages_apps_operit
 Branch: feat/accessibility-provider-opensource
-Status: 调查完成——上游无源码，方案定稿为参考 AOSP 最小重写，待动工
+Status: 已落地（2026-09-23 执行完毕；2026-09-24 dodge 树 m Operit OperitProvider 全绿，见文末）
 ---
 
 # accessibility provider 源码入仓
@@ -61,8 +61,8 @@ provider 源码入仓并 Soong 化，消灭 2.7MB 二进制与安装器链路，
 
 ## 步骤
 
-1. [最小 provider 工程与 AIDL 实现](1_MinimalProvider.md)
-2. [主应用接线收敛与安装器删除](2_ClientRewire.md)
+1. [最小 provider 工程与 AIDL 实现](1_MinimalProvider.md) [DONE]
+2. [主应用接线收敛与安装器删除](2_ClientRewire.md) [DONE]
 
 ## 决策记录
 
