@@ -1,7 +1,7 @@
 ---
 Repository: https://github.com/ApertureLatticework/android_packages_apps_operit
 Branch: fix/mcp-local-form-removal
-Status: 计划定稿，动工中
+Status: 已落地（2026-09-23 执行完毕，见文末执行情况）
 ---
 
 # MCP 本地表单与本地安装链清理
@@ -62,8 +62,8 @@ remote-only 语义贯彻到底：本地安装的表单、流程、分析器、�
 
 ## 步骤
 
-1. [本地安装链与表单删除](1_LocalInstallRemoval.md)
-2. [元数据单态化与存量迁移](2_MetadataSingleState.md)
+1. [本地安装链与表单删除](1_LocalInstallRemoval.md) [DONE]
+2. [元数据单态化与存量迁移](2_MetadataSingleState.md) [DONE]
 
 ## 验证
 
@@ -89,3 +89,5 @@ remote-only 语义贯彻到底：本地安装的表单、流程、分析器、�
   mcp_market_remote_only（八语新增）；市场标记根收敛 pluginMetadata
 - 字符串：孤儿键 18 枚八语清除，检Localization 门禁零错
 - 净变化：28 文件，+354/-4082
+- 偏差记录：awaitPluginVisible 未随计划删除，改造保留为远程添加/导入后
+  等待插件卡片出现的通用等待（MCPConfigScreen.kt），语义已与本地安装无关
