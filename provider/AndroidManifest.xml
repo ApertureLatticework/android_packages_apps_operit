@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ai.assistance.operit.provider">
 
+    <application android:label="@string/accessibility_service_label">
     <!-- 无障碍主服务：语义树、手势注入与安全截图通道 -->
     <service
         android:name=".UIAccessibilityService"
@@ -24,4 +25,5 @@
             <action android:name="com.ai.assistance.operit.provider.IAccessibilityProvider" />
         </intent-filter>
     </service>
+    </application>
 </manifest>
