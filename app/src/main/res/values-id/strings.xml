@@ -1385,7 +1385,6 @@
     <string name="cannot_open_overlay_settings">Tidak dapat membuka pengaturan jendela mengambang</string>
     <string name="cannot_open_battery_settings">Tidak dapat membuka pengaturan pengoptimalan baterai</string>
     <string name="cannot_open_accessibility_settings">Tidak dapat membuka pengaturan layanan aksesibilitas</string>
-    <string name="accessibility_provider_installed">Penyedia layanan telah diinstal</string>
     <string name="cannot_open_root_tutorial">Tidak dapat membuka tautan tutorial Root</string>
     <string name="cannot_open_docs_link">Tidak dapat membuka tautan dokumentasi</string>
     <string name="plugin_loading_skipped">Pemuatan plugin telah dilewati</string>
@@ -5702,7 +5701,6 @@ Sekarang Anda dapat menggunakan mode AutoGLM di antarmuka percakapan.</string>
     <string name="modellist_error_missing_data">Format respons salah: bidang (data) tidak ada</string>
     <string name="modellist_error_missing_data_or_models">Format respons salah: bidang (data) atau (models) tidak ada</string>
     <string name="modellist_error_missing_models">Format respons salah: bidang (models) tidak ditemukan</string>
-    <string name="accessibility_provider_unknown">Tidak Diketahui</string>
     <string name="gemini_error_request_cancelled">Permintaan telah dibatalkan oleh pengguna</string>
     <string name="gemini_error_no_error_details">Tidak ada detail kesalahan</string>
     <string name="gemini_error_api_request_failed">Permintaan API gagal: %1$d, %2$s</string>

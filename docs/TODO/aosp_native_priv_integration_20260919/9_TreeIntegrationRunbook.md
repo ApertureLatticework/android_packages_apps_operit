@@ -48,11 +48,15 @@ m Operit
 ## 5. device.mk 接线
 
 ```make
-PRODUCT_PACKAGES += Operit
+PRODUCT_PACKAGES += Operit OperitProvider
 # 特权白名单（系统侧安装路径，缺了 boot 时特权权限被拒）
 PRODUCT_COPY_FILES += \
     packages/apps/Operit/etc/privapp-permissions-operit.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-operit.xml
 ```
+
+（2026-09-23 起追加 OperitProvider：无障碍 provider 伴随 APK 源码入仓
+（provider/，feat/accessibility-provider-opensource），platform 签名，
+主应用不再内嵌 assets/accessibility.apk。）
 
 ## 6. 构建与刷机
 
@@ -82,4 +86,4 @@ m Operit && adb install -r $OUT/system/priv-app/Operit/Operit.apk   # 或整包 
 
 - Live 三缺件：帧泵实时流、流式多模态通路、AST 查询工具化（用户已定方向未排期）
 - 树内直引优化（okhttp/gson 等 12 项换树内模块名）：日后逐个换，非当前路径
-- accessibility provider 伴随 APK（assets/accessibility.apk）源码入仓：独立小专项
+- accessibility provider 源码入仓：✅ 已完成（provider/ 模块，见 ../accessibility_provider_sourcing_20260923/）

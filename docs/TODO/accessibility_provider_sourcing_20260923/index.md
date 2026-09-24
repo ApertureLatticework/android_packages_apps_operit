@@ -72,3 +72,43 @@ provider 源码入仓并 Soong 化，消灭 2.7MB 二进制与安装器链路，
 | UI 壳 | MainComposeActivity 删除，provider 零 UI |
 | 分发 | OperitProvider 模块随 ROM 分发，platform 签名 |
 | nodeId 语义 | AccessibilityNodeInfo 身份哈希，与 setTextOnNode 同源闭环 |
+
+## 执行情况（2026-09-23，分支 feat/accessibility-provider-opensource）
+
+步骤 1（最小 provider 工程）：
+- provider/ 新模块：Android.bp（android_app `OperitProvider`，platform 签名，
+  minSdk 30，零 androidx）+ manifest（无 activity，双 service）+
+  res/xml 服务配置（canRetrieveWindowContent/canPerformGestures/canTakeScreenshot）
+- UIAccessibilityService：十方法全实现——uiautomator 风格 XML 序列化（nodeId 为
+  节点身份哈希，findFocusedNodeId/setTextOnNode 同源闭环）、GestureDescription
+  坐标手势、takeScreenshot API 30+ 硬件位图转存；IAccessibilityEventCallback
+  死接口不迁移
+- RemoteBinderService：onServiceConnected 时挂桩，onBind 交付
+
+步骤 2（主应用接线收敛）：
+- AccessibilityProviderInstaller.kt、assets/accessibility.apk（2.7MB）、
+  accessibility_version.txt、IAccessibilityEventCallback.aidl、
+  AccessibilityEvent.aidl 全删；主 APK -2.7MB
+- UIHierarchyManager：安装线四法删除，绑定直钉 RemoteBinderService 组件
+  （ROM 内建，不经包管理器发现）
+- AccessibilityAutoEnable：登记目标修正为直钉 UIAccessibilityService——
+  原按 action 解析会误中 RemoteBinderService（组件语义错位，一并根除）
+- DemoStateManager：provider 安装状态卡删除（ROM 恒在场）
+- 字符串：accessibility_provider_unknown/installed 孤儿键八语清除，门禁零错
+- 树侧接线：device.mk 增 `PRODUCT_PACKAGES += OperitProvider`（runbook 已更新）
+
+待树内验证：`m OperitProvider` 产物 < 100KB；四场景之"无障碍 provider 自动登记"
+由本模块承载；UIHierarchyManager 全量回归（getUIHierarchy/performClick/
+setTextOnNode/takeScreenshot 逐项）。
+
+## 树内验证（2026-09-24，dodge 树 m Operit OperitProvider 全绿）
+
+- 环境：LOS 23.2（cnb.cool 镜像）+ 一加 13（dodge/sm8750），64C128G 云机
+- ffmpeg：实际生效 7b7f4a3（定制 4）——e6285e1 只含定制 1，libavutil 仍依赖
+  libudev 挡 Soong 解析；local_manifests 钉子已同步更新（b21710f）
+- 产物：Operit.apk 87.2MB @ system/priv-app/；OperitProvider.apk 2.04MB
+  @ system/app/（体积实测修正原 <100KB 预期：kotlin-stdlib 打包所致，合理）
+- 途中修复：provider manifest 组件声明补 application 包裹（8a83a97，aapt2
+  manifest_fixer 严格校验）
+- 源码树内依赖教训（非本仓问题，记录备查）：1.sh 依赖列表缺 zip（genrule
+  sbox 调 zip 打 srcjar）；新 shell 必须 breakfast 设目标环境后才能 m

@@ -1610,7 +1610,6 @@
     <string name="cannot_open_overlay_settings">Cannot open overlay settings</string>
     <string name="cannot_open_battery_settings">Cannot open battery optimization settings</string>
     <string name="cannot_open_accessibility_settings">Cannot open accessibility service settings</string>
-    <string name="accessibility_provider_installed">Service provider installed</string>
     <string name="cannot_open_root_tutorial">Cannot open Root tutorial link</string>
     <string name="cannot_open_docs_link">Cannot open documentation link</string>
     <string name="plugin_loading_skipped">Plugin loading skipped</string>
@@ -6349,7 +6348,6 @@
     <string name="modellist_error_missing_models">Response format error: (models) field not found</string>
 
     <!-- Accessibility Provider Installer -->
-    <string name="accessibility_provider_unknown">Unknown</string>
 
     <!-- Gemini Provider -->
     <string name="gemini_error_request_cancelled">Request cancelled by user</string>

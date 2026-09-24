@@ -2382,7 +2382,6 @@
     <string name="cannot_open_overlay_settings">No se puede abrir la configuración de superposición</string>
     <string name="cannot_open_battery_settings">No se puede abrir la configuración de optimización de batería</string>
     <string name="cannot_open_accessibility_settings">No se puede abrir la configuración de accesibilidad</string>
-    <string name="accessibility_provider_installed">Proveedor de servicios instalado</string>
     <string name="cannot_open_root_tutorial">No se puede abrir el enlace del tutorial de Root</string>
     <string name="cannot_open_docs_link">No se puede abrir el enlace de documentación</string>
     <string name="cannot_find_termux_app">No se puede encontrar la aplicación Termux</string>
@@ -6114,7 +6113,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="modellist_error_missing_data">Formato de respuesta incorrecto: falta el campo (data).</string>
     <string name="modellist_error_missing_data_or_models">Formato de respuesta incorrecto: falta el campo (data) o (models).</string>
     <string name="modellist_error_missing_models">Formato de respuesta incorrecto: no se encontró el campo (models).</string>
-    <string name="accessibility_provider_unknown">Desconocido</string>
     <string name="gemini_error_request_cancelled">La solicitud fue cancelada por el usuario.</string>
     <string name="gemini_error_no_error_details">Sin detalles del error.</string>
     <string name="gemini_error_api_request_failed">Error en la solicitud a la API: %1$d, %2$s</string>

@@ -1734,7 +1734,6 @@
     <string name="cannot_open_overlay_settings">无法打开悬浮窗设置</string>
     <string name="cannot_open_battery_settings">无法打开电池优化设置</string>
     <string name="cannot_open_accessibility_settings">无法打开无障碍服务设置</string>
-    <string name="accessibility_provider_installed">服务提供者已安装</string>
     <string name="cannot_open_root_tutorial">无法打开Root教程链接</string>
     <string name="cannot_open_docs_link">无法打开文档链接</string>
     <string name="plugin_loading_skipped">已跳过插件加载</string>
@@ -6860,7 +6859,6 @@
     <string name="modellist_error_missing_models">响应格式错误: 未找到(models)字段</string>
 
     <!-- Accessibility Provider Installer -->
-    <string name="accessibility_provider_unknown">未知</string>
 
     <!-- Gemini Provider -->
     <string name="gemini_error_request_cancelled">请求已被用户取消</string>

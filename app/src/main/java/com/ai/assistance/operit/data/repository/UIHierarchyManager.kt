@@ -4,17 +4,9 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
-import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
-import android.net.Uri
-import android.os.Build
 import android.os.IBinder
 import android.os.RemoteException
 import com.ai.assistance.operit.util.AppLogger
-import android.widget.Toast
-import androidx.core.content.FileProvider
-import com.ai.assistance.operit.R
-import com.ai.assistance.operit.core.tools.system.AccessibilityProviderInstaller
 import com.ai.assistance.operit.provider.IAccessibilityProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,8 +16,6 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
-import java.io.File
-import java.io.FileOutputStream
 import java.io.StringReader
 import kotlin.coroutines.resume
 import kotlinx.coroutines.GlobalScope
@@ -41,14 +31,12 @@ object UIHierarchyManager {
     private const val TAG = "UIHierarchyManager"
     private const val BIND_SERVICE_TIMEOUT_MS = 3000L // 3秒超时
 
-    // 新的无障碍服务提供者应用的包名
+    // 无障碍服务提供者（ROM 内建 OperitProvider 模块，platform 签名随 ROM 分发）
     private const val PROVIDER_PACKAGE_NAME = "com.ai.assistance.operit.provider"
-    // 无障碍服务提供者APK的文件名
-    private const val PROVIDER_APK_NAME = "accessibility.apk"
+    // Binder 交付服务直钉组件；无障碍主服务由系统按 BIND_ACCESSIBILITY_SERVICE 绑定
+    private const val PROVIDER_BINDER_COMPONENT = "$PROVIDER_PACKAGE_NAME.RemoteBinderService"
     // 用于绑定的自定义Action，必须与服务提供者应用中的声明一致
     private const val PROVIDER_ACTION = "com.ai.assistance.operit.provider.IAccessibilityProvider"
-    // TODO: 如果你不在Google Play上发布，可以将其更改为直接下载的URL
-    private const val PROVIDER_MARKET_URL = "market://details?id=$PROVIDER_PACKAGE_NAME"
 
     @Volatile
     private var accessibilityProvider: IAccessibilityProvider? = null
@@ -79,86 +67,9 @@ object UIHierarchyManager {
         }
     }
 
-    /**
-     * 从应用内assets目录中提取无障碍服务提供者APK文件。
-     * @param context Context
-     * @return 提取出的APK文件，如果失败则返回null。
-     */
-    private fun extractProviderApkFromAssets(context: Context): File? {
-        return try {
-            val apkFile = File(context.cacheDir, PROVIDER_APK_NAME)
-            // 如果文件已存在且大小匹配，可以跳过提取，但为了简单起见，这里总是覆盖
-            context.assets.open(PROVIDER_APK_NAME).use { inputStream ->
-                FileOutputStream(apkFile).use { outputStream ->
-                    inputStream.copyTo(outputStream)
-                }
-            }
-            AppLogger.d(TAG, "无障碍服务APK已提取到: ${apkFile.absolutePath}")
-            apkFile
-        } catch (e: Exception) {
-            AppLogger.e(TAG, "从assets提取无障碍服务APK失败", e)
-            null
-        }
-    }
-
-    /**
-     * 启动安装流程来安装提供者应用
-     */
-    fun launchProviderInstall(context: Context) {
-        GlobalScope.launch(Dispatchers.IO) {
-            val apkFile = extractProviderApkFromAssets(context)
-            if (apkFile == null) {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.toast_apk_extract_failed),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                return@launch
-            }
-
-            val apkUri =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    FileProvider.getUriForFile(
-                        context,
-                        "${context.packageName}.fileprovider",
-                        apkFile
-                    )
-                } else {
-                    Uri.fromFile(apkFile)
-                }
-
-            val installIntent = Intent(Intent.ACTION_VIEW).apply {
-                setDataAndType(apkUri, "application/vnd.android.package-archive")
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                }
-            }
-
-            withContext(Dispatchers.Main) {
-                try {
-                    context.startActivity(installIntent)
-                } catch (e: Exception) {
-                    AppLogger.e(TAG, "启动安装界面失败", e)
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.toast_operation_failed, e.message ?: ""),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        }
-    }
-
-    /**
-     * 检查无障碍服务提供者是否需要更新
-     */
-    fun isUpdateNeeded(context: Context): Boolean {
-        return AccessibilityProviderInstaller.isUpdateNeeded(context)
-    }
-
+    
+    
+    
     /**
      * 确保服务已绑定，如果未绑定则尝试自动重新绑定。
      * @return a boolean indicating if the service is ready.
@@ -177,18 +88,7 @@ object UIHierarchyManager {
         return _isBound.value && accessibilityProvider != null
     }
 
-    /**
-     * 检查无障碍服务提供者应用是否已安装
-     */
-    fun isProviderAppInstalled(context: Context): Boolean {
-        return try {
-            context.packageManager.getPackageInfo(PROVIDER_PACKAGE_NAME, 0)
-            true
-        } catch (e: PackageManager.NameNotFoundException) {
-            false
-        }
-    }
-
+    
     /**
      * 绑定到外部无障碍服务。
      * 这是一个挂起函数，它会等待服务连接成功或失败。
@@ -198,25 +98,14 @@ object UIHierarchyManager {
         return bindingMutex.withLock {
             AppLogger.d(TAG, "bindToService invoked. Thread: ${Thread.currentThread().name}, Context: ${context.javaClass.name}")
 
-            // 只有在已完全绑定（bound且provider不为空）或者应用未安装的情况下才直接返回
             // 如果 _isBound 为 true 但 provider 为 null，则认为是状态不一致，需要重新绑定
-            if ((_isBound.value && accessibilityProvider != null) || !isProviderAppInstalled(context)) {
-                if (!_isBound.value) AppLogger.w(TAG, "无法绑定：服务已绑定或提供者应用未安装")
-                return@withLock _isBound.value
+            if (_isBound.value && accessibilityProvider != null) {
+                return@withLock true
             }
 
-            val implicitIntent = Intent(PROVIDER_ACTION).setPackage(PROVIDER_PACKAGE_NAME)
-            val resolveInfo: ResolveInfo? = context.packageManager.resolveService(implicitIntent, PackageManager.MATCH_ALL)
-
-            if (resolveInfo == null) {
-                AppLogger.e(TAG, "无法解析服务: $PROVIDER_ACTION. 请确认提供者应用已正确安装。")
-                return@withLock false
-            }
-
-            AppLogger.d(TAG, "服务解析成功: ${resolveInfo.serviceInfo.packageName}/${resolveInfo.serviceInfo.name}")
-
+            // ROM 内建 provider：直钉 Binder 交付服务，不经包管理器发现
             val explicitIntent = Intent(PROVIDER_ACTION).apply {
-                component = ComponentName(resolveInfo.serviceInfo.packageName, resolveInfo.serviceInfo.name)
+                component = ComponentName.unflattenFromString(PROVIDER_BINDER_COMPONENT)
                 addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
             }
 

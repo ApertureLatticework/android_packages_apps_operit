@@ -1633,7 +1633,6 @@
     <string name="cannot_open_overlay_settings">Nu se pot deschide setările ferestrei flotante</string>
     <string name="cannot_open_battery_settings">Nu se pot deschide setările de optimizare a bateriei</string>
     <string name="cannot_open_accessibility_settings">Nu se pot deschide setările serviciilor de accesibilitate</string>
-    <string name="accessibility_provider_installed">Furnizorul de servicii a fost instalat</string>
     <string name="cannot_open_root_tutorial">Nu se poate deschideRootLink către tutorial</string>
     <string name="cannot_open_docs_link">Nu se poate deschide linkul către document</string>
     <string name="plugin_loading_skipped">S-a sărit peste încărcarea pluginului</string>
@@ -6674,7 +6673,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="modellist_error_missing_models">Eroare de format al răspunsului: Nu s-a găsit nimic(models)Câmp</string>
 
     <!-- Accessibility Provider Installer -->
-    <string name="accessibility_provider_unknown">Necunoscut</string>
 
     <!-- Gemini Provider -->
     <string name="gemini_error_request_cancelled">Solicitarea a fost anulată de utilizator</string>
