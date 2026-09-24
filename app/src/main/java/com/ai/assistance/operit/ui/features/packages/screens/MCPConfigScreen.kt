@@ -1388,13 +1388,12 @@ fun RemoteServerEditDialog(
                         )
                     }
                 }
-                {
-                    OutlinedTextField(
-                        value = endpoint,
-                        onValueChange = { endpoint = it },
-                        label = { Text(stringResource(R.string.host_address)) },
-                        modifier = Modifier.fillMaxWidth(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri)
+                OutlinedTextField(
+                    value = endpoint,
+                    onValueChange = { endpoint = it },
+                    label = { Text(stringResource(R.string.host_address)) },
+                    modifier = Modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri)
                     )
 
                     ExposedDropdownMenuBox(
@@ -1440,7 +1439,6 @@ fun RemoteServerEditDialog(
                         headers = headers,
                         onHeadersChange = { headers = it }
                     )
-                }
             }
         },
         confirmButton = {
