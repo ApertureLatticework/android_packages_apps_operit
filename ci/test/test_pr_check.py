@@ -83,12 +83,12 @@ class ScopeClassificationTest(unittest.TestCase):
     def test_rename_source_and_destination_cover_both_scopes(self) -> None:
         plan = classify_paths(
             [
-                "web-chat/src/legacy.tsx",
+                "docs/doc-src/dev-core/BUILDING.md",
                 "app/src/main/java/com/example/Current.kt",
             ]
         )
 
-        self.assertTrue(plan.web)
+        self.assertTrue(plan.docs)
         self.assertTrue(plan.android_jvm)
 
     def test_type_change_path_is_classified_normally(self) -> None:
@@ -102,11 +102,13 @@ class ScopeClassificationTest(unittest.TestCase):
         self.assertTrue(plan.yaml)
         self.assertFalse(plan.ci)
 
-    def test_root_npm_configuration_uses_javascript_lanes(self) -> None:
+    def test_root_npm_configuration_uses_no_dedicated_lane(self) -> None:
         plan = classify_paths([".npmrc", "npm-shrinkwrap.json"])
 
-        self.assertTrue(plan.web)
-        # toolpkg 车道随 examples 整裁撤除（243de9b），根 npm 配置只归 web 车道
+        # web 车道随 web-chat 整裁撤（外部对话能力下线）而删除；
+        # 根 npm 配置仅服务本地工具链，不归属任何 CI 车道
+        self.assertFalse(plan.android_full)
+        self.assertFalse(plan.yaml)
 
     def test_android_test_source_uses_instrumentation_compile(self) -> None:
         plan = classify_paths(["app/src/androidTest/java/com/example/ExampleTest.kt"])

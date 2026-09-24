@@ -2,8 +2,7 @@
     "scripts": {
         "build": "webpack",
         "java2ts": "java2ts config.json",
-        "builder": "node ./build/build.js",
-        "build:webchat": "npm --prefix web-chat run build && npm --prefix web-chat run sync:android-assets"
+        "builder": "node ./build/build.js"
     },
     "dependencies": {},
     "devDependencies": {

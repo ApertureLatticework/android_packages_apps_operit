@@ -35,7 +35,6 @@ import com.ai.assistance.operit.core.workflow.WorkflowSchedulerInitializer
 import com.ai.assistance.operit.data.backup.RoomDatabaseBackupPreferences
 import com.ai.assistance.operit.data.backup.RoomDatabaseBackupScheduler
 import com.ai.assistance.operit.data.db.AppDatabase
-import com.ai.assistance.operit.data.preferences.ExternalHttpApiPreferences
 import com.ai.assistance.operit.data.preferences.UserPreferencesManager
 import com.ai.assistance.operit.data.preferences.WakeWordPreferences
 import com.ai.assistance.operit.data.preferences.initAndroidPermissionPreferences
@@ -471,10 +470,7 @@ class OperitApplication : Application(), ImageLoaderFactory, WorkConfiguration.P
             val alwaysListeningEnabled = runBlocking {
                 WakeWordPreferences(applicationContext).alwaysListeningEnabledFlow.first()
             }
-            val externalHttpEnabled = runBlocking {
-                ExternalHttpApiPreferences.getInstance(applicationContext).enabledFlow.first()
-            }
-            if ((!alwaysListeningEnabled && !externalHttpEnabled) || AIForegroundService.isRunning.get()) {
+            if (!alwaysListeningEnabled || AIForegroundService.isRunning.get()) {
                 return
             }
             val intent = Intent(this, AIForegroundService::class.java).apply {

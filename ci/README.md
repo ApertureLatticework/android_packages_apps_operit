@@ -44,10 +44,9 @@ python3 -B ci/script/check_localizations.py --base "$BASE_SHA" --candidate "$CAN
 - Kotlin/Java 和普通 Android 资源：运行 JVM unit tests
 - Kotlin/Java 和普通 Android 资源：由 `Android JVM tests` job 运行 JVM unit tests
 - Native、Gradle 和构建输入：由 `Android build` job 单独运行 assemble；同一作用域的 JVM unit tests 在独立 job 运行
-- WebChat：运行 TypeScript typecheck 与 Vite build
 - ToolPkg：重建并核对 GitHub 示例，按独立锁文件编译 WASM 示例，再构建测试集合和生产白名单集合；JSON manifest 声明的入口与 WASM 文件必须存在且进入归档
 
-根项目、`web-chat` 和独立的 `examples/toolpkg_wasm_demo` 分别提交 `package-lock.json`，CI 使用 `npm ci` 安装确定的依赖树。
+根项目和独立的 `examples/toolpkg_wasm_demo` 分别提交 `package-lock.json`，CI 使用 `npm ci` 安装确定的依赖树。
 
 PR workflow 只有 `contents: read` 权限，不读取仓库 secret，也不上传 APK/AAB。`Android Build`
 是只负责编译和打包的可信 main/手工构建 workflow，`Android Tests` 单独负责可信 main/手工 JVM 单测。

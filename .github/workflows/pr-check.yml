@@ -36,7 +36,6 @@ jobs:
       android_jvm: ${{ steps.plan.outputs.android_jvm }}
       android_instrumentation: ${{ steps.plan.outputs.android_instrumentation }}
       android_full: ${{ steps.plan.outputs.android_full }}
-      web: ${{ steps.plan.outputs.web }}
 
     steps:
       - name: Checkout merge candidate
@@ -191,32 +190,6 @@ jobs:
             exit 1
           fi
 
-      - name: Set up Node.js
-        if: steps.plan.outputs.web == 'true'
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Install JavaScript dependencies
-        if: steps.plan.outputs.web == 'true'
-        env:
-          WEB_REQUIRED: ${{ steps.plan.outputs.web }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          npm install -g pnpm@10.34.5
-          if [[ "$WEB_REQUIRED" == "true" ]]; then
-            npm --prefix web-chat ci --no-audit --no-fund
-          fi
-
-      - name: Check WebChat
-        if: steps.plan.outputs.web == 'true'
-        shell: bash
-        run: |
-          set -euo pipefail
-          npm --prefix web-chat run typecheck
-          npm run build:webchat
-
       - name: Set up Android SDK
         if: steps.plan.outputs.android_resources == 'true'
         uses: android-actions/setup-android@40fd30fb8d7440372e1316f5d1809ec01dcd3699 # v4
@@ -356,17 +329,6 @@ jobs:
             tools/native_ripgrep/target/aarch64-linux-android/release/liboperit_ripgrep.so \
             app/src/main/jniLibs/arm64-v8a/liboperit_ripgrep.so
           test -s app/src/main/jniLibs/arm64-v8a/liboperit_ripgrep.so
-
-      - name: Install JavaScript dependencies for Android assets
-        shell: bash
-        run: |
-          set -euo pipefail
-          npm install -g pnpm@10.34.5
-          npm ci --no-audit --no-fund
-          npm --prefix web-chat ci --no-audit --no-fund
-
-      - name: Build WebChat assets
-        run: npm run build:webchat
 
       - name: Configure secret-free Android build
         shell: bash
