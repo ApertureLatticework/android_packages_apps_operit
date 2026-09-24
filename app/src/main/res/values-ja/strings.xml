@@ -297,4 +297,7 @@
     <string name="test_result_expand">展開</string>
     <string name="test_result_collapse">折りたたむ</string>
     <string name="mcp_market_remote_only">リモートMCPサービスの構成のみサポートされます</string>
+    <string name="live_frame_pump_interval">Live フレームポンプ頻度</string>
+    <string name="live_frame_pump_interval_description">ライブミラーのフレーム送出スロット間隔。低いほどフレームが密になり、消費が増加します</string>
+    <string name="live_frame_pump_no_throttle">制限なし</string>
 </resources>

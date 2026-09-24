@@ -7316,4 +7316,7 @@ Sekarang Anda dapat menggunakan mode AutoGLM di antarmuka percakapan.</string>
     <string name="token_activity_total_tokens">Total Token</string>
     <string name="token_activity_peak_tokens">Token puncak</string>
     <string name="mcp_market_remote_only">Hanya konfigurasi layanan MCP jarak jauh yang didukung</string>
+    <string name="live_frame_pump_interval">Kecepatan pompa Live</string>
+    <string name="live_frame_pump_interval_description">Intervala pembatasan emisi bingkai cermin Live; lebih rendah berarti bingkai lebih padat dan konsumsi lebih tinggi</string>
+    <string name="live_frame_pump_no_throttle">Tanpa batas</string>
 </resources>

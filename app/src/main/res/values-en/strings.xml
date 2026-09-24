@@ -5475,6 +5475,7 @@
     <string name="toolreg_get_device_location_high_accuracy_desc">Get device location (high accuracy)</string>
     <string name="toolreg_get_device_location_desc">Get device location</string>
     <string name="toolreg_get_page_info_desc">Get current page info</string>
+    <string name="toolreg_query_ui_tree_desc">Query the accessibility node tree by condition, returning node handles for precise actions</string>
     <string name="toolreg_capture_screenshot_desc">Capture screenshot and return file path</string>
     <string name="toolreg_run_ui_subagent_desc">Run UI sub-agent: %1$s (max %2$s steps)</string>
     <string name="toolreg_agent_id_suffix"> (agent_id=%1$s)</string>
@@ -7976,4 +7977,7 @@
     <string name="market_version_too_high_message">Current client version %1$s is higher than the maximum supported version %2$s for this resource. Please use a supported client version.</string>
     <string name="thinking_config_invalid_json">Invalid Thinking Configuration</string>
     <string name="mcp_market_remote_only">Only remote MCP service configurations are supported</string>
+    <string name="live_frame_pump_interval">Live frame pump rate</string>
+    <string name="live_frame_pump_interval_description">Throttle interval for live mirror frame emission; lower means denser frames and higher battery/traffic cost</string>
+    <string name="live_frame_pump_no_throttle">No throttle</string>
 </resources>

@@ -7154,4 +7154,7 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="token_activity_total_tokens">Tokens acumulados</string>
     <string name="token_activity_peak_tokens">Pico de tokens</string>
     <string name="mcp_market_remote_only">Apenas configurações de serviços MCP remotos são suportadas</string>
+    <string name="live_frame_pump_interval">Frequência da bomba de quadros Live</string>
+    <string name="live_frame_pump_interval_description">Intervalo de limitação para emissão de quadros do espelho Live; menor significa quadros mais densos e maior consumo</string>
+    <string name="live_frame_pump_no_throttle">Sem limite</string>
 </resources>

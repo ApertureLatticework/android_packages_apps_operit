@@ -312,6 +312,16 @@ open class StandardUITools(protected val context: Context) : ToolImplementations
         )
     }
 
+    /** Queries the accessibility node tree by condition (remote-only semantic locating). */
+    open suspend fun queryUiTree(tool: AITool): ToolResult {
+            return ToolResult(
+                    toolName = tool.name,
+                    success = false,
+                    result = StringResultData(""),
+                error = OPERATION_NOT_SUPPORTED
+        )
+    }
+
     data class UINode(
             val className: String?,
             val text: String?,

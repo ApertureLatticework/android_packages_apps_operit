@@ -128,6 +128,142 @@ open class AccessibilityUITools(context: Context) : StandardUITools(context) {
         }
     }
 
+    /**
+     * 语义树条件查询（live_pipeline_completion 步骤 3）。
+     *
+     * 全量 XML 单次拉取、XmlPullParser 流式遍历判定（不建 DOM），多条件 AND。
+     * 返回节点句柄 nodeId 与 setTextOnNode 同源，模型可拿着 nodeId 直通精操。
+     */
+    override suspend fun queryUiTree(tool: AITool): ToolResult {
+        return try {
+            withAccessibilityCheck(tool) {
+                val textContains = tool.parameters.find { it.name == "text_contains" }?.value?.trim()?.takeIf { it.isNotEmpty() }
+                val resourceId = tool.parameters.find { it.name == "resource_id" }?.value?.trim()?.takeIf { it.isNotEmpty() }
+                val className = tool.parameters.find { it.name == "class_name" }?.value?.trim()?.takeIf { it.isNotEmpty() }
+                val clickableFilter = tool.parameters.find { it.name == "clickable" }?.value?.lowercase()
+                val maxDepth = tool.parameters.find { it.name == "max_depth" }?.value?.toIntOrNull()?.coerceIn(1, 50) ?: 24
+                val maxResults = tool.parameters.find { it.name == "max_results" }?.value?.toIntOrNull()?.coerceIn(1, 100) ?: 20
+
+                if (textContains == null && resourceId == null && className == null && clickableFilter == null) {
+                    return@withAccessibilityCheck ToolResult(
+                        toolName = tool.name,
+                        success = false,
+                        result = StringResultData(""),
+                        error = "At least one filter is required: text_contains / resource_id / class_name / clickable."
+                    )
+                }
+                val clickableWanted = when (clickableFilter) {
+                    null -> null
+                    "true", "yes", "1" -> true
+                    else -> false
+                }
+
+                val uiXml = getUIHierarchyWithRetry()
+                if (uiXml.isEmpty()) {
+                    return@withAccessibilityCheck ToolResult(
+                        toolName = tool.name,
+                        success = false,
+                        result = StringResultData(""),
+                        error = "Failed to retrieve UI data via accessibility service."
+                    )
+                }
+
+                val matches = org.json.JSONArray()
+                var totalMatches = 0
+                var truncated = false
+                try {
+                    val factory = XmlPullParserFactory.newInstance()
+                    factory.isNamespaceAware = false
+                    val parser = factory.newPullParser()
+                    parser.setInput(StringReader(uiXml))
+
+                    var eventType = parser.eventType
+                    var depth = -1
+                    while (eventType != XmlPullParser.END_DOCUMENT) {
+                        when (eventType) {
+                            XmlPullParser.START_TAG -> {
+                                depth += 1
+                                if (parser.name == "node" && depth in 1..maxDepth) {
+                                    val nodeText = parser.getAttributeValue(null, "text") ?: ""
+                                    val nodeDesc = parser.getAttributeValue(null, "content-desc") ?: ""
+                                    val nodeResId = parser.getAttributeValue(null, "resource-id") ?: ""
+                                    val nodeClass = parser.getAttributeValue(null, "class") ?: ""
+                                    val nodeClickable = parser.getAttributeValue(null, "clickable") == "true"
+
+                                    val hit = (textContains == null ||
+                                        nodeText.contains(textContains, ignoreCase = true) ||
+                                        nodeDesc.contains(textContains, ignoreCase = true)) &&
+                                        (resourceId == null ||
+                                            nodeResId == resourceId ||
+                                            nodeResId.endsWith(":id/$resourceId")) &&
+                                        (className == null || nodeClass.endsWith(className)) &&
+                                        (clickableWanted == null || nodeClickable == clickableWanted)
+
+                                    if (hit) {
+                                        totalMatches += 1
+                                        if (matches.length() < maxResults) {
+                                            val bounds = parser.getAttributeValue(null, "bounds") ?: ""
+                                            val rect = Regex("""\[(\d+),(\d+)\]\[(\d+),(\d+)\]""").find(bounds)
+                                            val entry = org.json.JSONObject()
+                                                .put("nodeId", parser.getAttributeValue(null, "nodeId") ?: "")
+                                                .put("text", nodeText)
+                                                .put("contentDesc", nodeDesc)
+                                                .put("className", nodeClass)
+                                                .put("resourceId", nodeResId)
+                                                .put(
+                                                    "bounds",
+                                                    if (rect != null) {
+                                                        org.json.JSONObject()
+                                                            .put("left", rect.groupValues[1].toInt())
+                                                            .put("top", rect.groupValues[2].toInt())
+                                                            .put("right", rect.groupValues[3].toInt())
+                                                            .put("bottom", rect.groupValues[4].toInt())
+                                                    } else {
+                                                        org.json.JSONObject()
+                                                    }
+                                                )
+                                                .put("clickable", nodeClickable)
+                                                .put("focusable", parser.getAttributeValue(null, "focusable") == "true")
+                                                .put("depth", depth)
+                                            matches.put(entry)
+                                        } else {
+                                            truncated = true
+                                        }
+                                    }
+                                }
+                            }
+                            XmlPullParser.END_TAG -> depth -= 1
+                        }
+                        eventType = parser.next()
+                    }
+                } catch (e: Exception) {
+                    AppLogger.e(TAG, "queryUiTree parse failed", e)
+                    return@withAccessibilityCheck ToolResult(
+                        toolName = tool.name,
+                        success = false,
+                        result = StringResultData(""),
+                        error = "Failed to parse UI hierarchy: ${e.message}"
+                    )
+                }
+
+                val payload = org.json.JSONObject()
+                    .put("matches", matches)
+                    .put("totalMatches", totalMatches)
+                    .put("truncated", truncated)
+                    .put("hint", if (truncated) "Narrow the filters to reduce matches." else "")
+                ToolResult(toolName = tool.name, success = true, result = StringResultData(payload.toString()), error = "")
+            }
+        } catch (e: Exception) {
+            AppLogger.e(TAG, "Error querying ui tree", e)
+            ToolResult(
+                toolName = tool.name,
+                success = false,
+                result = StringResultData(""),
+                error = "Error querying ui tree: ${e.message}"
+            )
+        }
+    }
+
     /** 从无障碍服务获取焦点信息 */
     private suspend fun extractFocusInfoFromAccessibility(): FocusInfo {
         val focusInfo = FocusInfo()

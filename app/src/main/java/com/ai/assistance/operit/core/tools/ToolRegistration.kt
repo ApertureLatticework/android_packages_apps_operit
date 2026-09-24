@@ -2470,6 +2470,17 @@ fun registerAllTools(handler: AIToolHandler, context: Context) {
             }
     )
 
+    // 语义树条件查询（live_pipeline_completion 步骤 3）：nodeId 直通 setText 精操
+    handler.registerTool(
+            name = "query_ui_tree",
+            descriptionGenerator = { _ -> s(R.string.toolreg_query_ui_tree_desc) },
+            executor = { tool ->
+                runBlocking(Dispatchers.IO) {
+                    executeUiToolWithVisibility(tool) { uiTools.queryUiTree(it) }
+                }
+            }
+    )
+
     handler.registerTool(
             name = "capture_screenshot",
             descriptionGenerator = { _ -> s(R.string.toolreg_capture_screenshot_desc) },

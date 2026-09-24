@@ -48,3 +48,32 @@ Live 线随 aosp_native_priv_integration 步骤 6/7 落了骨架，但闭环缺�
 1. [帧泵实时流](1_FramePump.md)（方案就绪待过目）
 2. [流式多模态通路](2_StreamingMultimodal.md)（方案就绪待过目）
 3. [AST 查询工具化](3_AstQueryTool.md)（方案就绪待过目）
+
+## 执行情况（2026-09-23，分支 feat/live-pipeline-completion，基于 lineage-23.2）
+
+步骤 1（帧泵）：
+- LiveScreenMirror 增泵层：OnImageAvailableListener（专用 HandlerThread）事件驱动，
+  节流窗口（liveFramePumpIntervalMs，0/250/500/1000 四档，默认 250），
+  MutableSharedFlow(replay=0, DROP_OLDEST) conflate 语义；无订阅者不复制 Bitmap
+- 新接口：`frames: SharedFlow<Frame>`、`awaitFreshFrame(afterSequence)`（静默画面
+  超时返回 null 显式信号）、`latestSequence()`、`applyPumpIntervalMs()`（设置面即时生效）
+- captureFrame/captureLatestBitmap 按需接口原样保留；设置项入 GlobalDisplaySettingsScreen
+  （FilterChip 四档），八语同步
+
+步骤 2（流式多模态）：
+- captureScreenshotForAgent 泵化：首帧轮询取当前画面，此后 awaitFreshFrame 等
+  稳定新帧；画面未变时复用上帧 imageId 并以 "[SCREENSHOT] Screen unchanged..."
+  显式告知模型（不冒充新帧）
+- 历史帧双帧保留：recentFrameImageIds 上限 2，被逐出者从 prompt 历史与
+  ImagePoolManager 池同步清除；removeImagesFromLastUserMessage 整删
+- 遮罩常隐藏：特权主屏会话期间指示器/进度遮罩不再逐帧显隐（run 级隐藏、finally 恢复），
+  消除 delay(200) 逐帧开销与泵帧污染；非泵路径（副屏/非特权）保留原遮罩
+
+步骤 3（AST 查询工具化）：
+- query_ui_tree 落地：XmlPullParser 流式遍历（不建 DOM），text_contains/
+  resource_id（后缀匹配）/class_name/clickable 多条件 AND，max_depth/max_results
+  截断带 truncated+hint；返回 nodeId 与 setTextOnNode 同源闭环
+- 注册三件套：ToolRegistration executor、SystemToolPromptsInternal 双语
+  ToolPrompt、toolreg 描述字符串（values/en，跟随 toolreg 前例）
+
+验证：检Localization 门禁零错；待 CI 编译与真机四场景回归（步骤 9 清单）。

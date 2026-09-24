@@ -7163,4 +7163,7 @@
     <string name="token_activity_total_tokens">누적 토큰</string>
     <string name="token_activity_peak_tokens">최대 토큰</string>
     <string name="mcp_market_remote_only">원격 MCP 서비스 구성만 지원됩니다</string>
+    <string name="live_frame_pump_interval">Live 프레임 펌프 주기</string>
+    <string name="live_frame_pump_interval_description">라이브 미러 프레임 출력 스로틀 간격. 낮을수록 프레임이 촘촘해지고 소비가 증가합니다</string>
+    <string name="live_frame_pump_no_throttle">제한 없음</string>
 </resources>

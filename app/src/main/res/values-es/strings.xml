@@ -7465,4 +7465,7 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="token_stats_settings">Configuración de estadísticas</string>
     <string name="token_stats_custom_range_confirm">Aceptar</string>
     <string name="mcp_market_remote_only">Solo se admiten configuraciones de servicios MCP remotos</string>
+    <string name="live_frame_pump_interval">Frecuencia de bombeo Live</string>
+    <string name="live_frame_pump_interval_description">Intervalo de limitación para la emisión de fotogramas del espejo Live; menor significa fotogramas más densos y mayor consumo</string>
+    <string name="live_frame_pump_no_throttle">Sin límite</string>
 </resources>

@@ -72,6 +72,10 @@ class DisplayPreferencesManager private constructor(private val context: Context
         private val KEY_ENABLE_LIVE_SECURE_CAPTURE =
             booleanPreferencesKey("enable_live_secure_capture")
 
+        // Live 帧泵节流间隔（毫秒）：画面变化事件到帧产出的最小间距，默认 250ms
+        private val KEY_LIVE_FRAME_PUMP_INTERVAL_MS =
+            intPreferencesKey("live_frame_pump_interval_ms")
+
         // 工具折叠设置（多个只读工具 / 多个任意工具 / 全部工具）
         private val KEY_TOOL_COLLAPSE_MODE = stringPreferencesKey("tool_collapse_mode")
     }
@@ -231,6 +235,7 @@ class DisplayPreferencesManager private constructor(private val context: Context
         visitWebWaitSeconds: Int? = null,
         toolPkgHookTimeoutSeconds: Int? = null,
         enableLiveSecureCapture: Boolean? = null,
+        liveFramePumpIntervalMs: Int? = null,
         toolCollapseMode: ToolCollapseMode? = null
     ) {
         context.displayPreferencesDataStore.edit { preferences ->
@@ -268,6 +273,7 @@ class DisplayPreferencesManager private constructor(private val context: Context
                 preferences[KEY_TOOLPKG_HOOK_TIMEOUT_SECONDS] = it.coerceIn(1, 60)
             }
             enableLiveSecureCapture?.let { preferences[KEY_ENABLE_LIVE_SECURE_CAPTURE] = it }
+            liveFramePumpIntervalMs?.let { preferences[KEY_LIVE_FRAME_PUMP_INTERVAL_MS] = it }
             toolCollapseMode?.let { preferences[KEY_TOOL_COLLAPSE_MODE] = it.value }
         }
     }
@@ -311,6 +317,26 @@ class DisplayPreferencesManager private constructor(private val context: Context
     fun isLiveSecureCaptureEnabled(): Boolean {
         return runBlocking {
             enableLiveSecureCapture.first()
+        }
+    }
+
+    /**
+     * Live 帧泵节流间隔（毫秒）。0 表示不节流（跟随合成事件）。
+     */
+    val liveFramePumpIntervalMs: Flow<Int> =
+        context.displayPreferencesDataStore.data.map { preferences ->
+            preferences[KEY_LIVE_FRAME_PUMP_INTERVAL_MS] ?: 250
+        }
+
+    fun getLiveFramePumpIntervalMs(): Int {
+        return runBlocking {
+            liveFramePumpIntervalMs.first()
+        }
+    }
+
+    suspend fun setLiveFramePumpIntervalMs(intervalMs: Int) {
+        context.displayPreferencesDataStore.edit { preferences ->
+            preferences[KEY_LIVE_FRAME_PUMP_INTERVAL_MS] = intervalMs
         }
     }
 
