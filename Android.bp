@@ -4,8 +4,9 @@
 //     定制 4 后 libavfilter/libavdevice/libffmpeg_cli 全部编通）
 //   - 136 个包内 prebuilt（android_library_import/java_import）+ native 五件
 //   - 树内 androidx（25 件直引）与 Kotlin 系模块（下划线命名）逐一实名核验
-// 注意：本 bp 生效即要求树内有 external/ffmpeg（local_manifests/upstream-ports.xml）；
-//       只装 aperture.xml 不装 upstream-ports.xml 的树会解析失败，两份清单成对安装。
+// 注意：本 bp 生效即要求树内有 external/ffmpeg 与 external/operit-ripgrep
+//       （local_manifests/upstream-forks.xml）；只装 aperture.xml 不装
+//       upstream-forks.xml 的树会解析失败，两份清单成对安装。
 //
 android_library {
     name: "operit-lib",
@@ -224,6 +225,29 @@ android_library {
         // 树内 material3 1.4-alpha 将 PullToRefreshBox 降回实验位（应用侧新版本为稳定位）
         "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
     ],
+}
+
+// liboperit_ripgrep —— rg 内容搜索 JNI 桥（Rust，树内源码线，翻 2026-09-22 prebuilt 定案）
+// 源与 Gradle cargo 线共用 tools/native_ripgrep/（同一份 src/lib.rs 与 Cargo.lock）；
+// ripgrep 家族与 regex 断代三件在 external/operit-ripgrep fork 仓，jni 0.21.1 与
+// serde 系直接借树（android-crates-io）。Gradle 线继续 CI cargo 产物入 jniLibs。
+rust_library_dylib {
+    name: "liboperit_ripgrep",
+    crate_name: "operit_ripgrep",
+    crate_root: "tools/native_ripgrep/src/lib.rs",
+    cargo_pkg_version: "0.1.0",
+    edition: "2021",
+    rustlibs: [
+        "liboperit_globset",
+        "liboperit_grep_matcher",
+        "liboperit_grep_regex",
+        "liboperit_ignore",
+        "libjni",
+        "libserde",
+        "libserde_json",
+    ],
+    proc_macros: ["libserde_derive"],
+    visibility: ["//packages/apps/Operit:__subpackages__"],
 }
 
 android_app {

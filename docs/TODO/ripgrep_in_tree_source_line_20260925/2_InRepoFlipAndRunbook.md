@@ -3,7 +3,7 @@
 ## 前置
 
 - fork 仓已建并推组织仓
-- local_manifests `upstream-ports.xml` 增 `external/ripgrep` 条目（钉 fork 分支）
+- local_manifests `upstream-forks.xml` 已增 `external/operit-ripgrep` 条目（✅ 11c43ab）
 
 ## 本仓改动
 

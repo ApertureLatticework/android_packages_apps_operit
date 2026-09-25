@@ -1,7 +1,7 @@
 ---
 Repository: https://github.com/ApertureLatticework/android_packages_apps_operit
 Branch: 待建（依赖 fork 仓就位后动工）
-Status: fork 仓内容就绪，待组织仓建立推送
+Status: 本仓已翻牌（源码线生效），待树侧 m 验证
 ---
 
 # ripgrep 树内源码线（翻 2026-09-22 prebuilt 定案）
