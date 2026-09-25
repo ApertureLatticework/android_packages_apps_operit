@@ -43,7 +43,8 @@ class StructuredToolCallBridgeHistoryTest {
             ),
             placeholder
         )
-        assertFalse(placeholder.contains("用户取消"))
+        assertFalse(placeholder.contains("已取消"))
+        assertTrue(placeholder.contains("这不是用户取消"))
         assertEquals("The second read was skipped.", messages.at(4).getString("content"))
         assertToolResultsFollowTheirCalls(messages)
     }

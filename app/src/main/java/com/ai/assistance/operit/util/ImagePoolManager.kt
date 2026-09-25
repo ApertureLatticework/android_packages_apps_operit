@@ -437,12 +437,14 @@ object ImagePoolManager {
         if (!imageData.mimeType.startsWith("image/", ignoreCase = true)) {
             return imageData
         }
-        val bytes = try {
-            Base64.decode(imageData.base64, Base64.DEFAULT)
+        // decode→detect 全程容错：JVM 单测的 android 桩（isReturnDefaultValues）
+        // 让 Base64.decode 返回 null，任一环节异常/无法判定均保留原样，真机行为不变
+        val detectedMimeType = try {
+            val bytes = Base64.decode(imageData.base64, Base64.DEFAULT)
+            detectImageMimeTypeFromBytes(bytes)
         } catch (_: Throwable) {
             return imageData
-        }
-        val detectedMimeType = detectImageMimeTypeFromBytes(bytes) ?: return imageData
+        } ?: return imageData
         if (detectedMimeType.equals(imageData.mimeType, ignoreCase = true)) {
             return imageData
         }
