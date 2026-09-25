@@ -1667,20 +1667,6 @@
     <string name="workspace_project_type_office_description">Pentru editarea documentelor, gestionarea fișierelor și sarcini generale de birou</string>
     <string name="workspace_project_type_web_title">Web Proiect</string>
     <string name="workspace_project_type_web_description">Potrivit pentru dezvoltarea de pagini web, suportă HTML/CSS/JavaScript, pornirea automată a serverului local</string>
-    <string name="workspace_project_type_android_title">Android Proiect</string>
-    <string name="workspace_project_type_android_description">Se aplică în cazul Android Dezvoltarea proiectelor, incluzând Gradle Butoane rapide pentru sarcini frecvente</string>
-    <string name="workspace_project_type_flutter_title">Flutter Proiect</string>
-    <string name="workspace_project_type_flutter_description">Se aplică în cazul Flutter Dezvoltare multiplataformă, cu șabloane de aplicații din versiunea stabilă actuală și comenzi uzuale integrate</string>
-    <string name="workspace_project_type_node_title">Node.js Proiect</string>
-    <string name="workspace_project_type_node_description">Se aplică în cazul Node.js Dezvoltare backend, oferind npm Butoane rapide pentru comenzi</string>
-    <string name="workspace_project_type_typescript_title">TypeScript Proiect</string>
-    <string name="workspace_project_type_typescript_description">TypeScript + pnpm, care susține dezvoltarea cu siguranță de tip și tsc watch Compilare în timp real</string>
-    <string name="workspace_project_type_python_title">Python Proiect</string>
-    <string name="workspace_project_type_python_description">Se aplică în cazul Python Dezvoltare, asistență pip și HTTP server</string>
-    <string name="workspace_project_type_java_title">Java Proiect</string>
-    <string name="workspace_project_type_java_description">Se aplică în cazul Java Dezvoltare, asistență Gradle și Maven Construirea</string>
-    <string name="workspace_project_type_go_title">Go Proiect</string>
-    <string name="workspace_project_type_go_description">Se aplică în cazul Go Dezvoltare, furnizare go mod și build Comandă</string>
     <string name="workspace_project_type_toolpkg_section">Șabloane pentru spațiul de lucru al pluginurilor</string>
     <string name="workspace_template_import_failed">Eșecul importării șablonului spațiului de lucru al pluginului</string>
     <string name="please_select_or_create_conversation">Vă rugăm să selectați sau să creați mai întâi o conversație</string>
@@ -2959,22 +2945,8 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="workspace_project_blank_description">Acesta este un spațiu de lucru gol, care conține doar structura de directoare de bază. Poți edita .operit/config.json Configurați tipul de proiect, serverul și comenzile, de exemplu:server.enabled,preview.type,commands etc.</string>
     <string name="workspace_project_web_title">Web Proiect</string>
     <string name="workspace_project_web_description">HTML/CSS/JavaScript Dezvoltare web, serverul local este activat</string>
-    <string name="workspace_project_node_title">Node.js Proiect</string>
-    <string name="workspace_project_node_description">Utilizare npm Gestionarea dependențelor, destinată dezvoltării backend și instrumentelor de compilare</string>
-    <string name="workspace_project_typescript_title">TypeScript Proiect</string>
-    <string name="workspace_project_typescript_description">Utilizare pnpm și TypeScript, oferind siguranță de tip și compilare în timp real</string>
-    <string name="workspace_project_python_title">Python Proiect</string>
-    <string name="workspace_project_python_description">Suportă medii virtuale și pip Gestionarea pachetelor, potrivită pentru analiza datelor și dezvoltare</string>
-    <string name="workspace_project_java_title">Java Proiect</string>
-    <string name="workspace_project_java_description">Standard Gradle Structura proiectului, care permite compilarea, testarea și împachetarea</string>
-    <string name="workspace_project_go_title">Go Proiect</string>
-    <string name="workspace_project_go_description">Programare concurentă de înaltă performanță, utilizând Go Modules Gestionarea dependențelor</string>
     <string name="workspace_project_office_title">Documente de birou</string>
     <string name="workspace_project_office_description">Pentru editarea documentelor, gestionarea fișierelor și sarcini generale de birou</string>
-    <string name="workspace_project_android_title">Android Proiect</string>
-    <string name="workspace_project_android_description">Se aplică în cazul Android Dezvoltare de proiecte, furnizare Gradle Butoane rapide pentru sarcini frecvente</string>
-    <string name="workspace_project_flutter_title">Flutter Proiect</string>
-    <string name="workspace_project_flutter_description">Flutter Șabloane de aplicații multiplatformă, care includ Android,iOS,Web și infrastructura pentru desktop</string>
 
     <!-- Workspace UI -->
     <string name="workspace_preview">Previzualizare</string>

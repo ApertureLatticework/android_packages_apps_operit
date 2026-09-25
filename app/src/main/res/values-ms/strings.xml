@@ -1444,20 +1444,6 @@
     <string name="workspace_project_type_office_description">Untuk penyuntingan dokumen, pemprosesan fail dan tugas pejabat umum</string>
     <string name="workspace_project_type_web_title">Projek Web</string>
     <string name="workspace_project_type_web_description">Sesuai untuk pembangunan laman web, menyokong HTML/CSS/JavaScript, pelayan tempatan bermula secara automatik</string>
-    <string name="workspace_project_type_android_title">Projek Android</string>
-    <string name="workspace_project_type_android_description">Sesuai untuk pembangunan kejuruteraan Android, mengandungi butang pintas tugas Gradle biasa</string>
-    <string name="workspace_project_type_flutter_title">Projek Flutter</string>
-    <string name="workspace_project_type_flutter_description">Sesuai untuk pembangunan pelbagai platform Flutter, dengan templat aplikasi versi stabil semasa dan arahan biasa terbina dalam</string>
-    <string name="workspace_project_type_node_title">Projek Node.js</string>
-    <string name="workspace_project_type_node_description">Sesuai untuk pembangunan backend Node.js, menyediakan butang pintas arahan npm</string>
-    <string name="workspace_project_type_typescript_title">Projek TypeScript</string>
-    <string name="workspace_project_type_typescript_description">TypeScript + pnpm, menyokong pembangunan selamat jenis dan kompilasi masa nyata tsc watch</string>
-    <string name="workspace_project_type_python_title">Projek Python</string>
-    <string name="workspace_project_type_python_description">Sesuai untuk pembangunan Python, menyokong pip dan pelayan HTTP</string>
-    <string name="workspace_project_type_java_title">Projek Java</string>
-    <string name="workspace_project_type_java_description">Sesuai untuk pembangunan Java, menyokong pembinaan Gradle dan Maven</string>
-    <string name="workspace_project_type_go_title">Projek Go</string>
-    <string name="workspace_project_type_go_description">Sesuai untuk pembangunan Go, menyediakan arahan go mod dan build</string>
     <string name="please_select_or_create_conversation">Sila pilih atau cipta perbualan terlebih dahulu</string>
     <string name="latest">Terkini</string>
     <string name="main_highlights">✨ Sorotan utama</string>
@@ -2483,10 +2469,6 @@
     <string name="not_selected">Tidak dipilih</string>
 
     <string name="workspace_project_office_description">Untuk penyuntingan dokumen, pemprosesan fail dan tugas pejabat umum</string>
-    <string name="workspace_project_android_title">Projek Android</string>
-    <string name="workspace_project_android_description">Untuk pembangunan kejuruteraan Android, menyediakan butang pintas untuk tugas Gradle biasa</string>
-    <string name="workspace_project_flutter_title">Projek Flutter</string>
-    <string name="workspace_project_flutter_description">Templat aplikasi pelbagai platform Flutter, merangkumi infrastruktur asas untuk Android, iOS, Web dan desktop</string>
     <string name="workspace_preview">Pratonton</string>
     <string name="workspace_close_menu">Tutup menu</string>
     <string name="workspace_open_menu">Buka menu</string>
@@ -2591,16 +2573,6 @@
     <string name="workspace_project_blank_description">Ini adalah ruang kerja kosong yang hanya mengandungi struktur direktori asas. Anda boleh mengedit .operit/config.json untuk mengkonfigurasi jenis projek, pelayan dan arahan, contohnya: server.enabled, preview.type, commands, dll.</string>
     <string name="workspace_project_web_title">Projek Web</string>
     <string name="workspace_project_web_description">Pembangunan halaman web HTML/CSS/JavaScript, pelayan tempatan telah diaktifkan</string>
-    <string name="workspace_project_node_title">Projek Node.js</string>
-    <string name="workspace_project_node_description">Menggunakan npm untuk menguruskan kebergantungan, sesuai untuk pembangunan backend dan alat pembinaan</string>
-    <string name="workspace_project_typescript_title">Projek TypeScript</string>
-    <string name="workspace_project_typescript_description">Menggunakan pnpm dan TypeScript, menyediakan keselamatan jenis dan kompilasi masa nyata</string>
-    <string name="workspace_project_python_title">Projek Python</string>
-    <string name="workspace_project_python_description">Menyokong persekitaran maya dan pengurusan pakej pip, sesuai untuk analisis data dan pembangunan</string>
-    <string name="workspace_project_java_title">Projek Java</string>
-    <string name="workspace_project_java_description">Struktur projek Gradle standard, menyokong pembinaan, pengujian dan pembungkusan</string>
-    <string name="workspace_project_go_title">Projek Go</string>
-    <string name="workspace_project_go_description">Pengaturcaraan konkuren berprestasi tinggi, menggunakan Go Modules untuk menguruskan kebergantungan</string>
     <string name="workspace_project_office_title">Dokumen Pejabat</string>
 
     <string name="process_limit_info_title">Mengenai Had Proses Hantu</string>

@@ -334,75 +334,12 @@ fun WorkspaceSetup(chatId: String, onBindWorkspace: (String, String?) -> Unit) {
                                 }
                             )
 
-                            // Android 项目卡片
-                            ProjectTypeCard(
-                                icon = Icons.Default.PhoneAndroid,
-                                title = context.getString(R.string.workspace_project_type_android_title),
-                                description = context.getString(R.string.workspace_project_type_android_description),
-                                onClick = {
-                                    bindBuiltInWorkspace("android")
-                                }
-                            )
 
-                            // Flutter 项目卡片
-                            ProjectTypeCard(
-                                icon = Icons.Default.Widgets,
-                                title = context.getString(R.string.workspace_project_type_flutter_title),
-                                description = context.getString(R.string.workspace_project_type_flutter_description),
-                                onClick = {
-                                    bindBuiltInWorkspace("flutter")
-                                }
-                            )
                              
-                            // Node.js 项目卡片
-                            ProjectTypeCard(
-                                icon = Icons.Default.Terminal,
-                                title = context.getString(R.string.workspace_project_type_node_title),
-                                description = context.getString(R.string.workspace_project_type_node_description),
-                                onClick = {
-                                    bindBuiltInWorkspace("node")
-                                }
-                            )
                             
-                            // TypeScript 项目卡片
-                            ProjectTypeCard(
-                                icon = Icons.Default.Code,
-                                title = context.getString(R.string.workspace_project_type_typescript_title),
-                                description = context.getString(R.string.workspace_project_type_typescript_description),
-                                onClick = {
-                                    bindBuiltInWorkspace("typescript")
-                                }
-                            )
                             
-                            // Python 项目卡片
-                            ProjectTypeCard(
-                                icon = Icons.Default.Code,
-                                title = context.getString(R.string.workspace_project_type_python_title),
-                                description = context.getString(R.string.workspace_project_type_python_description),
-                                onClick = {
-                                    bindBuiltInWorkspace("python")
-                                }
-                            )
                             
-                            // Java 项目卡片
-                            ProjectTypeCard(
-                                icon = Icons.Default.Settings,
-                                title = context.getString(R.string.workspace_project_type_java_title),
-                                description = context.getString(R.string.workspace_project_type_java_description),
-                                onClick = {
-                                    bindBuiltInWorkspace("java")
-                                }
-                            )
                             
-                            // Go 项目卡片
-                            ProjectTypeCard(
-                                icon = Icons.Default.Build,
-                                title = context.getString(R.string.workspace_project_type_go_title),
-                                description = context.getString(R.string.workspace_project_type_go_description),
-                                onClick = {
-                                    bindBuiltInWorkspace("go")
-                                }
-                            )
 
                             if (toolPkgWorkspaceTemplates.isNotEmpty()) {
                                 Spacer(modifier = Modifier.height(8.dp))

@@ -1643,20 +1643,6 @@
     <string name="workspace_project_type_office_description">For document editing, file processing, and general office tasks</string>
     <string name="workspace_project_type_web_title">Web Project</string>
     <string name="workspace_project_type_web_description">For web development (HTML/CSS/JavaScript), auto-starts a local server</string>
-    <string name="workspace_project_type_node_title">Node.js Project</string>
-    <string name="workspace_project_type_node_description">For Node.js backend development, includes quick npm command buttons</string>
-    <string name="workspace_project_type_typescript_title">TypeScript Project</string>
-    <string name="workspace_project_type_typescript_description">TypeScript + pnpm, type-safe development with live compilation via tsc watch</string>
-    <string name="workspace_project_type_python_title">Python Project</string>
-    <string name="workspace_project_type_python_description">For Python development, supports pip and an HTTP server</string>
-    <string name="workspace_project_type_java_title">Java Project</string>
-    <string name="workspace_project_type_java_description">For Java development, supports Gradle and Maven builds</string>
-    <string name="workspace_project_type_go_title">Go Project</string>
-    <string name="workspace_project_type_go_description">For Go development, includes go mod and build commands</string>
-    <string name="workspace_project_type_android_title">Android Project</string>
-    <string name="workspace_project_type_android_description">For Android development with quick Gradle task shortcuts</string>
-    <string name="workspace_project_type_flutter_title">Flutter Project</string>
-    <string name="workspace_project_type_flutter_description">For Flutter cross-platform development, includes the current stable app template and common command shortcuts</string>
     <string name="please_select_or_create_conversation">Please select or create a conversation first</string>
     <string name="latest">Latest</string>
     <string name="main_highlights">✨ Main Highlights</string>
@@ -3118,22 +3104,8 @@
     <string name="workspace_project_blank_description">This is a blank workspace with only basic directory structure. You can edit .operit/config.json to configure project type, server, and commands, such as: server.enabled, preview.type, commands, etc.</string>
     <string name="workspace_project_web_title">Web Project</string>
     <string name="workspace_project_web_description">HTML/CSS/JavaScript web development with local server enabled</string>
-    <string name="workspace_project_node_title">Node.js Project</string>
-    <string name="workspace_project_node_description">Uses npm for dependency management, suitable for backend development and build tools</string>
-    <string name="workspace_project_typescript_title">TypeScript Project</string>
-    <string name="workspace_project_typescript_description">Uses pnpm and TypeScript, provides type safety and real-time compilation</string>
-    <string name="workspace_project_python_title">Python Project</string>
-    <string name="workspace_project_python_description">Supports virtual environments and pip package management, suitable for data analysis and development</string>
-    <string name="workspace_project_java_title">Java Project</string>
-    <string name="workspace_project_java_description">Standard Gradle project structure, supports building, testing, and packaging</string>
-    <string name="workspace_project_go_title">Go Project</string>
-    <string name="workspace_project_go_description">High-performance concurrent programming using Go Modules for dependency management</string>
     <string name="workspace_project_office_title">Office Documents</string>
     <string name="workspace_project_office_description">For document editing, file processing, and general office tasks</string>
-    <string name="workspace_project_android_title">Android Project</string>
-    <string name="workspace_project_android_description">For Android development with quick Gradle task shortcuts</string>
-    <string name="workspace_project_flutter_title">Flutter Project</string>
-    <string name="workspace_project_flutter_description">Flutter cross-platform app template with base structure for Android, iOS, Web, and desktop</string>
 
     <!-- Workspace UI -->
     <string name="workspace_preview">Preview</string>

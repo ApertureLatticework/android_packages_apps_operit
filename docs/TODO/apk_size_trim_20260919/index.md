@@ -34,7 +34,7 @@ ROM 独占分发，system 分区寸土寸金；安装包体积按梯队压缩，
 
 观察项（现役，不动）：
 
-- templates/ 11M：AI 工作区与工具包开发的 Android 工程模板，WorkspaceUtils 现役消费
+- templates/：2026-09-25 裁军至 31K（见文末）
 - accessibility.apk 2.7M：无障碍档现役，步骤 4 权限阶梯改造时评估保留形态
 
 并入步骤 4 的本地 AI 切割（2026-09-19）：llama.cpp 与 MNN-LLM 两条本地推理线、sherpa-mnn ASR 线整删，模型资产与下载管理同步移除；唤醒词与 VAD 保留
@@ -47,3 +47,16 @@ ROM 独占分发，system 分区寸土寸金；安装包体积按梯队压缩，
 - 差值 -30.6MB 中：随 examples 裁撤退出的打包 toolpkg 占大头，语言资源约 4M、bridge 1.4M、png 1.3M
 - minify 与 shrinkResources 仅作用于 release/nightly 构建型，debug 口径未体现；release 收益待 bundleRelease 实测
 - 另：用户侧 Drop examples（f936608，540 文件 -15.7 万行）与 CI toolpkg 车道撤除已配套落地
+
+## templates 裁军（2026-09-25）
+
+观察项重新判定：proot/chroot/lxc 已随 aosp_native_priv_integration 裁掉，
+端上不存在任何工程运行时。android/flutter 两模板（10.2M，内含 aapt2 二进制
+两份、gradle-wrapper、flutter 全平台骨架）与 node/typescript/python/java/go
+五轻模板（190K）同属「脚手架指向不存在的运行时」——同罪同罚，七型全裁。
+
+- 保留：web（LocalWebServer 端内预览现役）、office（编辑器现役）、blank
+- 摘除：WorkspaceSetup 六张工程类型卡、WorkspaceUtils 六份默认 config
+  生成器与 when 分支、ProjectType 枚举收敛为 WEB/OFFICE/BLANK
+- templates/ 11M → 31K
+- 字符串：workspace_project(_type)?_{六型} 28 键八语清除

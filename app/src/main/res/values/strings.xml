@@ -1768,20 +1768,6 @@
     <string name="workspace_project_type_office_description">用于文档编辑、文件处理和通用办公任务</string>
     <string name="workspace_project_type_web_title">Web 项目</string>
     <string name="workspace_project_type_web_description">适用于网页开发，支持 HTML/CSS/JavaScript，自动启动本地服务器</string>
-    <string name="workspace_project_type_android_title">Android 项目</string>
-    <string name="workspace_project_type_android_description">适用于 Android 工程开发，包含 Gradle 常用任务快捷按钮</string>
-    <string name="workspace_project_type_flutter_title">Flutter 项目</string>
-    <string name="workspace_project_type_flutter_description">适用于 Flutter 跨平台开发，内置当前稳定版应用模板和常用命令</string>
-    <string name="workspace_project_type_node_title">Node.js 项目</string>
-    <string name="workspace_project_type_node_description">适用于 Node.js 后端开发，提供 npm 命令快捷按钮</string>
-    <string name="workspace_project_type_typescript_title">TypeScript 项目</string>
-    <string name="workspace_project_type_typescript_description">TypeScript + pnpm，支持类型安全开发和 tsc watch 实时编译</string>
-    <string name="workspace_project_type_python_title">Python 项目</string>
-    <string name="workspace_project_type_python_description">适用于 Python 开发，支持 pip 和 HTTP 服务器</string>
-    <string name="workspace_project_type_java_title">Java 项目</string>
-    <string name="workspace_project_type_java_description">适用于 Java 开发，支持 Gradle 和 Maven 构建</string>
-    <string name="workspace_project_type_go_title">Go 项目</string>
-    <string name="workspace_project_type_go_description">适用于 Go 开发，提供 go mod 和 build 命令</string>
     <string name="workspace_project_type_toolpkg_section">插件工作区模板</string>
     <string name="workspace_template_import_failed">导入插件工作区模板失败</string>
     <string name="please_select_or_create_conversation">请先选择或创建一个对话</string>
@@ -3070,22 +3056,8 @@
     <string name="workspace_project_blank_description">这是一个空白工作区，只包含基础目录结构。你可以编辑 .operit/config.json 来配置项目类型、服务器和命令，例如：server.enabled、preview.type、commands 等。</string>
     <string name="workspace_project_web_title">Web 项目</string>
     <string name="workspace_project_web_description">HTML/CSS/JavaScript 网页开发，本地服务器已启用</string>
-    <string name="workspace_project_node_title">Node.js 项目</string>
-    <string name="workspace_project_node_description">使用 npm 管理依赖，适用于后端开发和构建工具</string>
-    <string name="workspace_project_typescript_title">TypeScript 项目</string>
-    <string name="workspace_project_typescript_description">使用 pnpm 和 TypeScript，提供类型安全和实时编译</string>
-    <string name="workspace_project_python_title">Python 项目</string>
-    <string name="workspace_project_python_description">支持虚拟环境和 pip 包管理，适用于数据分析和开发</string>
-    <string name="workspace_project_java_title">Java 项目</string>
-    <string name="workspace_project_java_description">标准 Gradle 项目结构，支持构建、测试和打包</string>
-    <string name="workspace_project_go_title">Go 项目</string>
-    <string name="workspace_project_go_description">高性能并发编程，使用 Go Modules 管理依赖</string>
     <string name="workspace_project_office_title">办公文档</string>
     <string name="workspace_project_office_description">用于文档编辑、文件处理和通用办公任务</string>
-    <string name="workspace_project_android_title">Android 项目</string>
-    <string name="workspace_project_android_description">适用于 Android 工程开发，提供 Gradle 常用任务快捷按钮</string>
-    <string name="workspace_project_flutter_title">Flutter 项目</string>
-    <string name="workspace_project_flutter_description">Flutter 跨平台应用模板，包含 Android、iOS、Web 和桌面端基础结构</string>
 
     <!-- Workspace UI -->
     <string name="workspace_preview">预览</string>
