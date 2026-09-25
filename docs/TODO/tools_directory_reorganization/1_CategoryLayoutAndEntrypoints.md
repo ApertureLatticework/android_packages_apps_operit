@@ -23,11 +23,8 @@ tools/
 	example_packages/
 	ffmpeg/
 	github/
-	hotbuild/
-	mcp_bridge/
+	intree/
 	native_ripgrep/
-	shell_identity_launcher/
-	shower/
 	string/
 	toolpkg/
 	sandboxpackage_dev_install_or_update.js

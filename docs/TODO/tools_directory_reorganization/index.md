@@ -7,7 +7,7 @@ scope: assistance
 
 ## 现状
 
-`tools/` 根目录同时放置 ToolPkg 调试、ADB 脚本执行、示例包同步、Shower 辅助脚本、Compose DSL 调试与 native-ripgrep 构建入口，职责相近的文件彼此分散。
+`tools/` 根目录同时放置 ToolPkg 调试、ADB 脚本执行、示例包同步、Compose DSL 调试与 native-ripgrep 构建入口，职责相近的文件彼此分散。2026-09-25 已裁：mcp_bridge（MCP remote-only 后死链）、hotbuild、shell_identity_launcher（零引用）。
 
 ## 意图
 

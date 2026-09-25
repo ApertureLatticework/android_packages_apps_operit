@@ -22,7 +22,6 @@ on:
       - package.json
       - package-lock.json
       - npm-shrinkwrap.json
-      - pnpm-workspace.yaml
       - quickjs/**
       - settings.gradle.kts
       - showerclient/**
