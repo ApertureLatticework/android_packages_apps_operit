@@ -101,19 +101,19 @@ fun signApkWithRotation(apkFile: File) {
         "Refusing to overwrite an existing rotation signing output: ${rotatedApk.path}"
     }
 
-    // API 28 is the first platform that selects V3 and understands proof-of-rotation;
-    // API 26/27 therefore continue to select the old signer from the V2 block.
+    // ROM 唯一形态，minSdk 31 > 28：平台一律走 V3 块，proof-of-rotation 全量生效，
+    // 不再需要为 API 26/27 保留 V2 老签名路径。
     val signingArguments = listOf(
         "sign",
         "--in", apkFile.path,
         "--out", rotatedApk.path,
-        "--min-sdk-version", "26",
+        "--min-sdk-version", "31",
         "--v1-signing-enabled", "false",
         "--v2-signing-enabled", "true",
         "--v3-signing-enabled", "true",
         "--v4-signing-enabled", "false",
         "--lineage", config.lineageFile.path,
-        "--rotation-min-sdk-version", "28",
+        "--rotation-min-sdk-version", "31",
         "--ks", config.oldStoreFile.path,
         "--ks-type", "PKCS12",
         "--ks-key-alias", config.oldKeyAlias,
@@ -405,8 +405,8 @@ android {
 
     defaultConfig {
         applicationId = "com.ai.assistance.operit"
-        minSdk = 26
-        targetSdk = 34
+        minSdk = 31
+        targetSdk = 36
         versionCode = 51
         versionName = "1.12.2"
 

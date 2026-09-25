@@ -456,7 +456,6 @@
     <string name="voice_keyword_attachments_type_label">Tip</string>
 
     <!-- 用于NavItem类的标识符 -->
-    <string name="shizuku_commands">Acordarea drepturilor</string>
     <string name="tool_permissions">Setări privind permisiunile instrumentelor</string>
     <string name="about">Despre</string>
     <string name="toolbox">Trusa de scule</string>
@@ -857,11 +856,9 @@
     <string name="settings_total">Total</string>
 
     <!-- Shizuku Command Screen -->
-    <string name="shizuku_command_executor">Shizuku ADB Executor de comenzi</string>
     <string name="device_info">Informații despre echipament</string>
     <string name="android_version">AndroidVersiune: %1$s (API %2$d)</string>
     <string name="device_model">Modelul echipamentului: %1$s %2$s</string>
-    <string name="shizuku_status">Shizuku Stare</string>
     <string name="refresh">Reîmprospătare</string>
     <string name="installed">Instalat</string>
     <string name="service_running">Funcționarea serviciului: %1$s</string>
@@ -1160,48 +1157,10 @@
     <string name="root_wizard_risk_details">1. ROOTOperațiunea prezintă anumite riscuri și poate duce la pierderea garanției echipamentului\n2. Este posibil ca unele aplicații să refuze să funcționeze înROOTRularea pe echipament\n3. neadecvatROOTOperațiunea poate duce la instabilitatea sistemului</string>
 
     <!-- ShizukuWizardCard -->
-    <string name="shizuku_wizard_title">Shizuku Ghidul de configurare</string>
-    <string name="shizuku_wizard_update_title">Shizuku Ghidul de actualizare</string>
-    <string name="shizuku_wizard_completed">Shizuku Configurarea este finalizată</string>
-    <string name="shizuku_wizard_install_message">ShizukuEste un instrument care acordă permisiuni avansate aplicațiilor, fără a fi necesarroot. Mai întâi trebuie să instalăm această aplicație.</string>
-    <string name="shizuku_wizard_install_bundled">Instalarea versiunii integrate</string>
-    <string name="shizuku_wizard_start_message">ShizukuEste instalat, acum trebuie pornitShizukuServicii. Vă rugăm să urmați una dintre metodele de mai jos:</string>
-    <string name="shizuku_wizard_open_shizuku">DeschideShizuku</string>
-    <string name="shizuku_wizard_permission_message">ShizukuServiciul a fost pornit; acum trebuie să acordați permisiuni acestei aplicații. Apăsați butonul de mai jos și selectați opțiunea dorită din fereastra de dialog care apare\"Permis\".</string>
-    <string name="shizuku_wizard_permission_notice">Atenție: Dacă nu apare fereastra pop-up de autorizare, vă rugăm să verificați:</string>
-    <string name="shizuku_wizard_permission_notice_details">1. ShizukuServiciul este în funcțiune?\n2. RepornireShizukuÎncercați din nou după ce ați efectuat operațiunea\n3. Confirmă permisiunea de afișare a ferestrelor plutitoare</string>
-    <string name="shizuku_wizard_grant_permission">AcordareShizukuDrepturi</string>
-    <string name="shizuku_wizard_success_message">Felicitări!ShizukuConfigurarea este finalizată; acum puteți utiliza funcțiile cu drepturi de depanare.</string>
-    <string name="shizuku_wizard_update_available">Descoperă noua versiune</string>
-    <string name="shizuku_wizard_update_message">Aplicația include o versiune actualizată aShizuku, vă recomandăm să efectuați actualizarea pentru a beneficia de o compatibilitate și funcționalitate îmbunătățite.</string>
-    <string name="shizuku_wizard_current_version">Versiunea actuală:%1$s</string>
-    <string name="shizuku_wizard_latest_version">Cea mai recentă versiune:%1$s</string>
-    <string name="shizuku_wizard_update">ActualizareShizuku</string>
 
     <!-- TermuxWizardCard -->
 
     <!-- ShizukuDemoScreen -->
-    <string name="shizuku_demo_loading">Se încarcă starea aplicației...</string>
-    <string name="shizuku_demo_permission_failed">Nu se pot deschide setările de permisiuni</string>
-    <string name="shizuku_demo_overlay_failed">Nu se pot deschide setările ferestrei flotante</string>
-    <string name="shizuku_demo_battery_failed">Nu se pot deschide setările de optimizare a bateriei</string>
-    <string name="shizuku_demo_accessibility_failed">Nu se pot deschide setările serviciilor de accesibilitate</string>
-    <string name="shizuku_demo_title">Ghidul de configurare</string>
-    <string name="shizuku_demo_download_failed">Nu se poate deschide linkul de descărcare</string>
-    <string name="shizuku_demo_extract_failed">ExtragereAPKEroare. Vă rugăm să încercați din nou mai târziu.</string>
-    <string name="shizuku_demo_install_notify">A fost lansatShizukuPentru instalare, urmați instrucțiunile afișate pe ecran</string>
-    <string name="shizuku_demo_update_notify">A fost lansatShizukuActualizare: vă rugăm să urmați instrucțiunile sistemului pentru a finaliza instalarea</string>
-    <string name="shizuku_demo_install_failed">Instalarea a eșuat: %1$s</string>
-    <string name="shizuku_demo_update_failed">Actualizarea a eșuat: %1$s</string>
-    <string name="shizuku_demo_shizuku_not_found">Nu se găseșteShizukuAplicații</string>
-    <string name="shizuku_demo_shizuku_launch_failed">Nu se poate porniShizukuAplicații</string>
-    <string name="shizuku_demo_root_tutorial_failed">Nu se poate deschideRootLink către tutorial</string>
-    <string name="shizuku_demo_shizuku_permission_granted">ShizukuDrepturile au fost acordate</string>
-    <string name="shizuku_demo_shizuku_permission_denied">ShizukuSolicitarea de permisiuni a fost respinsă</string>
-    <string name="shizuku_demo_termux_install_success">A fost lansatTermuxPentru instalare, urmați instrucțiunile afișate pe ecran</string>
-    <string name="shizuku_demo_termux_install_failed_store">ÎncorporatAPKInstalarea a eșuat; se deschide pagina de descărcare</string>
-    <string name="shizuku_demo_termux_download_failed">Nu se poate deschide linkul de descărcare; vă rugăm să descărcați și să instalați manualTermux</string>
-    <string name="shizuku_demo_termux_tuna_skipped">Configurarea Tsinghua Yuan a fost omisă; o puteți efectua mai târziu înTermuxConfigurarea surselor în mod independent</string>
 
     <!-- 权限级别卡片 -->
     <string name="permission_level">Nivelul de acces</string>
@@ -1217,7 +1176,6 @@
     <string name="accessibility_permission">Permisiuni de accesibilitate</string>
     <string name="accessibility_service">Servicii pentru persoane cu dizabilități</string>
     <string name="debug_permission">Drepturi de depanare</string>
-    <string name="shizuku_service">ShizukuServicii</string>
     <string name="root_permission">RootDrepturi</string>
     <string name="root_access_permission">RootDrepturi de acces</string>
     <string name="status_not_installed">Nu este instalat</string>
@@ -2081,8 +2039,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="battery_settings_failed">Nu se pot deschide setările de optimizare a bateriei</string>
     <string name="accessibility_settings_failed">Nu se pot deschide setările serviciilor de accesibilitate</string>
     <string name="provider_installed">Furnizorul de servicii a fost instalat</string>
-    <string name="shizuku_not_found">Nu se găseșteShizukuAplicații</string>
-    <string name="shizuku_start_failed">Nu se poate porniShizukuAplicații</string>
     <string name="doc_link_failed">Nu se poate deschide linkul către document</string>
     <string name="root_tutorial_failed">Nu se poate deschideRootLink către tutorial</string>
     <string name="file_open_failed">Nu se poate deschide fișierul: %1$s</string>
@@ -6610,7 +6566,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
 
     <!-- Phone Agent -->
     <string name="phone_agent_need_debug_permission">Este necesară depanarea/Administrator/Root Trebuie să aveți permisiunile necesare și să activați ecranul virtual experimental pentru a putea utiliza automatizarea ecranului virtual.</string>
-    <string name="phone_agent_shizuku_unavailable">Shizuku Indisponibil, ecranul virtual nu poate fi pornit.</string>
     <string name="phone_agent_virtual_screen_create_failed">Crearea ecranului virtual a eșuat.</string>
     <string name="phone_agent_virtual_screen_prewarm_failed">Eroare la preîncărcarea ecranului virtual:%1$s</string>
     <string name="phone_agent_virtual_screen_not_started">Ecranul virtual nu a putut fi pornit; procesul a fost întrerupt pentru a evita efectuarea unor operațiuni pe ecranul principal.</string>
@@ -7264,13 +7219,8 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="pathfinder_cannot_find_path">Nu s-a găsit nimic de la \'%1$s\' până la \'%2$s\' Calea de stare validă</string>
 
     <!-- ShizukuAuthorizer -->
-    <string name="shizuku_start_service_intro">Pentru a porniShizukuServicii:\n</string>
-    <string name="shizuku_or">sau\n\n</string>
 
     <!-- ShizukuInstaller -->
-    <string name="shizuku_install_update">Actualizare</string>
-    <string name="shizuku_install_install">Instalare</string>
-    <string name="shizuku_install_unknown">Necunoscut</string>
 
     <!-- RootActionListener -->
     <string name="root_no_root_permission">Nu se află pe echipamentRootDrepturi</string>
