@@ -1,7 +1,7 @@
 ---
 Repository: https://github.com/ApertureLatticework/android_packages_apps_operit
 Branch: 待建（依赖 fork 仓就位后动工）
-Status: 本仓已翻牌，四件降级 rustc 1.82/1.83 适配完毕，待树侧 m 首验（次日 SSH）
+Status: 已落地（2026-09-26 树侧 m liboperit_ripgrep + m Operit 全绿，见文末）
 ---
 
 # ripgrep 树内源码线（翻 2026-09-22 prebuilt 定案）
@@ -69,3 +69,19 @@ m Operit               # 全绿复验（jni_libs 切源码模块）
 - Gradle CI 已绿（36119248931）：降级版 wrapper 编译 + .so 产出正常
 - 若树内 android-crates-io 的 serde/json 版本req 满足不了 vendor 件（理论
   不会，globset 0.4.16 只 req log/bstr/regex 系），按报错单件补 vendoring
+
+
+## 树侧首验战报（2026-09-26，cnb 云机 dodge，全绿）
+
+m liboperit_ripgrep ✓（1m29s）、m Operit ✓。五道 Soong 关的修法（全部已入库）：
+
+1. stem 命名律：库名必须 lib<crate_name> 开头，七件显式 stem（b02c6dc）
+2. dylib 安装位冲突：模块类型改 rust_library_rlib 纯依赖形态（84e3ffd）
+3. Soong 不展开 feature 蕴含：regex 两件按全叶闭包显式列 26 项（ef85940）
+4. dylib 消费者的 rustlibs 解析到 dylib 变体致 clippy 加载失败：wrapper 改
+   rlibs（树内 betosync 同款，1bec8e5）
+5. -D missing-docs 门禁：wrapper 补文档注释（661b61c）
+
+环境雷：树内 Operit clone 曾指 cnb.cool 第三方镜像（SekaiMoeAOSP）拉不到
+新头，改指 GitHub 本尊。STT 模型资产树侧通路见
+tools/intree/sync_stt_models.py（75505fd），APK 实证 213MB 含全部模型。
