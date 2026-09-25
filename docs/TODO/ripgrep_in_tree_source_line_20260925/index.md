@@ -1,7 +1,7 @@
 ---
 Repository: https://github.com/ApertureLatticework/android_packages_apps_operit
 Branch: 待建（依赖 fork 仓就位后动工）
-Status: 方案定稿待树侧资源
+Status: fork 仓内容就绪，待组织仓建立推送
 ---
 
 # ripgrep 树内源码线（翻 2026-09-22 prebuilt 定案）
@@ -25,10 +25,10 @@ Status: 方案定稿待树侧资源
 
 分两宿，职责最简：
 
-- **fork 仓 `android_external_ripgrep`（组织仓，待建）**：纯依赖仓。vendored
-  ripgrep workspace 相关 crate（globset/grep-regex/grep-matcher/ignore 及传递依赖）
-  + jni/serde/serde_json 钉版本，各配 `rust_library` Android.bp，
-  visibility 开 `packages/apps/Operit`。不赌树内 external/rust/crates 版本。
+- **fork 仓 `android_external_ripgrep`（已备内容，待组织仓开权限）**：闭包 35
+  件对账 AOSP android-crates-io 后仅 vendor 7 件（globset/grep 三件/ignore +
+  regex 断代三件），jni 0.21.1 与 serde 系树内同线直接借用。仓内容已就绪于
+  本地（7 crate 瘦身源 + Android.bp + README），等组织仓建立即推。
 - **本仓**：`Android.bp` 增 `rust_library_dylib liboperit_ripgrep`（srcs 指
   `tools/native_ripgrep/src/lib.rs`，rustlibs 全指 fork 仓模块）；删
   `app/src/main/jniLibs/Android.bp` 的 cc_prebuilt（模块名让位）。
