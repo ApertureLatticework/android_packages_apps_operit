@@ -1,7 +1,7 @@
 ---
 Repository: https://github.com/ApertureLatticework/android_packages_apps_operit
 Branch: 待建（依赖 fork 仓就位后动工）
-Status: 本仓已翻牌（源码线生效），待树侧 m 验证
+Status: 本仓已翻牌，四件降级 rustc 1.82/1.83 适配完毕，待树侧 m 首验（次日 SSH）
 ---
 
 # ripgrep 树内源码线（翻 2026-09-22 prebuilt 定案）
@@ -49,3 +49,23 @@ Status: 本仓已翻牌（源码线生效），待树侧 m 验证
 - 树侧：`m liboperit_ripgrep` 产物落位；`m Operit` 全绿（jni_libs 解析到源码模块）
 - 产物比对：源码线 .so 与 cargo 线 .so 导出符号面一致（JNICALL 计数）
 - 真机：rg 内容搜索工具走查一遍
+
+
+## 次日树侧首验清单（2026-09-26）
+
+前置：fork 仓名已定正 android_external_ripgrep（manifest 045d7f6 已同步）。
+
+```bash
+cd <LOS 23.2 树根>
+cp <local_manifests>/upstream-forks.xml .repo/local_manifests/   # 若未装
+repo sync -c -j8 external/operit-ripgrep packages/apps/Operit
+source build/envsetup.sh && lunch <目标>
+m liboperit_ripgrep    # 首验：rustlibs 解析 + edition 2021 编译
+m Operit               # 全绿复验（jni_libs 切源码模块）
+```
+
+关注点：
+- liboperit_* 七模块与树内 libjni/libserde/libserde_json/libmemchr 等解析
+- Gradle CI 已绿（36119248931）：降级版 wrapper 编译 + .so 产出正常
+- 若树内 android-crates-io 的 serde/json 版本req 满足不了 vendor 件（理论
+  不会，globset 0.4.16 只 req log/bstr/regex 系），按报错单件补 vendoring
