@@ -68,3 +68,16 @@ Operit 以 Gradle 构建产出通用 APK，系统能力通过五档权限阶梯�
 7. [副屏底座原生化与前台抢占规避](7_VirtualDisplayBackend.md)（应用侧完成，待设备实测）
 8. [提示词精简](8_PromptCleanup.md)（完成）
 9. [树侧集成 RUNBOOK](9_TreeIntegrationRunbook.md)（应用侧就绪，树侧动作手册化）
+
+## 测试欠账清偿（2026-09-25）
+
+本地模型线切割出仓时测试源未同步清理，`:app:compileDebugUnitTestKotlin`
+在 lineage-23.2 上断编（先于外部对话删除，非其引入）。本次清偿：
+
+- 整删：LocalGenerationEndTest、AvatarConfigPersistenceTest（avatar 线同批欠账）
+- 摘除引用已删符号的用例：ChatConfigReadinessTest（MNN 用例）、
+  EndpointCompleterTest / EndpointCompleterProviderSpecificTest（MNN 用例）、
+  XaiProviderReasoningTest（XaiReasoningMapper 三用例）、
+  ProviderUsageNormalizerTest（本地模型节）
+- DeepseekProviderMediaRoleTest：createRequestBody 转 protected 后直调断编，
+  改走同文件既有反射通道

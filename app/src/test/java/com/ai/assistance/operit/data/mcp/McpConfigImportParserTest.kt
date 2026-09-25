@@ -8,17 +8,11 @@ import org.junit.Test
 class McpConfigImportParserTest {
 
     @Test
-    fun parse_classifiesStdioAndRemoteTransports() {
+    fun parse_classifiesRemoteTransports() {
         val config =
             """
             {
               "mcpServers": {
-                "filesystem": {
-                  "command": "npx",
-                  "args": ["-y", "@modelcontextprotocol/server-filesystem"],
-                  "env": {"HOME": "/data/local/tmp"},
-                  "autoApprove": ["read_file"]
-                },
                 "fetch": {
                   "type": "streamable_http",
                   "url": "https://example.com/mcp",
@@ -35,13 +29,6 @@ class McpConfigImportParserTest {
 
         val parsed = McpConfigImportParser.parse(config)
 
-        val stdio = parsed.servers.filterIsInstance<StdioMcpImportedServer>().single()
-        assertEquals("filesystem", stdio.id)
-        assertEquals("npx", stdio.command)
-        assertEquals(listOf("-y", "@modelcontextprotocol/server-filesystem"), stdio.args)
-        assertEquals(mapOf("HOME" to "/data/local/tmp"), stdio.env)
-        assertEquals(listOf("read_file"), stdio.autoApprove)
-
         val remoteServers = parsed.servers.filterIsInstance<RemoteMcpImportedServer>()
             .associateBy { it.id }
         assertEquals("httpStream", remoteServers.getValue("fetch").connectionType)
@@ -49,6 +36,24 @@ class McpConfigImportParserTest {
         assertTrue(remoteServers.getValue("fetch").disabled)
         assertEquals("sse", remoteServers.getValue("events").connectionType)
         assertFalse(remoteServers.getValue("events").disabled)
+    }
+
+    @Test
+    fun parse_rejectsStdioCommandEntries() {
+        val config =
+            """
+            {
+              "mcpServers": {
+                "filesystem": {
+                  "command": "npx",
+                  "args": ["-y", "@modelcontextprotocol/server-filesystem"],
+                  "env": {"HOME": "/data/local/tmp"}
+                }
+              }
+            }
+            """.trimIndent()
+
+        assertParseFails(config)
     }
 
     @Test

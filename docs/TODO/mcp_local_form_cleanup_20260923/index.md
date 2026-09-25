@@ -91,3 +91,6 @@ remote-only 语义贯彻到底：本地安装的表单、流程、分析器、�
 - 净变化：28 文件，+354/-4082
 - 偏差记录：awaitPluginVisible 未随计划删除，改造保留为远程添加/导入后
   等待插件卡片出现的通用等待（MCPConfigScreen.kt），语义已与本地安装无关
+- 遗留清偿（2026-09-25）：McpConfigImportParserTest 仍引用已删的
+  StdioMcpImportedServer 断编；重写为 remote-only 分类 + stdio command
+  显式拒绝断言

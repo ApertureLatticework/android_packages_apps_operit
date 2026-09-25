@@ -26,11 +26,4 @@ class EndpointCompleterProviderSpecificTest {
             EndpointCompleter.completeEndpoint("https://example.com#", ApiProviderType.GOOGLE)
         )
     }
-
-    @Test fun mnnProvider_withWhitespaceAndHashReturnsTrimmedRawUrl() {
-        assertEquals(
-            "http://127.0.0.1:8080",
-            EndpointCompleter.completeEndpoint("  http://127.0.0.1:8080#  ", ApiProviderType.MNN)
-        )
-    }
 }

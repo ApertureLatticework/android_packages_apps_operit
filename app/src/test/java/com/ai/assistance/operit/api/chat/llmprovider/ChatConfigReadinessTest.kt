@@ -73,21 +73,6 @@ class ChatConfigReadinessTest {
     }
 
     @Test
-    fun localProviderDoesNotRequireEndpointOrKey() {
-        assertReady(
-            ModelConfigData(
-                id = "mnn",
-                name = "MNN",
-                modelName = "local-model",
-                apiProviderType = ApiProviderType.MNN,
-                apiProviderTypeId = ApiProviderType.MNN.name,
-                apiKey = "中文",
-                useMultipleApiKeys = true
-            )
-        )
-    }
-
-    @Test
     fun registeredPluginOwnsItsConfigurationRequirements() {
         val config =
             ModelConfigData(

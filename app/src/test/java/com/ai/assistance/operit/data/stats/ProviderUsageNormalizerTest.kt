@@ -305,23 +305,6 @@ class ProviderUsageNormalizerTest {
         assertFalse("Gemini 无独立缓存写入计费概念", snapshot.cacheWriteSeparateBilling)
     }
 
-    // ==== 本地模型 ====
-
-    @Test
-    fun `local providers preserve long measured counts with explicit zero cache`() {
-        val inputTokens = Int.MAX_VALUE.toLong() + 1L
-        val outputTokens = Int.MAX_VALUE.toLong() + 2L
-        val snapshot = ProviderUsageNormalizer.local(inputTokens, outputTokens, ProviderUsageNormalizer.SOURCE_LLAMA)
-        assertEquals(inputTokens, snapshot.uncachedInputTokens)
-        assertEquals(0L, snapshot.cachedInputTokens)
-        assertEquals(0L, snapshot.cacheWriteTokens)
-        assertEquals(inputTokens, snapshot.totalInputTokens)
-        assertEquals(outputTokens, snapshot.outputTokens)
-        assertNull(snapshot.reasoningTokens)
-        assertNull(snapshot.reasoningIncludedInOutput)
-        assertFalse(snapshot.cacheWriteSeparateBilling)
-    }
-
     // ==== ToolPkg ====
 
     @Test
