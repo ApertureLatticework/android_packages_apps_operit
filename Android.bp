@@ -237,7 +237,10 @@ rust_library_dylib {
     crate_root: "tools/native_ripgrep/src/lib.rs",
     cargo_pkg_version: "0.1.0",
     edition: "2021",
-    rustlibs: [
+    // rlibs 而非 rustlibs：dylib 模块的 rustlibs 会解析到依赖的 dylib 变体
+    // （--extern force:jni=...dylib.so），clippy 元数据编译无法加载 .so 必炸；
+    // 树内消费者（betosync 等）同用 rlibs 强制 rlib 形态
+    rlibs: [
         "liboperit_globset",
         "liboperit_grep_matcher",
         "liboperit_grep_regex",
