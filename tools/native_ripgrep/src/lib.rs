@@ -1,3 +1,6 @@
+//! rg 内容搜索 JNI 桥：向 Java 层暴露 ripgrep 家族（globset/grep-regex/ignore）
+//! 的文件内容搜索能力，结果以 JSON 串回传。
+//! Gradle cargo 线与 Soong 树内源码线共用本文件。
 use globset::{Glob, GlobSet, GlobSetBuilder};
 use grep_matcher::Matcher;
 use grep_regex::{RegexMatcher, RegexMatcherBuilder};
@@ -46,6 +49,7 @@ struct FileMatch {
 }
 
 #[no_mangle]
+/// JNI 入口：执行搜索并以 JSON 返回命中块（供 NativeRipgrep.searchJson 消费）。
 pub extern "system" fn Java_com_ai_assistance_operit_util_ripgrep_NativeRipgrep_searchJson(
     mut env: JNIEnv,
     _class: JClass,
