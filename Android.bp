@@ -272,7 +272,13 @@ android_app {
 
     manifest: "app/src/main/AndroidManifest.xml",
     static_libs: ["operit-lib"],
-    asset_dirs: ["app/src/main/assets"],
+    asset_dirs: [
+        "app/src/main/assets",
+        // STT/VAD 模型专仓（cnb SekaiMoeAOSPDev/android_external_operit_ttsmodels，
+        // local_manifests 挂 external/operit-ttsmodels；与本仓 bp 成对安装，
+        // 不挂该仓的树 asset_dirs 解析失败，同 ffmpeg 清单成对惯例）
+        "../../../external/operit-ttsmodels/models",
+    ],
 
     // native 库经 required 随包安装到 priv-app lib 目录；
     // ffmpeg 走源码线薄壳（native/operit-ffmpeg/Android.bp.tree，链树内 libav* + libffmpeg_cli）。
