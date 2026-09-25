@@ -47,3 +47,19 @@ Cargo.lock 为唯一真源：fork 仓各 crate 版本必须与本仓
 上游 BurntSushi/ripgrep（workspace 自带 globset/grep-*/ignore，裁无用成员），
 代价是本仓 Cargo.lock 须对 fork tag 重锁对齐；regex 三件两种形态都需单独
 vendor（属 rust-lang/regex 仓）。待用户定夺。
+
+## 降级实录（2026-09-25）
+
+用户树侧实情：android16-release 的 rustc 为 1.82/1.83，edition 2024
+（1.85+ 特性）不可编。四件降 last-2021-edition 版：
+
+| crate | 2024 版起点 | 钉定 |
+| --- | --- | --- |
+| globset | 0.4.17 | 0.4.16 |
+| grep-matcher | 0.1.8 | 0.1.7 |
+| grep-regex | 0.1.14 | 0.1.13 |
+| ignore | 0.4.24 | 0.4.23 |
+
+fork 仓 db79707 已换源；本仓 Cargo.lock 手工对齐（crates.io API 校验和，
+依赖集零变化）。regex 三件（aho-corasick/regex-syntax/regex-automata）本就
+edition 2021 不动。Gradle cargo 线随新锁编译，CI android-build 复验。
