@@ -365,6 +365,12 @@ android {
         }
     }
 
+    testOptions {
+        // JVM 单测会走到生产日志路径（AppLogger → android.util.Log），
+        // 返回默认值而非抛 not-mocked，否则单测无法覆盖带日志的分支
+        unitTests.isReturnDefaultValues = true
+    }
+
     signingConfigs {
         val releaseKeystorePath = localProperties.getProperty("RELEASE_STORE_FILE")
         val releaseStorePassword = localProperties.getProperty("RELEASE_STORE_PASSWORD")

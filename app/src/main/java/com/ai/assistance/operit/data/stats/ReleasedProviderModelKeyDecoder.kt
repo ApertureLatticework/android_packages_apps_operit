@@ -41,14 +41,22 @@ internal object ReleasedProviderModelKeyDecoder {
         )
     }
 
+    /** Pre-provider format counted feature usage under bare function keys; they carry no
+     * provider/model identity and must not decode as `provider_model`. */
+    private val preProviderFunctionKeys = setOf("CHAT", "FILE_BINDING")
+
     /** Used by migration code for released keys from before provider/model identities existed. */
     fun decodeOrNull(
         encoded: String,
         additionalProviderAliases: Map<String, String> = emptyMap(),
     ): ReleasedProviderModelKey? =
-        try {
-            decode(encoded, additionalProviderAliases)
-        } catch (_: IllegalArgumentException) {
+        if (encoded in preProviderFunctionKeys) {
             null
+        } else {
+            try {
+                decode(encoded, additionalProviderAliases)
+            } catch (_: IllegalArgumentException) {
+                null
+            }
         }
 }
