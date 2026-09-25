@@ -34,3 +34,16 @@ libignore、libjni、libserde、libserde_json…（最终名以树内无撞名�
 
 Cargo.lock 为唯一真源：fork 仓各 crate 版本必须与本仓
 `tools/native_ripgrep/Cargo.lock` 完全一致，runbook 记同步命令。
+
+## 勘误（2026-09-25）
+
+「避让 AOSP 自有 external/ripgrep」说法有误——实查 AOSP 仓表（3130 仓）
+零命中，树内并无 ripgrep 仓，该 path 空闲。manifest 与 fork README 注释
+已修正；path 维持 external/operit-ripgrep 以自明归属。
+
+## 形态备选（用户问询在案）
+
+现形态为最小 vendor（7 crate 钉本仓 Cargo.lock 版本）。备选为整仓 fork
+上游 BurntSushi/ripgrep（workspace 自带 globset/grep-*/ignore，裁无用成员），
+代价是本仓 Cargo.lock 须对 fork tag 重锁对齐；regex 三件两种形态都需单独
+vendor（属 rust-lang/regex 仓）。待用户定夺。
