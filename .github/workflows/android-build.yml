@@ -43,6 +43,7 @@ on:
       - terminal/**
       - terminal
       - tools/native_ripgrep/**
+      - tools/dev/**
       - tools/packages_whitelist.txt
       - tools/example_packages/sync_example_packages.py
 
@@ -134,6 +135,11 @@ jobs:
         with:
           path: app/build/generated/stt-model-assets
           key: stt-model-assets-${{ runner.os }}-${{ hashFiles('app/config/stt-model-assets.properties') }}
+
+      # 缓存未命中时从 cnb 专仓预置字节（与 Soong 树内线同源），
+      # syncSttModelAssets 过验后零网络；命中时脚本秒退不克隆
+      - name: Seed STT model assets
+        run: python3 tools/dev/seed_stt_models.py
 
       - name: Download Android dependencies
         if: steps.cache-manual-deps.outputs.cache-hit != 'true'

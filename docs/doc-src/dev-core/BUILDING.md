@@ -176,7 +176,7 @@ git submodule update --init --recursive terminal
 MNN 的 Android CMake 配置会在加入 MNN 子项目前，使用 MNN 自带的 FlatBuffers 源码编译一个宿主机 `flatc`，并从同一份 `schema/default/*.fbs` 重新生成 `schema/current/*.h`。因此构建机除了 Android NDK 和 CMake，还必须提供可用的宿主机 C/C++ 编译器；Linux 构建明确使用 `gcc` 和 `g++`，生成器不会使用 Android ABI 编译，也不会依赖工作区外的预生成头文件。
 
 2. **下载并放置非模型依赖库 (关键步骤！):**
-`README.md` 中提到，项目依赖一些需要手动下载的库。请从 [这个 Google Drive 链接](https://drive.google.com/drive/folders/1g-Q_i7cf6Ua4KX9ZM6V282EEZvTVVfF7?usp=sharing) 下载非模型文件，并将它们解压或放置到项目根目录下对应的 `libs` 或有 `.keep` 文件的文件夹中。  **警告：** 如果跳过此步骤，编译将因缺少依赖而失败。当前需要下载并解压这三个压缩包：`subpack.zip`、`jniLibs.zip`、`libs.zip`。默认本地 STT 模型不再通过 `models.zip` 准备，Android 构建会按 `app/config/stt-model-assets.properties` 从固定 Hugging Face 来源自动获取并校验。
+`README.md` 中提到，项目依赖一些需要手动下载的库。请从 [这个 Google Drive 链接](https://drive.google.com/drive/folders/1g-Q_i7cf6Ua4KX9ZM6V282EEZvTVVfF7?usp=sharing) 下载非模型文件，并将它们解压或放置到项目根目录下对应的 `libs` 或有 `.keep` 文件的文件夹中。  **警告：** 如果跳过此步骤，编译将因缺少依赖而失败。当前需要下载并解压这三个压缩包：`subpack.zip`、`jniLibs.zip`、`libs.zip`。默认本地 STT 模型不再通过 `models.zip` 准备，Android 构建会按 `app/config/stt-model-assets.properties` 从固定 Hugging Face 来源自动获取并校验。为免拉取慢或不可达，可先跑 `python3 tools/dev/seed_stt_models.py` 从 cnb 模型专仓预置字节（与 Soong 树内线同源），构建时逐件校验通过即零网络。
 ```bash
 ./app/src/main/assets/subpack/.keep  
 ./app/src/main/jniLibs/.keep
