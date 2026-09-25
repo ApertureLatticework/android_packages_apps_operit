@@ -36,7 +36,6 @@
     <string name="chat_display_mode">显示模式</string>
     <string name="chat_autoglm_warning">禁止使用autoglm作为对话主模型。对话模型和ui控制模型是分离的，请选择任意一个别的聪明的大模型。如有疑问，请仔细阅读文档学习软件的模型配置机制。</string>
     <string name="chat_model_count">%d个模型</string>
-    <string name="chat_starting_export">开始导出...</string>
     <string name="chat_reply_instruction">用户正在回复你之前的这条消息：</string>
     <string name="chat_workspace_status">工作区状态</string>
     <string name="attach_local_storage_repo">附加本地储存仓库</string>
@@ -474,7 +473,6 @@
     <string name="chat_binding_scope_hint">仅影响此对话的绑定，不会修改已有消息</string>
     <string name="confirm_delete">确认删除</string>
     <string name="delete_warning">删除所有聊天记录将无法恢复。建议在执行此操作前先导出备份。</string>
-    <string name="export_success">导出成功</string>
     <string name="import_success">导入成功</string>
     <string name="operation_failed">操作失败</string>
     <string name="danger_zone">危险区域</string>
@@ -878,7 +876,6 @@
     <string name="show_help">显示帮助</string>
     <string name="hide_help">隐藏帮助</string>
     <string name="request_permission">请求Shizuku权限</string>
-    <string name="screen_title_html_packager">HTML Packager</string>
     <string name="execute_shell">执行shell命令</string>
     <string name="enter_command">输入ADB命令</string>
     <string name="show_samples">显示示例命令</string>
@@ -1471,7 +1468,6 @@
     <string name="dialog_title_prompt">提示</string>
     <string name="ai_computer">AI电脑</string>
     <string name="code_editor">代码编辑器</string>
-    <string name="export_starting">开始导出...</string>
     <string name="floating_window_permission_denied">未获得悬浮窗权限，已关闭悬浮窗模式</string>
     <string name="select_download_source">选择下载源</string>
     <string name="select_download_source_desc">请选择适合您网络环境的下载源：</string>
@@ -2073,8 +2069,6 @@
     <string name="tool_process_limit_remover">解除幻象进程限制</string>
     <string name="tool_process_limit_remover_desc">管理Android 12+的幻象进程数量限制，允许更多后台子进程</string>
 
-    <string name="tool_html_packager">HTML打包器</string>
-    <string name="tool_html_packager_desc">将HTML文件及其依赖打包成单个HTML文件，方便分享和部署</string>
 
     <string name="tool_autoglm_one_click">AutoGLM 一键配置</string>
     <string name="tool_autoglm_one_click_desc">一键为 UI 控制器配置 autoglm-phone 模型并切换 AutoGLM 工具包</string>
@@ -3153,28 +3147,8 @@
     <string name="chat_ai_service_init_failed">初始化AI服务失败: %1$s</string>
     <string name="chat_need_overlay_permission_start_voice_assistant">需要悬浮窗权限才能启动语音助手</string>
     <string name="chat_clipboard_label_message">聊天消息</string>
-    <string name="export_in_progress_title">导出中</string>
-    <string name="export_prepare_base_apk">准备基础APK文件...</string>
-    <string name="export_extract_apk">解压APK...</string>
-    <string name="export_modify_app_info">修改应用信息...</string>
-    <string name="export_change_app_icon">更换应用图标...</string>
-    <string name="export_pack_web_content">打包网页内容...</string>
-    <string name="export_prepare_signing">准备签名...</string>
-    <string name="export_signing_apk">签名APK...</string>
-    <string name="export_finish_packaging">完成打包...</string>
     <string name="export_completed">导出完成!</string>
-    <string name="export_sign_apk_failed">签名APK失败: %1$s</string>
     <string name="export_failed_with_reason">导出失败: %1$s</string>
-    <string name="export_prepare_windows_template">准备Windows应用模板...</string>
-    <string name="export_copy_template">复制应用模板...</string>
-    <string name="export_extract_template">解压应用模板...</string>
-    <string name="export_copy_web_content">复制网页内容...</string>
-    <string name="export_pack_app">打包应用...</string>
-    <string name="export_cleanup_temp_files">清理临时文件...</string>
-    <string name="export_process_failed">导出过程失败: %1$s</string>
-    <string name="export_invalid_package_name_format">格式不正确，应为 com.example.app</string>
-    <string name="export_invalid_version_format">格式不正确，应为 1.0.0</string>
-    <string name="export_apk_extract_dir_missing">APK解压目录不存在</string>
     <string name="chat_generate_share_image_failed">生成图片失败: %1$s</string>
     <string name="chat_processing_attachment">正在处理附件...</string>
     <string name="chat_attachment_processing_failed">处理附件失败: %1$s</string>
@@ -3616,7 +3590,6 @@
     
     <!-- Profile Selection for Import/Export -->
     <string name="select_profile">选择配置</string>
-    <string name="export_from_profile">从配置导出</string>
     <string name="import_to_profile">导入到配置</string>
     <string name="source_profile">源配置</string>
     <string name="target_profile">目标配置</string>
@@ -5188,7 +5161,6 @@
     <string name="app_icon">应用图标:</string>
     <string name="click_select_icon">点击选择图标</string>
     <string name="exporting">导出中</string>
-    <string name="export_failed">导出失败</string>
     <string name="file_saved_to">文件已保存到:</string>
     <string name="token_limit_warning">Token 超限警告</string>
     <string name="token_limit_warning_message">消息已超出Token上限，继续发送可能会导致上下文丢失或AI无法理解。是否继续？</string>
@@ -7394,7 +7366,6 @@
     <string name="apk_key_not_found_in_keystore">在密钥库中找不到别名为\'%1$s\'的密钥</string>
     <string name="apk_cannot_get_cert_chain">无法获取别名为\'%1$s\'的证书链</string>
 
-    <!-- ExeEditor -->
     <string name="exe_editor_change_icon_first">请先调用changeIcon方法设置新图标</string>
     <string name="exe_editor_change_icon_failed">更换EXE图标失败</string>
 

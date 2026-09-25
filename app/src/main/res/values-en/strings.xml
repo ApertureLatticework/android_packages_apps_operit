@@ -26,7 +26,6 @@
     <string name="chat_display_mode">Display Mode</string>
     <string name="chat_autoglm_warning">Using autoglm as the main conversation model is prohibited. The conversation model and UI control model are separated. Please choose any other smart large model. If you have questions, please read the documentation carefully to learn about the model configuration mechanism.</string>
     <string name="chat_model_count">%d models</string>
-    <string name="chat_starting_export">Starting export...</string>
     <string name="chat_reply_instruction">User is replying to your previous message:</string>
     <string name="chat_workspace_status">Workspace Status</string>
     <string name="attach_local_storage_repo">Attach Local Storage Repository</string>
@@ -485,7 +484,6 @@
     <string name="clear_chat_history">Clear All Chat History</string>
     <string name="confirm_delete">Confirm Delete</string>
     <string name="delete_warning">Deleting all chat history is irreversible. Consider exporting a backup before proceeding.</string>
-    <string name="export_success">Export Successful</string>
     <string name="import_success">Import Successful</string>
     <string name="operation_failed">Operation Failed</string>
     <string name="danger_zone">Danger Zone</string>
@@ -929,7 +927,6 @@
     <string name="show_help">Show help</string>
     <string name="hide_help">Hide help</string>
     <string name="request_permission">Request Shizuku permission</string>
-    <string name="screen_title_html_packager">HTML Packager</string>
     <string name="execute_shell">Execute Shell Command</string>
     <string name="enter_command">Enter ADB Command</string>
     <string name="show_samples">Show Example Commands</string>
@@ -1494,7 +1491,6 @@
     <string name="dialog_title_prompt">Prompt</string>
     <string name="ai_computer">AI Computer</string>
     <string name="code_editor">Code Editor</string>
-    <string name="export_starting">Starting export...</string>
     <string name="floating_window_permission_denied">Floating window permission not granted, floating window mode closed</string>
     <string name="select_download_source">Select Download Source</string>
     <string name="select_download_source_desc">Please select a download source suitable for your network:</string>
@@ -1938,8 +1934,6 @@
     <string name="sql_viewer_empty_state">No results yet. Tap the top-right button to run SQL.</string>
     <string name="tool_process_limit_remover">Phantom Process Limit Remover</string>
     <string name="tool_process_limit_remover_desc">Manage Android 12+ phantom process count limits to allow more background child processes</string>
-    <string name="tool_html_packager">HTML Packager</string>
-    <string name="tool_html_packager_desc">Package HTML files and their dependencies into a single file</string>
     
     <!-- Process Limit Remover Screen -->
     <string name="process_limit_title">Phantom Process Limit Remover</string>
@@ -3201,28 +3195,8 @@
     <string name="chat_ai_service_init_failed">Failed to initialize AI service: %1$s</string>
     <string name="chat_need_overlay_permission_start_voice_assistant">Overlay permission is required to start the voice assistant</string>
     <string name="chat_clipboard_label_message">Chat message</string>
-    <string name="export_in_progress_title">Exporting</string>
-    <string name="export_prepare_base_apk">Preparing base APK...</string>
-    <string name="export_extract_apk">Extracting APK...</string>
-    <string name="export_modify_app_info">Updating app info...</string>
-    <string name="export_change_app_icon">Changing app icon...</string>
-    <string name="export_pack_web_content">Packaging web content...</string>
-    <string name="export_prepare_signing">Preparing signing...</string>
-    <string name="export_signing_apk">Signing APK...</string>
-    <string name="export_finish_packaging">Finishing packaging...</string>
     <string name="export_completed">Export complete!</string>
-    <string name="export_sign_apk_failed">APK signing failed: %1$s</string>
     <string name="export_failed_with_reason">Export failed: %1$s</string>
-    <string name="export_prepare_windows_template">Preparing Windows app template...</string>
-    <string name="export_copy_template">Copying app template...</string>
-    <string name="export_extract_template">Extracting app template...</string>
-    <string name="export_copy_web_content">Copying web content...</string>
-    <string name="export_pack_app">Packaging app...</string>
-    <string name="export_cleanup_temp_files">Cleaning up temporary files...</string>
-    <string name="export_process_failed">Export process failed: %1$s</string>
-    <string name="export_invalid_package_name_format">Invalid format. Example: com.example.app</string>
-    <string name="export_invalid_version_format">Invalid format. Example: 1.0.0</string>
-    <string name="export_apk_extract_dir_missing">APK extracted directory does not exist</string>
     <string name="chat_generate_share_image_failed">Failed to generate image: %1$s</string>
     <string name="chat_processing_attachment">Processing attachment...</string>
     <string name="chat_attachment_processing_failed">Failed to process attachment: %1$s</string>
@@ -3652,7 +3626,6 @@
     
     <!-- Profile Selection for Import/Export -->
     <string name="select_profile">Select Profile</string>
-    <string name="export_from_profile">Export from Profile</string>
     <string name="import_to_profile">Import to Profile</string>
     <string name="source_profile">Source Profile</string>
     <string name="target_profile">Target Profile</string>
@@ -4736,7 +4709,6 @@
     <string name="app_icon">App Icon:</string>
     <string name="click_select_icon">Click to select icon</string>
     <string name="exporting">Exporting</string>
-    <string name="export_failed">Export Failed</string>
     <string name="file_saved_to">File saved to:</string>
     <string name="token_limit_warning">Token Limit Warning</string>
     <string name="token_limit_warning_message">The message has exceeded the token limit. Continuing to send may result in context loss or AI being unable to understand. Continue?</string>
@@ -6828,7 +6800,6 @@
     <string name="apk_key_not_found_in_keystore">Key with alias \'%1$s\' not found in keystore</string>
     <string name="apk_cannot_get_cert_chain">Cannot get certificate chain for alias \'%1$s\'</string>
 
-    <!-- ExeEditor -->
     <string name="exe_editor_change_icon_first">Please call changeIcon method first to set new icon</string>
     <string name="exe_editor_change_icon_failed">Failed to change EXE icon</string>
 

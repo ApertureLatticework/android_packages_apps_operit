@@ -30,7 +30,6 @@
     <string name="chat_display_mode">Mod Paparan</string>
     <string name="chat_autoglm_warning">Dilarang menggunakan autoglm sebagai model utama sembang. Model sembang dan model kawalan UI adalah berasingan, sila pilih mana-mana model besar pintar yang lain. Jika ada keraguan, sila baca dokumentasi dengan teliti untuk mempelajari mekanisme konfigurasi model perisian.</string>
     <string name="chat_model_count">%d model</string>
-    <string name="chat_starting_export">Mula mengeksport...</string>
     <string name="chat_reply_instruction">Pengguna sedang membalas mesej anda yang sebelumnya ini:</string>
     <string name="chat_workspace_status">Status Ruang Kerja</string>
     <string name="attach_local_storage_repo">Lampirkan Repositori Simpanan Tempatan</string>
@@ -438,7 +437,6 @@
     <string name="chat_binding_scope_hint">Hanya mempengaruhi ikatan perbualan ini, tidak akan mengubah mesej sedia ada</string>
     <string name="confirm_delete">Sahkan Padam</string>
     <string name="delete_warning">Memadam semua rekod perbualan tidak boleh dipulihkan. Disyorkan untuk mengeksport sandaran sebelum melakukan tindakan ini.</string>
-    <string name="export_success">Eksport Berjaya</string>
     <string name="import_success">Import Berjaya</string>
     <string name="operation_failed">Operasi Gagal</string>
     <string name="danger_zone">Zon Bahaya</string>
@@ -938,7 +936,6 @@
     <string name="show_help">Tunjukkan bantuan</string>
     <string name="hide_help">Sembunyikan bantuan</string>
     <string name="request_permission">Minta kebenaran Shizuku</string>
-    <string name="screen_title_html_packager">HTML Packager</string>
     <string name="execute_shell">Laksanakan arahan shell</string>
     <string name="enter_command">Masukkan arahan ADB</string>
     <string name="show_samples">Tunjukkan contoh arahan</string>
@@ -1003,7 +1000,6 @@
     <string name="dialog_title_prompt">Petunjuk</string>
     <string name="ai_computer">Komputer AI</string>
     <string name="code_editor">Editor kod</string>
-    <string name="export_starting">Mula mengeksport...</string>
     <string name="floating_window_permission_denied">Tiada kebenaran tetingkap terapung, mod tetingkap terapung ditutup</string>
     <string name="select_download_source">Pilih sumber muat turun</string>
     <string name="select_download_source_desc">Sila pilih sumber muat turun yang sesuai dengan persekitaran rangkaian anda:</string>
@@ -1702,8 +1698,6 @@
     <string name="sql_viewer_empty_state">Tiada keputusan buat masa ini, klik butang di sudut kanan atas untuk melaksanakan SQL</string>
     <string name="tool_process_limit_remover">Pembuang Had Proses Hantu</string>
     <string name="tool_process_limit_remover_desc">Urus had bilangan proses hantu Android 12+, benarkan lebih banyak proses latar belakang</string>
-    <string name="tool_html_packager">Pengepak HTML</string>
-    <string name="tool_html_packager_desc">Kemas fail HTML dan kebergantungannya menjadi satu fail HTML tunggal, mudah untuk dikongsi dan disebarkan</string>
     <string name="tool_autoglm_one_click">Konfigurasi Satu Klik AutoGLM</string>
     <string name="tool_autoglm_one_click_desc">Konfigurasikan model autoglm-phone untuk pengawal UI dan tukar kit alat AutoGLM dengan satu klik</string>
     <string name="tool_autoglm_tool">Pelaksanaan AutoGLM</string>
@@ -2338,25 +2332,8 @@
     <string name="chat_ai_service_init_failed">Gagal mulakan perkhidmatan AI: %1$s</string>
     <string name="chat_need_overlay_permission_start_voice_assistant">Kebenaran tetingkap terapung diperlukan untuk mulakan pembantu suara</string>
     <string name="chat_clipboard_label_message">Mesej sembang</string>
-    <string name="export_in_progress_title">Sedang Mengeksport</string>
-    <string name="export_prepare_base_apk">Menyediakan fail APK asas...</string>
-    <string name="export_extract_apk">Mengekstrak APK...</string>
-    <string name="export_modify_app_info">Mengubah maklumat aplikasi...</string>
-    <string name="export_change_app_icon">Menukar ikon aplikasi...</string>
-    <string name="export_pack_web_content">Membungkus kandungan web...</string>
-    <string name="export_prepare_signing">Menyediakan penandatanganan...</string>
-    <string name="export_signing_apk">Menandatangani APK...</string>
-    <string name="export_finish_packaging">Selesai membungkus...</string>
     <string name="export_completed">Eksport selesai!</string>
-    <string name="export_sign_apk_failed">Gagal menandatangani APK: %1$s</string>
     <string name="export_failed_with_reason">Eksport gagal: %1$s</string>
-    <string name="export_prepare_windows_template">Menyediakan templat aplikasi Windows...</string>
-    <string name="export_copy_template">Menyalin templat aplikasi...</string>
-    <string name="export_extract_template">Mengekstrak templat aplikasi...</string>
-    <string name="export_copy_web_content">Menyalin kandungan web...</string>
-    <string name="export_pack_app">Membungkus aplikasi...</string>
-    <string name="export_cleanup_temp_files">Membersihkan fail sementara...</string>
-    <string name="export_process_failed">Proses eksport gagal: %1$s</string>
 
     <string name="not_supported">Tidak disokong</string>
     <string name="permission_level_set_active">Telah menetapkan %1$s sebagai tahap kebenaran aktif semasa</string>
@@ -2479,9 +2456,6 @@
     <string name="function_desc_title_generation">Menjana tajuk perbualan yang ringkas dan tepat daripada mesej pertama pengguna.</string>
     <string name="function_desc_summary">Mampatkan konteks, hasilkan ringkasan sembang</string>
 
-    <string name="export_invalid_package_name_format">Format tidak betul, sepatutnya com.example.app</string>
-    <string name="export_invalid_version_format">Format tidak betul, sepatutnya 1.0.0</string>
-    <string name="export_apk_extract_dir_missing">Direktori ekstrak APK tidak wujud</string>
     <string name="chat_generate_share_image_failed">Gagal menjana imej: %1$s</string>
     <string name="chat_processing_attachment">Memproses lampiran...</string>
     <string name="chat_attachment_processing_failed">Gagal memproses lampiran: %1$s</string>
@@ -2884,7 +2858,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="confirm_delete_profile">Sahkan Padam Profil</string>
     <string name="delete_profile_warning">Adakah anda pasti mahu memadam profil keutamaan ini? Tindakan ini juga akan memadam data repositori ingatan yang terikat dengannya dan tidak boleh dipulihkan.\n\nAdalah disyorkan untuk membuat sandaran kandungan penting terlebih dahulu.</string>
     <string name="select_profile">Pilih Profil</string>
-    <string name="export_from_profile">Eksport dari Profil</string>
     <string name="import_to_profile">Import ke Profil</string>
     <string name="source_profile">Profil Sumber</string>
     <string name="target_profile">Profil Sasaran</string>
@@ -4219,7 +4192,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="default_assistant_guide_step3_title">Uji Fungsi Pembantu</string>
     <string name="default_assistant_guide_step3_desc">Selepas selesai penetapan, uji sama ada Operit boleh dibangkitkan dengan normal</string>
 
-    <string name="export_failed">Eksport gagal</string>
     <string name="file_saved_to">Fail telah disimpan ke:</string>
     <string name="token_limit_warning">Amaran Had Token</string>
     <string name="token_limit_warning_message">Mesej telah melebihi had token. Menghantar berterusan mungkin menyebabkan kehilangan konteks atau AI tidak dapat memahami. Teruskan?</string>

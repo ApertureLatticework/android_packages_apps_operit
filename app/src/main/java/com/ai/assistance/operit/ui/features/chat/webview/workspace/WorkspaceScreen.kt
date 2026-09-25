@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.ai.assistance.operit.R
 import com.ai.assistance.operit.data.model.ChatHistory
 import com.ai.assistance.operit.ui.features.chat.viewmodel.ChatViewModel
-import java.io.File
 
 /**
  * 主工作区屏幕组件
@@ -25,7 +24,6 @@ fun WorkspaceScreen(
     actualViewModel: ChatViewModel,
     currentChat: ChatHistory?,
     isVisible: Boolean,
-    onExportClick: (workDir: File) -> Unit
 ) {
     if (currentChat?.workspace != null) {
         val workspacePath = currentChat.workspace
@@ -35,7 +33,6 @@ fun WorkspaceScreen(
                 workspacePath = workspacePath,
                 workspaceEnv = currentChat.workspaceEnv,
                 isVisible = isVisible,
-                onExportClick = onExportClick
             )
         
     } else if (currentChat != null) {

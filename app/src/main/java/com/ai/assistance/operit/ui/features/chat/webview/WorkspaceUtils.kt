@@ -120,10 +120,8 @@ private fun generateBlankProjectConfig(context: Context): String {
         "showPreviewButton": false,
         "previewButtonLabel": ""
     },
-    "commands": [],
-    "export": {
-        "enabled": false
-    }
+    "commands": []
+    
 }
 """.trimIndent()
 }
@@ -205,10 +203,8 @@ private fun generateAndroidProjectConfig(context: Context): String {
             "workingDir": ".",
             "shell": true
         }
-    ],
-    "export": {
-        "enabled": false
-    }
+    ]
+    
 }
 """.trimIndent()
 }
@@ -292,10 +288,8 @@ private fun generateFlutterProjectConfig(context: Context): String {
             "workingDir": ".",
             "shell": true
         }
-    ],
-    "export": {
-        "enabled": false
-    }
+    ]
+    
 }
 """.trimIndent()
 }
@@ -318,10 +312,7 @@ private fun generateWebProjectConfig(context: Context): String {
         "type": "browser",
         "url": "http://localhost:8093"
     },
-    "commands": [],
-    "export": {
-        "enabled": true
-    }
+    "commands": []
 }
 """.trimIndent()
 }
@@ -377,10 +368,8 @@ private fun generateNodeProjectConfig(context: Context): String {
             "workingDir": ".",
             "shell": true
         }
-    ],
-    "export": {
-        "enabled": false
-    }
+    ]
+    
 }
 """.trimIndent()
 }
@@ -444,10 +433,8 @@ private fun generateTypeScriptProjectConfig(context: Context): String {
             "workingDir": ".",
             "shell": true
         }
-    ],
-    "export": {
-        "enabled": false
-    }
+    ]
+    
 }
 """.trimIndent()
 }
@@ -507,10 +494,8 @@ private fun generatePythonProjectConfig(context: Context): String {
             "workingDir": ".",
             "shell": true
         }
-    ],
-    "export": {
-        "enabled": false
-    }
+    ]
+    
 }
 """.trimIndent()
 }
@@ -584,10 +569,8 @@ private fun generateJavaProjectConfig(context: Context): String {
             "workingDir": ".",
             "shell": true
         }
-    ],
-    "export": {
-        "enabled": false
-    }
+    ]
+    
 }
 """.trimIndent()
 }
@@ -640,10 +623,8 @@ private fun generateGoProjectConfig(context: Context): String {
             "workingDir": ".",
             "shell": true
         }
-    ],
-    "export": {
-        "enabled": false
-    }
+    ]
+    
 }
 """.trimIndent()
 }
@@ -668,10 +649,8 @@ private fun generateOfficeProjectConfig(context: Context): String {
         "showPreviewButton": false,
         "previewButtonLabel": ""
     },
-    "commands": [],
-    "export": {
-        "enabled": false
-    }
+    "commands": []
+    
 }
 """.trimIndent()
 }

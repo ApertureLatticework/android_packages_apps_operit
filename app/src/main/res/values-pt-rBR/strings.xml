@@ -29,7 +29,6 @@
     <string name="chat_display_mode">modo de exibição</string>
     <string name="chat_autoglm_warning">É proibido usar autoglm como modelo mestre de diálogo. O modelo de diálogo e o modelo de controle da UI são separados, escolha qualquer outro modelo grande e inteligente. Se você tiver alguma dúvida, leia atentamente a documentação para aprender o mecanismo de configuração do modelo do software.</string>
     <string name="chat_model_count">%d modelos</string>
-    <string name="chat_starting_export">Comece a exportar...</string>
     <string name="chat_reply_instruction">O usuário está respondendo à sua mensagem anterior:</string>
     <string name="chat_workspace_status">status do espaço de trabalho</string>
     <string name="attach_local_storage_repo">Repositório de armazenamento local anexado</string>
@@ -427,7 +426,6 @@
     <string name="chat_binding_scope_hint">Afeta apenas a vinculação desta conversa e não modifica as mensagens existentes.</string>
     <string name="confirm_delete">Confirmar exclusão</string>
     <string name="delete_warning">A exclusão de todo o histórico de bate-papo será irreversível. Recomenda-se exportar o backup antes de realizar esta operação.</string>
-    <string name="export_success">Exportação bem-sucedida</string>
     <string name="import_success">Importação bem-sucedida</string>
     <string name="operation_failed">Falha na operação</string>
     <string name="danger_zone">Área de perigo</string>
@@ -768,7 +766,6 @@
     <string name="show_help">mostrar ajuda</string>
     <string name="hide_help">Ocultar ajuda</string>
     <string name="request_permission">Solicite permissão para Shizuku</string>
-    <string name="screen_title_html_packager">Empacotador HTML</string>
     <string name="execute_shell">Executar comando shell</string>
     <string name="enter_command">Digite o comando ADB</string>
     <string name="show_samples">Mostrar comandos de exemplo</string>
@@ -1164,7 +1161,6 @@
     <string name="dialog_title_prompt">dica</string>
     <string name="ai_computer">Computador de IA</string>
     <string name="code_editor">editor de código</string>
-    <string name="export_starting">Comece a exportar...</string>
     <string name="floating_window_permission_denied">A permissão da janela flutuante não foi obtida e o modo de janela flutuante foi desativado.</string>
     <string name="select_download_source">Selecione a fonte de download</string>
     <string name="select_download_source_desc">Escolha a fonte de download adequada ao seu ambiente de rede:</string>
@@ -1696,8 +1692,6 @@
     <string name="sql_viewer_empty_state">Nenhum resultado ainda, clique no botão no canto superior direito para executar o SQL</string>
     <string name="tool_process_limit_remover">Remover restrições de processo fantasma</string>
     <string name="tool_process_limit_remover_desc">Gerencie o número de processos fantasmas no Android 12+, permitindo mais processos filhos em segundo plano</string>
-    <string name="tool_html_packager">Empacotador HTML</string>
-    <string name="tool_html_packager_desc">Empacote arquivos HTML e suas dependências em um único arquivo HTML para fácil compartilhamento e implantação</string>
     <string name="tool_autoglm_one_click">Configuração do AutoGLM com um clique</string>
     <string name="tool_autoglm_one_click_desc">Configure o modelo autoglm-phone para controlador de UI e alterne o kit de ferramentas AutoGLM com um clique</string>
     <string name="tool_autoglm_tool">Execução AutoGLM</string>
@@ -2575,28 +2569,8 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="chat_ai_service_init_failed">Falha ao inicializar o serviço de IA: %1$s</string>
     <string name="chat_need_overlay_permission_start_voice_assistant">Você precisa de permissão de janela flutuante para iniciar o assistente de voz</string>
     <string name="chat_clipboard_label_message">Mensagens de bate-papo</string>
-    <string name="export_in_progress_title">Exportador</string>
-    <string name="export_prepare_base_apk">Preparar arquivo APK base...</string>
-    <string name="export_extract_apk">Descompacte o APK...</string>
-    <string name="export_modify_app_info">Modificar informações do aplicativo...</string>
-    <string name="export_change_app_icon">Alterar ícone do aplicativo...</string>
-    <string name="export_pack_web_content">Empacotando conteúdo da web...</string>
-    <string name="export_prepare_signing">Pronto para assinar...</string>
-    <string name="export_signing_apk">APK assinado...</string>
-    <string name="export_finish_packaging">Embalagem completa...</string>
     <string name="export_completed">Exportação concluída!</string>
-    <string name="export_sign_apk_failed">Falha ao assinar APK: %1$s</string>
     <string name="export_failed_with_reason">Falha na exportação: %1$s</string>
-    <string name="export_prepare_windows_template">Preparar modelo de aplicativo do Windows...</string>
-    <string name="export_copy_template">Copiar modelo de aplicativo...</string>
-    <string name="export_extract_template">Descompacte o modelo de aplicativo...</string>
-    <string name="export_copy_web_content">Copiar conteúdo da web...</string>
-    <string name="export_pack_app">Aplicativos empacotados...</string>
-    <string name="export_cleanup_temp_files">Limpar arquivos temporários...</string>
-    <string name="export_process_failed">Falha no processo de exportação: %1$s</string>
-    <string name="export_invalid_package_name_format">Formato incorreto, esperado com.example.app</string>
-    <string name="export_invalid_version_format">Formato incorreto, esperado 1.0.0</string>
-    <string name="export_apk_extract_dir_missing">O diretório de descompactação do APK não existe</string>
     <string name="chat_generate_share_image_failed">Falha ao gerar imagem: %1$s</string>
     <string name="chat_processing_attachment">Processando anexo...</string>
     <string name="chat_attachment_processing_failed">Falha ao processar anexo: %1$s</string>
@@ -2902,7 +2876,6 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="confirm_delete_profile">Confirmar exclusão da configuração</string>
     <string name="delete_profile_warning">Tem certeza de que deseja excluir esta preferência? Esta operação também excluirá os dados da memória vinculados a ela e não poderá ser restaurado. \n\nÉ recomendável fazer backup do conteúdo importante com antecedência.</string>
     <string name="select_profile">Selecione a configuração</string>
-    <string name="export_from_profile">Exportar da configuração</string>
     <string name="import_to_profile">Importar para configuração</string>
     <string name="source_profile">Configuração de origem</string>
     <string name="target_profile">configuração de destino</string>
@@ -3951,7 +3924,6 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="app_icon">Ícone do aplicativo:</string>
     <string name="click_select_icon">Clique no ícone de seleção</string>
     <string name="exporting">Exportador</string>
-    <string name="export_failed">Falha na exportação</string>
     <string name="file_saved_to">Arquivo salvo em:</string>
     <string name="token_limit_warning">Aviso de token acima do limite</string>
     <string name="token_limit_warning_message">A mensagem excedeu o limite de token. Continuar a enviar pode fazer com que o contexto se perca ou que a IA não consiga entendê-lo. Continuar?</string>

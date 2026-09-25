@@ -167,7 +167,6 @@ fun WorkspaceManager(
         workspacePath: String,
         workspaceEnv: String? = null,
         isVisible: Boolean,
-        onExportClick: (workDir: File) -> Unit
 ) {
     val context = LocalContext.current
     val clipboardManager = LocalClipboardManager.current
@@ -1002,12 +1001,6 @@ fun WorkspaceManager(
             ExpandableFabMenu(
                 isExpanded = isFabMenuExpanded,
                 onToggle = { isFabMenuExpanded = !isFabMenuExpanded },
-                exportEnabled = workspaceConfig.export.enabled && !isSafEnv,
-                onExportClick = {
-                    if (!isSafEnv) {
-                        onExportClick(File(workspacePath))
-                    }
-                },
                 onFileManagerClick = { showFileManager = true },
                 onUndoClick = { activeEditor?.undo() },
                 onRedoClick = { activeEditor?.redo() },
@@ -1202,8 +1195,6 @@ fun WorkspaceManager(
 fun ExpandableFabMenu(
     isExpanded: Boolean,
     onToggle: () -> Unit,
-    exportEnabled: Boolean = true,
-    onExportClick: () -> Unit,
     onFileManagerClick: () -> Unit,
     onUndoClick: () -> Unit,
     onRedoClick: () -> Unit,
@@ -1270,10 +1261,6 @@ fun ExpandableFabMenu(
             }
             FabMenuItem(icon = Icons.Default.Folder, text = context.getString(R.string.files), onClick = onFileManagerClick)
             Spacer(modifier = Modifier.height(12.dp))
-            if (exportEnabled) {
-                FabMenuItem(icon = Icons.Default.Upload, text = context.getString(R.string.export), onClick = onExportClick)
-                Spacer(modifier = Modifier.height(12.dp))
-            }
             if (renameEnabled) {
                 FabMenuItem(
                     icon = Icons.Default.Edit,

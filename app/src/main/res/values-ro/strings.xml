@@ -38,7 +38,6 @@
     <string name="chat_display_mode">Modul de afișare</string>
     <string name="chat_autoglm_warning">Utilizarea este interzisăautoglmCa model principal de dialog. Modelul de dialog șiuiModelele de control sunt separate; vă rugăm să alegeți orice alt model inteligent. Dacă aveți întrebări, vă rugăm să citiți cu atenție documentația pentru a înțelege mecanismul de configurare a modelelor din cadrul software-ului.</string>
     <string name="chat_model_count">%dun model</string>
-    <string name="chat_starting_export">Începe exportul...</string>
     <string name="chat_reply_instruction">Utilizatorul îți răspunde la mesajul tău anterior:</string>
     <string name="chat_workspace_status">Starea zonei de lucru</string>
     <string name="attach_local_storage_repo">Adăugarea unui depozit de stocare local</string>
@@ -478,7 +477,6 @@
     <string name="chat_binding_scope_hint">Afectează doar legăturile din această conversație și nu modifică mesajele existente</string>
     <string name="confirm_delete">Confirmă ștergerea</string>
     <string name="delete_warning">Ștergerea tuturor istoricului conversațiilor va face ca acestea să nu mai poată fi recuperate. Vă recomandăm să exportați o copie de rezervă înainte de a efectua această operațiune.</string>
-    <string name="export_success">Exportul s-a realizat cu succes</string>
     <string name="import_success">Importul s-a realizat cu succes</string>
     <string name="operation_failed">Operațiunea a eșuat</string>
     <string name="danger_zone">Zonă periculoasă</string>
@@ -875,7 +873,6 @@
     <string name="show_help">Afișează ajutorul</string>
     <string name="hide_help">Ascunde ajutorul</string>
     <string name="request_permission">SolicitareShizukuDrepturi</string>
-    <string name="screen_title_html_packager">HTML Packager</string>
     <string name="execute_shell">ExecutareshellComandă</string>
     <string name="enter_command">IntroducereADBComandă</string>
     <string name="show_samples">Afișează exemple de comenzi</string>
@@ -1369,7 +1366,6 @@
     <string name="dialog_title_prompt">Sfat</string>
     <string name="ai_computer">AICalculator</string>
     <string name="code_editor">Editor de cod</string>
-    <string name="export_starting">Începe exportul...</string>
     <string name="floating_window_permission_denied">Nu s-a obținut permisiunea pentru fereastra plutitoare; modul fereastră plutitoare a fost dezactivat</string>
     <string name="select_download_source">Alegeți sursa de descărcare</string>
     <string name="select_download_source_desc">Vă rugăm să alegeți sursa de descărcare potrivită pentru mediul dvs. de rețea:</string>
@@ -1972,8 +1968,6 @@
     <string name="tool_process_limit_remover">Eliminarea restricțiilor procesului „Illusion”</string>
     <string name="tool_process_limit_remover_desc">AdministrareAndroid 12+Limita numărului de procese fantomă, care permite un număr mai mare de subprocese în fundal</string>
 
-    <string name="tool_html_packager">HTMLMașină de ambalat</string>
-    <string name="tool_html_packager_desc">VaHTMLFișierul și dependențele sale sunt împachetate într-un singur fișierHTMLFișiere, ușor de partajat și de implementat</string>
 
     <string name="tool_autoglm_one_click">AutoGLM Configurare cu un singur clic</string>
     <string name="tool_autoglm_one_click_desc">Cu un singur clic pentru UI Configurarea controlerului autoglm-phone Model și comutare AutoGLM Set de instrumente</string>
@@ -3042,28 +3036,8 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="chat_ai_service_init_failed">InițializareAIEroare la prestarea serviciului: %1$s</string>
     <string name="chat_need_overlay_permission_start_voice_assistant">Este necesară permisiunea pentru fereastra flotantă pentru a porni asistentul vocal</string>
     <string name="chat_clipboard_label_message">Mesaje de chat</string>
-    <string name="export_in_progress_title">Se exportă</string>
-    <string name="export_prepare_base_apk">Bazele pregătiriiAPKDocument...</string>
-    <string name="export_extract_apk">DezarhivareAPK...</string>
-    <string name="export_modify_app_info">Modificarea informațiilor despre aplicație...</string>
-    <string name="export_change_app_icon">Schimbarea pictogramei aplicației...</string>
-    <string name="export_pack_web_content">Împachetarea conținutului paginii web...</string>
-    <string name="export_prepare_signing">Pregătire pentru semnare...</string>
-    <string name="export_signing_apk">SemnăturăAPK...</string>
-    <string name="export_finish_packaging">Am terminat de împachetat...</string>
     <string name="export_completed">Exportul s-a finalizat!</string>
-    <string name="export_sign_apk_failed">SemnăturăAPKEșec: %1$s</string>
     <string name="export_failed_with_reason">Eșec la exportare: %1$s</string>
-    <string name="export_prepare_windows_template">PregătireWindowsȘabloane de aplicații...</string>
-    <string name="export_copy_template">Copierea șablonului aplicației...</string>
-    <string name="export_extract_template">Despachetarea șabloanelor de aplicații...</string>
-    <string name="export_copy_web_content">Copierea conținutului paginii web...</string>
-    <string name="export_pack_app">Aplicație de împachetare...</string>
-    <string name="export_cleanup_temp_files">Ștergerea fișierelor temporare...</string>
-    <string name="export_process_failed">Procesul de exportare a eșuat: %1$s</string>
-    <string name="export_invalid_package_name_format">Formatul este incorect; ar trebui să fie com.example.app</string>
-    <string name="export_invalid_version_format">Formatul este incorect; ar trebui să fie 1.0.0</string>
-    <string name="export_apk_extract_dir_missing">APKDirectorul de destulare nu există</string>
     <string name="chat_generate_share_image_failed">Generarea imaginii a eșuat: %1$s</string>
     <string name="chat_processing_attachment">Se procesează atașamentul...</string>
     <string name="chat_attachment_processing_failed">Eroare la procesarea atașamentului: %1$s</string>
@@ -3403,7 +3377,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
 
     <!-- Profile Selection for Import/Export -->
     <string name="select_profile">Selectați configurația</string>
-    <string name="export_from_profile">Export din configurație</string>
     <string name="import_to_profile">Import în configurație</string>
     <string name="source_profile">Configurația sursei</string>
     <string name="target_profile">Configurația țintă</string>
@@ -5011,7 +4984,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="app_icon">Pictograma aplicației:</string>
     <string name="click_select_icon">Faceți clic pe pictograma de selectare</string>
     <string name="exporting">Se exportă</string>
-    <string name="export_failed">Eșec la exportare</string>
     <string name="file_saved_to">Fișierul a fost salvat în:</string>
     <string name="token_limit_warning">Token Avertisment privind depășirea limitelor</string>
     <string name="token_limit_warning_message">Știrea a depășitTokenLimita maximă; continuarea trimiterii ar putea duce la pierderea contextului sauAINu înțeleg. Să continuăm?</string>
@@ -7255,7 +7227,6 @@ Acum poate fi utilizat în interfața de dialog AutoGLM A devenit un model.</str
     <string name="apk_key_not_found_in_keystore">Aliasul nu a fost găsit în magazinul de chei\'%1$s\'cheia</string>
     <string name="apk_cannot_get_cert_chain">Nu se poate obține aliasul\'%1$s\'Lanțul de certificate</string>
 
-    <!-- ExeEditor -->
     <string name="exe_editor_change_icon_first">Vă rugăm să apelați mai întâichangeIconCum se setează o pictogramă nouă</string>
     <string name="exe_editor_change_icon_failed">ÎnlocuireEXEEroare la afișarea pictogramei</string>
 

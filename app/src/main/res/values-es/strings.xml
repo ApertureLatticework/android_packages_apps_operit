@@ -52,7 +52,6 @@
     <string name="clear_chat_history">Borrar todo el historial de chat</string>
     <string name="confirm_delete">Confirmar eliminación</string>
     <string name="delete_warning">Eliminar todo el historial de chat será irreversible. Se recomienda exportar una copia de seguridad antes de realizar esta operación.</string>
-    <string name="export_success">Exportación exitosa</string>
     <string name="import_success">Importación exitosa</string>
     <string name="operation_failed">Operación fallida</string>
     <string name="danger_zone">Zona peligrosa</string>
@@ -1561,7 +1560,6 @@
     <string name="chat_display_mode">Modo de visualización</string>
     <string name="chat_autoglm_warning">No está permitido usar autoglm como modelo principal de diálogo. El modelo de diálogo y el modelo de control de la interfaz de usuario están separados. Por favor, elige cualquier otro modelo grande inteligente. Si tienes dudas, lee atentamente la documentación para aprender el mecanismo de configuración de modelos del software.</string>
     <string name="chat_model_count">%d modelos</string>
-    <string name="chat_starting_export">Iniciando exportación...</string>
     <string name="chat_reply_instruction">El usuario está respondiendo a este mensaje tuyo anterior:</string>
     <string name="chat_workspace_status">Estado del espacio de trabajo</string>
     <string name="attach_local_storage_repo">Adjuntar repositorio de almacenamiento local</string>
@@ -1652,7 +1650,6 @@
     <string name="dialog_title_prompt">Aviso</string>
     <string name="ai_computer">PC con IA</string>
     <string name="code_editor">Editor de código</string>
-    <string name="export_starting">Iniciando exportación...</string>
     <string name="floating_window_permission_denied">Permiso de ventana flotante no concedido, se ha cerrado el modo de ventana flotante</string>
     <string name="select_download_source">Seleccionar fuente de descarga</string>
     <string name="select_download_source_desc">Seleccione la fuente de descarga adecuada para su entorno de red:</string>
@@ -2112,7 +2109,6 @@
     <string name="settings_section_external_calls">Llamadas externas</string>
     <string name="settings_total_tokens_breakdown">Entrada: %1$d (caché: %2$d) / Salida: %3$d</string>
     <string name="settings_cached_tokens">(caché: %1$d)</string>
-    <string name="screen_title_html_packager">HTML Packager</string>
     <string name="skills">Habilidades</string>
     <string name="show_to_ai_short">IA</string>
     <string name="package_js_only">Solo se admiten archivos JavaScript(.js) y ToolPkg(.toolpkg)</string>
@@ -2658,8 +2654,6 @@
     <string name="sql_viewer_empty_state">Sin resultados aún, toque el botón superior derecho para ejecutar SQL</string>
     <string name="tool_process_limit_remover">Eliminar límite de procesos fantasma</string>
     <string name="tool_process_limit_remover_desc">Gestionar el límite de procesos fantasma en Android 12+, permitiendo más procesos secundarios en segundo plano</string>
-    <string name="tool_html_packager">Empaquetador HTML</string>
-    <string name="tool_html_packager_desc">Empaqueta archivos HTML y sus dependencias en un solo archivo HTML, fácil de compartir e implementar</string>
     <string name="tool_autoglm_one_click">Configuración con un clic de AutoGLM</string>
     <string name="tool_autoglm_one_click_desc">Configura el modelo autoglm-phone para el controlador de UI con un clic y cambia al paquete de herramientas AutoGLM</string>
     <string name="tool_autoglm_tool">Ejecución de AutoGLM</string>
@@ -3166,28 +3160,8 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="chat_ai_service_init_failed">Error al inicializar el servicio de IA: %1$s</string>
     <string name="chat_need_overlay_permission_start_voice_assistant">Se necesita permiso de superposición para iniciar el asistente de voz</string>
     <string name="chat_clipboard_label_message">Mensaje de chat</string>
-    <string name="export_in_progress_title">Exportando</string>
-    <string name="export_prepare_base_apk">Preparando archivo APK base...</string>
-    <string name="export_extract_apk">Extrayendo APK...</string>
-    <string name="export_modify_app_info">Modificando información de la aplicación...</string>
-    <string name="export_change_app_icon">Cambiando icono de la aplicación...</string>
-    <string name="export_pack_web_content">Empaquetando contenido web...</string>
-    <string name="export_prepare_signing">Preparando firma...</string>
-    <string name="export_signing_apk">Firmando APK...</string>
-    <string name="export_finish_packaging">Finalizando empaquetado...</string>
     <string name="export_completed">¡Exportación completada!</string>
-    <string name="export_sign_apk_failed">Error al firmar APK: %1$s</string>
     <string name="export_failed_with_reason">Error al exportar: %1$s</string>
-    <string name="export_prepare_windows_template">Preparando plantilla de aplicación para Windows...</string>
-    <string name="export_copy_template">Copiando plantilla de aplicación...</string>
-    <string name="export_extract_template">Extrayendo plantilla de aplicación...</string>
-    <string name="export_copy_web_content">Copiando contenido web...</string>
-    <string name="export_pack_app">Empaquetando aplicación...</string>
-    <string name="export_cleanup_temp_files">Limpiando archivos temporales...</string>
-    <string name="export_process_failed">Error en el proceso de exportación: %1$s</string>
-    <string name="export_invalid_package_name_format">Formato incorrecto, debe ser com.example.app</string>
-    <string name="export_invalid_version_format">Formato incorrecto, debe ser 1.0.0</string>
-    <string name="export_apk_extract_dir_missing">El directorio de extracción del APK no existe</string>
     <string name="chat_generate_share_image_failed">Error al generar imagen: %1$s</string>
     <string name="chat_processing_attachment">Procesando adjunto...</string>
     <string name="chat_attachment_processing_failed">Error al procesar adjunto: %1$s</string>
@@ -3415,7 +3389,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="settings_price_format">¥%.2f/1M</string>
     <string name="clear_action">Limpiar</string>
     <string name="select_profile">Seleccionar perfil</string>
-    <string name="export_from_profile">Exportar desde perfil</string>
     <string name="import_to_profile">Importar a perfil</string>
     <string name="source_profile">Perfil de origen</string>
     <string name="target_profile">Perfil de destino</string>
@@ -4024,7 +3997,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="app_icon">Icono de la aplicación:</string>
     <string name="click_select_icon">Haga clic para seleccionar el icono</string>
     <string name="exporting">Exportando</string>
-    <string name="export_failed">Error al exportar</string>
     <string name="file_saved_to">Archivo guardado en:</string>
     <string name="token_limit_warning">Advertencia de límite de tokens</string>
     <string name="token_limit_warning_message">El mensaje ha superado el límite de tokens. Continuar podría causar pérdida de contexto o que la IA no entienda. ¿Desea continuar?</string>

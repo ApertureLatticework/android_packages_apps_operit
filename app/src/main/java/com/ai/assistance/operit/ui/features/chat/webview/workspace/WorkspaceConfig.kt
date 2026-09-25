@@ -20,7 +20,6 @@ data class WorkspaceConfig(
     val server: ServerConfig = ServerConfig(),
     val preview: PreviewConfig = PreviewConfig(),
     val commands: List<CommandConfig> = emptyList(),
-    val export: ExportConfig = ExportConfig(),
     val watch: WatchConfig = WatchConfig()
 )
 
@@ -58,11 +57,6 @@ data class CommandConfig(
     val shell: Boolean = true,
     val usesDedicatedSession: Boolean = false, // 是否使用独立会话（适用于长时间运行的命令如 tsc watch）
     val sessionTitle: String? = null // 独立会话的标题，null 时使用 label
-)
-
-@Serializable
-data class ExportConfig(
-    val enabled: Boolean = true // 是否显示导出按钮
 )
 
 @Serializable

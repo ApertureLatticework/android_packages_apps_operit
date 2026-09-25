@@ -32,7 +32,6 @@
     <string name="chat_display_mode">디스플레이 모드</string>
     <string name="chat_autoglm_warning">AutoGLM을 기본 대화 모델로 사용할 수 없습니다. 대화 모델과 UI 제어 모델은 분리되어 있습니다. 다른 고성능 대형 모델을 선택하세요. 궁금한 점이 있으면 문서를 확인해 모델 구성 방식을 알아보세요.</string>
     <string name="chat_model_count">%d개 모델</string>
-    <string name="chat_starting_export">내보내기 시작 중...</string>
     <string name="chat_reply_instruction">사용자가 이전 메시지에 답장하고 있습니다.</string>
     <string name="chat_workspace_status">작업 공간 상태</string>
     <string name="attach_local_storage_repo">로컬 저장소 연결</string>
@@ -436,7 +435,6 @@
     <string name="chat_binding_scope_hint">이 대화 바인딩에만 영향을 미치고 기존 메시지는 수정하지 않습니다.</string>
     <string name="confirm_delete">삭제 확인</string>
     <string name="delete_warning">모든 채팅 기록을 삭제하면 되돌릴 수 없습니다. 계속하기 전에 백업 내보내기를 고려하십시오.</string>
-    <string name="export_success">내보내기 성공</string>
     <string name="import_success">가져오기 성공</string>
     <string name="operation_failed">작업 실패</string>
     <string name="danger_zone">위험지대</string>
@@ -778,7 +776,6 @@
     <string name="show_help">도움말 보기</string>
     <string name="hide_help">도움말 숨기기</string>
     <string name="request_permission">Shizuku 권한 요청</string>
-    <string name="screen_title_html_packager">HTML 패키저</string>
     <string name="execute_shell">셸 명령 실행</string>
     <string name="enter_command">ADB 명령 입력</string>
     <string name="show_samples">예제 명령 표시</string>
@@ -1199,7 +1196,6 @@
     <string name="dialog_title_prompt">프롬프트</string>
     <string name="ai_computer">AI 컴퓨터</string>
     <string name="code_editor">코드 편집기</string>
-    <string name="export_starting">내보내기 시작 중...</string>
     <string name="floating_window_permission_denied">플로팅 창 권한이 부여되지 않았으며 플로팅 창 모드가 닫혔습니다.</string>
     <string name="select_download_source">다운로드 소스 선택</string>
     <string name="select_download_source_desc">귀하의 네트워크에 적합한 다운로드 소스를 선택하십시오:</string>
@@ -1746,8 +1742,6 @@
     <string name="sql_viewer_empty_state">아직 결과가 없습니다. SQL을 실행하려면 오른쪽 상단 버튼을 탭하세요.</string>
     <string name="tool_process_limit_remover">팬텀 프로세스 제한 제거기</string>
     <string name="tool_process_limit_remover_desc">Android 12+의 팬텀 프로세스 수 제한을 관리하여 더 많은 백그라운드 하위 프로세스를 허용합니다</string>
-    <string name="tool_html_packager">HTML 패키저</string>
-    <string name="tool_html_packager_desc">HTML 파일과 해당 종속성을 단일 파일로 패키징</string>
     <string name="tool_autoglm_one_click">AutoGLM 원클릭 구성</string>
     <string name="tool_autoglm_one_click_desc">한 번의 클릭으로 UI 컨트롤러용 autoglm-phone 모델을 구성하고 AutoGLM 툴킷으로 전환</string>
     <string name="tool_autoglm_tool">AutoGLM 실행</string>
@@ -2700,28 +2694,8 @@
     <string name="chat_ai_service_init_failed">AI 서비스 초기화 실패: %1$s</string>
     <string name="chat_need_overlay_permission_start_voice_assistant">음성 어시스턴트를 시작하려면 오버레이 권한이 필요합니다</string>
     <string name="chat_clipboard_label_message">채팅 메시지</string>
-    <string name="export_in_progress_title">내보내는 중</string>
-    <string name="export_prepare_base_apk">기본 APK 준비 중...</string>
-    <string name="export_extract_apk">APK 추출 중...</string>
-    <string name="export_modify_app_info">앱 정보 업데이트 중...</string>
-    <string name="export_change_app_icon">앱 아이콘 변경 중...</string>
-    <string name="export_pack_web_content">웹 콘텐츠 패키징 중...</string>
-    <string name="export_prepare_signing">서명 준비 중...</string>
-    <string name="export_signing_apk">APK 서명 중...</string>
-    <string name="export_finish_packaging">패키징 마무리 중...</string>
     <string name="export_completed">내보내기가 완료되었습니다!</string>
-    <string name="export_sign_apk_failed">APK 서명 실패: %1$s</string>
     <string name="export_failed_with_reason">내보내기 실패: %1$s</string>
-    <string name="export_prepare_windows_template">Windows 앱 템플릿 준비 중...</string>
-    <string name="export_copy_template">앱 템플릿 복사 중...</string>
-    <string name="export_extract_template">앱 템플릿 추출 중...</string>
-    <string name="export_copy_web_content">웹 콘텐츠 복사 중...</string>
-    <string name="export_pack_app">앱 패키징 중...</string>
-    <string name="export_cleanup_temp_files">임시 파일을 정리하는 중...</string>
-    <string name="export_process_failed">내보내기 프로세스 실패: %1$s</string>
-    <string name="export_invalid_package_name_format">형식이 잘못되었습니다. 예: com.example.app</string>
-    <string name="export_invalid_version_format">형식이 잘못되었습니다. 예: 1.0.0</string>
-    <string name="export_apk_extract_dir_missing">APK 추출 디렉터리가 존재하지 않습니다.</string>
     <string name="chat_generate_share_image_failed">이미지 생성 실패: %1$s</string>
     <string name="chat_processing_attachment">첨부파일 처리 중...</string>
     <string name="chat_attachment_processing_failed">첨부 파일 처리 실패: %1$s</string>
@@ -3031,7 +3005,6 @@
     <string name="confirm_delete_profile">프로필 삭제 확인</string>
     <string name="delete_profile_warning">이 기본 설정 프로필을 삭제하시겠습니까? 이 작업을 수행하면 바인딩된 메모리 라이브러리 데이터도 삭제되며 복구할 수 없습니다.\n\n중요한 콘텐츠를 미리 백업하는 것이 좋습니다.</string>
     <string name="select_profile">프로필 선택</string>
-    <string name="export_from_profile">프로필에서 내보내기</string>
     <string name="import_to_profile">프로필로 가져오기</string>
     <string name="source_profile">소스 프로필</string>
     <string name="target_profile">대상 프로필</string>
@@ -4306,7 +4279,6 @@
     <string name="app_icon">앱 아이콘:</string>
     <string name="click_select_icon">아이콘을 선택하려면 클릭하세요.</string>
     <string name="exporting">내보내는 중</string>
-    <string name="export_failed">내보내기 실패</string>
     <string name="file_saved_to">파일 저장 위치:</string>
     <string name="token_limit_warning">토큰 제한 경고</string>
     <string name="token_limit_warning_message">메시지가 토큰 제한을 초과했습니다. 계속 보내면 컨텍스트가 손실되거나 AI가 내용을 이해하지 못할 수 있습니다. 계속하시겠습니까?</string>

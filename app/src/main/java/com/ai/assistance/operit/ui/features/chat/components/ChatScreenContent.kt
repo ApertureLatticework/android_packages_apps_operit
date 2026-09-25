@@ -1,7 +1,6 @@
 package com.ai.assistance.operit.ui.features.chat.components
 
 import android.annotation.SuppressLint
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
@@ -41,7 +40,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.FileProvider
 import com.ai.assistance.operit.data.model.ChatHistory
 import com.ai.assistance.operit.data.model.ChatMessage
 import com.ai.assistance.operit.data.model.ActivePrompt
@@ -181,12 +179,6 @@ fun ChatScreenContent(
     val context = LocalContext.current
     val clipboardManager = LocalClipboardManager.current
     val selectedMessagesCopyScope = rememberCoroutineScope()
-    var showExportPlatformDialog by remember { mutableStateOf(false) }
-    var showAndroidExportDialog by remember { mutableStateOf(false) }
-    var showWindowsExportDialog by remember { mutableStateOf(false) }
-    var showExportProgressDialog by remember { mutableStateOf(false) }
-    var showExportCompleteDialog by remember { mutableStateOf(false) }
-    var exportProgress by remember { mutableStateOf(0f) }
 
     LaunchedEffect(currentChatId, messageOrder) {
         selectedMessagesCopyJob?.cancel()
@@ -198,11 +190,6 @@ fun ChatScreenContent(
         }
         showMultiSelectActionsMenu = false
     }
-    var exportStatus by remember { mutableStateOf("") }
-    var exportSuccess by remember { mutableStateOf(false) }
-    var exportFilePath by remember { mutableStateOf<String?>(null) }
-    var exportErrorMessage by remember { mutableStateOf<String?>(null) }
-    var webContentDir by remember { mutableStateOf<File?>(null) }
     var editingMessageType by remember { mutableStateOf<String?>(null) }
     var pendingRollbackIndex by remember { mutableStateOf<Int?>(null) }
     var pendingRewindIndex by remember { mutableStateOf<Int?>(null) }
@@ -979,131 +966,6 @@ fun ChatScreenContent(
                         }
                     }
                 }
-            )
-        }
-
-        // 导出平台选择对话框
-        if (showExportPlatformDialog) {
-            ExportPlatformDialog(
-                    onDismiss = { showExportPlatformDialog = false },
-                    onSelectAndroid = { showAndroidExportDialog = true },
-                    onSelectWindows = { showWindowsExportDialog = true }
-            )
-        }
-
-        // Android导出设置对话框
-        if (showAndroidExportDialog && webContentDir != null) {
-            AndroidExportDialog(
-                    workDir = webContentDir!!,
-                    onDismiss = { showAndroidExportDialog = false },
-                    onExport = { packageName, appName, iconUri, versionName, versionCode ->
-                        showAndroidExportDialog = false
-                        showExportProgressDialog = true
-                        exportProgress = 0f
-                        exportStatus = context.getString(R.string.chat_starting_export)
-
-                        // 启动导出过程
-                        coroutineScope.launch {
-                            exportAndroidApp(
-                                    context = context,
-                                    packageName = packageName,
-                                    appName = appName,
-                                    versionName = versionName,
-                                    versionCode = versionCode,
-                                    iconUri = iconUri,
-                                    webContentDir = webContentDir!!,
-                                    onProgress = { progress, status ->
-                                        exportProgress = progress
-                                        exportStatus = status
-                                    },
-                                    onComplete = { success, filePath, errorMessage ->
-                                        showExportProgressDialog = false
-                                        exportSuccess = success
-                                        exportFilePath = filePath
-                                        exportErrorMessage = errorMessage
-                                        showExportCompleteDialog = true
-                                    }
-                            )
-                        }
-                    }
-            )
-        }
-
-        // Windows导出设置对话框
-        if (showWindowsExportDialog && webContentDir != null) {
-            WindowsExportDialog(
-                    workDir = webContentDir!!,
-                    onDismiss = { showWindowsExportDialog = false },
-                    onExport = { appName, iconUri ->
-                        showWindowsExportDialog = false
-                        showExportProgressDialog = true
-                        exportProgress = 0f
-                        exportStatus = context.getString(R.string.chat_starting_export)
-
-                        // 启动导出过程
-                        coroutineScope.launch {
-                            exportWindowsApp(
-                                    context = context,
-                                    appName = appName,
-                                    iconUri = iconUri,
-                                    webContentDir = webContentDir!!,
-                                    onProgress = { progress, status ->
-                                        exportProgress = progress
-                                        exportStatus = status
-                                    },
-                                    onComplete = { success, filePath, errorMessage ->
-                                        showExportProgressDialog = false
-                                        exportSuccess = success
-                                        exportFilePath = filePath
-                                        exportErrorMessage = errorMessage
-                                        showExportCompleteDialog = true
-                                    }
-                            )
-                        }
-                    }
-            )
-        }
-
-        // 导出进度对话框
-        if (showExportProgressDialog) {
-            ExportProgressDialog(
-                    progress = exportProgress,
-                    status = exportStatus,
-                    onCancel = { showExportProgressDialog = false }
-            )
-        }
-
-        // 导出完成对话框
-        if (showExportCompleteDialog) {
-            ExportCompleteDialog(
-                    success = exportSuccess,
-                    filePath = exportFilePath,
-                    errorMessage = exportErrorMessage,
-                    onDismiss = { showExportCompleteDialog = false },
-                    onOpenFile = { filePath ->
-                        try {
-                            val file = File(filePath)
-                            val fileUri =
-                                    FileProvider.getUriForFile(
-                                            context,
-                                            context.applicationContext.packageName +
-                                                    ".fileprovider",
-                                            file
-                                    )
-                            val intent = Intent(Intent.ACTION_VIEW)
-                            intent.setDataAndType(
-                                    fileUri,
-                                    "application/vnd.android.package-archive"
-                            )
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                            context.startActivity(intent)
-                        } catch (e: ActivityNotFoundException) {
-                            AppLogger.e("ChatScreenContent", "无法打开文件: $filePath", e)
-                        } catch (e: Exception) {
-                            AppLogger.e("ChatScreenContent", "文件操作错误: ${e.message}", e)
-                        }
-                    }
             )
         }
 

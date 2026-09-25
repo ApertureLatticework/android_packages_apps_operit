@@ -233,7 +233,6 @@
     <string name="chat_display_mode">Mode Tampilan</string>
     <string name="chat_autoglm_warning">Dilarang menggunakan autoglm sebagai model utama untuk obrolan. Model obrolan dan model kontrol UI terpisah, silakan pilih model besar cerdas lainnya. Jika ada pertanyaan, harap baca dokumentasi dengan cermat untuk mempelajari mekanisme konfigurasi model perangkat lunak.</string>
     <string name="chat_model_count">%d model</string>
-    <string name="chat_starting_export">Memulai ekspor...</string>
     <string name="chat_reply_instruction">Pengguna sedang membalas pesan Anda sebelumnya ini:</string>
     <string name="chat_workspace_status">Status Ruang Kerja</string>
     <string name="attach_local_storage_repo">Lampirkan Repositori Penyimpanan Lokal</string>
@@ -492,7 +491,6 @@
     <string name="chat_binding_scope_hint">Hanya memengaruhi ikatan percakapan ini, tidak akan mengubah pesan yang sudah ada</string>
     <string name="confirm_delete">Konfirmasi Hapus</string>
     <string name="delete_warning">Menghapus semua riwayat obrolan tidak dapat dipulihkan. Disarankan untuk mengekspor cadangan sebelum melakukan tindakan ini.</string>
-    <string name="export_success">Ekspor Berhasil</string>
     <string name="import_success">Impor Berhasil</string>
     <string name="operation_failed">Operasi Gagal</string>
     <string name="danger_zone">Zona Berbahaya</string>
@@ -586,7 +584,6 @@
     <string name="show_help">Tampilkan bantuan</string>
     <string name="hide_help">Sembunyikan bantuan</string>
     <string name="request_permission">Minta izin Shizuku</string>
-    <string name="screen_title_html_packager">HTML Packager</string>
     <string name="execute_shell">Jalankan perintah shell</string>
     <string name="enter_command">Masukkan perintah ADB</string>
     <string name="show_samples">Tampilkan contoh perintah</string>
@@ -1049,7 +1046,6 @@
     <string name="dialog_title_prompt">Peringatan</string>
     <string name="ai_computer">Komputer AI</string>
     <string name="code_editor">Editor kode</string>
-    <string name="export_starting">Mulai mengekspor...</string>
     <string name="floating_window_permission_denied">Izin jendela mengambang tidak diberikan, mode jendela mengambang telah dimatikan</string>
     <string name="select_download_source">Pilih sumber unduhan</string>
     <string name="select_download_source_desc">Silakan pilih sumber unduhan yang sesuai dengan lingkungan jaringan Anda:</string>
@@ -1859,8 +1855,6 @@
     <string name="sql_viewer_empty_state">Belum ada hasil, klik tombol di kanan atas untuk menjalankan SQL</string>
     <string name="tool_process_limit_remover">Hapus Batas Proses Phantom</string>
     <string name="tool_process_limit_remover_desc">Kelola batas jumlah proses phantom di Android 12+, izinkan lebih banyak proses latar belakang</string>
-    <string name="tool_html_packager">Pengemas HTML</string>
-    <string name="tool_html_packager_desc">Kemas file HTML dan dependensinya menjadi satu file HTML, mudah dibagikan dan diterapkan</string>
     <string name="tool_autoglm_one_click">Konfigurasi Satu Klik AutoGLM</string>
     <string name="tool_autoglm_one_click_desc">Konfigurasi model autoglm-phone untuk pengontrol UI dan alihkan toolkit AutoGLM dengan satu klik</string>
     <string name="tool_autoglm_tool">Eksekusi AutoGLM</string>
@@ -2806,28 +2800,8 @@ Sekarang Anda dapat menggunakan mode AutoGLM di antarmuka percakapan.</string>
     <string name="chat_ai_service_init_failed">Gagal menginisialisasi layanan AI: %1$s</string>
     <string name="chat_need_overlay_permission_start_voice_assistant">Diperlukan izin jendela mengambang untuk memulai asisten suara</string>
     <string name="chat_clipboard_label_message">Pesan obrolan</string>
-    <string name="export_in_progress_title">Sedang Mengekspor</string>
-    <string name="export_prepare_base_apk">Mempersiapkan file APK dasar...</string>
-    <string name="export_extract_apk">Mengekstrak APK...</string>
-    <string name="export_modify_app_info">Memodifikasi informasi aplikasi...</string>
-    <string name="export_change_app_icon">Mengganti ikon aplikasi...</string>
-    <string name="export_pack_web_content">Mengemas konten web...</string>
-    <string name="export_prepare_signing">Mempersiapkan penandatanganan...</string>
-    <string name="export_signing_apk">Menandatangani APK...</string>
-    <string name="export_finish_packaging">Menyelesaikan pengemasan...</string>
     <string name="export_completed">Ekspor selesai!</string>
-    <string name="export_sign_apk_failed">Gagal menandatangani APK: %1$s</string>
     <string name="export_failed_with_reason">Ekspor gagal: %1$s</string>
-    <string name="export_prepare_windows_template">Mempersiapkan templat aplikasi Windows...</string>
-    <string name="export_copy_template">Menyalin templat aplikasi...</string>
-    <string name="export_extract_template">Mengekstrak templat aplikasi...</string>
-    <string name="export_copy_web_content">Menyalin konten web...</string>
-    <string name="export_pack_app">Mengemas aplikasi...</string>
-    <string name="export_cleanup_temp_files">Membersihkan file sementara...</string>
-    <string name="export_process_failed">Proses ekspor gagal: %1$s</string>
-    <string name="export_invalid_package_name_format">Format tidak benar, harus seperti com.example.app</string>
-    <string name="export_invalid_version_format">Format tidak benar, harus seperti 1.0.0</string>
-    <string name="export_apk_extract_dir_missing">Direktori ekstraksi APK tidak ada</string>
     <string name="chat_generate_share_image_failed">Gagal membuat gambar: %1$s</string>
     <string name="chat_processing_attachment">Memproses lampiran...</string>
     <string name="chat_attachment_processing_failed">Gagal memproses lampiran: %1$s</string>
@@ -3418,7 +3392,6 @@ Sekarang Anda dapat menggunakan mode AutoGLM di antarmuka percakapan.</string>
     <string name="confirm_delete_profile">Konfirmasi Hapus Konfigurasi</string>
     <string name="delete_profile_warning">Apakah Anda yakin ingin menghapus konfigurasi preferensi ini? Tindakan ini juga akan menghapus data memori yang terikat padanya dan tidak dapat dikembalikan.\n\nDisarankan untuk mencadangkan konten penting terlebih dahulu.</string>
     <string name="select_profile">Pilih Konfigurasi</string>
-    <string name="export_from_profile">Ekspor dari Konfigurasi</string>
     <string name="import_to_profile">Impor ke Konfigurasi</string>
     <string name="source_profile">Konfigurasi Sumber</string>
     <string name="target_profile">Konfigurasi Tujuan</string>
@@ -4138,7 +4111,6 @@ Sekarang Anda dapat menggunakan mode AutoGLM di antarmuka percakapan.</string>
     <string name="app_icon">Ikon aplikasi:</string>
     <string name="click_select_icon">Klik untuk memilih ikon</string>
     <string name="exporting">Sedang Mengekspor</string>
-    <string name="export_failed">Ekspor Gagal</string>
     <string name="file_saved_to">File telah disimpan ke:</string>
     <string name="token_limit_warning">Peringatan Batas Token</string>
     <string name="token_limit_warning_message">Pesan telah melebihi batas Token, melanjutkan pengiriman dapat menyebabkan kehilangan konteks atau AI tidak dapat memahami. Lanjutkan?</string>

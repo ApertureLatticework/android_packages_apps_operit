@@ -43,14 +43,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ai.assistance.operit.R
-import com.ai.assistance.operit.core.tools.AIToolHandler
-import com.ai.assistance.operit.data.model.AITool
 import com.ai.assistance.operit.data.model.ApiProviderType
 import com.ai.assistance.operit.data.model.AttachmentInfo
 import com.ai.assistance.operit.data.model.CharacterCardChatModelBindingMode
 import com.ai.assistance.operit.data.model.CharacterCardMemoryProfileBindingMode
 import com.ai.assistance.operit.data.model.InputProcessingState
-import com.ai.assistance.operit.data.model.ToolParameter
 import com.ai.assistance.operit.data.preferences.ApiPreferences
 import com.ai.assistance.operit.data.preferences.DisplayPreferencesManager
 import com.ai.assistance.operit.data.preferences.UserPreferencesManager
@@ -66,11 +63,6 @@ import com.ai.assistance.operit.ui.features.chat.components.style.input.common.C
 import com.ai.assistance.operit.ui.features.chat.components.style.input.classic.ClassicChatSettingsBar
 import com.ai.assistance.operit.ui.features.chat.components.style.input.common.PendingQueueMessageItem
 import com.ai.assistance.operit.ui.features.chat.components.style.bubble.BubbleImageStyleConfig
-import com.ai.assistance.operit.ui.features.chat.components.AndroidExportDialog
-import com.ai.assistance.operit.ui.features.chat.components.ExportCompleteDialog
-import com.ai.assistance.operit.ui.features.chat.components.ExportPlatformDialog
-import com.ai.assistance.operit.ui.features.chat.components.ExportProgressDialog
-import com.ai.assistance.operit.ui.features.chat.components.WindowsExportDialog
 import com.ai.assistance.operit.ui.features.chat.webview.MentionSuggestionPanelStyle
 import com.ai.assistance.operit.ui.features.chat.webview.workspace.WorkspaceScreen
 import com.ai.assistance.operit.ui.features.chat.webview.MentionSuggestionPanel
@@ -824,18 +816,7 @@ val actualViewModel: ChatViewModel = viewModel ?: viewModel { ChatViewModel(cont
         }
     }
 
-    // 导出相关状态
-    var showExportPlatformDialog by remember { mutableStateOf(false) }
-    var showAndroidExportDialog by remember { mutableStateOf(false) }
-    var showWindowsExportDialog by remember { mutableStateOf(false) }
-    var showExportProgressDialog by remember { mutableStateOf(false) }
-    var showExportCompleteDialog by remember { mutableStateOf(false) }
-    var exportProgress by remember { mutableStateOf(0f) }
-    var exportStatus by remember { mutableStateOf("") }
-    var exportSuccess by remember { mutableStateOf(false) }
-    var exportFilePath by remember { mutableStateOf<String?>(null) }
-    var exportErrorMessage by remember { mutableStateOf<String?>(null) }
-    var webContentDir by remember { mutableStateOf<File?>(null) }
+    // 导出相关状态已随 subpack 死链下线（assets/subpack 资产早已不存在，导出必炸）
     var showCharacterSelector by remember { mutableStateOf(false) }
 
     var bottomBarHeightPx by remember { mutableStateOf(0) }
@@ -1212,14 +1193,6 @@ val actualViewModel: ChatViewModel = viewModel ?: viewModel { ChatViewModel(cont
                         actualViewModel = actualViewModel,
                         currentChat = currentChat,
                         isVisible = isWorkspaceVisible, // Pass visibility state
-                        onExportClick = { workDir ->
-                            webContentDir = workDir
-                            AppLogger.d(
-                                "AIChatScreen",
-                                "正在导出工作区: ${workDir.absolutePath}, 聊天ID: $currentChatId"
-                            )
-                            showExportPlatformDialog = true
-                        }
                     )
                 }
             }
@@ -1277,122 +1250,7 @@ val actualViewModel: ChatViewModel = viewModel ?: viewModel { ChatViewModel(cont
             }
         }
 
-        // 导出平台选择对话框
-        if (showExportPlatformDialog) {
-            ExportPlatformDialog(
-                    onDismiss = { showExportPlatformDialog = false },
-                    onSelectAndroid = {
-                        showExportPlatformDialog = false
-                        showAndroidExportDialog = true
-                    },
-                    onSelectWindows = {
-                        showExportPlatformDialog = false
-                        showWindowsExportDialog = true
-                    }
-            )
-        }
-
-        // Android导出设置对话框
-        if (showAndroidExportDialog && webContentDir != null) {
-            AndroidExportDialog(
-                    workDir = webContentDir!!,
-                    onDismiss = { showAndroidExportDialog = false },
-                    onExport = { packageName, appName, iconUri, versionName, versionCode ->
-                        showAndroidExportDialog = false
-                        showExportProgressDialog = true
-                        exportProgress = 0f
-                        exportStatus = context.getString(R.string.export_starting)
-
-                        // 启动导出过程
-                        coroutineScope.launch {
-                            exportAndroidApp(
-                                    context = context,
-                                    packageName = packageName,
-                                    appName = appName,
-                                    versionName = versionName,
-                                    versionCode = versionCode,
-                                    iconUri = iconUri,
-                                    webContentDir = webContentDir!!,
-                                    onProgress = { progress, status ->
-                                        exportProgress = progress
-                                        exportStatus = status
-                                    },
-                                    onComplete = { success, filePath, errorMessage ->
-                                        showExportProgressDialog = false
-                                        exportSuccess = success
-                                        exportFilePath = filePath
-                                        exportErrorMessage = errorMessage
-                                        showExportCompleteDialog = true
-                                    }
-                            )
-                        }
-                    }
-            )
-        }
-
-        // Windows导出设置对话框
-        if (showWindowsExportDialog && webContentDir != null) {
-            WindowsExportDialog(
-                    workDir = webContentDir!!,
-                    onDismiss = { showWindowsExportDialog = false },
-                    onExport = { appName, iconUri ->
-                        showWindowsExportDialog = false
-                        showExportProgressDialog = true
-                        exportProgress = 0f
-                        exportStatus = context.getString(R.string.export_starting)
-
-                        // 启动导出过程
-                        coroutineScope.launch {
-                            exportWindowsApp(
-                                    context = context,
-                                    appName = appName,
-                                    iconUri = iconUri,
-                                    webContentDir = webContentDir!!,
-                                    onProgress = { progress, status ->
-                                        exportProgress = progress
-                                        exportStatus = status
-                                    },
-                                    onComplete = { success, filePath, errorMessage ->
-                                        showExportProgressDialog = false
-                                        exportSuccess = success
-                                        exportFilePath = filePath
-                                        exportErrorMessage = errorMessage
-                                        showExportCompleteDialog = true
-                                    }
-                            )
-                        }
-                    }
-            )
-        }
-
-        // 导出进度对话框
-        if (showExportProgressDialog) {
-            ExportProgressDialog(
-                    progress = exportProgress,
-                    status = exportStatus,
-                    onCancel = {
-                        // TODO: 实现取消导出的逻辑
-                        showExportProgressDialog = false
-                    }
-            )
-        }
-
-        // 导出完成对话框
-        if (showExportCompleteDialog) {
-            ExportCompleteDialog(
-                    success = exportSuccess,
-                    filePath = exportFilePath,
-                    errorMessage = exportErrorMessage,
-                    onDismiss = { showExportCompleteDialog = false },
-                    onOpenFile = { path ->
-                        val tool = AITool(
-                            name = if (path.endsWith(".apk", ignoreCase = true)) "install_app" else "open_file",
-                            parameters = listOf(ToolParameter("path", path))
-                        )
-                        AIToolHandler.getInstance(context).executeTool(tool)
-                    }
-            )
-        }
+        // 导出对话框群已随 subpack 死链下线
 
         ChatToastHost(
             event = toastEvent,

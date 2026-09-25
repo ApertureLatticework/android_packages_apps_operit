@@ -293,15 +293,6 @@ object ScreenRouteRegistry {
                 order = 150
             ),
             hostEntryDefinition(
-                entryId = "toolbox.html_packager",
-                screen = Screen.HtmlPackager,
-                surface = NavigationSurface.TOOLBOX,
-                titleResId = R.string.tool_html_packager,
-                descriptionResId = R.string.tool_html_packager_desc,
-                icon = Icons.Default.Html,
-                order = 160
-            ),
-            hostEntryDefinition(
                 entryId = "toolbox.auto_glm_one_click",
                 screen = Screen.AutoGlmOneClick,
                 surface = NavigationSurface.TOOLBOX,

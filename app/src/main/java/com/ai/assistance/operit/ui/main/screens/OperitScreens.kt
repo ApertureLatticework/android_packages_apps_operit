@@ -76,7 +76,6 @@ import com.ai.assistance.operit.ui.features.toolbox.screens.DefaultAssistantGuid
 import com.ai.assistance.operit.ui.features.toolbox.screens.ProcessLimitRemoverToolScreen
 import com.ai.assistance.operit.ui.features.toolbox.screens.sqlviewer.SqlViewerToolScreen
 import com.ai.assistance.operit.ui.features.toolbox.screens.ffmpegtoolbox.FFmpegToolboxScreen
-import com.ai.assistance.operit.ui.features.toolbox.screens.htmlpackager.HtmlPackagerScreen
 import com.ai.assistance.operit.ui.features.toolbox.screens.speechtotext.SpeechToTextToolScreen
 import com.ai.assistance.operit.ui.features.toolbox.screens.autoglm.AutoGlmOneClickToolScreen
 import com.ai.assistance.operit.ui.features.toolbox.screens.autoglm.AutoGlmToolScreen
@@ -1373,21 +1372,6 @@ sealed class Screen(
             onGestureConsumed: (Boolean) -> Unit
         ) {
             ProcessLimitRemoverToolScreen(navController = navController)
-        }
-    }
-
-    data object HtmlPackager : Screen(navItem = NavItem.Toolbox, titleRes = R.string.screen_title_html_packager) {
-        @Composable
-        override fun Content(
-                navController: NavController,
-                navigateTo: ScreenNavigationHandler,
-                onGoBack: () -> Unit,
-                hasBackgroundImage: Boolean,
-                onLoading: (Boolean) -> Unit,
-                onError: (String) -> Unit,
-                onGestureConsumed: (Boolean) -> Unit
-        ) {
-            HtmlPackagerScreen(onGoBack = onGoBack)
         }
     }
 
