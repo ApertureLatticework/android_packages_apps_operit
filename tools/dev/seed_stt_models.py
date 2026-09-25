@@ -29,6 +29,8 @@ MANIFEST = REPO_ROOT / "app/config/stt-model-assets.properties"
 DEFAULT_DEST = REPO_ROOT / "app/build/generated/stt-model-assets"
 DEFAULT_REPO = "https://cnb.cool/SekaiMoeAOSPDev/android_external_operit_ttsmodels.git"
 DEFAULT_BRANCH = "lineage-23.2"
+# 专仓内模型根（asset_dirs 指向 assets，清单 target 自带 models/ 前缀）
+CLONE_ASSET_ROOT = "assets"
 
 
 def parse_manifest():
@@ -69,8 +71,14 @@ def main() -> int:
             check=True,
         )
 
+        # 共享完整性声明：专仓根清单副本必须与本仓清单逐字节一致
+        remote_manifest = clone_root / MANIFEST.name
+        if not remote_manifest.is_file() or remote_manifest.read_bytes() != MANIFEST.read_bytes():
+            print("[专仓清单副本与本仓不一致] 两仓清单必须同 commit 更新", file=sys.stderr)
+            return 1
+
         for target, size, sha256 in assets:
-            source = clone_root / target
+            source = clone_root / CLONE_ASSET_ROOT / target
             if not verify(source, size, sha256):
                 print(f"[专仓件不符清单] {target}", file=sys.stderr)
                 return 1
@@ -78,7 +86,7 @@ def main() -> int:
         for target, _size, _sha256 in assets:
             destination = args.dest / target
             destination.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(clone_root / target, destination)
+            shutil.copy2(clone_root / CLONE_ASSET_ROOT / target, destination)
 
     bad = [t for t, s, h in assets if not verify(args.dest / t, s, h)]
     if bad:

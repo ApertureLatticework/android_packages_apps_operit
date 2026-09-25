@@ -271,14 +271,14 @@ android_app {
     min_sdk_version: "31",
 
     manifest: "app/src/main/AndroidManifest.xml",
-    static_libs: ["operit-lib"],
-    asset_dirs: [
-        "app/src/main/assets",
-        // STT/VAD 模型专仓（cnb SekaiMoeAOSPDev/android_external_operit_ttsmodels，
-        // local_manifests 挂 external/operit-ttsmodels；与本仓 bp 成对安装，
-        // 不挂该仓的树 asset_dirs 解析失败，同 ffmpeg 清单成对惯例）
-        "../../../external/operit-ttsmodels/models",
-    ],
+    // STT/VAD 模型走专仓资产模块（external/operit-ttsmodels 的
+    // operit_ttsmodels_assets，其 asset_dirs 内容按相对路径合入 APK
+    // assets/models/**，soong TestLibraryAssets 机制）；不挂该仓的树报
+    // module not defined（成对安装惯例，fail-fast）。字节完整性声明两仓
+    // 共享：专仓根 stt-model-assets.properties 副本与本仓 app/config 清单
+    // 必须逐字节一致（tools/dev/seed_stt_models.py 交叉校验）。
+    static_libs: ["operit-lib", "operit_ttsmodels_assets"],
+    asset_dirs: ["app/src/main/assets"],
 
     // native 库经 required 随包安装到 priv-app lib 目录；
     // ffmpeg 走源码线薄壳（native/operit-ffmpeg/Android.bp.tree，链树内 libav* + libffmpeg_cli）。
