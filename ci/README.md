@@ -25,6 +25,7 @@ BASE_SHA="$(git merge-base upstream/dev HEAD)"
 CANDIDATE_SHA="HEAD"
 
 python3 -B -m unittest discover -s ci/test -p 'test_*.py'
+python3 -B ci/script/check_android_api_level.py
 python3 -B ci/script/check_repo_hygiene.py --base "$BASE_SHA" --candidate "$CANDIDATE_SHA"
 python3 -B ci/script/check_markdown_links.py --base "$BASE_SHA" --candidate "$CANDIDATE_SHA"
 python3 -B ci/script/check_localizations.py --base "$BASE_SHA" --candidate "$CANDIDATE_SHA"

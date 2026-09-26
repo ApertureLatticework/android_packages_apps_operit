@@ -44,11 +44,12 @@ if ([string]::IsNullOrWhiteSpace($ndkRoot)) {
 }
 
 $toolchainBin = Join-Path $ndkRoot "toolchains\llvm\prebuilt\windows-x86_64\bin"
+# 单 ABI 是有意设计：jniLibs 与 ffmpeg jni 均只发 arm64-v8a（与三份 workflow 的
+# NDK linker driver 预检步同源声明）；构建其它 triple 只会产出无 ffmpeg 伙伴库的
+# 残废 jniLibs。未来扩多 ABI 时，在此表补 triple→Linker/Abi 条目（旧四条目见
+# git 历史），并同步扩 CI 侧预检清单。
 $targetConfig = @{
     "aarch64-linux-android" = @{ Linker = "aarch64-linux-android$ApiLevel-clang.cmd"; Abi = "arm64-v8a" }
-    "armv7-linux-androideabi" = @{ Linker = "armv7a-linux-androideabi$ApiLevel-clang.cmd"; Abi = "armeabi-v7a" }
-    "x86_64-linux-android" = @{ Linker = "x86_64-linux-android$ApiLevel-clang.cmd"; Abi = "x86_64" }
-    "i686-linux-android" = @{ Linker = "i686-linux-android$ApiLevel-clang.cmd"; Abi = "x86" }
 }
 
 foreach ($target in $Targets) {

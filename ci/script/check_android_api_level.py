@@ -15,6 +15,8 @@ ANDROID_API_LEVEL env + build_native_ripgrep.ps1 的 $ApiLevel 默认值。
 
 用法：
   python3 ci/script/check_android_api_level.py
+
+repo_root 参数供 ci/test/test_android_api_level.py 注入合成树做场景固化。
 """
 import re
 import sys
@@ -32,16 +34,16 @@ WF_RE = re.compile(r"^  ANDROID_API_LEVEL:\s*'(\d+)'\s*$", re.MULTILINE)
 PS1_RE = re.compile(r"\[int\]\$ApiLevel\s*=\s*(\d+)")
 
 
-def main() -> int:
+def main(repo_root: Path = REPO_ROOT) -> int:
     declarations = {}
     failures = []
     for rel in WORKFLOWS:
-        matches = WF_RE.findall((REPO_ROOT / rel).read_text(encoding="utf-8"))
+        matches = WF_RE.findall((repo_root / rel).read_text(encoding="utf-8"))
         if len(matches) != 1:
             failures.append(f"[{rel}] ANDROID_API_LEVEL 声明 {len(matches)} 处（应恰好 1 处）")
             continue
         declarations[rel] = matches[0]
-    ps1_matches = PS1_RE.findall((REPO_ROOT / PS1).read_text(encoding="utf-8"))
+    ps1_matches = PS1_RE.findall((repo_root / PS1).read_text(encoding="utf-8"))
     if len(ps1_matches) != 1:
         failures.append(f"[{PS1}] ApiLevel 默认值声明 {len(ps1_matches)} 处（应恰好 1 处）")
     else:
