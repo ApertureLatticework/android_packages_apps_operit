@@ -65,3 +65,24 @@ dev@29d67812 **全等**（逐件 blob sha 比对）。
   死命令→sync_example_packages + check_package_drift）。
   package.json 先前已净（2.md 该点过期）。
 - 门禁 CI 失败修复：Actions 内 gh 需 GH_TOKEN（补 env github.token）。
+
+## 树侧终验（2026-09-26，cnb 云机 dodge，全绿）
+
+`m Operit` 13m09s 成功（vendor/oneplus/dodge 缺 radio/modem.img 系树侧
+blob 残缺，验证期临时注释其校验行后即还原；真机构建需补齐 extract）。
+产物实证：
+
+- APK 213MB，`assets/models/` **8 件全数来自专仓 android_library 合并**
+  （static_libs 资产通路全链贯通）
+- `spacexai_draw.js`（41062B）在、`xai_draw.js` 绝迹
+- `lib/arm64/` 旁挂 `liboperit_ripgrep.dylib.so`→`/system/lib64/`（源码线
+  4.9MB 实体）+ ffmpeg/quickjs/sherpa/streamnative/toolpkgwasm 六件套
+
+专仓修复链（每颗都是树侧实测暴露）：be7cb05 补最小 manifest（soong 默认
+在模块根找）→ be92901 树修复（blobless 无检出提交误清 assets/**，教训：
+blobless 克隆提交前必 read-tree 全树）→ c3eec8c 补 package 声明
+（manifest-merger 硬校验）→ 007f5b7 钉 sdk_version 31（无此声明时 fixer
+盖平台 SDK 36 撞消费方 minSdk 31）。
+
+CI 侧同日全绿：API 面对齐 31 后 android-build success（android31-clang
+在 NDK 25.1.8937393 内，r25 unified 覆盖 21-33 预期成立）。
