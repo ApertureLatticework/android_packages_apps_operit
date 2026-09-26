@@ -27,7 +27,6 @@
     <string name="query_memory_test_desc">Probar la consulta de la biblioteca de memorias.</string>
 
     <!-- 用于NavItem类的标识符 -->
-    <string name="shizuku_commands">Concesión de permisos</string>
     <string name="tool_permissions">Configuración de permisos de herramientas</string>
     <string name="about">Acerca de</string>
     <string name="toolbox">Caja de herramientas</string>
@@ -131,11 +130,9 @@
     <string name="fps_counter_description">Mostrar FPS en tiempo real en la esquina superior derecha de la pantalla</string>
 
     <!-- Shizuku Command Screen -->
-    <string name="shizuku_command_executor">Ejecutor de comandos ADB Shizuku</string>
     <string name="device_info">Información del dispositivo</string>
     <string name="android_version">Versión de Android: %1$s (API %2$d)</string>
     <string name="device_model">Modelo de dispositivo: %1$s %2$s</string>
-    <string name="shizuku_status">Estado de Shizuku</string>
     <string name="refresh">Actualizar</string>
     <string name="installed">Instalado</string>
     <string name="service_running">Servicio en ejecución: %1$s</string>
@@ -1842,27 +1839,6 @@
     <string name="plugin_server_success">Servidor MCP iniciado correctamente</string>
     <string name="plugin_server_initializing">Inicializando servidor MCP...</string>
 
-    <string name="shizuku_demo_loading">Cargando estado de la aplicación...</string>
-    <string name="shizuku_demo_permission_failed">No se puede abrir la configuración de permisos</string>
-    <string name="shizuku_demo_overlay_failed">No se puede abrir la configuración de superposición</string>
-    <string name="shizuku_demo_battery_failed">No se puede abrir la configuración de optimización de batería</string>
-    <string name="shizuku_demo_accessibility_failed">No se puede abrir la configuración del servicio de accesibilidad</string>
-    <string name="shizuku_demo_title">Asistente de configuración</string>
-    <string name="shizuku_demo_download_failed">No se puede abrir el enlace de descarga</string>
-    <string name="shizuku_demo_extract_failed">Error al extraer el APK, intente de nuevo más tarde</string>
-    <string name="shizuku_demo_install_notify">Se ha iniciado la instalación de Shizuku, siga las indicaciones del sistema para completarla</string>
-    <string name="shizuku_demo_update_notify">Se ha iniciado la actualización de Shizuku, siga las indicaciones del sistema para completarla</string>
-    <string name="shizuku_demo_install_failed">Error de instalación: %1$s</string>
-    <string name="shizuku_demo_update_failed">Error de actualización: %1$s</string>
-    <string name="shizuku_demo_shizuku_not_found">No se puede encontrar la aplicación Shizuku</string>
-    <string name="shizuku_demo_shizuku_launch_failed">No se puede iniciar la aplicación Shizuku</string>
-    <string name="shizuku_demo_root_tutorial_failed">No se puede abrir el enlace del tutorial de Root</string>
-    <string name="shizuku_demo_shizuku_permission_granted">Permiso de Shizuku concedido</string>
-    <string name="shizuku_demo_shizuku_permission_denied">Solicitud de permiso de Shizuku rechazada</string>
-    <string name="shizuku_demo_termux_install_success">Se ha iniciado la instalación de Termux, siga las indicaciones del sistema para completarla</string>
-    <string name="shizuku_demo_termux_install_failed_store">Error al instalar el APK integrado, abriendo página de descarga</string>
-    <string name="shizuku_demo_termux_download_failed">No se puede abrir el enlace de descarga, descargue e instale Termux manualmente</string>
-    <string name="shizuku_demo_termux_tuna_skipped">Se ha omitido la configuración del espejo de Tsinghua, puede configurarlo más tarde en Termux</string>
     <string name="permission_level">Nivel de permiso</string>
     <string name="permission_level_icon">Icono de nivel de permiso</string>
     <string name="set_as_current_level">Establecer como nivel actual</string>
@@ -1876,7 +1852,6 @@
     <string name="accessibility_permission">Permiso de accesibilidad</string>
     <string name="accessibility_service">Servicio de accesibilidad</string>
     <string name="debug_permission">Permiso de depuración</string>
-    <string name="shizuku_service">Servicio Shizuku</string>
     <string name="root_permission">Permiso Root</string>
     <string name="root_access_permission">Permiso de acceso Root</string>
     <string name="status_not_installed">No instalado</string>
@@ -2147,23 +2122,6 @@
     <string name="root_wizard_device_not_rooted">No se detectó que su dispositivo esté rooteado. Rootear requiere modificaciones específicas del sistema y puede anular la garantía del dispositivo. Para usar funciones root, primero complete el rooteo del dispositivo.</string>
     <string name="root_wizard_risk_notice">Aviso: Riesgos de la operación root</string>
     <string name="root_wizard_risk_details">1. Rootear conlleva ciertos riesgos y puede anular la garantía del dispositivo\n2. Algunas aplicaciones pueden negarse a ejecutarse en dispositivos rooteados\n3. Un rooteo inadecuado puede causar inestabilidad del sistema</string>
-    <string name="shizuku_wizard_title">Asistente de configuración de Shizuku</string>
-    <string name="shizuku_wizard_update_title">Asistente de actualización de Shizuku</string>
-    <string name="shizuku_wizard_completed">Shizuku completamente configurado</string>
-    <string name="shizuku_wizard_install_message">Shizuku es una herramienta que otorga permisos avanzados a las aplicaciones sin necesidad de root. Primero debemos instalar esta aplicación.</string>
-    <string name="shizuku_wizard_install_bundled">Instalar versión integrada</string>
-    <string name="shizuku_wizard_start_message">Shizuku está instalado, ahora debe iniciar el servicio Shizuku. Siga uno de los siguientes métodos:</string>
-    <string name="shizuku_wizard_open_shizuku">Abrir Shizuku</string>
-    <string name="shizuku_wizard_permission_message">El servicio Shizuku se ha iniciado, ahora debe conceder permisos a esta aplicación. Haga clic en el botón a continuación y seleccione \"Permitir\" en el cuadro de diálogo que aparece.</string>
-    <string name="shizuku_wizard_permission_notice">Nota: Si no ve la ventana de autorización, verifique:</string>
-    <string name="shizuku_wizard_permission_notice_details">1. Que el servicio Shizuku esté en ejecución\n2. Reinicie el servicio Shizuku e intente de nuevo\n3. Asegúrese de permitir el permiso de superposición de ventanas</string>
-    <string name="shizuku_wizard_grant_permission">Conceder permisos a Shizuku</string>
-    <string name="shizuku_wizard_success_message">¡Felicidades! Shizuku está completamente configurado. Ahora puede usar las funciones de permisos de depuración.</string>
-    <string name="shizuku_wizard_update_available">Nueva versión disponible</string>
-    <string name="shizuku_wizard_update_message">La aplicación incluye una versión actualizada de Shizuku. Se recomienda actualizar para obtener mejor compatibilidad y funcionalidad.</string>
-    <string name="shizuku_wizard_current_version">Versión actual: %1$s</string>
-    <string name="shizuku_wizard_latest_version">Última versión: %1$s</string>
-    <string name="shizuku_wizard_update">Actualizar Shizuku</string>
 
     <string name="import_structure_guide_tap_to_expand">Guía de estructura de importación (tocar para expandir)</string>
     <string name="import_structure_guide_tap_to_collapse">Guía de estructura de importación (tocar para colapsar)</string>
@@ -2303,8 +2261,6 @@
     <string name="battery_settings_failed">No se pudo abrir la configuración de optimización de batería</string>
     <string name="accessibility_settings_failed">No se pudo abrir la configuración de accesibilidad</string>
     <string name="provider_installed">Proveedor de servicios instalado</string>
-    <string name="shizuku_not_found">No se encuentra la aplicación Shizuku</string>
-    <string name="shizuku_start_failed">No se pudo iniciar la aplicación Shizuku</string>
     <string name="doc_link_failed">No se pudo abrir el enlace de documentación</string>
     <string name="root_tutorial_failed">No se pudo abrir el enlace del tutorial de root</string>
     <string name="file_open_failed">No se pudo abrir el archivo: %1$s</string>
@@ -6044,7 +6000,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="openai_connection_success">¡Conexión exitosa!</string>
     <string name="openai_connection_test_failed">Prueba de conexión fallida: %1$s</string>
     <string name="phone_agent_need_debug_permission">Se requieren permisos de depuración/administrador/Root y una pantalla virtual experimental habilitada para usar la automatización de pantalla virtual.</string>
-    <string name="phone_agent_shizuku_unavailable">Shizuku no está disponible. No se puede iniciar la pantalla virtual.</string>
     <string name="phone_agent_virtual_screen_create_failed">Error al crear la pantalla virtual.</string>
     <string name="phone_agent_virtual_screen_prewarm_failed">Error al precalentar la pantalla virtual: %1$s</string>
     <string name="phone_agent_virtual_screen_not_started">La pantalla virtual no se pudo iniciar. Se ha cancelado para evitar ejecutar acciones en la pantalla principal.</string>
@@ -6251,8 +6206,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="anr_android_version">Versión de Android: %1$d\n</string>
     <string name="anr_device">Dispositivo: %1$s %2$s\n</string>
 
-    <string name="shizuku_install_install">Instalar</string>
-    <string name="shizuku_install_unknown">Desconocido</string>
     <string name="root_no_root_permission">No hay permisos de root en el dispositivo</string>
     <string name="root_check_permission_error">Error al verificar permisos de root: %1$s</string>
     <string name="root_ui_listener_started">Monitor de operaciones de UI Root iniciado</string>
@@ -6483,9 +6436,6 @@ Ahora puede usar el modo AutoGLM en la interfaz de conversación.</string>
     <string name="pathfinder_start_equals_target">El estado inicial es igual al estado objetivo</string>
     <string name="pathfinder_found_path">Se encontró una ruta usando el algoritmo %1$s</string>
     <string name="pathfinder_cannot_find_path">No se puede encontrar una ruta de estado válida desde \'%1$s\' hasta \'%2$s\'</string>
-    <string name="shizuku_start_service_intro">Para iniciar el servicio Shizuku:\n</string>
-    <string name="shizuku_or">o\n\n</string>
-    <string name="shizuku_install_update">Actualizar</string>
 
     <string name="mcp_tools_total">Total: %1$d</string>
     <string name="mcp_result">Resultado</string>
