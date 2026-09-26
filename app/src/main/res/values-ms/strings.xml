@@ -418,7 +418,6 @@
 
     <string name="voice_keyword_attachments_add_item_title">Tambah Item Lampiran</string>
     <string name="voice_keyword_attachments_type_label">Jenis</string>
-    <string name="shizuku_commands">Pemberian Kebenaran</string>
     <string name="tool_permissions">Tetapan Kebenaran Alat</string>
     <string name="about">Tentang</string>
     <string name="toolbox">Kotak Alat</string>
@@ -692,11 +691,9 @@
     <string name="settings_preference_input_token">Token Input Analisis Keutamaan</string>
     <string name="settings_preference_output_token">Token Output Analisis Keutamaan</string>
     <string name="settings_total">Jumlah</string>
-    <string name="shizuku_command_executor">Pelaksana Arahan ADB Shizuku</string>
     <string name="device_info">Maklumat Peranti</string>
     <string name="android_version">Versi Android: %1$s (API %2$d)</string>
     <string name="device_model">Model Peranti: %1$s %2$s</string>
-    <string name="shizuku_status">Status Shizuku</string>
     <string name="refresh">Segar Semula</string>
     <string name="installed">Telah Dipasang</string>
     <string name="service_running">Perkhidmatan Berjalan: %1$s</string>
@@ -915,23 +912,6 @@
     <string name="root_wizard_device_not_rooted">Peranti anda tidak dikesan telah di-root. ROOT memerlukan pengubahsuaian sistem tertentu dan boleh menyebabkan waranti peranti terbatal. Jika anda perlu menggunakan fungsi ROOT, selesaikan operasi ROOT peranti terlebih dahulu.</string>
     <string name="root_wizard_risk_notice">Perhatian: Notis Risiko Operasi Root</string>
     <string name="root_wizard_risk_details">1. Operasi ROOT mempunyai risiko tertentu, boleh menyebabkan waranti peranti terbatal\n2. Sesetengah aplikasi mungkin enggan berjalan pada peranti ROOT\n3. Operasi ROOT yang tidak betul boleh menyebabkan sistem tidak stabil</string>
-    <string name="shizuku_wizard_title">Panduan Tetapan Shizuku</string>
-    <string name="shizuku_wizard_update_title">Panduan Kemaskini Shizuku</string>
-    <string name="shizuku_wizard_completed">Shizuku Telah Ditetapkan Sepenuhnya</string>
-    <string name="shizuku_wizard_install_message">Shizuku ialah alat yang memberikan kebenaran lanjutan kepada aplikasi tanpa memerlukan root. Kita perlu memasang aplikasi ini terlebih dahulu.</string>
-    <string name="shizuku_wizard_install_bundled">Pasang Versi Terbina</string>
-    <string name="shizuku_wizard_start_message">Shizuku telah dipasang, kini perlu memulakan perkhidmatan Shizuku. Sila ikuti salah satu kaedah berikut:</string>
-    <string name="shizuku_wizard_open_shizuku">Buka Shizuku</string>
-    <string name="shizuku_wizard_permission_message">Perkhidmatan Shizuku telah dimulakan, kini perlu memberikan kebenaran kepada aplikasi ini. Klik butang di bawah, pilih \"Benarkan\" dalam dialog yang muncul.</string>
-    <string name="shizuku_wizard_permission_notice">Perhatian: Jika tiada dialog pemberian kebenaran muncul, semak:</string>
-    <string name="shizuku_wizard_permission_notice_details">1. Adakah perkhidmatan Shizuku sedang berjalan\n2. Cuba semula selepas mulakan semula perkhidmatan Shizuku\n3. Pastikan kebenaran paparan tetingkap terapung dibenarkan</string>
-    <string name="shizuku_wizard_grant_permission">Beri Kebenaran Shizuku</string>
-    <string name="shizuku_wizard_success_message">Tahniah! Shizuku telah ditetapkan sepenuhnya, anda kini boleh menggunakan fungsi kebenaran nyahpepijat.</string>
-    <string name="shizuku_wizard_update_available">Versi Baru Ditemui</string>
-    <string name="shizuku_wizard_update_message">Aplikasi ini mempunyai versi Shizuku yang lebih baru terbina dalam, disyorkan untuk dikemaskini bagi mendapatkan keserasian dan fungsi yang lebih baik.</string>
-    <string name="shizuku_wizard_current_version">Versi semasa: %1$s</string>
-    <string name="shizuku_wizard_latest_version">Versi terkini: %1$s</string>
-    <string name="shizuku_wizard_update">Kemaskini Shizuku</string>
 
     <string name="show_help">Tunjukkan bantuan</string>
     <string name="hide_help">Sembunyikan bantuan</string>
@@ -1058,22 +1038,6 @@
     <string name="settings_configure_prompt">Konfigurasi Petunjuk</string>
     <string name="settings_functional_prompt_title">Konfigurasi Petunjuk Fungsian</string>
 
-    <string name="shizuku_demo_title">Panduan Tetapan</string>
-    <string name="shizuku_demo_download_failed">Tidak dapat membuka pautan muat turun</string>
-    <string name="shizuku_demo_extract_failed">Gagal mengekstrak APK, sila cuba sebentar lagi</string>
-    <string name="shizuku_demo_install_notify">Pemasangan Shizuku telah dimulakan, sila ikut arahan sistem untuk melengkapkan pemasangan</string>
-    <string name="shizuku_demo_update_notify">Kemas kini Shizuku telah dimulakan, sila ikut arahan sistem untuk melengkapkan pemasangan</string>
-    <string name="shizuku_demo_install_failed">Pemasangan gagal: %1$s</string>
-    <string name="shizuku_demo_update_failed">Kemas kini gagal: %1$s</string>
-    <string name="shizuku_demo_shizuku_not_found">Aplikasi Shizuku tidak ditemui</string>
-    <string name="shizuku_demo_shizuku_launch_failed">Tidak dapat melancarkan aplikasi Shizuku</string>
-    <string name="shizuku_demo_root_tutorial_failed">Tidak dapat membuka pautan tutorial Root</string>
-    <string name="shizuku_demo_shizuku_permission_granted">Kebenaran Shizuku telah diberikan</string>
-    <string name="shizuku_demo_shizuku_permission_denied">Permintaan kebenaran Shizuku ditolak</string>
-    <string name="shizuku_demo_termux_install_success">Pemasangan Termux telah dimulakan, sila ikut arahan sistem untuk melengkapkan pemasangan</string>
-    <string name="shizuku_demo_termux_install_failed_store">Pemasangan APK terbina gagal, sedang membuka halaman muat turun</string>
-    <string name="shizuku_demo_termux_download_failed">Tidak dapat membuka pautan muat turun, sila muat turun dan pasang Termux secara manual</string>
-    <string name="shizuku_demo_termux_tuna_skipped">Konfigurasi sumber Tsinghua telah dilangkau, anda boleh mengkonfigurasi sumber dalam Termux kemudian</string>
     <string name="permission_level">Tahap Kebenaran</string>
     <string name="permission_level_icon">Ikon Tahap Kebenaran</string>
     <string name="set_as_current_level">Tetapkan sebagai tahap semasa</string>
@@ -1087,7 +1051,6 @@
     <string name="accessibility_permission">Kebenaran Aksesibiliti</string>
     <string name="accessibility_service">Perkhidmatan Aksesibiliti</string>
     <string name="debug_permission">Kebenaran Nyahpepijat</string>
-    <string name="shizuku_service">Perkhidmatan Shizuku</string>
     <string name="root_permission">Kebenaran Root</string>
     <string name="root_access_permission">Kebenaran Akses Root</string>
     <string name="status_not_installed">Tidak dipasang</string>
@@ -1321,11 +1284,6 @@
     <string name="message_info_message_time">Masa Mesej</string>
     <string name="message_info_sent_at">Masa Dihantar</string>
 
-    <string name="shizuku_demo_loading">Memuatkan status aplikasi...</string>
-    <string name="shizuku_demo_permission_failed">Tidak dapat membuka tetapan keizinan</string>
-    <string name="shizuku_demo_overlay_failed">Tidak dapat membuka tetapan tetingkap terapung</string>
-    <string name="shizuku_demo_battery_failed">Tidak dapat membuka tetapan pengoptimuman bateri</string>
-    <string name="shizuku_demo_accessibility_failed">Tidak dapat membuka tetapan perkhidmatan kebolehcapaian</string>
 
     <string name="message_info_input_tokens">Token Masukan</string>
     <string name="message_info_cached_input_tokens">Token Masukan Cache</string>
@@ -1839,8 +1797,6 @@
     <string name="battery_settings_failed">Tidak dapat membuka tetapan pengoptimuman bateri</string>
     <string name="accessibility_settings_failed">Tidak dapat membuka tetapan perkhidmatan kebolehcapaian</string>
     <string name="provider_installed">Penyedia perkhidmatan telah dipasang</string>
-    <string name="shizuku_not_found">Aplikasi Shizuku tidak ditemui</string>
-    <string name="shizuku_start_failed">Tidak dapat memulakan aplikasi Shizuku</string>
     <string name="doc_link_failed">Tidak dapat membuka pautan dokumen</string>
     <string name="root_tutorial_failed">Tidak dapat membuka pautan tutorial Root</string>
     <string name="file_open_failed">Tidak dapat membuka fail: %1$s</string>
@@ -5635,7 +5591,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="openai_connection_success">Sambungan berjaya!</string>
     <string name="openai_connection_test_failed">Ujian sambungan gagal: %1$s</string>
     <string name="phone_agent_need_debug_permission">Memerlukan kebenaran nyahpepijat/pentadbir/Root dan skrin maya eksperimen diaktifkan untuk menggunakan automasi skrin maya.</string>
-    <string name="phone_agent_shizuku_unavailable">Shizuku tidak tersedia, tidak dapat memulakan skrin maya.</string>
     <string name="phone_agent_virtual_screen_create_failed">Gagal mencipta skrin maya.</string>
     <string name="phone_agent_virtual_screen_prewarm_failed">Gagal pra-mula skrin maya: %1$s</string>
 
@@ -5991,11 +5946,6 @@ Kini anda boleh menggunakan mod AutoGLM di antara muka perbualan.</string>
     <string name="pathfinder_start_equals_target">Keadaan permulaan sudah merupakan keadaan sasaran</string>
     <string name="pathfinder_found_path">Menggunakan algoritma %1$s untuk mencari laluan</string>
     <string name="pathfinder_cannot_find_path">Tidak dapat mencari laluan keadaan yang sah dari \'%1$s\' ke \'%2$s\'</string>
-    <string name="shizuku_start_service_intro">Untuk memulakan perkhidmatan Shizuku:\n</string>
-    <string name="shizuku_or">atau\n\n</string>
-    <string name="shizuku_install_update">Kemas kini</string>
-    <string name="shizuku_install_install">Pasang</string>
-    <string name="shizuku_install_unknown">Tidak diketahui</string>
 
     <string name="mnn_session_not_initialized">Ralat: Sesi LLM tidak diinisialisasi</string>
     <string name="mnn_reasoning_error">\n\n[Ralat dalam proses penaakulan]</string>
