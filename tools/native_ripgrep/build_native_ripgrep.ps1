@@ -1,7 +1,7 @@
 param(
     [string[]]$Targets = @("aarch64-linux-android"),
     [string]$SdkDir = "",
-    [int]$ApiLevel = 23
+    [int]$ApiLevel = 31
 )
 
 $ErrorActionPreference = "Stop"
