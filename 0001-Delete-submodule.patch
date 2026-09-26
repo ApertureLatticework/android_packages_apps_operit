@@ -1,0 +1,29 @@
+From ef3b07a407dcad61873bfb15411fbb9b87a7bc93 Mon Sep 17 00:00:00 2001
+From: root <dabao1955@163.com>
+Date: Thu, 24 Sep 2026 22:12:05 +0800
+Subject: [PATCH] Delete submodule
+
+---
+ .gitmodules                         | 3 ---
+ tools/hotbuild/OperitNightlyRelease | 1 -
+ 2 files changed, 4 deletions(-)
+ delete mode 160000 tools/hotbuild/OperitNightlyRelease
+
+diff --git a/.gitmodules b/.gitmodules
+index 847f260..e69de29 100644
+--- a/.gitmodules
++++ b/.gitmodules
+@@ -1,3 +0,0 @@
+-[submodule "tools/hotbuild/OperitNightlyRelease"]
+-	path = tools/hotbuild/OperitNightlyRelease
+-	url = git@github.com:AAswordman/OperitNightlyRelease.git
+diff --git a/tools/hotbuild/OperitNightlyRelease b/tools/hotbuild/OperitNightlyRelease
+deleted file mode 160000
+index 3501652..0000000
+--- a/tools/hotbuild/OperitNightlyRelease
++++ /dev/null
+@@ -1 +0,0 @@
+-Subproject commit 350165237e89b370e45213dcd7ab02ee7e7a6361
+-- 
+2.53.0
+

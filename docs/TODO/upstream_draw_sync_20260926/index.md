@@ -49,3 +49,19 @@ dev@29d67812 **全等**（逐件 blob sha 比对）。
 上游 dev 前进 → 门禁红并列出提交 → 评估移植（js 直取终态，Kotlin 对锚点
 手工移植）→ `upstream_pin.json` 同 commit 更新。本地有意改动 packages/
 同理。禁把 spacexai_draw 类分叉件当纯 rename 合并。
+
+## 补记（2026-09-26，2.md 复审后）
+
+- **已发布判定**（翻转 A/B）：三提交未被任何 tag 收（v1.12.2=9/18 封版，
+  早于 dev 上 9/20 批次）；而 xai_draw 在 v1.12.2 内流通，本仓
+  versionName 即 1.12.2（versionCode 51）——存量用户偏好里存的是
+  "xai_draw"。故 PackageManager 偏好迁移块为**必选项**（469973d 已随批
+  落地，含一次性键/新名落地前置判断/双键迁移三重防护）。
+- 品牌线溯源：SpaceXAI 品牌改造（6b8fceeb，8/23）已在 v1.12.2 发布面
+  （显示名/supportedEfforts/xai.svg），包改名是其下游收尾；Kotlin 品牌侧
+  本仓经 f38d10a 已对齐。
+- 文档腐坏收口：ci/README.md（ToolPkg 门禁描述→漂移门禁实况）、
+  CONTRIBUTING.md（examples/ 路径与死链 TOOLPKG_FORMAT_GUIDE.md、四条
+  死命令→sync_example_packages + check_package_drift）。
+  package.json 先前已净（2.md 该点过期）。
+- 门禁 CI 失败修复：Actions 内 gh 需 GH_TOKEN（补 env github.token）。

@@ -5,7 +5,7 @@
 ## 贡献类型
 
 - Android 应用、工具调用、工作流、数据和 UI：主要位于 `app/`
-- 脚本、Skill、Plugin、MCP 和示例包：位于 `examples/`，格式说明见 [ToolPkg 指南](../../TOOLPKG_FORMAT_GUIDE.md)
+- 内置工具包（JS ToolPkg）：位于 `app/src/main/assets/packages/`，与上游 dev 同步基线由 `tools/example_packages/upstream_pin.json` 钉住；热重载同步走 `tools/example_packages/sync_example_packages.py`
 - 文档和协作资料：位于 `docs/`
 - 构建、检查和仓库自动化：位于 `.github/`、`ci/` 和 `tools/`
 
@@ -72,14 +72,10 @@ python3 -B ci/script/check_localizations.py --base "$BASE_SHA" --candidate "$CAN
 根据改动范围选择额外检查：
 
 ```bash
-# 示例包或 ToolPkg
-npm ci
-npm run build:examples:github
-git diff --exit-code -- examples/github.js
-npm --prefix examples/toolpkg_wasm_demo ci
-npm --prefix examples/toolpkg_wasm_demo run pack:toolpkg
+# packages 资产（改动 app/src/main/assets/packages/ 或吸收上游时）
 python3 ./tools/example_packages/sync_example_packages.py --mode test --no-hot-reload
 python3 ./tools/example_packages/sync_example_packages.py --no-hot-reload
+python3 ./ci/script/check_package_drift.py
 
 # Android JVM 单测和构建
 ./gradlew :app:testDebugUnitTest
