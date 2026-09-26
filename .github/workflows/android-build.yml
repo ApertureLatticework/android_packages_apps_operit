@@ -86,6 +86,9 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: packages 资产漂移门禁
+        run: python3 ci/script/check_package_drift.py
+
       - name: Set up JDK
         uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95 # v5
         with:
